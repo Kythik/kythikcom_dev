@@ -35,7 +35,7 @@
       const videoId = parseYouTubeId(v.link);
       const thumb = videoId
         ? `<img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${v.title}" loading="lazy"
-             style="width:100%;height:100%;object-fit:cover;object-position:center top;" />`
+             style="width:100%;height:100%;object-fit:contain;background:#000;" />`
         : `<div style="height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-navy)"><span>▶ Video</span></div>`;
       return `
         <div class="card"><div class="card-inner">
