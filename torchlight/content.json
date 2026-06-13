@@ -29,20 +29,14 @@
       "eyebrow": "Tool",
       "title": "Clockwork Ballet Calculator",
       "blurb": "Season 12 farm calculator — fully updated with Astrolabe & Probe support.",
-      "link": "/clockwork/clockwork.html",
+      "link": "/torchlight/clockwork/clockwork.html",
       "linkLabel": "Open Calculator"
     }
   ],
   "youtube": [
     {
-      "title": "Crow's Corner: Developer Q&A",
-      "videoId": "wcJmLmCSMjg",
-      "link": "http://youtube.com/watch?v=wcJmLmCSMjg"
-    }
-     {
-      "title": "Season 12 Lunaria Reveal",
-      "videoId": "KEnNJp_yyro",
-      "link": "https://www.youtube.com/watch?v=KEnNJp_yyro"
+      "title": "Lunaria Reveal Stream",
+      "link": "https://www.youtube.com/watch?v="
     }
   ]
 }
