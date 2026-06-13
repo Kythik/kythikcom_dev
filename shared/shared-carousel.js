@@ -11,7 +11,7 @@
 
    Card item shape (by "type"):
      { type:"link",     eyebrow, title, blurb, link, linkLabel }
-     { type:"youtube",  eyebrow, title, blurb, videoId, link }
+     { type:"youtube",  eyebrow, title, blurb, link }
      { type:"season",   eyebrow, title, blurb, seasonStartISO, nextSeasonISO, link }
      { type:"countdown",eyebrow, title, blurb, targetISO, link }
      { type:"strategy", ...same shape as existing feat-card strategy object }
@@ -19,6 +19,11 @@
 
 (function () {
   const instances = {};
+
+  function parseYouTubeId(url) {
+    if (!url) return null;
+    try { return new URL(url).searchParams.get('v') || null; } catch(e) { return null; }
+  }
 
   function fmtDuration(ms) {
     if (ms <= 0) return 'Live now';
@@ -39,9 +44,8 @@
 
     switch (item.type) {
       case 'youtube': {
-        const thumb = item.videoId
-          ? `https://img.youtube.com/vi/${item.videoId}/hqdefault.jpg`
-          : null;
+        const videoId = parseYouTubeId(item.link);
+        const thumb = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
         mediaHtml = thumb
           ? `<img src="${thumb}" alt="${title}" loading="lazy" />`
           : `<div class="feat-screenshot-empty"><span>▶ Video</span></div>`;
