@@ -10,8 +10,8 @@
       "status": "live",
       "subpages": [
         { "label": "Strats", "path": "/torchlight/strats/strats.html" },
-        { "label": "Clockwork", "path": "/clockwork/clockwork.html" },
-        { "label": "Arcana", "path": "/arcana/arcana.html" }
+        { "label": "Clockwork", "path": "/torchlight/clockwork/clockwork.html" },
+        { "label": "Arcana", "path": "/torchlight/arcana/arcana.html" }
       ]
     },
     {
