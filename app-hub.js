@@ -1,8 +1,10 @@
 /* ═══════════════════════════════════════════
    app-hub.js — Root hub page logic
-   Renders one carousel section per game using
+   Renders one carousel per live game using
    games.json (registry) + homepage-content.json
    (editable card content per game).
+   No game titles on the page — game name appears
+   only inside the carousel label bar.
    ═══════════════════════════════════════════ */
 
 (function () {
@@ -18,18 +20,19 @@
     if (!container) return;
 
     games.forEach(game => {
-      const items = content[game.id] || [];
+      if (game.status === 'upcoming') return;
+
+      const items = (content[game.id] || []).map(item => ({ ...item, _gameName: game.name }));
+      if (!items.length) return;
+
       const mountId = 'carousel-' + game.id;
-      const isUpcoming = game.status === 'upcoming';
 
-      const statusBadge = isUpcoming
-        ? `<span class="hub-game-status hub-game-status--upcoming">Launching ${formatLaunch(game.launchDate)}</span>`
-        : '';
-
-      const carouselHtml = !isUpcoming ? `
+      const section = document.createElement('section');
+      section.className = 'hub-game-section';
+      section.innerHTML = `
         <div class="featured-section" id="${mountId}" style="display:none">
           <div class="featured-header">
-            <div class="featured-label">Featured</div>
+            <div class="featured-label">${game.name}</div>
             <div class="featured-nav">
               <button class="featured-btn" onclick="KythikCarousel.nav('${mountId}', -1)" aria-label="Previous">‹</button>
               <span class="featured-counter" id="${mountId}Counter"></span>
@@ -37,32 +40,11 @@
             </div>
           </div>
           <div class="featured-track" id="${mountId}Track"></div>
-        </div>` : '';
-
-      const section = document.createElement('section');
-      section.className = 'hub-game-section';
-      section.innerHTML = `
-        <div class="hub-game-header">
-          <div class="hub-game-title">
-            <img src="${game.icon}" alt="" width="22" height="22" onerror="this.style.display='none'" />
-            ${game.name}
-            ${statusBadge}
-          </div>
-          ${!isUpcoming ? `<a href="${game.path}" class="hub-game-link">View All</a>` : ''}
-        </div>
-        ${carouselHtml}`;
+        </div>`;
 
       container.appendChild(section);
-
-      if (!isUpcoming && items.length) {
-        KythikCarousel.init({ mountId, items, autoRotateMs: 6000 });
-      }
+      KythikCarousel.init({ mountId, items, autoRotateMs: 6000 });
     });
-  }
-
-  function formatLaunch(iso) {
-    if (!iso) return 'Soon';
-    return new Date(iso).toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
   }
 
   init();
