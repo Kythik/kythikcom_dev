@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clockwork Quick Ref — Kythik</title>
 <link rel="stylesheet" href="/styles.css">
-<link rel="stylesheet" href="/clockwork/clockwork_styles.css">
+<link rel="stylesheet" href="/torchlight/clockwork/clockwork_styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
 <style>
@@ -28,6 +28,10 @@
   .cs-row.purple{color:#cfc4f9;border-left-color:#a78bfa}
   .cs-row.blue{color:#bcd2f5;border-left-color:#60a5fa}
 
+  .cs-effect{font-size:10px;color:#A3ABBE;margin-top:1px;line-height:1.4}
+
+  .cs-bnote{margin-top:8px;padding:6px 8px;background:rgba(140,165,210,0.05);border:1px solid var(--border-soft);border-radius:6px;font-size:10px;color:var(--text-faint);line-height:1.4}
+
   .cs-roul{margin-top:8px;padding:6px 8px;background:rgba(216,90,78,0.06);border:1px solid rgba(216,90,78,0.15);border-radius:6px;font-size:10px;color:var(--red-loss);line-height:1.4}
 
   .cs-legend{display:flex;gap:12px;font-size:9px;color:var(--text-faint);margin-top:10px;padding-top:8px;border-top:1px solid var(--border-blue);flex-wrap:wrap}
@@ -43,42 +47,57 @@
 
   <div class="cs-hdr">
     <div class="cs-title">Clockwork Quick Ref</div>
-    <a href="/clockwork/clockwork.html" class="cs-back">full calculator ↗</a>
+    <a href="/torchlight/clockwork/clockwork.html" class="cs-back">full calculator ↗</a>
   </div>
 
   <div class="cs-tier-block">
     <div class="cs-tier-hdr">S+</div>
-    <div class="cs-row rainbow">Roses in the No-Man's Land</div>
-    <div class="cs-row rainbow">Nut Trick</div>
+    <div class="cs-row rainbow">Roses in the No-Man's Land
+      <div class="cs-effect">All monsters → Low-Level Doll Employees. Only 7 Rainbow Cogwheels in the stage.</div>
+    </div>
+    <div class="cs-row rainbow">Nut Trick
+      <div class="cs-effect">3 vouchers of the same rarity in a row → all 3 become Rainbow.</div>
+    </div>
   </div>
 
   <div class="cs-tier-block">
     <div class="cs-tier-hdr">S</div>
-    <div class="cs-row rainbow">Clockwork Ballet Heist</div>
-    <div class="cs-row rainbow">All Tabs on Me</div>
-    <div class="cs-row rainbow">Bloody Mary</div>
-    <div class="cs-row gold">40%×+1 / 20%×+2 / 5%×+3 vouchers, 10% safe early end</div>
-    <div class="cs-row gold">Best Doll Employee: 20% per completion → extra voucher</div>
+    <div class="cs-row rainbow">Clockwork Ballet Heist
+      <div class="cs-effect">Last cogwheel: 3 Runaway Dancers appear → 1 random voucher each (up to Red).</div>
+    </div>
+    <div class="cs-row rainbow">Clockwork Roulette
+      <div class="cs-effect">Each voucher grants a bonus random voucher + escalating future bonus. ~10% instant-loss chance at start.</div>
+    </div>
+    <div class="cs-row rainbow">Bloody Mary
+      <div class="cs-effect">Instant 3-5 Purple+ vouchers. SS rating, 15s default — Mary starts chasing after 3s.</div>
+    </div>
+    <div class="cs-row rainbow">All Tabs on Me
+      <div class="cs-effect">1-2 Rainbow Cogwheels in the stage. Vouchers locked until fully complete.</div>
+    </div>
   </div>
 
   <div class="cs-tier-block">
     <div class="cs-tier-hdr">A</div>
-    <div class="cs-row gold">3 completions in 30s → 2 Orange Vouchers</div>
-    <div class="cs-row blue">Immediately obtain 2–3 vouchers (up to Orange)</div>
-    <div class="cs-row rainbow">Dolls' Hunting Ground</div>
-    <div class="cs-row gold">15% chance → Runaway Dancer → 1 Orange Voucher</div>
+    <div class="cs-row gold">Best Doll Employee
+      <div class="cs-effect">20% per completion → extra voucher, skewed toward higher rarity.</div>
+    </div>
+    <div class="cs-row gold">Triple Combo Bonus
+      <div class="cs-effect">3 completions within 30s → 2 Orange Vouchers.</div>
+    </div>
+    <div class="cs-row blue">Instant Voucher Cache
+      <div class="cs-effect">Immediate 2-3 vouchers (up to Orange) at start.</div>
+    </div>
+    <div class="cs-row gold">Cogwheel Gambler
+      <div class="cs-effect">40%×+1 / 20%×+2 / 5%×+3 vouchers per completion, 10% chance to safe-end early.</div>
+    </div>
   </div>
 
-  <div class="cs-tier-block">
-    <div class="cs-tier-hdr">B</div>
-    <div class="cs-row purple">30% on completion: all vouchers +1 rarity + 10s</div>
-    <div class="cs-row purple">30% per completion → all vouchers +1 rarity</div>
-    <div class="cs-row purple">6 Cogwheels — hits B at cog 3 → SS → SSS by completion</div>
-    <div class="cs-row gold">&gt;20s remaining → 15% extra voucher</div>
+  <div class="cs-bnote">
+    <b>B-tier (anything else offered):</b> Hunting Ground, All-or-Nothing Rating, Booster Drinks, Dual Rarity Boost, Lucky Upgrade (+Time), Cogwheel Culling. All roughly interchangeable — pick whichever fits your run.
   </div>
 
   <div class="cs-roul">
-    <b>Clockwork Roulette</b> — high EV but ~1 per 100 maps, 43% wipe rate. Skip unless mapping 500+ per season.
+    <b>Clockwork Roulette</b> — high EV under the default fail model, but ~1 per 100 maps and ~10% instant-loss risk at start. If using the escalating fail model instead, EV drops to negative — treat as skip.
   </div>
 
   <div class="cs-legend">
@@ -88,7 +107,7 @@
     <span><i style="background:#60a5fa"></i>Blue</span>
   </div>
 
-  <div class="cs-footer"><a href="/clockwork/clockwork.html">kythik.com/clockwork</a> — full breakdown &amp; setup-specific rankings</div>
+  <div class="cs-footer"><a href="/torchlight/clockwork/clockwork.html">kythik.com/torchlight/clockwork</a> — full breakdown &amp; rankings</div>
 
 </body>
 </html>
