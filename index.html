@@ -3,98 +3,89 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kythik — ARPG Strategy, Builds & Live Commentary</title>
-  <meta name="description" content="Kythik (kythikx) — Twitch streamer covering Torchlight Infinite, Diablo IV, Hero Siege, and more. Farm strategies, builds, and live ARPG commentary." />
-  <meta name="keywords" content="Kythik, KythikX, Kyth, kythik streamer, kythikx twitch, kythik twitch streamer, kythik arpg, Torchlight Infinite, EverQuest Legends, ARPG builds, ARPG streamer, ARPG Twitch streamer, Diablo IV, Hero Siege, Dwarven Realms" />
-  <meta property="og:title" content="Kythik — ARPG Strategy, Builds & Live Commentary" />
-  <meta property="og:description" content="Twitch streamer covering Torchlight Infinite, EverQuest Legends, and more ARPGs. Farm strategies, builds, and live commentary." />
-  <meta property="og:url" content="https://kythik.com" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="header-additions.css" />
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Kythik",
-    "alternateName": ["KythikX", "Kyth", "kythikx"],
-    "url": "https://kythik.com",
-    "description": "ARPG farm builds, strategies, and live commentary from Kythik.",
-    "author": {
-      "@type": "Person",
-      "name": "Kythik",
-      "alternateName": "kythikx",
-      "url": "https://twitch.tv/kythikx"
-    }
-  }
-  </script>
+  <title>Torchlight Infinite — Kythik Hub</title>
+  <meta name="description" content="Torchlight Infinite farm strategies, builds, the Clockwork Ballet calculator, and live ARPG commentary from Kythik (kythikx)." />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/header-additions.css" />
 </head>
 <body>
 
-  <!-- ── PAGE BACKGROUND IMAGE ── -->
   <div class="page-bg-img"></div>
 
-  <!-- ── HEX BACKGROUND ── -->
   <svg class="hex-bg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <defs>
       <pattern id="hexGrid" width="50" height="84" patternUnits="userSpaceOnUse">
-        <polygon points="25,0 50,14 50,42 25,56 0,42 0,14" fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <polygon points="25,0 50,14 50,42 25,56 0,42 0,14"   fill="none" stroke="#1A3055" stroke-width="0.8"/>
         <polygon points="0,42 25,56 25,84 0,98 -25,84 -25,56" fill="none" stroke="#1A3055" stroke-width="0.8"/>
-        <polygon points="50,42 75,56 75,84 50,98 25,84 25,56" fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <polygon points="50,42 75,56 75,84 50,98 25,84 25,56"  fill="none" stroke="#1A3055" stroke-width="0.8"/>
       </pattern>
     </defs>
     <rect width="100%" height="100%" fill="url(#hexGrid)"/>
   </svg>
 
-  <!-- ── STICKY HEADER (default state — no active game) ── -->
-  <div id="site-header" data-active-game="none"></div>
+  <!-- ── STICKY HEADER ── -->
+  <div id="site-header" data-active-game="torchlight"></div>
 
   <main class="main">
 
-    <!-- ── HERO / BIO ── -->
-    <section class="hub-hero">
-      <h1 class="display display--xl">Kythik</h1>
-      <div class="hub-hero-tagline">S-Tier Yapper · ARPG Strategy & Live Commentary</div>
-      <p class="hub-hero-bio">
-        Former hardcore MMO raider turned ARPG streamer — you'll get more talking than killing,
-        but the builds still work. Live 5 days a week covering Torchlight Infinite, EverQuest Legends,
-        and whatever loot-pinata game catches my attention this patch.
-      </p>
-      <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener" class="hub-hero-cta">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
-        Watch Live on Twitch
-      </a>
+    <div class="page-title">
+      <h1 class="display display--lg"><span class="accent">Torchlight Infinite</span></h1>
+    </div>
+
+    <!-- ── FEATURED CAROUSEL ── -->
+    <div class="featured-section" id="tliCarousel" style="display:none">
+      <div class="featured-header">
+        <div class="featured-label">Featured</div>
+        <div class="featured-nav">
+          <button class="featured-btn" onclick="KythikCarousel.nav('tliCarousel', -1)" aria-label="Previous">‹</button>
+          <span class="featured-counter" id="tliCarouselCounter"></span>
+          <button class="featured-btn" onclick="KythikCarousel.nav('tliCarousel',  1)" aria-label="Next">›</button>
+        </div>
+      </div>
+      <div class="featured-track" id="tliCarouselTrack"></div>
+    </div>
+
+    <!-- ── RESOURCES ── -->
+    <section class="hub-game-section">
+      <div class="hub-game-header">
+        <div class="hub-game-title">Resources</div>
+      </div>
+      <div class="grid">
+
+        <div class="card"><div class="card-inner">
+          <div class="card-top">
+            <h3 class="card-title">Strategy Hub</h3>
+          </div>
+          <p class="subtext" style="margin:8px 0 14px">Community-sourced farm routes and builds, synced from Discord.</p>
+          <a href="/torchlight/strats/strats.html" class="header-pill">Open Strats</a>
+        </div></div>
+
+        <div class="card"><div class="card-inner">
+          <div class="card-top">
+            <h3 class="card-title">Clockwork Ballet Calculator</h3>
+          </div>
+          <p class="subtext" style="margin:8px 0 14px">Season 12 farm calculator with full Astrolabe &amp; Probe support.</p>
+          <a href="/torchlight/clockwork/clockwork.html" class="header-pill">Open Calculator</a>
+        </div></div>
+
+        <div class="card"><div class="card-inner">
+          <div class="card-top">
+            <h3 class="card-title">Arcana Tools</h3>
+          </div>
+          <p class="subtext" style="margin:8px 0 14px">Minigame simulator and reference tools for Arcana.</p>
+          <a href="/torchlight/arcana/arcana.html" class="header-pill">Open Arcana</a>
+        </div></div>
+
+      </div>
     </section>
 
-    <!-- ── PER-GAME SECTIONS (rendered by app-hub.js from games.json) ── -->
-    <div id="gameSections"></div>
-
-    <!-- ── COMMUNITY SECTION ── -->
-    <section class="hub-community">
+    <!-- ── YOUTUBE VIDEOS (populated by content.js) ── -->
+    <section class="hub-game-section" id="ytSection" style="display:none">
       <div class="hub-game-header">
-        <div class="hub-game-title">Community</div>
+        <div class="hub-game-title">Latest Videos</div>
+        <a href="https://www.youtube.com/@kythikx" target="_blank" rel="noopener" class="hub-game-link">More on YouTube</a>
       </div>
-      <div class="hub-community-grid">
-        <div class="hub-twitch-embed">
-          <iframe
-            src="https://player.twitch.tv/?channel=kythikx&parent=kythik.com&muted=true"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <div class="hub-community-side">
-          <div class="hub-community-card">
-            <h3>Watch Live</h3>
-            <p>ARPGs, 5 days a week, ~6 hours a stream. Torchlight Infinite, Diablo IV, Hero Siege, Dwarven Realms — and a lot of commentary.</p>
-            <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener" class="header-pill">Go to Twitch</a>
-          </div>
-          <div class="hub-community-card">
-            <h3>Join the Discord</h3>
-            <p>Strategy discussion, build help, community-sourced farm routes synced straight into the strat hub.</p>
-            <a href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener" class="header-pill">Join Discord</a>
-          </div>
-        </div>
-      </div>
+      <div class="grid" id="ytGrid"></div>
     </section>
 
   </main>
@@ -102,16 +93,15 @@
   <footer class="footer">
     <div class="footer-links">
       &copy; Kythik &nbsp;·&nbsp;
-      <a href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener">Join Discord for live discussion</a>
-      &nbsp;·&nbsp; <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener">Watch Live</a>
+      <a href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener">Join Discord</a>
+      &nbsp;·&nbsp;
+      <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener">Watch Live</a>
     </div>
   </footer>
 
-  <script>
-    window.kythikSkipDefaultLiveCheck = false;
-  </script>
-  <script src="header.js"></script>
-  <script src="shared/shared-carousel.js"></script>
-  <script src="app-hub.js"></script>
+  <script src="/header.js"></script>
+  <script src="/shared/shared-carousel.js"></script>
+  <script src="/torchlight/content.js"></script>
+
 </body>
 </html>
