@@ -33,14 +33,20 @@
       "linkLabel": "Open Calculator"
     }
   ],
-  "youtube": [
+  "youtube_official": [
     {
-      "title": "s12 Lunaria Reveal",
-      "link": "https://www.youtube.com/watch?v=KEnNJp_yyro"
-    },
+    "title": "S12 Lunaria Reveal",
+    "link": "https://www.youtube.com/watch?v=KEnNJp_yyro"
+  },
+  {
+    "title": "S12 Crow's Corner + Developer Q&A",
+    "link": "https://www.youtube.com/watch?v=wcJmLmCSMjg"
+  }
+  ],
+  "youtube_kythik": [
     {
-      "title": "S12 Crow's Corner + Developer Q&A ",
-      "link": "https://www.youtube.com/watch?v=wcJmLmCSMjg"
+      "title": "My TLI Highlight",
+      "link": "https://www.youtube.com/watch?v="
     }
   ]
 }
