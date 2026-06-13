@@ -987,21 +987,16 @@ function render(){
 
 
 
-  // ── Service table — lookup from pre-computed rankings ────────────────
+  // ── Service table — static rankings (fe-based, ceiling-relative %) ────
   const dollVal=document.getElementById('doll')?.value||'artifact';
   const DOLL_CR={none:0.06,regular:0.19,artifact:0.45};
   const cr=DOLL_CR[dollVal]||0.45;
   const probeVal=document.getElementById('probe')?.value||'none';
   const nodeSeasonal=!!(document.getElementById('node-seasonal')?.checked);
-  const dollProbe=probeVal==='doll'?1:0;
-  const compassProbe=probeVal==='compass'?1:0;
-  const rkey=`${gearsVal}|${dollVal}|${document.getElementById('alice').value}|${nodeIndulgent?1:0}|${nodeVain?1:0}|${nodeWasteful?1:0}|${nodeOstentatious?1:0}|${nodeCb59?1:0}|${document.getElementById('rdist').value}|${dollProbe}|${compassProbe}`;
   if(!RANKINGS){return;} // wait for JSON to load
-  const ridx=RANKINGS.k[rkey];
-  const ranked=ridx!==undefined?RANKINGS.r[ridx]:null;
   let svcs=S12_SVCS.map(s=>{
-    const entry=ranked?ranked.find(r=>r[0]===s.id):null;
-    return {...s,tier:entry?entry[1]:'F',pct:entry?entry[2]:0,rank:ranked?ranked.findIndex(r=>r[0]===s.id):999};
+    const entry=RANKINGS.services.find(r=>r.id===s.id&&!r.sensitivity_only);
+    return {...s,tier:entry?entry.tier:'F',pct:entry?entry.pct:0,rank:entry?entry.rank:999};
   });
   const showCombat=document.getElementById('showz')&&document.getElementById('showz').checked;
   if(!showCombat)svcs=svcs.filter(s=>s.tier!=='F'||s.tag==='conditional'||s.tag==='builddep'||s.isRoulette||s.isID23);
@@ -1025,9 +1020,10 @@ function render(){
         const maxCogR=gearsValRoul==='avg'?6:parseInt(gearsValRoul);
         const evEsc=roulEV(maxCogR,maxCogR===6?6:parseInt(gearsValRoul),rdist,base,'escalating');
         const theorBaseR=bge()*maxCogR*MULT[maxCogR];
-        const pctEsc=Math.max(0,evEsc/theorBaseR*100);
-        // Use same tier thresholds as getTier but force F since Roulette is special-cased
-        bw=Math.min(Math.round(pctEsc/3),100); // rough relative scale matching other %-of-top values
+        // Convert escalating EV (in theorBase units) to fe, then to %-of-ceiling
+        const evFe=evEsc/theorBaseR*384.68; // 384.68fe = flat Roulette's theorBase-relative value
+        const CEILING=2929;
+        bw=Math.max(0,Math.round(evFe/CEILING*100*10)/10);
         t2={l:'F',c:'tier-f'};
       }
     }
@@ -1057,7 +1053,7 @@ function render(){
       <td>${nameHtml}${eff}${inlineWarn}${extra}</td>
       <td><span class="badge ${RCLS[s.rarity]||'badge-blue'}">${RLABEL[s.rarity]||s.rarity}</span></td>
       <td><span class="${t2.c} tier">${t2.l}${s.isRoulette?'*':''}</span></td>
-      <td><div class="ev-bar-wrap"><div class="ev-bar" style="width:${Math.min(bw,100)}px;max-width:100px"></div><span style="font-size:10px;color:var(--text-faint);margin-left:4px">${bw}% of top${s.isRoulette?' *':''}</span></div></td>
+      <td><div class="ev-bar-wrap"><div class="ev-bar" style="width:${Math.min(bw,100)}px;max-width:100px"></div><span style="font-size:10px;color:var(--text-faint);margin-left:4px">${bw.toFixed(1)}% of ceiling${s.isRoulette?' *':''}</span></div></td>
     `;
     tbody.appendChild(tr);
     if(s.isRoulette){
