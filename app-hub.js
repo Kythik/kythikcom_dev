@@ -20,23 +20,13 @@
     games.forEach(game => {
       const items = content[game.id] || [];
       const mountId = 'carousel-' + game.id;
+      const isUpcoming = game.status === 'upcoming';
 
-      const statusBadge = game.status === 'upcoming'
+      const statusBadge = isUpcoming
         ? `<span class="hub-game-status hub-game-status--upcoming">Launching ${formatLaunch(game.launchDate)}</span>`
         : '';
 
-      const section = document.createElement('section');
-      section.className = 'hub-game-section';
-      section.innerHTML = `
-        <div class="hub-game-header">
-          <div class="hub-game-title">
-            <img src="${game.icon}" alt="" width="22" height="22" onerror="this.style.display='none'" />
-            ${game.name}
-            ${statusBadge}
-          </div>
-          ${game.status !== 'upcoming' ? `<a href="${game.path}" class="hub-game-link">View All</a>` : ''}
-        </div>
-
+      const carouselHtml = !isUpcoming ? `
         <div class="featured-section" id="${mountId}" style="display:none">
           <div class="featured-header">
             <div class="featured-label">Featured</div>
@@ -47,14 +37,25 @@
             </div>
           </div>
           <div class="featured-track" id="${mountId}Track"></div>
-        </div>`;
+        </div>` : '';
+
+      const section = document.createElement('section');
+      section.className = 'hub-game-section';
+      section.innerHTML = `
+        <div class="hub-game-header">
+          <div class="hub-game-title">
+            <img src="${game.icon}" alt="" width="22" height="22" onerror="this.style.display='none'" />
+            ${game.name}
+            ${statusBadge}
+          </div>
+          ${!isUpcoming ? `<a href="${game.path}" class="hub-game-link">View All</a>` : ''}
+        </div>
+        ${carouselHtml}`;
 
       container.appendChild(section);
 
-      if (items.length) {
+      if (!isUpcoming && items.length) {
         KythikCarousel.init({ mountId, items, autoRotateMs: 6000 });
-      } else {
-        document.getElementById(mountId).style.display = 'none';
       }
     });
   }
