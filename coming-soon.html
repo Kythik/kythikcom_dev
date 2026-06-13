@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon — Kythik</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/header-additions.css" />
+</head>
+<body>
+
+  <div class="page-bg-img"></div>
+
+  <svg class="hex-bg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="hexGrid" width="50" height="84" patternUnits="userSpaceOnUse">
+        <polygon points="25,0 50,14 50,42 25,56 0,42 0,14" fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <polygon points="0,42 25,56 25,84 0,98 -25,84 -25,56" fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <polygon points="50,42 75,56 75,84 50,98 25,84 25,56" fill="none" stroke="#1A3055" stroke-width="0.8"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexGrid)"/>
+  </svg>
+
+  <!-- default header state -->
+  <div id="site-header" data-active-game="none"></div>
+
+  <main class="main">
+    <section class="hub-hero" style="padding:80px 0">
+      <div class="hub-hero-tagline" id="comingSoonEyebrow">Coming Soon</div>
+      <h1 class="display display--xl" id="comingSoonTitle">More on the way</h1>
+      <p class="hub-hero-bio" id="comingSoonBlurb">
+        This game's hub page isn't built yet — check back soon, or follow on Twitch/Discord for updates.
+      </p>
+      <a href="/" class="hub-hero-cta">← Back to Kythik</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-links">
+      &copy; Kythik &nbsp;·&nbsp;
+      <a href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener">Join Discord for live discussion</a>
+      &nbsp;·&nbsp; <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener">Watch Live</a>
+    </div>
+  </footer>
+
+  <script src="/header.js"></script>
+  <script>
+    // Personalize based on ?game=<id>, looked up in games.json
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const gameId = params.get('game');
+      if (!gameId) return;
+
+      fetch('/games.json')
+        .then(r => r.json())
+        .then(data => {
+          const game = (data.games || []).find(g => g.id === gameId);
+          if (!game) return;
+
+          document.getElementById('comingSoonTitle').textContent = game.name;
+
+          const blurb = document.getElementById('comingSoonBlurb');
+          if (game.launchDate) {
+            const date = new Date(game.launchDate).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            blurb.textContent = `${game.name} launches ${date}. The hub page for this game is coming soon — check back then, or follow on Twitch/Discord for updates.`;
+          } else {
+            blurb.textContent = `The ${game.name} hub page isn't built yet — check back soon, or follow on Twitch/Discord for updates.`;
+          }
+        })
+        .catch(() => {});
+    })();
+  </script>
+</body>
+</html>

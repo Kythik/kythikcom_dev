@@ -41,24 +41,27 @@
     return `<img src="${game.icon}" alt="" width="18" height="18" style="display:block" onerror="this.style.display='none'" />`;
   }
 
+  // Games without a built landing page route to the shared coming-soon page
+  function gameHref(game) {
+    if (game.status === 'upcoming') {
+      return `/coming-soon.html?game=${encodeURIComponent(game.id)}`;
+    }
+    return game.path;
+  }
+
   // ── Default state: all games visible with names ──
   function renderDefaultCenter(games) {
     return games.map(g => `
-      <a href="${g.path}" class="header-pill header-pill--game" data-game="${g.id}" style="display:flex;align-items:center;gap:6px;">
+      <a href="${gameHref(g)}" class="header-pill header-pill--game" data-game="${g.id}" style="display:flex;align-items:center;gap:6px;">
         ${gameIconSvg(g)}<span>${g.shortName || g.name}</span>
       </a>`).join('');
   }
 
-  // ── Game-active state: other games collapse to icon-only (greyed),
-  //    active game's icon + subpage pills appear, active game rightmost ──
+  // ── Game-active state: active game's icon + subpage pills appear
+  //    leftmost in header-center; other games collapse to icon-only
+  //    (greyed) and move into header-right near Twitch/Discord ──
   function renderActiveCenter(games, activeId) {
-    const others = games.filter(g => g.id !== activeId);
-    const active  = games.find(g => g.id === activeId);
-
-    const othersHtml = others.map(g => `
-      <a href="${g.path}" class="header-icon-collapsed" data-game="${g.id}" aria-label="${g.name}" title="${g.name}">
-        ${gameIconSvg(g)}
-      </a>`).join('');
+    const active = games.find(g => g.id === activeId);
 
     let activeHtml = '';
     if (active) {
@@ -67,20 +70,35 @@
 
       activeHtml = `
         <div class="header-active-game">
-          ${subpages}
-          <a href="${active.path}" class="header-pill header-pill--game header-pill--active" data-game="${active.id}" style="display:flex;align-items:center;gap:6px;">
+          <a href="${gameHref(active)}" class="header-pill header-pill--game header-pill--active" data-game="${active.id}" style="display:flex;align-items:center;gap:6px;">
             ${gameIconSvg(active)}<span>${active.shortName || active.name}</span>
           </a>
+          ${subpages}
         </div>`;
     }
 
-    return `<div class="header-collapsed-row">${othersHtml}</div>${activeHtml}`;
+    return activeHtml;
+  }
+
+  // ── Collapsed icon row for non-active games (game-active state only) ──
+  function renderCollapsedIcons(games, activeId) {
+    const others = games.filter(g => g.id !== activeId);
+    if (!others.length) return '';
+
+    return `<div class="header-collapsed-row">${others.map(g => `
+      <a href="${gameHref(g)}" class="header-icon-collapsed" data-game="${g.id}" aria-label="${g.name}" title="${g.name}">
+        ${gameIconSvg(g)}
+      </a>`).join('')}</div>`;
   }
 
   function buildHeader(games, activeId) {
-    const centerHtml = (activeId && activeId !== 'none')
+    const isActiveState = activeId && activeId !== 'none';
+    const centerHtml = isActiveState
       ? renderActiveCenter(games, activeId)
       : renderDefaultCenter(games);
+    const collapsedIconsHtml = isActiveState
+      ? renderCollapsedIcons(games, activeId)
+      : '';
 
     return `
     <header class="site-header">
@@ -92,6 +110,7 @@
           ${centerHtml}
         </nav>
         <nav class="header-right">
+          ${collapsedIconsHtml}
           ${TWITCH_DISCORD_HTML}
         </nav>
       </div>
