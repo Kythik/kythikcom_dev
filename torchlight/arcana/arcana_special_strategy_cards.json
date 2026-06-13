@@ -1,0 +1,780 @@
+{
+  "schemaVersion": 1,
+  "updated": "2026-06-10",
+  "cards": [
+    {
+      "id": "Special1_Staging_Loaded",
+      "title": "Special 1: Staging Loaded",
+      "kicker": "Recommended",
+      "meta": "Board 1 / wall-staging route",
+      "cardSummary": "Best tested Board 1 route. Load early chests, stage near tiles 24–30, then cross and cash post-wall red upgrades.",
+      "profile": "Special Board 1 is a wall-staging board. The old immediate-cross model underplayed it badly. Board 1 works because early chests are already value, and staging near the wall lets you convert that payload into a much stronger post-wall upgrade payoff.",
+      "notes": [
+        [
+          "Core rule",
+          "Stage first. Cross second."
+        ],
+        [
+          "Hand-size impact",
+          "Board 1 is not very hand-size sensitive after staging; staging behavior matters more than +1 card."
+        ],
+        [
+          "Starting hand size EV",
+          "Hand 4: EV 87.19 / rainbow 0.556 / wall 48.3%. Hand 5: EV 93.71 / rainbow 0.593 / wall 45.4%. Hand 6: EV 91.31 / rainbow 0.553 / wall 42.0%."
+        ],
+        [
+          "Staging zone",
+          "Aim to set up near tiles 24–30 before committing to the wall."
+        ],
+        [
+          "Why staging works",
+          "Early chests are already owned payload; staging does not erase that value."
+        ],
+        [
+          "Conditional payoff",
+          "Wall-success tests around 168 EV with about 1.25 rainbow average."
+        ],
+        [
+          "Failure floor",
+          "If the wall fails, Board 1 still has early chest value, unlike Board 2."
+        ],
+        [
+          "Targeting",
+          "Owned upgrade cards highest-tier-prioritize, then randomly pick within that tier."
+        ]
+      ],
+      "useWhen": "Use as the default Special Board 1 plan for realistic starts. Load chest bodies, stage near the wall, then cross.",
+      "avoidWhen": "Avoid blind crossing from too far back. The old no-staging route under-crossed and tested far lower.",
+      "walkthrough": [
+        {
+          "heading": "Load",
+          "steps": [
+            "Collect early chests as upgradeable bodies.",
+            "Do not judge green/blue chests only by current value; they can become upgraded payoff slots.",
+            "Take life and movement when they improve staging or wall access."
+          ]
+        },
+        {
+          "heading": "Stage",
+          "steps": [
+            "Treat tiles 24–30 as the wall-staging band.",
+            "Do not ask only ‘can I cross now?’",
+            "Get into a better wall position before committing if the payload is loaded."
+          ]
+        },
+        {
+          "heading": "Cross",
+          "steps": [
+            "Once staged, use the wall solver to reach tile 37+.",
+            "Crossing unlocks the red-upgrade zone.",
+            "If the wall succeeds, Board 1 becomes a very premium special board."
+          ]
+        },
+        {
+          "heading": "Cash",
+          "steps": [
+            "Use red upgrades on owned chests after the wall.",
+            "Upgrade cards target the highest eligible owned rarity first, random within that tier.",
+            "Post-wall upgrades are the reason staging is worth it."
+          ]
+        }
+      ],
+      "metrics": {
+        "runsPerStrategyPerStartingHand": 700,
+        "testedStartingHands": "4–6",
+        "weighted4to6EV": 90.74,
+        "avgRainbow": 0.567,
+        "wallSuccessRate": 0.452,
+        "wallSuccessEV": 168.28,
+        "wallFailEV": 26.68,
+        "perStartingHand": {
+          "source": "arcana_s1_staging_battery_700",
+          "hand4": {
+            "EV": 87.19,
+            "rainbow": 0.556,
+            "wall": 0.483
+          },
+          "hand5": {
+            "EV": 93.71,
+            "rainbow": 0.593,
+            "wall": 0.454
+          },
+          "hand6": {
+            "EV": 91.31,
+            "rainbow": 0.553,
+            "wall": 0.42
+          },
+          "note": "Board 1 is not very hand-size sensitive after staging; staging behavior matters more than +1 card."
+        }
+      }
+    },
+    {
+      "id": "Special1_Rainbow_Wall",
+      "title": "Special 1: Rainbow Wall",
+      "kicker": "Legacy / No-Staging",
+      "meta": "Board 1 comparison route",
+      "cardSummary": "Older immediate-cross route kept for comparison. It under-crosses Board 1 compared to Staging Loaded.",
+      "profile": "This was the first Board 1 route, but staging tests showed it leaves major value on the table. Use Special 1: Staging Loaded as the default.",
+      "notes": [
+        [
+          "Board shape",
+          "Chests first, trap wall second, red upgrades last."
+        ],
+        [
+          "Main question",
+          "Are the owned chest slots good enough to justify crossing the wall?"
+        ],
+        [
+          "Wall logic",
+          "Calculates actual hand route to tile 37+, trap hits, and life required."
+        ],
+        [
+          "Upgrade logic",
+          "Red upgrades can target already-collected chests on this board."
+        ],
+        [
+          "Offset logic",
+          "Softly protects the final correction card; it does not forbid spending it."
+        ],
+        [
+          "Targeting correction",
+          "Upgrade cards highest-tier-prioritize, then randomly pick inside that tier."
+        ],
+        [
+          "Status",
+          "Legacy comparison only; default is now Special1_Staging_Loaded."
+        ]
+      ],
+      "useWhen": "Use when you have several owned chest slots, enough life/card reach to cross, and red upgrades still available after the wall.",
+      "avoidWhen": "Avoid crossing when the hand cannot reach past the wall, life cannot pay the trap toll, or the red upgrade payoff is weak.",
+      "walkthrough": [
+        {
+          "heading": "Chest zone",
+          "steps": [
+            "Collect enough chest bodies to make later red upgrades matter.",
+            "Do not dismiss green/blue automatically; they can become rainbow slots.",
+            "Take movement and life tiles when they improve the future wall solve."
+          ]
+        },
+        {
+          "heading": "Wall check",
+          "steps": [
+            "Solve the actual current hand to tile 37+.",
+            "Compare expected owned-upgrade gain against trap/life cost.",
+            "Cross only if the score clears the strategy threshold."
+          ]
+        },
+        {
+          "heading": "After wall",
+          "steps": [
+            "Use red upgrades on owned chests.",
+            "Upgrade cards target the highest eligible owned rarity tier, then random within that tier.",
+            "Keep routing simple; do not over-chase empty pathing."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Special1_Safer_Wall",
+      "title": "Special 1: Safer Wall",
+      "kicker": "Legacy Conservative",
+      "meta": "Board 1 safer route",
+      "cardSummary": "Conservative older wall route. Use only as a comparison; staging is now the recommended Board 1 plan.",
+      "profile": "A stricter version of Rainbow Wall for runs where you want fewer bad crosses.",
+      "notes": [
+        [
+          "Difference",
+          "Requires 6 owned chests, 5 upgrades ahead, and +1 life buffer."
+        ],
+        [
+          "Tradeoff",
+          "Fewer crosses, fewer disasters, but may miss some profitable aggressive routes."
+        ],
+        [
+          "Status",
+          "Legacy comparison only; default is now Special1_Staging_Loaded."
+        ]
+      ],
+      "useWhen": "Use when the wall route looks sketchy or you want a safer recommendation.",
+      "avoidWhen": "Avoid when you need a faster cross and are willing to take a thinner wall line."
+    },
+    {
+      "id": "Special2_Bank_And_Cross",
+      "title": "Special 2: Bank & Cross",
+      "kicker": "Realistic Default",
+      "meta": "Board 2 / 4–6 card starts",
+      "cardSummary": "Default for realistic 4–6 card Board 2 starts. Bank red upgrades, preserve enough access, then cross decisively.",
+      "profile": "Special Board 2 is wall-access-gated and starting-hand sensitive. With realistic 4–6 starting cards, Bank & Cross is the default. Unlike Board 1, staging does not freely improve EV because every delay can weaken the upgrade/access balance. The wall is still the run: cross it and the board has premium payoff; fail it and chest value can be near-zero.",
+      "notes": [
+        [
+          "Board shape",
+          "Red upgrades first, trap wall second, chest zone last."
+        ],
+        [
+          "Hand-size impact",
+          "Board 2 is meaningfully hand-size sensitive; 6 cards is much healthier than 4–5, while 7+ is a rare/high-setup case."
+        ],
+        [
+          "Starting hand size EV",
+          "Hand 4: EV 46.61 / rainbow 0.296 / wall 75.4%. Hand 5: EV 50.60 / rainbow 0.328 / wall 76.8%. Hand 6: EV 61.23 / rainbow 0.408 / wall 83.0%."
+        ],
+        [
+          "Main question",
+          "How many red upgrades can you bank before the wall without bricking movement?"
+        ],
+        [
+          "Crossing logic",
+          "Uses deterministic wall solve when available, but can use survival crossing after enough upgrades/life are banked."
+        ],
+        [
+          "Upgrade logic",
+          "Banked red upgrade cards are used on future chest tiles in the late chest zone."
+        ],
+        [
+          "Upgrade targeting",
+          "Banked red upgrades target the highest eligible future chest rarity tier, random within that tier."
+        ],
+        [
+          "Validation",
+          "Corrected targeting test: strong value route, but Aggro Cross narrowly ranked higher by average value."
+        ],
+        [
+          "Starting hand",
+          "4–6 starting cards are the realistic baseline. In this band, Bank & Cross is the default."
+        ],
+        [
+          "High-hand caveat",
+          "7+ cards sharply improves Board 2 EV, but those starts are rare or confusion-card dependent."
+        ],
+        [
+          "Wall framing",
+          "The wall is the run. Wall success tests near ~67–70 EV; wall failure can be near-zero."
+        ],
+        [
+          "Hand pressure",
+          "Movement cards are access, red upgrades are payoff. Keep enough movement to cross; do not let extra movement crowd out red upgrades."
+        ],
+        [
+          "Board 1 contrast",
+          "Board 1 can stage freely because early chests are already owned value. Board 2 must preserve upgrade payload and access."
+        ],
+        [
+          "Staging test",
+          "Life-first staging improved wall success but did not beat Bank/ForceCross EV in 4–6 starts."
+        ],
+        [
+          "Final rule",
+          "Bank first. Cross decisively."
+        ]
+      ],
+      "useWhen": "Use for normal Board 2 starts with 4–6 cards.",
+      "avoidWhen": "Avoid treating this as guaranteed premium if your wall access is weak. For rare 7+ card/high-access starts, compare Aggro Cross.",
+      "walkthrough": [
+        {
+          "heading": "Starting hand check",
+          "steps": [
+            "4–6 cards: play Bank & Cross as the default.",
+            "7+ cards or strong confusion setup: Board 2 becomes much more premium; Aggro Cross may compete.",
+            "Do not evaluate Board 2 EV without noting starting hand size."
+          ]
+        },
+        {
+          "heading": "Upgrade zone",
+          "steps": [
+            "Bank red upgrades as payoff.",
+            "Keep movement only when it solves upgrade access, wall access, or late chest-zone access.",
+            "Remember every extra movement card competes with a red upgrade card."
+          ]
+        },
+        {
+          "heading": "Wall",
+          "steps": [
+            "Prioritize wall success. The trap wall is not guaranteed.",
+            "If you cross, the board acts like a premium special board.",
+            "If you fail, the early zone may produce little or no chest value."
+          ]
+        },
+        {
+          "heading": "Chest zone",
+          "steps": [
+            "Spend banked red upgrades into late chests.",
+            "Upgrade cards target highest eligible rarity first, random within that tier.",
+            "After wall access is solved, payoff comes from converting chest-zone targets."
+          ]
+        }
+      ],
+      "metrics": {
+        "perStartingHand": {
+          "source": "arcana_b2_starting_hand_lite_500",
+          "hand4": {
+            "EV": 46.61,
+            "rainbow": 0.296,
+            "wall": 0.754
+          },
+          "hand5": {
+            "EV": 50.6,
+            "rainbow": 0.328,
+            "wall": 0.768
+          },
+          "hand6": {
+            "EV": 61.23,
+            "rainbow": 0.408,
+            "wall": 0.83
+          },
+          "note": "Board 2 is meaningfully hand-size sensitive; 6 cards is much healthier than 4–5, while 7+ is a rare/high-setup case."
+        }
+      }
+    },
+    {
+      "id": "Special2_Chest_Zone_Fill",
+      "title": "Special 2: Chest Zone Fill",
+      "kicker": "Completion focus",
+      "meta": "Board 2 7-chest route",
+      "cardSummary": "Crosses earlier and fills more chest slots. Lower value ceiling, better 7-chest rate in testing.",
+      "profile": "A completion-oriented Board 2 route. It sacrifices some red-upgrade banking to reach and fill the late chest zone more often.",
+      "notes": [
+        [
+          "Strength",
+          "Best 7-chest rate among the Board 2 tested strategies."
+        ],
+        [
+          "Hand-size impact",
+          "Safer wall/completion style, but lower EV because it sacrifices payoff."
+        ],
+        [
+          "Starting hand size EV",
+          "Hand 4: EV 35.39 / rainbow 0.172 / wall 77.0%. Hand 5: EV 48.63 / rainbow 0.260 / wall 89.4%. Hand 6: EV 52.10 / rainbow 0.276 / wall 94.6%."
+        ],
+        [
+          "Weakness",
+          "Lower average value and lower rainbow rate than Bank & Cross."
+        ],
+        [
+          "Use case",
+          "Good when chest count matters more than upgrade value."
+        ],
+        [
+          "Hand pressure",
+          "This route accepts lower upgrade banking to reach/fill the chest zone more often."
+        ]
+      ],
+      "useWhen": "Use when you want more 7-chest completions on Board 2.",
+      "avoidWhen": "Avoid when you want the highest expected value.",
+      "metrics": {
+        "perStartingHand": {
+          "source": "arcana_b2_starting_hand_lite_500",
+          "hand4": {
+            "EV": 35.39,
+            "rainbow": 0.172,
+            "wall": 0.77
+          },
+          "hand5": {
+            "EV": 48.63,
+            "rainbow": 0.26,
+            "wall": 0.894
+          },
+          "hand6": {
+            "EV": 52.1,
+            "rainbow": 0.276,
+            "wall": 0.946
+          },
+          "note": "Safer wall/completion style, but lower EV because it sacrifices payoff."
+        }
+      }
+    },
+    {
+      "id": "Special2_Aggro_Cross",
+      "title": "Special 2: Aggro Cross",
+      "kicker": "High-Hand Variant",
+      "meta": "Board 2 / 7+ card or high-access setup",
+      "cardSummary": "Aggressive Board 2 variant for rare 7+ card, high-access, or confusion-card starts. Not baseline default.",
+      "profile": "Aggro Cross improves when you enter Board 2 with unusually strong hand size/access. In realistic 4–6 starts, Bank & Cross is slightly better. At 7–8 starting cards, Board 2 EV rises sharply and Aggro can compete or edge ahead.",
+      "notes": [
+        [
+          "Difference",
+          "Lower upgrade banking requirement than Bank & Cross."
+        ],
+        [
+          "Hand-size impact",
+          "Close to Bank at 4–6, but Bank wins the realistic baseline; Aggro is mainly for high-hand/high-access starts."
+        ],
+        [
+          "Starting hand size EV",
+          "Hand 4: EV 45.42 / rainbow 0.294 / wall 67.6%. Hand 5: EV 50.10 / rainbow 0.334 / wall 70.6%. Hand 6: EV 60.20 / rainbow 0.404 / wall 77.8%."
+        ],
+        [
+          "Tradeoff",
+          "Faster access to chests, slightly lower average value."
+        ],
+        [
+          "Use case",
+          "Good when the wall package is strong but upgrade-zone routing is poor."
+        ],
+        [
+          "Validation",
+          "Corrected targeting test: ranked #1 by average value in the 2,000-run Board 2 retest."
+        ],
+        [
+          "Hand pressure",
+          "Every stored movement card competes with a red upgrade card. Movement is access, not payoff."
+        ],
+        [
+          "Rule of thumb",
+          "Keep enough movement to cross/reach chests; do not hoard weak or extra movement if red upgrades are available."
+        ],
+        [
+          "Retest",
+          "Heavy hand-pressure penalties underperformed. The current default keeps hand pressure as guidance rather than a hard dump rule."
+        ],
+        [
+          "Default status",
+          "Not the default for realistic 4–6 starts."
+        ],
+        [
+          "Starting hand",
+          "Use this more seriously with 7+ starting cards, strong access, or confusion-card setup."
+        ]
+      ],
+      "useWhen": "Use as the current default Board 2 route when you want the highest corrected-test value.",
+      "avoidWhen": "Avoid when safe red upgrade tiles are still easy to collect.",
+      "walkthrough": [
+        {
+          "heading": "Upgrade zone",
+          "steps": [
+            "Prioritize red upgrades as the payoff cards.",
+            "Take movement only when it solves access to more upgrades, the wall, or the chest zone.",
+            "Do not let weak movement cards crowd out red upgrade cards."
+          ]
+        },
+        {
+          "heading": "Wall",
+          "steps": [
+            "Cross once you have enough upgrade payoff and enough life/access.",
+            "Board 2 does not want infinite banking; hand pressure can make earlier crossing correct.",
+            "The wall behavior itself is the same as Board 1."
+          ]
+        },
+        {
+          "heading": "Chest zone",
+          "steps": [
+            "Cash banked red upgrades on the late chest zone.",
+            "Upgrade cards target the highest eligible chest tier first, random inside that tier.",
+            "If hand pressure was managed well, most stored cards should now be payoff cards, not dead access."
+          ]
+        }
+      ],
+      "metrics": {
+        "perStartingHand": {
+          "source": "arcana_b2_starting_hand_lite_500",
+          "hand4": {
+            "EV": 45.42,
+            "rainbow": 0.294,
+            "wall": 0.676
+          },
+          "hand5": {
+            "EV": 50.1,
+            "rainbow": 0.334,
+            "wall": 0.706
+          },
+          "hand6": {
+            "EV": 60.2,
+            "rainbow": 0.404,
+            "wall": 0.778
+          },
+          "note": "Close to Bank at 4–6, but Bank wins the realistic baseline; Aggro is mainly for high-hand/high-access starts."
+        }
+      }
+    },
+    {
+      "id": "Special3_RainbowRed_HighCeiling",
+      "title": "Special 3: Rainbow/Red High Ceiling",
+      "kicker": "Recommended EV",
+      "meta": "Board 3 / slot-preservation route",
+      "cardSummary": "Highest tested EV Board 3 route. Skip low bands, preserve chest slots, and push for red/rainbow bands.",
+      "profile": "Special Board 3 is not a wall board. It is a slot-preservation board. Rarity bands climb as you move forward, so the main loss condition is filling your 7 chest slots too early with green, blue, or mediocre purple chests. The high-ceiling route accepts lower 7-chest completion in exchange for far better average value.",
+      "notes": [
+        [
+          "Core rule",
+          "Preserve slots for the late bands."
+        ],
+        [
+          "Hand-size impact",
+          "Board 3 is highly hand-size sensitive; extra cards greatly improve access to late red/rainbow bands."
+        ],
+        [
+          "Starting hand size EV",
+          "Hand 4: EV 118.96 / median 39.0 / 7-chest 40.1% / rainbow 0.454. Hand 5: EV 145.85 / median 115.4 / 7-chest 44.5% / rainbow 0.597. Hand 6: EV 178.97 / median 155.2 / 7-chest 50.4% / rainbow 0.775."
+        ],
+        [
+          "Board shape",
+          "Green → blue → purple → orange → red → rainbow bands across 24 rows."
+        ],
+        [
+          "Main mistake",
+          "Do not greedily complete 7 chests before reaching red/rainbow."
+        ],
+        [
+          "Movement value",
+          "Movement before red/rainbow bands is premium because it preserves access to the payoff zone."
+        ],
+        [
+          "Completion tradeoff",
+          "This route has lower 7-chest completion but the best tested EV."
+        ],
+        [
+          "Upgrade targeting",
+          "Upgrade cards highest-tier-prioritize, then randomly pick inside that tier."
+        ]
+      ],
+      "useWhen": "Use as the default Board 3 EV route, especially when you can afford a higher ceiling / lower completion style.",
+      "avoidWhen": "Avoid if your only goal is guaranteed 7-chest completion; use Red+ Softer Fill or Completion Safe instead.",
+      "walkthrough": [
+        {
+          "heading": "Early bands",
+          "steps": [
+            "Skip green/blue unless forced.",
+            "Avoid filling chest slots before red/rainbow access.",
+            "Prioritize movement and forward progress."
+          ]
+        },
+        {
+          "heading": "Middle bands",
+          "steps": [
+            "Purple is mostly filler, not payoff.",
+            "Orange is acceptable if you need bodies, but preserve slots when red/rainbow access looks realistic.",
+            "Do not over-complete too early."
+          ]
+        },
+        {
+          "heading": "Late bands",
+          "steps": [
+            "Prioritize red and rainbow chests.",
+            "Use upgrade cards on future high-band targets or owned high-value chests.",
+            "This is where the board’s EV comes from."
+          ]
+        }
+      ],
+      "metrics": {
+        "runsPerStrategyPerStartingHand": 2000,
+        "testedStartingHands": "4–6",
+        "weighted4to6EV": 147.93,
+        "weightedMedian": 103.2,
+        "completion7Rate": 0.45,
+        "avgRainbow": 0.608,
+        "avgRed": 1.244,
+        "rainbowBandEntryRate": 0.343,
+        "perStartingHand": {
+          "source": "arcana_s3_finalist_retest_2000",
+          "hand4": {
+            "EV": 118.96,
+            "median": 39.0,
+            "completion7": 0.401,
+            "rainbow": 0.454
+          },
+          "hand5": {
+            "EV": 145.85,
+            "median": 115.4,
+            "completion7": 0.445,
+            "rainbow": 0.597
+          },
+          "hand6": {
+            "EV": 178.97,
+            "median": 155.2,
+            "completion7": 0.504,
+            "rainbow": 0.775
+          },
+          "note": "Board 3 is highly hand-size sensitive; extra cards greatly improve access to late red/rainbow bands."
+        }
+      }
+    },
+    {
+      "id": "Special3_RedPlus_Dynamic",
+      "title": "Special 3: Red+ Dynamic",
+      "kicker": "Balanced EV",
+      "meta": "Board 3 / balanced route",
+      "cardSummary": "Balanced Board 3 route. Preserves slots for red/rainbow but fills 7 chests more often than the high-ceiling route.",
+      "profile": "Use this when you want most of the Board 3 EV without accepting as many incomplete runs. It is less greedy than Rainbow/Red High Ceiling and completed 7 chests much more often in testing.",
+      "notes": [
+        [
+          "Tradeoff",
+          "Lower ceiling than High Ceiling, but much better 7-chest completion."
+        ],
+        [
+          "Hand-size impact",
+          "Balanced EV route also scales strongly with starting hand size."
+        ],
+        [
+          "Starting hand size EV",
+          "Hand 4: EV 118.16 / median 82.0 / 7-chest 69.3% / rainbow 0.384. Hand 5: EV 138.94 / median 97.2 / 7-chest 73.6% / rainbow 0.485. Hand 6: EV 166.73 / median 126.2 / 7-chest 74.4% / rainbow 0.652."
+        ],
+        [
+          "Baseline",
+          "Strong default if the player dislikes incomplete boards."
+        ],
+        [
+          "Rule",
+          "Prefer red+, allow orange/purple filler dynamically."
+        ]
+      ],
+      "useWhen": "Use when you want a balanced mix of EV and 7-chest completion.",
+      "avoidWhen": "Avoid if maximizing average value is the only goal.",
+      "metrics": {
+        "runsPerStrategyPerStartingHand": 2000,
+        "testedStartingHands": "4–6",
+        "weighted4to6EV": 141.28,
+        "weightedMedian": 101.8,
+        "completion7Rate": 0.724,
+        "avgRainbow": 0.507,
+        "avgRed": 1.23,
+        "perStartingHand": {
+          "source": "arcana_s3_finalist_retest_2000",
+          "hand4": {
+            "EV": 118.16,
+            "median": 82.0,
+            "completion7": 0.693,
+            "rainbow": 0.384
+          },
+          "hand5": {
+            "EV": 138.94,
+            "median": 97.2,
+            "completion7": 0.736,
+            "rainbow": 0.485
+          },
+          "hand6": {
+            "EV": 166.73,
+            "median": 126.2,
+            "completion7": 0.744,
+            "rainbow": 0.652
+          },
+          "note": "Balanced EV route also scales strongly with starting hand size."
+        }
+      }
+    },
+    {
+      "id": "Special3_RedPlus_SofterFill",
+      "title": "Special 3: Red+ Softer Fill",
+      "kicker": "Consistent",
+      "meta": "Board 3 / completion-leaning route",
+      "cardSummary": "Completion-leaning Board 3 route. Still protects slots, but allows filler sooner.",
+      "profile": "Use this when you want a smoother route with high 7-chest completion while still avoiding the worst mistake: filling too early with low bands.",
+      "notes": [
+        [
+          "Completion",
+          "Tested around 93% 7-chest completion."
+        ],
+        [
+          "Hand-size impact",
+          "Softer Fill keeps completion high while still scaling with hand size."
+        ],
+        [
+          "Starting hand size EV",
+          "Hand 4: EV 117.31 / median 80.8 / 7-chest 95.2% / rainbow 0.358. Hand 5: EV 136.95 / median 96.4 / 7-chest 93.2% / rainbow 0.460. Hand 6: EV 159.71 / median 119.8 / 7-chest 90.1% / rainbow 0.604."
+        ],
+        [
+          "Cost",
+          "Lower EV than High Ceiling and Red+ Dynamic."
+        ],
+        [
+          "Rule",
+          "Preserve slots, but allow filler sooner."
+        ]
+      ],
+      "useWhen": "Use when completion consistency matters more than peak EV.",
+      "avoidWhen": "Avoid when chasing maximum expected value.",
+      "metrics": {
+        "runsPerStrategyPerStartingHand": 2000,
+        "testedStartingHands": "4–6",
+        "weighted4to6EV": 137.99,
+        "weightedMedian": 99.0,
+        "completion7Rate": 0.928,
+        "avgRainbow": 0.474,
+        "avgRed": 1.171,
+        "perStartingHand": {
+          "source": "arcana_s3_finalist_retest_2000",
+          "hand4": {
+            "EV": 117.31,
+            "median": 80.8,
+            "completion7": 0.952,
+            "rainbow": 0.358
+          },
+          "hand5": {
+            "EV": 136.95,
+            "median": 96.4,
+            "completion7": 0.932,
+            "rainbow": 0.46
+          },
+          "hand6": {
+            "EV": 159.71,
+            "median": 119.8,
+            "completion7": 0.901,
+            "rainbow": 0.604
+          },
+          "note": "Softer Fill keeps completion high while still scaling with hand size."
+        }
+      }
+    },
+    {
+      "id": "Special3_Completion_Safe",
+      "title": "Special 3: Completion Safe",
+      "kicker": "Low-risk",
+      "meta": "Board 3 / safe completion",
+      "cardSummary": "Low-risk Board 3 route. Completes 7 chests very often, but gives up a lot of ceiling.",
+      "profile": "This is the safer route if you hate incomplete boards. It is not the EV winner because it accepts too many mid/low-value slots.",
+      "notes": [
+        [
+          "Completion",
+          "Highest completion style among shipped Board 3 routes."
+        ],
+        [
+          "Hand-size impact",
+          "Completion Safe scales less explosively because it takes more filler."
+        ],
+        [
+          "Starting hand size EV",
+          "Hand 4: EV 99.09 / median 68.2 / 7-chest 97.7% / rainbow 0.216. Hand 5: EV 112.97 / median 82.0 / 7-chest 96.6% / rainbow 0.284. Hand 6: EV 122.39 / median 94.0 / 7-chest 96.3% / rainbow 0.303."
+        ],
+        [
+          "Cost",
+          "Much lower EV than slot-preservation routes."
+        ],
+        [
+          "Use case",
+          "For conservative routing or learning the board."
+        ]
+      ],
+      "useWhen": "Use when 7-chest completion matters more than maximizing value.",
+      "avoidWhen": "Avoid when trying to maximize expected value.",
+      "metrics": {
+        "runsPerStrategyPerStartingHand": 2000,
+        "testedStartingHands": "4–6",
+        "weighted4to6EV": 111.48,
+        "weightedMedian": 81.4,
+        "completion7Rate": 0.969,
+        "avgRainbow": 0.268,
+        "avgRed": 0.938,
+        "perStartingHand": {
+          "source": "arcana_s3_finalist_retest_2000",
+          "hand4": {
+            "EV": 99.09,
+            "median": 68.2,
+            "completion7": 0.977,
+            "rainbow": 0.216
+          },
+          "hand5": {
+            "EV": 112.97,
+            "median": 82.0,
+            "completion7": 0.966,
+            "rainbow": 0.284
+          },
+          "hand6": {
+            "EV": 122.39,
+            "median": 94.0,
+            "completion7": 0.963,
+            "rainbow": 0.303
+          },
+          "note": "Completion Safe scales less explosively because it takes more filler."
+        }
+      }
+    }
+  ]
+}

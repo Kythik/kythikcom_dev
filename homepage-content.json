@@ -1,0 +1,55 @@
+{
+  "torchlight": [
+    {
+      "type": "season",
+      "eyebrow": "SS12 · Lunaria",
+      "title": "Season Countdown",
+      "seasonStartISO": "2026-04-16T19:00:00-07:00",
+      "nextSeasonISO": null,
+      "blurb": "Next season info drops soon — check back for patch notes & countdown.",
+      "link": null
+    },
+    {
+      "type": "link",
+      "eyebrow": "Official",
+      "title": "SS12 Patch Notes",
+      "blurb": "Full breakdown of Lunaria mechanics, balance changes, and new systems.",
+      "link": "https://www.torchlightinfinite.com/",
+      "linkLabel": "Read Patch Notes"
+    },
+    {
+      "type": "youtube",
+      "eyebrow": "Dev Q&A",
+      "title": "Lunaria Reveal Stream",
+      "blurb": "Official dev breakdown of the new season's mechanics and Astrolabe changes.",
+      "videoId": "",
+      "link": "https://www.youtube.com/@TorchlightInfinite"
+    },
+    {
+      "type": "link",
+      "eyebrow": "Strategy Hub",
+      "title": "Browse Farm & Build Strats",
+      "blurb": "Community-sourced farm routes, builds, and Discord-synced strategy posts.",
+      "link": "/torchlight/strats/strats.html",
+      "linkLabel": "Open Strat Hub"
+    },
+    {
+      "type": "link",
+      "eyebrow": "Tool",
+      "title": "Clockwork Ballet Calculator",
+      "blurb": "Season 12 farm calculator — fully updated with Astrolabe & Probe support.",
+      "link": "/clockwork/clockwork.html",
+      "linkLabel": "Open Calculator"
+    }
+  ],
+  "everquest-legends": [
+    {
+      "type": "countdown",
+      "eyebrow": "Coming Soon",
+      "title": "EverQuest Legends",
+      "blurb": "New game, new content hub — launching alongside the stream lineup.",
+      "targetISO": "2026-07-01T00:00:00-07:00",
+      "link": null
+    }
+  ]
+}

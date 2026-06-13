@@ -1,0 +1,397 @@
+{
+  "version": "normal_board_retuned_v2_25000",
+  "cards": [
+    {
+      "id": "Math_Says_Best",
+      "title": "Kythik’s",
+      "subtitle": "Human value route",
+      "badge": "Practical default",
+      "sourcePolicy": "local_031",
+      "summary": "Practical human route: protect chest slots, upgrade real targets, and do not chase cute lines that waste movement.",
+      "details": [
+        "Priority 1: Take a good chest now if it does not block better chest quality later.",
+        "Priority 2: Take movement/cards/? tiles when they create access to better chests or upgrades.",
+        "Priority 3: Use upgrades on chests that will actually matter; do not save upgrades forever waiting for a miracle.",
+        "Avoid: Do not fill low chests just because a chest is available. A bad filled slot can be worse than waiting.",
+        "When to stop greeding: When you already have a strong chest package or the remaining path is mostly empty/trap/low-value mystery, cash in the clean line."
+      ],
+      "playPattern": [
+        "Look for a path that reaches chest + card/? support, not just the nearest chest.",
+        "Start asking: “Am I improving my final seven, or just filling space?”",
+        "Stop fishing if the remaining ? tiles are far away or mostly delay the finish."
+      ],
+      "metrics": {
+        "source": "normal_board_tune_highconf_v2_stageC_25000_paired_seeds",
+        "runs": 25000,
+        "avgValue": 27.626544,
+        "medianValue": 25.0,
+        "p25Value": 16.0,
+        "p75Value": 36.0,
+        "completion7Rate": 0.15448,
+        "deadRate": 0.0,
+        "avgChests": 4.58992,
+        "avgQuestions": 2.57152,
+        "avgQuestionFizzle": 0.09932,
+        "avgUpgradeCardsUsed": 4.399,
+        "avgTrapsHit": 1.88076,
+        "avgLifeEnd": 6.09468,
+        "avgRainbow": 0.10836,
+        "avgRed": 0.33492,
+        "avgGold": 1.16472,
+        "avgPurple": 1.60452,
+        "rankByAvgValue": 2,
+        "rankByCompletion7": 7,
+        "pairwiseVsOldKythiks": {
+          "avgDelta": 16.568464,
+          "medianDelta": 15.0,
+          "winRate": 0.86368,
+          "tieRate": 0.0242,
+          "lossRate": 0.11212
+        },
+        "pairwiseVsRandomPolicy015": {
+          "avgDelta": 4.439384,
+          "medianDelta": 0.0,
+          "winRate": 0.4112,
+          "tieRate": 0.44308,
+          "lossRate": 0.14572
+        }
+      },
+      "profile": "Use this when you want the route a good human would actually play. Your first priority is not “get seven chests”; it is “do not waste chest slots on trash when better chests are still reachable.” Take early chests when they are efficient, but leave room for purple/gold/red/rainbow if the board is clearly giving you access. Cards and ? tiles are good when they help you reach or upgrade better chests; they are bad when they only delay you.",
+      "cardSummary": "Practical human route: protect chest slots, upgrade real targets, and do not chase cute lines that waste movement.",
+      "notes": [
+        [
+          "Priority 1",
+          "Take a good chest now if it does not block better chest quality later."
+        ],
+        [
+          "Priority 2",
+          "Take movement/cards/? tiles when they create access to better chests or upgrades."
+        ],
+        [
+          "Priority 3",
+          "Use upgrades on chests that will actually matter; do not save upgrades forever waiting for a miracle."
+        ],
+        [
+          "Avoid",
+          "Do not fill low chests just because a chest is available. A bad filled slot can be worse than waiting."
+        ],
+        [
+          "When to stop greeding",
+          "When you already have a strong chest package or the remaining path is mostly empty/trap/low-value mystery, cash in the clean line."
+        ]
+      ],
+      "walkthrough": [
+        {
+          "heading": "Opening priority",
+          "steps": [
+            "Look for a path that reaches chest + card/? support, not just the nearest chest.",
+            "Green/blue chests are acceptable if they are cheap, but do not bend the whole route around them.",
+            "If the choice is weak chest now versus card/? that opens multiple future chests, take the setup."
+          ]
+        },
+        {
+          "heading": "Middle priority",
+          "steps": [
+            "Start asking: “Am I improving my final seven, or just filling space?”",
+            "Upgrade purple/gold/red/rainbow candidates before wasting upgrades on low chests.",
+            "Backtrack if it converts a bad move into chest quality, not just because backtracking is available."
+          ]
+        },
+        {
+          "heading": "End priority",
+          "steps": [
+            "Stop fishing if the remaining ? tiles are far away or mostly delay the finish.",
+            "Prefer a clean 5–6 good chest finish over forcing 7 bad chests.",
+            "Lock in value once the board stops offering realistic upgrades."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Kythiks",
+      "title": "Best Found",
+      "subtitle": "Solver EV route",
+      "badge": "Highest EV",
+      "sourcePolicy": "local_060",
+      "summary": "Highest EV route: aggressive value tempo, early conversion, hard empty-tile avoidance, fewer cute late gambles.",
+      "details": [
+        "Priority 1: Convert movement into chest value quickly. Do not wander for theoretical future upside.",
+        "Priority 2: Spend upgrade cards when they create real value now or in the next reachable chest band.",
+        "Priority 3: Avoid empty tiles harder than feels natural; empty movement is usually the hidden tax that kills EV.",
+        "Avoid: Do not chase late ? tiles unless they are cheap and directly improve the finish.",
+        "Human warning: This can look unintuitive because it is not trying to make the board look clean; it is trying to win the average."
+      ],
+      "playPattern": [
+        "Take efficient early value instead of over-planning the perfect board.",
+        "Use upgrades sooner when the target is already good enough.",
+        "Cut off late detours quickly."
+      ],
+      "metrics": {
+        "source": "normal_board_tune_highconf_v2_stageC_25000_paired_seeds",
+        "runs": 25000,
+        "avgValue": 27.707496,
+        "medianValue": 25.0,
+        "p25Value": 16.0,
+        "p75Value": 36.0,
+        "completion7Rate": 0.1796,
+        "deadRate": 0.0,
+        "avgChests": 4.71192,
+        "avgQuestions": 2.6778,
+        "avgQuestionFizzle": 0.10072,
+        "avgUpgradeCardsUsed": 4.33372,
+        "avgTrapsHit": 1.8232,
+        "avgLifeEnd": 6.07972,
+        "avgRainbow": 0.1164,
+        "avgRed": 0.35376,
+        "avgGold": 1.1346,
+        "avgPurple": 1.5134,
+        "rankByAvgValue": 1,
+        "rankByCompletion7": 2,
+        "pairwiseVsOldKythiks": {
+          "avgDelta": 16.649416,
+          "medianDelta": 15.2,
+          "winRate": 0.86128,
+          "tieRate": 0.02228,
+          "lossRate": 0.11644
+        },
+        "pairwiseVsRandomPolicy015": {
+          "avgDelta": 4.520336,
+          "medianDelta": 0.0,
+          "winRate": 0.46224,
+          "tieRate": 0.35492,
+          "lossRate": 0.18284
+        }
+      },
+      "profile": "Use this when you want the strongest tested expected value, even if the line looks weird. This route is more willing to spend movement and upgrades aggressively because it cares about converting the board into value quickly. It hates empty tiles, likes upgrade/card tempo, and stops chasing ? tiles earlier than a human might. The main rule is: if a move does not create chest value soon, the solver probably does not want it.",
+      "cardSummary": "Highest EV route: aggressive value tempo, early conversion, hard empty-tile avoidance, fewer cute late gambles.",
+      "notes": [
+        [
+          "Priority 1",
+          "Convert movement into chest value quickly. Do not wander for theoretical future upside."
+        ],
+        [
+          "Priority 2",
+          "Spend upgrade cards when they create real value now or in the next reachable chest band."
+        ],
+        [
+          "Priority 3",
+          "Avoid empty tiles harder than feels natural; empty movement is usually the hidden tax that kills EV."
+        ],
+        [
+          "Avoid",
+          "Do not chase late ? tiles unless they are cheap and directly improve the finish."
+        ],
+        [
+          "Human warning",
+          "This can look unintuitive because it is not trying to make the board look clean; it is trying to win the average."
+        ]
+      ],
+      "walkthrough": [
+        {
+          "heading": "Opening priority",
+          "steps": [
+            "Take efficient early value instead of over-planning the perfect board.",
+            "Favor routes that touch chest/card/upgrade clusters.",
+            "Skip scenic paths through empty tiles unless they unlock immediate payoff."
+          ]
+        },
+        {
+          "heading": "Middle priority",
+          "steps": [
+            "Use upgrades sooner when the target is already good enough.",
+            "Do not hoard tools waiting for rainbow/red if the current board is offering strong gold/purple value.",
+            "Choose paths that keep producing value every move."
+          ]
+        },
+        {
+          "heading": "End priority",
+          "steps": [
+            "Cut off late detours quickly.",
+            "Finish with the best value pile available.",
+            "Let 7-chest completion happen when it is efficient; do not force it when the cost is ugly."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "Seven_Chests_Rarity",
+      "title": "7 Chests → Rarity",
+      "subtitle": "Completion pressure",
+      "badge": "Best 7-chest rate",
+      "sourcePolicy": "local_002",
+      "summary": "Completion route: keep seven chests alive, take chest access earlier, but do not completely abandon rarity.",
+      "details": [
+        "Priority 1: Keep a realistic 7-chest path open.",
+        "Priority 2: Take chest count earlier than the other strategies, especially if future access is uncertain.",
+        "Priority 3: Still prefer upgraded or higher-rarity chests when the cost is reasonable.",
+        "Avoid: Do not chase perfect rarity so long that you end with only four or five chests.",
+        "When to switch mindset: Once 7 chests is nearly secured, stop being picky and complete the package."
+      ],
+      "playPattern": [
+        "Map out whether seven chests is realistic from the first few moves.",
+        "Protect the path to chest #6 and #7.",
+        "Secure the seventh chest if the cost is reasonable."
+      ],
+      "metrics": {
+        "source": "normal_board_tune_highconf_v2_stageC_25000_paired_seeds",
+        "runs": 25000,
+        "avgValue": 27.367792,
+        "medianValue": 25.0,
+        "p25Value": 15.6,
+        "p75Value": 35.2,
+        "completion7Rate": 0.18224,
+        "deadRate": 0.0,
+        "avgChests": 4.71708,
+        "avgQuestions": 2.63364,
+        "avgQuestionFizzle": 0.09896,
+        "avgUpgradeCardsUsed": 4.25176,
+        "avgTrapsHit": 1.85092,
+        "avgLifeEnd": 6.0894,
+        "avgRainbow": 0.10664,
+        "avgRed": 0.33144,
+        "avgGold": 1.13072,
+        "avgPurple": 1.60272,
+        "rankByAvgValue": 6,
+        "rankByCompletion7": 1,
+        "pairwiseVsOldKythiks": {
+          "avgDelta": 16.309712,
+          "medianDelta": 15.0,
+          "winRate": 0.85884,
+          "tieRate": 0.02216,
+          "lossRate": 0.119
+        },
+        "pairwiseVsRandomPolicy015": {
+          "avgDelta": 4.180632,
+          "medianDelta": 0.0,
+          "winRate": 0.427,
+          "tieRate": 0.41472,
+          "lossRate": 0.15828
+        }
+      },
+      "profile": "Use this when the goal is to complete seven chests more often. This route still cares about rarity, but it is more willing to secure chest count earlier. The human rule is: keep the seven-chest finish alive, but do not throw away the run by stuffing every green/blue chest immediately. It is the safest pick when missing the seventh chest feels worse than losing some average value.",
+      "cardSummary": "Completion route: keep seven chests alive, take chest access earlier, but do not completely abandon rarity.",
+      "notes": [
+        [
+          "Priority 1",
+          "Keep a realistic 7-chest path open."
+        ],
+        [
+          "Priority 2",
+          "Take chest count earlier than the other strategies, especially if future access is uncertain."
+        ],
+        [
+          "Priority 3",
+          "Still prefer upgraded or higher-rarity chests when the cost is reasonable."
+        ],
+        [
+          "Avoid",
+          "Do not chase perfect rarity so long that you end with only four or five chests."
+        ],
+        [
+          "When to switch mindset",
+          "Once 7 chests is nearly secured, stop being picky and complete the package."
+        ]
+      ],
+      "walkthrough": [
+        {
+          "heading": "Opening priority",
+          "steps": [
+            "Map out whether seven chests is realistic from the first few moves.",
+            "Take cheap chests sooner than the value routes would.",
+            "Use cards/? tiles if they increase chest access, not just chest quality."
+          ]
+        },
+        {
+          "heading": "Middle priority",
+          "steps": [
+            "Protect the path to chest #6 and #7.",
+            "Upgrade when it does not risk missing chest count.",
+            "Prefer routes with multiple chest landing options."
+          ]
+        },
+        {
+          "heading": "End priority",
+          "steps": [
+            "Secure the seventh chest if the cost is reasonable.",
+            "Stop passing reachable chests for speculative upgrades.",
+            "Accept a slightly worse final rarity mix if it completes the board."
+          ]
+        }
+      ]
+    }
+  ],
+  "comparison": {
+    "oldDiscoveredBest": {
+      "source": "normal_board_tune_highconf_v2_stageC_25000_paired_seeds",
+      "runs": 25000,
+      "avgValue": 23.18716,
+      "medianValue": 20.0,
+      "p25Value": 11.0,
+      "p75Value": 31.2,
+      "completion7Rate": 0.1188,
+      "deadRate": 0.0,
+      "avgChests": 3.9616,
+      "avgQuestions": 2.07768,
+      "avgQuestionFizzle": 0.06696,
+      "avgUpgradeCardsUsed": 3.73448,
+      "avgTrapsHit": 1.0202,
+      "avgLifeEnd": 6.09176,
+      "avgRainbow": 0.07888,
+      "avgRed": 0.26672,
+      "avgGold": 0.99636,
+      "avgPurple": 1.42272,
+      "rankByAvgValue": 8,
+      "rankByCompletion7": 8,
+      "pairwiseVsOldKythiks": {
+        "avgDelta": 12.12908,
+        "medianDelta": 10.0,
+        "winRate": 0.80044,
+        "tieRate": 0.04688,
+        "lossRate": 0.15268
+      },
+      "pairwiseVsRandomPolicy015": {
+        "avgDelta": 0.0,
+        "medianDelta": 0.0,
+        "winRate": 0.0,
+        "tieRate": 1.0,
+        "lossRate": 0.0
+      }
+    },
+    "oldPublicBaseline": {
+      "source": "normal_board_tune_highconf_v2_stageC_25000_paired_seeds",
+      "runs": 25000,
+      "avgValue": 11.05808,
+      "medianValue": 6.2,
+      "p25Value": 2.0,
+      "p75Value": 15.2,
+      "completion7Rate": 0.02576,
+      "deadRate": 0.0,
+      "avgChests": 2.37804,
+      "avgQuestions": 1.63572,
+      "avgQuestionFizzle": 0.09044,
+      "avgUpgradeCardsUsed": 1.8506,
+      "avgTrapsHit": 0.16704,
+      "avgLifeEnd": 6.3552,
+      "avgRainbow": 0.04796,
+      "avgRed": 0.11224,
+      "avgGold": 0.3622,
+      "avgPurple": 0.81904,
+      "rankByAvgValue": 9,
+      "rankByCompletion7": 9,
+      "pairwiseVsOldKythiks": {
+        "avgDelta": 0.0,
+        "medianDelta": 0.0,
+        "winRate": 0.0,
+        "tieRate": 1.0,
+        "lossRate": 0.0
+      },
+      "pairwiseVsRandomPolicy015": {
+        "avgDelta": -12.12908,
+        "medianDelta": -10.0,
+        "winRate": 0.15268,
+        "tieRate": 0.04688,
+        "lossRate": 0.80044
+      }
+    }
+  }
+}

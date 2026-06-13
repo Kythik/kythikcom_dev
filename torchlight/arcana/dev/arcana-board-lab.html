@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Arcana Board Dev Lab</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="arcana-board-lab.css">
+</head>
+<body class="arcana-page">
+  <main class="labWrap">
+    <header class="labHeader">
+      <div>
+        <h1>Arcana Board Dev Lab</h1>
+        <p>20-row deterministic board sample for stress-testing tile types, rarities, labels, row links, and board states.</p>
+      </div>
+      <div class="labBadge">Board-only v6</div>
+    </header>
+
+    <div class="labGrid">
+      <section class="panel gamePanel">
+        <div class="boardFrame">
+          <div class="boardHeader">
+            <div class="boardTitle">Arcana Board</div>
+            <div class="boardLegend">
+              <span class="legendPill"><span class="legendMark current"></span>Current</span>
+              <span class="legendPill"><span class="legendDot preview"></span>Preview</span>
+              <span class="legendPill"><span class="legendDot landing"></span>Landing #</span>
+              <span class="legendPill"><span class="legendDot path"></span>Row Link</span>
+            </div>
+          </div>
+          <div class="board" id="board"></div>
+        </div>
+      </section>
+
+      <aside class="panel labControls">
+        <h2>Visual direction for this pass</h2>
+        <p>This version pulls back from chunky card tiles and moves toward the old dev-lab board plus the fateful-contest mockup: dark node bases, gold path lines, icon-first tiles, compact 4-column rows, the restored current-position diamond marker, and drawn row-to-row path connectors instead of text link chips.</p>
+        <ul>
+          <li>Board sandbox only.</li>
+          <li>20 rows for visual QA.</li>
+          <li>Production untouched.</li>
+        </ul>
+      </aside>
+    </div>
+  </main>
+<script src="arcana-board-lab.js"></script>
+</body>
+</html>

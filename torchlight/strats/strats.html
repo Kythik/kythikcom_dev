@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kythik — Torchlight Infinite Farm Builds, ARPG Strategy & Live Commentary</title>
+  <meta name="description" content="Your source for Torchlight Infinite farm strategies, builds, and guides — plus live ARPG commentary from Kythik (kythikx). Community-sourced strategies from the Kythik Discord." />
+  <meta name="keywords" content="Kythik, KythikX, Kyth, kythik streamer, kythikx twitch, kythik twitch streamer, kythik arpg, Torchlight Infinite, Torchlight Infinite builds, Torchlight Infinite farm, Torchlight Infinite guide 2024, Torchlight Infinite guide 2025, TLI farm guide, TLI builds, TLI strategy, TLI season 12, ARPG builds, ARPG farm guide, ARPG strategy, ARPG streamer, ARPG Twitch streamer, ARPG commentary, ARPG loot game, ARPG tier list, action RPG builds, action RPG streamer, Path of Exile alternative, PoE like games, Path of Exile 2 alternative, best ARPG 2024, best ARPG 2025, Diablo IV builds, Diablo 4 streamer, Diablo alternative, Hero Siege, Dwarven Realms, loot game builds, loot game streamer, hack and slash builds, hack and slash streamer, Twitch ARPG streamer, gaming streamer builds, farm strategy guide, endgame builds, boss farming guide, speed farming builds, currency farming ARPG" />
+  <meta property="og:title" content="Kythik — Torchlight Infinite Farm Builds & ARPG Strategy" />
+  <meta property="og:description" content="Your source for Torchlight Infinite farm strategies, builds, and guides — plus live ARPG commentary from Kythik." />
+  <meta property="og:url" content="https://kythik.com" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/header-additions.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Kythik",
+    "alternateName": ["KythikX", "Kyth", "kythikx"],
+    "url": "https://kythik.com",
+    "description": "Torchlight Infinite farm builds, ARPG strategies, and live commentary from Kythik.",
+    "author": {
+      "@type": "Person",
+      "name": "Kythik",
+      "alternateName": "kythikx",
+      "url": "https://twitch.tv/kythikx"
+    }
+  }
+  </script>
+</head>
+<body>
+
+  <!-- ── PAGE BACKGROUND IMAGE ── -->
+  <div class="page-bg-img"></div>
+
+  <!-- ── HEX BACKGROUND ── -->
+  <svg class="hex-bg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="hexGrid" width="50" height="84" patternUnits="userSpaceOnUse">
+        <!-- Center hex -->
+        <polygon points="25,0 50,14 50,42 25,56 0,42 0,14"
+                 fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <!-- Staggered row hex — left edge -->
+        <polygon points="0,42 25,56 25,84 0,98 -25,84 -25,56"
+                 fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <!-- Staggered row hex — right edge -->
+        <polygon points="50,42 75,56 75,84 50,98 25,84 25,56"
+                 fill="none" stroke="#1A3055" stroke-width="0.8"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexGrid)"/>
+  </svg>
+
+  <!-- ── STICKY HEADER ── -->
+  <div id="site-header" data-active-game="torchlight"></div>
+
+  <!-- ── STRATEGY DATABASE ── -->
+  <main class="main">
+    <!-- ── PAGE TITLE ── -->
+    <div class="page-title">
+      <h1 class="display display--lg"><span class="accent">Torchlight Infinite</span></h1>
+    </div>
+
+    <!-- ── FEATURED SECTION ── -->
+    <div class="featured-section" id="featuredSection" style="display:none">
+      <div class="featured-header">
+        <div class="featured-label">Featured Strategy</div>
+        <div class="featured-nav">
+          <button class="featured-btn" id="featPrev" onclick="featNav(-1)" aria-label="Previous">‹</button>
+          <span class="featured-counter" id="featCounter"></span>
+          <button class="featured-btn" id="featNext" onclick="featNav(1)" aria-label="Next">›</button>
+        </div>
+      </div>
+      <div class="featured-track" id="featuredTrack"></div>
+    </div>
+
+    <div class="db-header">
+      <div></div>
+      <div class="db-count" id="stratCount">Loading...</div>
+    </div>
+
+    <div class="filters">
+      <input class="search" type="text" id="searchInput" placeholder="Search strategies, builds, authors..." aria-label="Search strategies" />
+      <button class="pill active" data-filter="all">All</button>
+      <button class="pill" data-filter="Farms">Farms</button>
+      <button class="pill" data-filter="Builds">Builds</button>
+    </div>
+
+    <div class="tag-filter-row" id="tagFilters"></div>
+
+    <div class="grid-frame">
+      <div class="grid" id="stratGrid">
+        <div class="card"><div class="card-inner">
+          <div class="skeleton" style="height:16px;width:55%;margin-bottom:14px;"></div>
+          <div class="skeleton" style="height:13px;width:100%;margin-bottom:7px;"></div>
+          <div class="skeleton" style="height:13px;width:75%;"></div>
+        </div></div>
+        <div class="card"><div class="card-inner">
+          <div class="skeleton" style="height:16px;width:65%;margin-bottom:14px;"></div>
+          <div class="skeleton" style="height:13px;width:100%;margin-bottom:7px;"></div>
+          <div class="skeleton" style="height:13px;width:60%;"></div>
+        </div></div>
+        <div class="card"><div class="card-inner">
+          <div class="skeleton" style="height:16px;width:50%;margin-bottom:14px;"></div>
+          <div class="skeleton" style="height:13px;width:100%;margin-bottom:7px;"></div>
+          <div class="skeleton" style="height:13px;width:80%;"></div>
+        </div></div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div id="lastSynced" class="footer-sync">Strategies last synced from Discord...</div>
+    <div class="footer-links">
+      &copy; Kythik &nbsp;·&nbsp;
+      <a href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener">Join Discord for live discussion</a>
+      &nbsp;·&nbsp; <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener">Watch Live</a>
+    </div>
+  </footer>
+
+  <!-- ── FLOATING PLAYER ── -->
+  <div class="fp" id="floatingPlayer">
+    <div class="fp-screen">
+      <div id="twitchSmall"></div>
+    </div>
+    <div class="fp-bar">
+      <div class="fp-info">
+        <div class="live-dot" id="fpDot"></div>
+        <span class="fp-name">Kythik</span>
+        <span class="fp-state" id="fpState"></span>
+      </div>
+      <div class="fp-actions">
+        <button class="fp-unmute-btn" id="fpUnmuteBtn" onclick="unmutePlayer()" title="Unmute">🔇</button>
+        <a class="fp-twitch-btn" href="https://twitch.tv/kythikx" target="_blank" rel="noopener">↗</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MODAL ── -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
+    <div class="modal" id="modalContent"></div>
+  </div>
+
+  <!-- ── LIGHTBOX ── -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
+    <button class="lightbox-prev" id="lightboxPrev" onclick="lightboxNav(-1,event)" aria-label="Previous">‹</button>
+    <button class="lightbox-next" id="lightboxNext" onclick="lightboxNav(1,event)" aria-label="Next">›</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Strategy screenshot" />
+    <div class="lightbox-counter" id="lightboxCounter"></div>
+  </div>
+
+  <div class="toast" id="toast" role="alert" aria-live="polite"></div>
+
+  <script>
+    const CONFIG = {
+      TWITCH_CHANNEL: 'kythikx',
+      VERCEL_DOMAIN:  'kythik.com',
+    };
+    // app.js handles the /api/twitch fetch and will call
+    // kythikUpdateLiveBadge itself — skip header.js's default check
+    window.kythikSkipDefaultLiveCheck = true;
+  </script>
+  <script src="/header.js"></script>
+  <script src="/torchlight/strats/app.js"></script>
+</body>
+</html>
