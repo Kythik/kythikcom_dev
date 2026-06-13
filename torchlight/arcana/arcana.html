@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="stylesheet" href="/styles.css" />
 <link rel="stylesheet" href="arcana.css?v=28cd067301" />
 <style id="arcana-critical-guard">
   .arcana-page .strategyLightbox[hidden],
@@ -17,16 +16,12 @@
   .arcana-page .tile{overflow:visible}
 </style>
 <link rel="stylesheet" href="arcana-board.css?v=board-v1" />
-</head>
+
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/header-additions.css" /></head>
 <body class="arcana-page visual-fork">
+<div id="site-header" data-active-game="torchlight"></div>
 <div class="page-bg-img" aria-hidden="true"></div>
-
-<div class="resource-backline">
-  <a href="/" class="resource-backlink">Kythik.com — Resource</a>
-</div>
-
-
-
 
 <section class="strategyDeck" aria-labelledby="strategyDeckTitle">
   <div class="strategyDeckHead">
@@ -2266,5 +2261,6 @@ function wireStrategyCards(){
 }
 window.addEventListener('load',async()=>{await loadMechanicsData();await loadStrategyData();newGame(false);wireStrategyCards();});
 </script>
+<script src="/header.js" defer></script>
 </body>
 </html>

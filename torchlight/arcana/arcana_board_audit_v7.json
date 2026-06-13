@@ -1,0 +1,13 @@
+{
+  "version": "v7_css_contract",
+  "changes": [
+    "Reduced #arcana-board-layout-guard so it no longer overrides .board or .boardRow layout.",
+    "Removed inline style attributes from .boardFrame and #board.",
+    "Kept arcana-board.css loaded after arcana.css as the board visual source of truth.",
+    "Kept old arcana.css board rules in place for rollback safety, but they are superseded by arcana-board.css load order."
+  ],
+  "known_remaining": [
+    "arcana.css still contains legacy board selectors (.board, .tile, .tile .c, old chest styles). This is not ideal, but arcana-board.css loads after it and should win. A future cleanup can remove or namespace those legacy blocks.",
+    "row connector geometry is still hard-coded to current tile height/gap."
+  ]
+}
