@@ -238,7 +238,7 @@
   transition: opacity .2s, transform .15s;
 }
 .header-game-icon-default img {
-  height: calc(var(--header-h) * 0.78);
+  height: calc(var(--header-h) * 0.88);
   width: auto;
   object-fit: contain;
   display: block;
