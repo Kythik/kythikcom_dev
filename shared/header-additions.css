@@ -227,3 +227,24 @@
   height: 28px;
   object-fit: contain;
 }
+
+/* ── Default state game icons (no pill, no text, logo only) ── */
+.header-game-icon-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--header-h);
+  padding: 5% 8px;
+  transition: opacity .2s, transform .15s;
+}
+.header-game-icon-default img {
+  height: 90%;
+  width: auto;
+  max-height: calc(var(--header-h) * 0.9);
+  object-fit: contain;
+  display: block;
+}
+.header-game-icon-default:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}

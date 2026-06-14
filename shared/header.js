@@ -52,8 +52,8 @@
   // ── Default state: all games visible with names ──
   function renderDefaultCenter(games) {
     return games.map(g => `
-      <a href="${gameHref(g)}" class="header-pill header-pill--game" data-game="${g.id}" style="display:flex;align-items:center;gap:6px;">
-        <img src="${g.icon}" alt="${g.name}" width="20" height="20" style="display:block;object-fit:contain;" onerror="this.style.display='none'" /><span>${g.shortName || g.name}</span>
+      <a href="${gameHref(g)}" class="header-game-icon-default" data-game="${g.id}" aria-label="${g.name}" title="${g.name}">
+        <img src="${g.icon}" alt="${g.name}" onerror="this.style.display='none'" />
       </a>`).join('');
   }
 
