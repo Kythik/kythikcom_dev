@@ -958,7 +958,7 @@ const S12_SVCS=[
 
 function render(){
   try{
-  const gearsVal=document.getElementById('gears').value;
+  const gearsVal='6'; // fixed: 6 cogs current season
   const alice=ALICE[document.getElementById('alice').value];
   const sort=document.getElementById('sort').value;
   const rdist=document.getElementById('rdist').value==='highrarity'?RDIST_HIGH:RDIST_EXP;
@@ -1016,8 +1016,7 @@ function render(){
       const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail').value:'flat';
       if(roulFailModel==='escalating'){
         // Recompute Roulette's EV under escalating model, relative to theorBase
-        const gearsValRoul=document.getElementById('gears').value;
-        const maxCogR=gearsValRoul==='avg'?6:parseInt(gearsValRoul);
+        const maxCogR=6; // fixed: 6 cogs current season
         const evEsc=roulEV(maxCogR,maxCogR===6?6:parseInt(gearsValRoul),rdist,base,'escalating');
         const theorBaseR=bge()*maxCogR*MULT[maxCogR];
         // Convert escalating EV (in theorBase units) to fe, then to %-of-ceiling
