@@ -376,20 +376,10 @@ select:focus{border-color:var(--gold-muted)}
   </div>
 </div>
 
-<div class="tbl-wrap"><table class="svc-table data-table tbl-sticky">
-    <thead>
-      <tr>
-        <th style="width:24px">#</th>
-        <th>Service</th>
-        <th style="width:90px">Rarity</th>
-                <th style="width:50px">Tier</th>
-        <th style="width:120px"><span style="display:flex;align-items:center;justify-content:space-between;gap:8px">Relative <a href="/torchlight/clockwork/cheatsheet.html" style="font-size:9px;font-weight:600;color:var(--gold-muted);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border-soft);border-radius:20px;padding:2px 8px;text-decoration:none;transition:color .15s,border-color .15s" onmouseover="this.style.color='var(--gold-primary)';this.style.borderColor='var(--border-strong)'" onmouseout="this.style.color='var(--gold-muted)';this.style.borderColor='var(--border-soft)'">Quick Ref ↗</a></span></th>
-      </tr>
-    </thead>
-    <tbody id="tbody"></tbody>
-  </table>
-  <div style="padding:10px 18px;font-size:10px;color:var(--text-faint);border-top:1px solid var(--border-blue)">* Roulette's per-encounter EV is mathematically correct, but at ~1 encounter per 100 maps the tier is misleading within a single season. Sorted last regardless of tier — see breakdown for the full picture.</div>
-  </div><!-- /tbl-wrap -->
+<div class="svc-list-wrap">
+    <div class="svc-list" id="tbody"></div>
+  <div id="roul-footnote" style="padding:10px 0;font-size:10px;color:var(--text-faint);border-top:1px solid var(--border-blue);margin-top:8px"></div>
+</div><!-- /svc-list-wrap -->
 
 </div>
 
@@ -1023,25 +1013,47 @@ function render(){
     if(s.isRoulette)extra=`<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px" title="Roulette breakdown">📊</button><div style="display:none"><div style="display:flex;gap:10px;flex-wrap:wrap;padding:8px 0 6px;border-bottom:1px solid var(--border-blue);margin-bottom:8px"><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Fail model</label><select id="roulFail" onchange="render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="flat">Flat 10%/cog</option><option value="escalating">Escalating 10%→47%</option></select></div><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Voucher dist.</label><select id="rdist" onchange="render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="expected">Expected</option><option value="highrarity">High rarity (observed)</option></select></div></div>`+roulBlock(gearsVal,rdist,base)+`</div>`;
     if(s.isID23)extra=`<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px">📊 show outcome breakdown ▾</button><div style="display:none">`+id23Block(gearsVal,base,nodeWasteful,nodeOstentatious,nodeCb59)+`</div>`;
     if(s.id===35){const nt=NUT[parseInt(gearsVal)]||NUT[6];extra=`<div class="svc-info">P(0 proc): ${(nt.p0*100).toFixed(1)}% · P(1 proc): ${(nt.p1*100).toFixed(1)}% · P(2 procs): ${(nt.p2*100).toFixed(1)}%</div>`+lbBtn('id35','how this is calculated');}
-    const tr=document.createElement('tr');
-    if(s.isRoulette)tr.className='svc-row-roulette';
-    if(s.isID23)tr.className='svc-row-id23';
+    const TIER_DESCS={'S+':'Best ceiling services — these define the run.','S':'Strong picks — take if S+ isn\'t offered.','A':'Solid value — good when S/S+ aren\'t available.','B':'Interchangeable — pick whatever\'s offered.','C':'Low value — only if nothing better is available.','F':'Skip — negative or negligible EV.'};
+    const TIER_COLORS={'S+':'var(--gold-primary)','S':'#a78bfa','A':'#60a5fa','B':'var(--border-strong)','C':'var(--text-faint)','F':'var(--blue-steel)'};
+    const isTop=(s.rank||i+1)<=2;
+    const cardExtraStyle=isTop
+      ?'background:linear-gradient(135deg,rgba(200,164,93,0.08),var(--bg-card) 60%);border-color:rgba(230,199,122,0.28);'
+      :s.isRoulette?'border-color:rgba(216,90,78,0.25);background:rgba(216,90,78,0.03);':'';
+    const roulNote=s.isRoulette?`<span style="font-size:10px;color:var(--red-loss);margin-left:6px">★ high variance</span>`:'';
+
+    const tr=document.createElement('div');
+    tr.className='svc-card'+(isTop?' svc-card--top':'')+(s.isRoulette?' svc-row-roulette':'')+(s.isID23?' svc-row-id23':'');
+    if(cardExtraStyle)tr.setAttribute('style',cardExtraStyle);
     tr.innerHTML=`
-      <td style="color:var(--text-faint);font-size:11px">${i+1}</td>
-      <td>${nameHtml}${eff}${inlineWarn}${extra}</td>
-      <td><span class="badge ${RCLS[s.rarity]||'badge-blue'}">${RLABEL[s.rarity]||s.rarity}</span></td>
-      <td><span class="${t2.c} tier">${t2.l}${s.isRoulette?'*':''}</span></td>
-      <td><div class="ev-bar-wrap"><div class="ev-bar" style="width:${Math.min(bw,100)}px;max-width:100px"></div><span style="font-size:10px;color:var(--text-faint);margin-left:4px">${bw.toFixed(1)}% of ceiling${s.isRoulette?' *':''}</span></div></td>
+      <span class="svc-rank">${s.rank||i+1}</span>
+      <div class="svc-body">
+        ${nameHtml}
+        ${eff}
+        ${extra}
+        <div class="svc-meta">
+          <span class="tag-stat ${RCLS[s.rarity]||'badge-blue'}">${RLABEL[s.rarity]||s.rarity}</span>
+          <span class="${t2.c} tier svc-tier-badge">${t2.l}${s.isRoulette?'*':''}</span>
+          ${roulNote}
+        </div>
+      </div>
+      <div class="svc-ev-block">
+        <span class="svc-ev-pct">${bw.toFixed(1)}%</span>
+        <span class="svc-ev-sub">of ceiling</span>
+        <div class="ev-bar-wrap" style="width:80px;margin-top:4px"><div class="ev-bar" style="width:${Math.min(bw*0.8,80)}px"></div></div>
+      </div>
     `;
     tbody.appendChild(tr);
     if(s.isRoulette){
-      const sepRow=document.createElement('tr');
-      sepRow.innerHTML=`<td colspan="5" style="padding:0"><div class="tier-sep-label" style="color:var(--red-loss)">High Variance — See Note Below</div></td>`;
-      tbody.insertBefore(sepRow,tr);
+      const sep=document.createElement('div');
+      sep.className='tier-banner tier-banner--roulette';
+      sep.innerHTML=`<span class="tier-banner__label" style="color:var(--red-loss)">Clockwork Roulette</span><span class="tier-banner__desc">High variance — tap 📊 for model details</span>`;
+      tbody.insertBefore(sep,tr);
     } else if(i===0||svcs[i-1].tier!==s.tier||(i>0&&svcs[i-1].isRoulette)){
-      const sepRow=document.createElement('tr');
-      sepRow.innerHTML=`<td colspan="5" style="padding:0"><div class="tier-sep-label">${s.tier} Tier</div></td>`;
-      tbody.insertBefore(sepRow,tr);
+      const sep=document.createElement('div');
+      sep.className='tier-banner';
+      sep.style.cssText=`border-top-color:${TIER_COLORS[s.tier]||'var(--border-soft)'}`;
+      sep.innerHTML=`<span class="tier-banner__label" style="color:${TIER_COLORS[s.tier]||'var(--text-faint)'}">${s.tier} Tier</span><span class="tier-banner__desc">${TIER_DESCS[s.tier]||''}</span>`;
+      tbody.insertBefore(sep,tr);
     }
   });
 

@@ -11,7 +11,7 @@
   max-width: 1100px;
   margin: 0 auto;
 }
-.main { max-width: 1100px; margin: 0 auto; padding: 32px 28px 0; }
+.main { max-width: 1100px; margin: 0 auto; padding: 32px 28px 0; } /* narrower than root — intentional for tool page */
 
 /* ── CONTROLS ROW ────────────────────────── */
 .ctrls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: flex-end; }
@@ -150,11 +150,62 @@
 .page-footer a:hover { color: var(--gold-primary); }
 
 /* ── RESPONSIVE ──────────────────────────── */
-@media (max-width: 860px) {
-  .display--lg { font-size: 22px; }
-}
+
 @media (max-width: 600px) {
   .main { padding: 16px 16px 0; }
   .page-header { padding: 24px 16px 20px; }
   .svc-table th:nth-child(4), .svc-table td:nth-child(4) { display: none; }
+}
+
+/* ── CARD LIST LAYOUT ────────────────────── */
+.svc-list-wrap { margin-bottom: 24px; }
+.svc-list { display: flex; flex-direction: column; gap: 0; }
+
+.tier-banner {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 16px 18px 10px;
+  border-top: 2px solid var(--border-soft);
+  margin-top: 20px; margin-bottom: 4px;
+  background: rgba(200,164,93,0.03);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.tier-banner--roulette { border-top-color: var(--red-loss); margin-top: 8px; }
+.tier-banner__label {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; font-family: var(--font-display);
+}
+.tier-banner__desc { font-size: 12px; color: var(--text-faint); }
+
+.svc-card {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-blue);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 6px;
+  transition: border-color .15s, background .15s;
+}
+.svc-card:hover { border-color: var(--border-soft); }
+.svc-card--top { }
+
+.svc-rank {
+  font-size: 11px; color: var(--text-faint);
+  min-width: 18px; padding-top: 2px;
+  text-align: right; flex-shrink: 0;
+}
+.svc-body { flex: 1; min-width: 0; }
+.svc-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.svc-tier-badge { font-size: 13px; font-weight: 700; }
+
+.svc-ev-block {
+  display: flex; flex-direction: column; align-items: flex-end;
+  gap: 2px; flex-shrink: 0; min-width: 80px;
+}
+.svc-ev-pct {
+  font-size: 18px; font-weight: 700; color: var(--text-primary);
+  line-height: 1; font-variant-numeric: tabular-nums;
+}
+.svc-ev-sub {
+  font-size: 10px; color: var(--text-faint);
+  letter-spacing: .06em; text-transform: uppercase;
 }
