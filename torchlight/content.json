@@ -21,22 +21,28 @@
   ],
   "resources": [
     {
-      "title": "Strategy Hub",
-      "blurb": "Community-sourced farm routes and builds, synced from Discord.",
-      "link": "/torchlight/strats/strats.html",
-      "linkLabel": "Open Strats"
+      "title": "Translated ETOR (FE TRACKER)",
+      "blurb": "Etor is the premier economy 3rd party program for Torclight Infinite.  This is the English Translation found on Github",
+      "link": "https://github.com/Giboork/TLI-tracker-translated",
+      "linkLabel": "Translated Etor on Github"
     },
     {
-      "title": "Clockwork Ballet Calculator",
-      "blurb": "Season 12 farm calculator with full Astrolabe & Probe support.",
-      "link": "/torchlight/clockwork/clockwork.html",
-      "linkLabel": "Open Calculator"
+      "title": "TITrack Economy",
+      "blurb": "Historical economy data for Torchlight Infinite",
+      "link": "https://titrack.ninja/",
+      "linkLabel": "TITrack Economy"
     },
     {
-      "title": "Arcana Tools",
-      "blurb": "Minigame simulator and reference tools for Arcana.",
-      "link": "/torchlight/arcana/arcana.html",
-      "linkLabel": "Open Arcana"
+      "title": "Minmaxed ARPG for TLI",
+      "blurb": "The Man. The Myth. The Legend MinmaxedARPG's TLI Resources",
+      "link": "https://minmaxedarpg.com/games/tli",
+      "linkLabel": "Minmaxed ARPG for TLI"
+    },
+	{
+      "title": "Herowik: a TLI resource site",
+      "blurb": "Donthecrown's build and resource site.",
+      "link": "https://www.herowik.gg/",
+      "linkLabel": "Donthecrown's herowik"
     }
   ],
   "officialYoutube": [
