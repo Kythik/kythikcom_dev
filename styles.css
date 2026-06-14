@@ -555,6 +555,7 @@ button { cursor: pointer; font-family: var(--font-body); }
   background-size: cover;
   background-position: center;
   background-color: var(--bg-navy);
+  min-width: 0;
 }
 
 .feat-art-overlay {
