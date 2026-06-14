@@ -5,98 +5,6 @@ let activeFilter   = 'all';
 let activeTag      = 'all';
 let lightboxImages = [];
 let lightboxIndex  = 0;
-let isLiveStream   = false;
-let vodId          = null;
-let playerExpanded = false;
-
-/* ══════════════════════════════════════════
-   TWITCH
-══════════════════════════════════════════ */
-async function initTwitchPlayer() {
-  try {
-    const res  = await fetch('/api/twitch');
-    const data = await res.json();
-    isLiveStream = data.isLive;
-    vodId        = data.vodId;
-  } catch(e) { console.warn('Twitch API failed', e); }
-
-  updateLiveUI();
-
-  // Use raw iframe for reliable muted autoplay
-  const container = document.getElementById('twitchSmall');
-  const base      = `https://player.twitch.tv/?parent=${CONFIG.VERCEL_DOMAIN}&parent=www.${CONFIG.VERCEL_DOMAIN}&autoplay=true&muted=true`;
-  const src       = isLiveStream
-    ? `${base}&channel=${CONFIG.TWITCH_CHANNEL}`
-    : vodId
-      ? `${base}&video=${vodId}`
-      : `${base}&channel=${CONFIG.TWITCH_CHANNEL}`;
-
-  const iframe = document.createElement('iframe');
-  iframe.src             = src;
-  iframe.allowFullscreen = true;
-  iframe.allow           = 'autoplay; fullscreen';
-  iframe.style.cssText   = 'width:100%;height:100%;border:none;display:block;';
-  container.appendChild(iframe);
-
-  // Store reference for unmute button
-  window.twitchIframe = iframe;
-}
-
-function unmutePlayer() {
-  const btn    = document.getElementById('fpUnmuteBtn');
-  const iframe = window.twitchIframe;
-  if (!iframe) return;
-
-  // Toggle muted in iframe src
-  const src    = iframe.src;
-  const muted  = src.includes('muted=true');
-  iframe.src   = muted
-    ? src.replace('muted=true', 'muted=false')
-    : src.replace('muted=false', 'muted=true');
-
-  if (btn) btn.textContent = muted ? '🔊' : '🔇';
-}
-
-function updateLiveUI() {
-  const fpState = document.getElementById('fpState');
-  const epState = document.getElementById('epState');
-  const fpDot   = document.getElementById('fpDot');
-  const epDot   = document.getElementById('epDot');
-
-  if (isLiveStream) {
-    if (fpState) fpState.textContent = 'Live';
-    if (epState) epState.textContent = 'Live';
-  } else {
-    if (fpState) fpState.textContent = 'Latest VOD';
-    if (epState) epState.textContent = 'Latest VOD';
-    [fpDot, epDot].forEach(d => { if (d) d.style.background = '#7a7a9a'; });
-  }
-
-  if (window.kythikUpdateLiveBadge) window.kythikUpdateLiveBadge(isLiveStream);
-}
-
-
-
-function collapsePlayer(e) {
-  if (e && e.target !== document.getElementById('epOverlay') && !e.target.closest('.ep-close')) return;
-  playerExpanded = false;
-
-  const overlay = document.getElementById('epOverlay');
-  const small   = document.getElementById('twitchSmall');
-  const large   = document.getElementById('twitchLarge');
-
-  overlay.classList.remove('open');
-  document.body.style.overflow = '';
-
-  // Move iframe back to small container
-  const iframe = large.querySelector('iframe');
-  if (iframe) {
-    iframe.style.cssText = 'width:100%!important;height:100%!important;border:none!important;';
-    small.appendChild(iframe);
-  }
-
-  setTimeout(() => { try { if (window.twitchPlayer) window.twitchPlayer.play(); } catch(err){} }, 150);
-}
 
 /* ══════════════════════════════════════════
    AIRTABLE
@@ -298,7 +206,7 @@ function closeModal() {
 
 document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape')     { closeModal(); closeLightbox(); collapsePlayer(); }
+  if (e.key === 'Escape')     { closeModal(); closeLightbox(); }
   if (e.key === 'ArrowLeft')  lightboxNav(-1);
   if (e.key === 'ArrowRight') lightboxNav(1);
 });
@@ -448,5 +356,4 @@ function resetFeaturedTimer() {
 }
 
 /* ── INIT ── */
-initTwitchPlayer();
 fetchStrategies();

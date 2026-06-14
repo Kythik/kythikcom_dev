@@ -121,22 +121,7 @@
   </footer>
 
   <!-- ── FLOATING PLAYER ── -->
-  <div class="fp" id="floatingPlayer">
-    <div class="fp-screen">
-      <div id="twitchSmall"></div>
-    </div>
-    <div class="fp-bar">
-      <div class="fp-info">
-        <div class="live-dot" id="fpDot"></div>
-        <span class="fp-name">Kythik</span>
-        <span class="fp-state" id="fpState"></span>
-      </div>
-      <div class="fp-actions">
-        <button class="fp-unmute-btn" id="fpUnmuteBtn" onclick="unmutePlayer()" title="Unmute">🔇</button>
-        <a class="fp-twitch-btn" href="https://twitch.tv/kythikx" target="_blank" rel="noopener">↗</a>
-      </div>
-    </div>
-  </div>
+  <div id="floating-player"></div>
 
   <!-- ── MODAL ── -->
   <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
@@ -159,11 +144,11 @@
       TWITCH_CHANNEL: 'kythikx',
       VERCEL_DOMAIN:  'kythik.com',
     };
-    // app.js handles the /api/twitch fetch and will call
-    // kythikUpdateLiveBadge itself — skip header.js's default check
+    // player.js handles /api/twitch — skip header.js default check
     window.kythikSkipDefaultLiveCheck = true;
   </script>
   <script src="/header.js"></script>
+  <script src="/shared/player.js"></script>
   <script src="/torchlight/strats/app.js"></script>
 </body>
 </html>
