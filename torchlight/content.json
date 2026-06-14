@@ -39,10 +39,16 @@
       "linkLabel": "Minmaxed ARPG for TLI"
     },
 	{
-      "title": "Herowik: a TLI resource site",
+      "title": "Herowik",
       "blurb": "Donthecrown's build and resource site.",
       "link": "https://www.herowik.gg/",
       "linkLabel": "Donthecrown's herowik"
+    },
+	{
+      "title": "TLIDB",
+      "blurb": "The TLI database site",
+      "link": "https://tlidb.com/",
+      "linkLabel": "TLIDB.com datamine site"
     }
   ],
   "officialYoutube": [
