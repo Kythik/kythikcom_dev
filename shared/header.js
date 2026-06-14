@@ -37,8 +37,8 @@
     </a>`;
 
   function gameIconSvg(game) {
-    // Fallback to a simple monogram if no icon path provided/loaded
-    return `<img src="${game.icon}" alt="" width="18" height="18" style="display:block" onerror="this.style.display='none'" />`;
+    const scale = game.iconScale && game.iconScale !== 1.0 ? `transform:scale(${game.iconScale});` : '';
+    return `<img src="${game.icon}" alt="" width="18" height="18" style="display:block;${scale}" onerror="this.style.display='none'" />`;
   }
 
   // Games without a built landing page route to the shared coming-soon page
@@ -53,7 +53,7 @@
   function renderDefaultCenter(games) {
     return games.map(g => `
       <a href="${gameHref(g)}" class="header-game-icon-default" data-game="${g.id}" aria-label="${g.name}" title="${g.name}">
-        <img src="${g.icon}" alt="${g.name}" onerror="this.style.display='none'" />
+        <img src="${g.icon}" alt="${g.name}" style="${g.iconScale && g.iconScale !== 1.0 ? 'transform:scale(' + g.iconScale + ');' : ''}" onerror="this.style.display='none'" />
       </a>`).join('');
   }
 
@@ -71,7 +71,7 @@
       activeHtml = `
         <div class="header-active-game">
           <a href="${gameHref(active)}" class="header-game-icon-default header-game-icon-default--active" data-game="${active.id}" aria-label="${active.name}" title="${active.name}">
-            <img src="${active.icon}" alt="${active.name}" onerror="this.style.display='none'" />
+            <img src="${active.icon}" alt="${active.name}" style="${active.iconScale && active.iconScale !== 1.0 ? 'transform:scale(' + active.iconScale + ');' : ''}" onerror="this.style.display='none'" />
           </a>
           ${subpages}
         </div>`;
@@ -87,7 +87,7 @@
 
     return `<div class="header-collapsed-row">${others.map(g => `
       <a href="${gameHref(g)}" class="header-game-icon-default header-game-icon-default--collapsed" data-game="${g.id}" aria-label="${g.name}" title="${g.name}">
-        <img src="${g.icon}" alt="${g.name}" onerror="this.style.display='none'" />
+        <img src="${g.icon}" alt="${g.name}" style="${g.iconScale && g.iconScale !== 1.0 ? 'transform:scale(' + g.iconScale + ');' : ''}" onerror="this.style.display='none'" />
       </a>`).join('')}</div>`;
   }
 
