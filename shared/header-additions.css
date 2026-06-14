@@ -238,9 +238,8 @@
   transition: opacity .2s, transform .15s;
 }
 .header-game-icon-default img {
-  height: 90%;
+  height: calc(var(--header-h) * 0.78);
   width: auto;
-  max-height: calc(var(--header-h) * 0.9);
   object-fit: contain;
   display: block;
 }
@@ -258,7 +257,10 @@
 .header-game-icon-default--collapsed {
   opacity: 0.45;
   filter: grayscale(0.3);
-  padding: 8% 6px;
+  padding: 5% 6px;
+}
+.header-game-icon-default--collapsed img {
+  height: calc(var(--header-h) * 0.60);
 }
 .header-game-icon-default--collapsed:hover {
   opacity: 0.85;
