@@ -191,18 +191,15 @@
 
     /* ── Hello Gamers opening ── */
 
-    /* Full-screen opening stage */
+    /* Opening stage — lives in hero right column */
     .hello-stage {
-      position: fixed;
-      inset: 0;
-      z-index: 8000;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 8px;
       pointer-events: none;
-      background: transparent;
+      min-height: 80px;
     }
     .hello-line {
       font-family: var(--font-display);
@@ -240,7 +237,6 @@
       animation: blink .55s step-end infinite;
     }
 
-    /* Hero — hidden until animation completes */
     .hub-hero {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -261,6 +257,13 @@
     .hub-hero-tagline { justify-content: flex-start; }
     .hub-hero-tagline::before { display: block; }
     .hub-hero-bio { margin-left: 0; margin-right: 0; }
+
+    .hello-text-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80px;
+    }
 
     /* Right side hello text — final resting state */
     .hello-text {
@@ -309,16 +312,12 @@
 
   <div id="site-header" data-active-game="none"></div>
 
-  <!-- ── HELLO GAMERS OPENING STAGE ── -->
-  <div class="hello-stage" id="helloStage" aria-hidden="true">
-    <span class="hello-line hello-line--hello" id="helloLineHello"></span>
-    <span class="hello-line hello-line--gamers" id="helloLineGamers"></span>
-  </div>
+
 
   <main class="main">
 
     <!-- ── HERO ── -->
-    <section class="hub-hero">
+    <section class="hub-hero" id="hubHero">
       <div class="hub-hero-left">
         <h1 class="hub-hero-name">Kythik</h1>
         <div class="hub-hero-tagline">S-Tier Yapper · Game Strategy & Live Commentary</div>
@@ -328,9 +327,15 @@
           catches the loot goblin brain next.
         </p>
       </div>
-      <div class="hello-text">
-        <span class="hello-line hello-line--hello" id="helloLineHello"></span>
-        <span class="hello-line hello-line--gamers" id="helloLineGamers"></span>
+      <div class="hello-text-wrap">
+        <div class="hello-stage" id="helloStage" aria-hidden="true">
+          <span class="hello-line hello-line--hello" id="helloLineHello"></span>
+          <span class="hello-line hello-line--gamers" id="helloLineGamers"></span>
+        </div>
+        <div class="hello-text" id="helloFinal" style="display:none">
+          <span class="hello-line" id="heroHello"></span>
+          <span class="hello-line" id="heroGamers"></span>
+        </div>
       </div>
     </section>
 
@@ -381,12 +386,14 @@
 
   <script>
     (function () {
-      const elHello  = document.getElementById('helloLineHello');
-      const elGamers = document.getElementById('helloLineGamers');
-      if (!elHello || !elGamers) return;
+      const stageHello  = document.getElementById('helloLineHello');
+      const stageGamers = document.getElementById('helloLineGamers');
+      const heroHello   = document.getElementById('heroHello');
+      const heroGamers  = document.getElementById('heroGamers');
+      if (!stageHello || !stageGamers) return;
 
-      const HELLLO  = 'HELLLLLLLOOOOOOOOOOOOOOOO,';
-      const CURSOR  = '<span class="cursor"></span>';
+      const HELLLO = 'HELLLLLLLOOOOOOOOOOOOOOOO,';
+      const CURSOR = '<span class="cursor"></span>';
       let frame;
 
       function type(el, text, speed, onDone) {
@@ -397,66 +404,62 @@
           el.innerHTML = text.slice(0, ++i) + CURSOR;
           if (i >= text.length) {
             clearInterval(frame);
-            onDone && setTimeout(onDone, 120);
+            onDone && setTimeout(onDone, 100);
           }
         }, speed);
       }
 
       function fadeOut(el, onDone) {
-        el.style.transition = 'opacity 0.25s';
+        el.style.transition = 'opacity 0.22s';
         el.style.opacity = '0';
-        setTimeout(() => { el.innerHTML = ''; onDone && onDone(); }, 260);
+        setTimeout(() => { el.innerHTML = ''; onDone && onDone(); }, 240);
       }
 
       function flashGamers(onDone) {
-        // Flash in big
-        elGamers.style.transition = 'none';
-        elGamers.style.fontSize   = '';
-        elGamers.style.opacity    = '0';
-        elGamers.textContent      = 'Gamers!';
-        // Force reflow
-        void elGamers.offsetWidth;
-        elGamers.style.transition = 'opacity 0.12s, transform 0.18s';
-        elGamers.style.opacity    = '1';
-        elGamers.style.transform  = 'scale(1.18)';
+        stageGamers.style.transition = 'none';
+        stageGamers.style.opacity    = '0';
+        stageGamers.textContent      = 'Gamers!';
+        void stageGamers.offsetWidth;
+        stageGamers.style.transition = 'opacity 0.1s, transform 0.16s';
+        stageGamers.style.opacity    = '1';
+        stageGamers.style.transform  = 'scale(1.18)';
 
-        // Expand hold then collapse
         setTimeout(() => {
-          elGamers.style.transition = 'transform 0.35s cubic-bezier(.22,1,.36,1), font-size 0.38s cubic-bezier(.22,1,.36,1)';
-          elGamers.style.transform  = 'scale(0.72)';
-          elGamers.style.fontSize   = '36px';
+          stageGamers.style.transition = 'transform 0.38s cubic-bezier(.22,1,.36,1), opacity 0.28s';
+          stageGamers.style.transform  = 'scale(0.88)';
+          setTimeout(() => { onDone && onDone(); }, 420);
+        }, 500);
+      }
 
-          // As it collapses, Hello, fades in above
+      function revealFinal() {
+        const stage  = document.getElementById('helloStage');
+        const final  = document.getElementById('helloFinal');
+        const hero   = document.getElementById('hubHero');
+        if (stage) {
+          stage.style.transition = 'opacity 0.25s';
+          stage.style.opacity = '0';
           setTimeout(() => {
-            elHello.style.transition = 'opacity 0.3s';
-            elHello.style.opacity    = '1';
-            elHello.textContent      = 'Hello,';
-            onDone && setTimeout(onDone, 350);
-          }, 180);
-        }, 520);
+            stage.style.display = 'none';
+            if (final) final.style.display = 'flex';
+            if (heroHello)  { heroHello.textContent  = 'Hello,';  heroHello.classList.add('is-visible'); }
+            if (heroGamers) { heroGamers.textContent = 'Gamers.'; heroGamers.classList.add('is-visible'); }
+            if (hero) hero.classList.add('is-visible');
+          }, 260);
+        }
       }
 
-      function settle() {
-        // Final clean state: Hello, / Gamers.
-        elGamers.style.transition = 'all 0.25s';
-        elGamers.style.transform  = 'scale(1)';
-        elGamers.style.fontSize   = '';
-        elGamers.textContent      = 'Gamers.';
-      }
-
-      // Sequence
+      // Sequence: type HELLO → fadeout → GAMERS slam → reveal final
       setTimeout(() => {
-        type(elHello, HELLLO, 42, () => {
-          // Hold after typing
+        type(stageHello, HELLLO, 40, () => {
           setTimeout(() => {
-            fadeOut(elHello, () => {
+            fadeOut(stageHello, () => {
               flashGamers(() => {
-                settle();
+                revealFinal();
               });
             });
-          }, 300);
+          }, 260);
         });
-      }, 400);
+      }, 300);
     })();
   </script>
   <script src="/shared/header.js"></script>
