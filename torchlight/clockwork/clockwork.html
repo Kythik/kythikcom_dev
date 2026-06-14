@@ -813,7 +813,7 @@ function roulBlock(gearsVal,rdist,base){
     : `<span style="color:var(--gold-muted)">Math says: always go to max cogs</span>`;
   const failDesc=isEsc
     ? 'Escalating 10%→47% fail per cog (cog k fail = 1−0.9^k, compounding risk grows each cog)'
-    : 'Flat 10% fail per cog start (compounding survival = 0.9^cog)';
+    : 'Flat 10% fail per cog survival = 0.9^cog)';
 
   let h=`<div class="roul-block"><div class="roul-header">Dist: <span style="color:#a78bfa">${dl}</span> · ${failDesc} · Fail = entire event ends · ${headline} <button onclick="showRouletteLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:10px;cursor:pointer;padding:0;margin-left:4px">why? ↗</button></div>`;
 
@@ -1007,15 +1007,14 @@ function render(){
     const rawEffect=s.isRoulette
       ?(rFM==='escalating'
         ?'Escalating: 10%→47% fail per cog. EV negative at max — optimal stop at cog 4. Fail = event ends.'
-        :'Flat: 10% fail per cog (compounding). Escalating bonus vouchers if survived. Fail = event ends.')
+        :'Flat: 10% fail per cog. Escalating bonus vouchers if survived. Fail = event ends.')
       :(s.effect||s.desc||'');
     const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
     const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
     const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
     const inlineWarn=s.isRoulette?(roulFailModel==='escalating'
                        ?`<div class="svc-inline-warn">~1 per 100 maps · ~89% wipe to cog 6 · barely break-even even ignoring variance</div>`
-                       :`<div class="svc-inline-warn">~1 per 100 maps · 43% wipe rate · ~500 maps to be reliably profitable</div>`):
-                     '';
+    const inlineWarn='';
     let extra='';
     const lbBtn=(id,label)=>`<button onclick="document.getElementById('${id}-lightbox').style.display='flex';document.body.style.overflow='hidden'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px;display:inline-flex;align-items:center;gap:4px;transition:background .15s,border-color .15s">📊 ${label} ↗</button>`;
     if(s.id===10)extra=lbBtn('id10','how this is calculated');
