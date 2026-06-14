@@ -19,6 +19,26 @@
       "linkLabel": "Read Patch Notes"
     }
   ],
+  "resources": [
+    {
+      "title": "Strategy Hub",
+      "blurb": "Community-sourced farm routes and builds, synced from Discord.",
+      "link": "/torchlight/strats/strats.html",
+      "linkLabel": "Open Strats"
+    },
+    {
+      "title": "Clockwork Ballet Calculator",
+      "blurb": "Season 12 farm calculator with full Astrolabe & Probe support.",
+      "link": "/torchlight/clockwork/clockwork.html",
+      "linkLabel": "Open Calculator"
+    },
+    {
+      "title": "Arcana Tools",
+      "blurb": "Minigame simulator and reference tools for Arcana.",
+      "link": "/torchlight/arcana/arcana.html",
+      "linkLabel": "Open Arcana"
+    }
+  ],
   "officialYoutube": [
     {
       "title": "S12 Lunaria Reveal",
@@ -30,7 +50,7 @@
     }
   ],
   "youtube": [
-	{
+    {
       "title": "How To Check Over Dummy Cap DPS",
       "link": "https://www.youtube.com/watch?v=L7i1tHyCtHs"
     },
@@ -38,11 +58,9 @@
       "title": "S8 Rehan Autobomber AFK SS21 KILL",
       "link": "https://www.youtube.com/watch?v=XDjrRXBnz-8"
     },
-	{
+    {
       "title": "S8 Rehan Autobomber AFK SS20 KILL",
       "link": "https://www.youtube.com/watch?v=xLEYnA9hm2s"
     }
-  
-  
   ]
 }

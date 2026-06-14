@@ -69,6 +69,21 @@
       KythikCarousel.init({ mountId: 'tliCarousel', items: data.featured, autoRotateMs: 6000 });
     }
 
+    // Resources grid
+    if (data.resources && data.resources.length) {
+      const section = document.getElementById('resourcesSection');
+      const grid    = document.getElementById('resourcesGrid');
+      grid.innerHTML = data.resources.map(r => `
+        <div class="card"><div class="card-inner">
+          <div class="card-top">
+            <h3 class="card-title">${r.title}</h3>
+          </div>
+          <p class="subtext" style="margin:8px 0 14px">${r.blurb}</p>
+          <a href="${r.link}" class="header-pill">${r.linkLabel}</a>
+        </div></div>`).join('');
+      section.style.display = 'block';
+    }
+
     // Official (XD developer) YouTube videos
     if (data.officialYoutube && data.officialYoutube.length) {
       const section = document.getElementById('ytOfficialSection');
