@@ -121,42 +121,43 @@
     const ctaLabel = item.linkLabel || (item.link ? 'View' : '');
 
     // Left panel: all text content + any type-specific mediaHtml (progress bar, etc.)
-    // Right panel: background image only (feat-art-panel), no text overlay
-    const hasTextContent = eyebrow || title || blurb || metaHtml || tagsRow || ctaLabel;
-    const leftPanel = hasTextContent ? `
-      <div class="feat-art-content">
-        <div>
-          ${eyebrow ? `<div class="feat-eyebrow">${eyebrow}</div>` : ''}
-          ${title   ? `<h2 class="feat-title">${title}</h2>` : ''}
-          ${blurb   ? `<p class="subtext" style="margin-top:6px">${blurb}</p>` : ''}
-          ${metaHtml}
-          ${tagsRow}
-        </div>
-        <div class="feat-foot">
-          <div></div>
-          ${ctaLabel ? `<div class="feat-author-name">${ctaLabel} →</div>` : ''}
-        </div>
-      </div>` : mediaHtml;
-
-    // Right panel image priority:
-    // youtube with real thumbnail → thumbnail
-    // item.image → per-card override
-    // fallbackImage → per-game fallback
-    // /images/featured-panel.png → last resort
+    // Left panel: text content
+    // Right panel: background image with absolute-positioned text overlay
     const hasRealThumb = item.type === 'youtube' && mediaHtml && mediaHtml.includes('<img');
     const rightBg = item.image || fallbackImage || null;
-    const rightPanel = hasRealThumb
-      ? `<div class="feat-screenshot" style="flex:1;">
+
+    // Left: screenshot for youtube, empty div for others (text goes in right overlay)
+    const leftPanel = hasRealThumb
+      ? `<div class="feat-screenshot">
            ${mediaHtml}
            <div class="feat-screenshot-fade"></div>
          </div>`
-      : rightBg
-        ? `<div class="feat-art-panel" style="flex:1;background-image:url('${rightBg}');background-size:cover;background-position:center;position:relative;">
-             <div class="feat-art-overlay"></div>
-           </div>`
-        : `<div class="feat-art-panel" style="flex:1;background-image:url('/images/featured-panel.png');position:relative;">
-             <div class="feat-art-overlay"></div>
-           </div>`;
+      : `<div class="feat-screenshot">
+           ${mediaHtml || '<div class="feat-screenshot-empty"></div>'}
+         </div>`;
+
+    // Right: art panel with content overlay on top
+    const bgStyle = rightBg
+      ? `background-image:url('${rightBg}');background-size:cover;background-position:center;`
+      : `background-image:url('/images/featured-panel.png');background-size:cover;background-position:center;`;
+
+    const rightPanel = `
+      <div class="feat-art-panel" style="${bgStyle}">
+        <div class="feat-art-overlay"></div>
+        <div class="feat-art-content">
+          <div>
+            ${eyebrow ? `<div class="feat-eyebrow">${eyebrow}</div>` : ''}
+            ${title   ? `<h2 class="feat-title">${title}</h2>` : ''}
+            ${blurb   ? `<p class="subtext" style="margin-top:6px">${blurb}</p>` : ''}
+            ${metaHtml}
+            ${tagsRow}
+          </div>
+          <div class="feat-foot">
+            <div></div>
+            ${ctaLabel ? `<div class="feat-author-name">${ctaLabel} →</div>` : ''}
+          </div>
+        </div>
+      </div>`;
 
     return `${leftPanel}${rightPanel}`;
   }
