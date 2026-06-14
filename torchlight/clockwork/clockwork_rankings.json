@@ -48,44 +48,43 @@
       "rank": 1,
       "name": "Roses in the No-Man's Land",
       "mean_delta_fe": 1652.95,
-      "pct_of_ceiling": 56.43,
       "tier": "S+",
       "decision": "keep_on_first_offer",
       "notes": [],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 56.43
     },
     {
       "id": 35,
       "rank": 2,
       "name": "Nut Trick",
       "mean_delta_fe": 942.5,
-      "pct_of_ceiling": 32.18,
       "tier": "S+",
       "decision": "keep_on_first_offer",
       "notes": [
         "Assume 100% of possible same-rarity 3-cog combos made. Two triples possible if 6 same-rarity cogs exist."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 32.18
     },
     {
       "id": 33,
       "rank": 3,
       "name": "Clockwork Ballet Heist",
       "mean_delta_fe": 391.28,
-      "pct_of_ceiling": 13.36,
       "tier": "S",
       "decision": "keep_on_first_offer",
       "notes": [
         "3 vouchers on last cog; each voucher 50/50 Orange or Red."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 13.36
     },
     {
       "id": 30,
       "rank": 4,
       "name": "Clockwork Roulette",
       "mean_delta_fe": 384.68,
-      "pct_of_ceiling": 13.13,
       "tier": "S",
       "decision": "keep_on_first_offer",
       "notes": [
@@ -94,40 +93,40 @@
       "mechanic_flags": [
         "high_variance",
         "flat_fail_default"
-      ]
+      ],
+      "pct": 13.13
     },
     {
       "id": 32,
       "rank": 5,
       "name": "Bloody Mary",
       "mean_delta_fe": 344.17,
-      "pct_of_ceiling": 11.75,
       "tier": "S",
       "decision": "keep_on_first_offer",
       "notes": [
         "3\u20135 Purple+ vouchers immediately. SS rating, 15s default, Mary chases after 3s."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 11.75
     },
     {
       "id": 28,
       "rank": 6,
       "name": "All Tabs on Me",
       "mean_delta_fe": 305.18,
-      "pct_of_ceiling": 10.42,
       "tier": "S",
       "decision": "keep_on_first_offer",
       "notes": [
         "Upgrades 1\u20132 existing cogs to Rainbow. Does not add extra cogs. 1 vs 2 upgrades split 50/50."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 10.42
     },
     {
       "id": 21,
       "rank": 7,
       "name": "Best Doll Employee",
       "mean_delta_fe": 219.37,
-      "pct_of_ceiling": 7.49,
       "tier": "A",
       "decision": "keep_on_first_offer",
       "notes": [
@@ -135,14 +134,14 @@
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ]
+      ],
+      "pct": 7.49
     },
     {
       "id": 20,
       "rank": 8,
       "name": "Triple Combo Bonus",
       "mean_delta_fe": 210.6,
-      "pct_of_ceiling": 7.19,
       "tier": "A",
       "decision": "keep_on_first_offer",
       "notes": [
@@ -150,40 +149,40 @@
       ],
       "mechanic_flags": [
         "condition_always_met"
-      ]
+      ],
+      "pct": 7.19
     },
     {
       "id": 9,
       "rank": 9,
       "name": "Instant Voucher Cache",
       "mean_delta_fe": 139.37,
-      "pct_of_ceiling": 4.76,
       "tier": "A",
       "decision": "keep_on_first_offer",
       "notes": [
         "2\u20133 vouchers (up to Orange) immediately at start."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 4.76
     },
     {
       "id": 23,
       "rank": 10,
       "name": "Cogwheel Gambler",
       "mean_delta_fe": 126.76,
-      "pct_of_ceiling": 4.33,
       "tier": "A",
       "decision": "keep_on_first_offer",
       "notes": [
         "40%/+1, 20%/+2, 5%/+3 vouchers per completion. 10% chance safe early end."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 4.33
     },
     {
       "id": 19,
       "rank": 11,
       "name": "Runaway Dancer Hunt",
       "mean_delta_fe": 94.32,
-      "pct_of_ceiling": 3.22,
       "tier": "B",
       "decision": "keep_on_second_offer",
       "notes": [
@@ -192,14 +191,14 @@
       "mechanic_flags": [
         "per_cog_proc",
         "v1_2_corrected"
-      ]
+      ],
+      "pct": 3.22
     },
     {
       "id": 29,
       "rank": 12,
       "name": "Dolls' Hunting Ground",
       "mean_delta_fe": 93.17,
-      "pct_of_ceiling": 3.18,
       "tier": "B",
       "decision": "keep_on_second_offer",
       "notes": [
@@ -207,40 +206,40 @@
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ]
+      ],
+      "pct": 3.18
     },
     {
       "id": 11,
       "rank": 13,
       "name": "All-or-Nothing Rating",
       "mean_delta_fe": 81.55,
-      "pct_of_ceiling": 2.78,
       "tier": "B",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "6 Cogwheels. Hit B \u2192 jumps to SSS rating."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 2.78
     },
     {
       "id": 8,
       "rank": 14,
       "name": "Dual Rarity Boost",
       "mean_delta_fe": 74.03,
-      "pct_of_ceiling": 2.53,
       "tier": "B",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "+1 rarity for 2 randomly selected Cogwheels at start."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 2.53
     },
     {
       "id": 15,
       "rank": 15,
       "name": "Lucky Upgrade + Time",
       "mean_delta_fe": 66.8,
-      "pct_of_ceiling": 2.28,
       "tier": "B",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
@@ -248,14 +247,14 @@
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ]
+      ],
+      "pct": 2.28
     },
     {
       "id": 17,
       "rank": 16,
       "name": "Lucky Upgrade",
       "mean_delta_fe": 66.59,
-      "pct_of_ceiling": 2.27,
       "tier": "B",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
@@ -263,27 +262,27 @@
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ]
+      ],
+      "pct": 2.27
     },
     {
       "id": 10,
       "rank": 17,
       "name": "Cogwheel Culling",
       "mean_delta_fe": 54.93,
-      "pct_of_ceiling": 1.88,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "Remove 1\u20132 Cogwheels, remaining all +1 rarity. Paired-delta logic applied."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 1.88
     },
     {
       "id": 16,
       "rank": 18,
       "name": "Rare Bonus Voucher",
       "mean_delta_fe": 49.06,
-      "pct_of_ceiling": 1.67,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
@@ -291,14 +290,14 @@
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ]
+      ],
+      "pct": 1.67
     },
     {
       "id": 27,
       "rank": 19,
       "name": "Late-Game Bonus",
       "mean_delta_fe": 39.9,
-      "pct_of_ceiling": 1.36,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
@@ -307,72 +306,73 @@
       "mechanic_flags": [
         "per_cog_proc",
         "v1_2_corrected"
-      ]
+      ],
+      "pct": 1.36
     },
     {
       "id": 2,
       "rank": 20,
       "name": "Single Rarity Boost",
       "mean_delta_fe": 36.92,
-      "pct_of_ceiling": 1.26,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "+1 rarity for 1 randomly selected Cogwheel at start."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 1.26
     },
     {
       "id": 1,
       "rank": 21,
       "name": "Starter Voucher",
       "mean_delta_fe": 31.83,
-      "pct_of_ceiling": 1.09,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "Immediately obtain 1 Blue Cogwheel Voucher at start."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 1.09
     },
     {
       "id": 3,
       "rank": 22,
       "name": "Every-4th Bonus",
       "mean_delta_fe": 31.57,
-      "pct_of_ceiling": 1.08,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "Every 4 completions \u2192 1 extra Blue Voucher."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 1.08
     },
     {
       "id": 14,
       "rank": 23,
       "name": "Time Extender",
       "mean_delta_fe": 16.83,
-      "pct_of_ceiling": 0.57,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "1 Time Extender in stage."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 0.57
     },
     {
       "id": 26,
       "rank": 24,
       "name": "Rush Bonus",
       "mean_delta_fe": 0.0,
-      "pct_of_ceiling": 0.0,
       "tier": "F",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "<20s remaining \u2192 30% extra voucher. Normal-play EV = 0; player does not intentionally slow cogs."
       ],
-      "mechanic_flags": []
+      "mechanic_flags": [],
+      "pct": 0.0
     }
   ],
   "sensitivity_variants": [
@@ -380,7 +380,6 @@
       "id": 30,
       "name": "Clockwork Roulette (escalating fail model)",
       "mean_delta_fe": -136.82,
-      "pct_of_ceiling": -4.67,
       "tier": "F",
       "rank": null,
       "decision": "skip",
@@ -391,7 +390,8 @@
       "mechanic_flags": [
         "high_variance",
         "escalating_fail_sensitivity"
-      ]
+      ],
+      "pct": -4.67
     }
   ]
 }
