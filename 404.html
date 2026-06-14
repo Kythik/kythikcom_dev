@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>404 — Loot Lost | Kythik</title>
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/shared/header-additions.css" />
+  <style>
+    .lost-wrap {
+      min-height: calc(100vh - var(--header-h));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 28px;
+    }
+
+    .lost-card {
+      max-width: 520px;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(13,24,40,.98), rgba(7,14,28,.99));
+      border: 1px solid rgba(216,90,78,.35);
+      border-radius: var(--radius-lg);
+      padding: 32px 32px 28px;
+      position: relative;
+      box-shadow:
+        0 0 0 1px rgba(216,90,78,.12),
+        0 24px 64px rgba(0,0,0,.55),
+        0 0 40px rgba(216,90,78,.06);
+      animation: flicker 6s ease-in-out infinite;
+    }
+
+    /* Left edge — red instead of gold */
+    .lost-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(180deg, var(--red-loss), rgba(216,90,78,.3) 60%, transparent);
+      opacity: 0.8;
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    }
+
+    /* Top highlight — red tint */
+    .lost-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(216,90,78,.6), transparent 55%);
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    }
+
+    @keyframes flicker {
+      0%, 95%, 100% { opacity: 1; }
+      96% { opacity: .92; }
+      97% { opacity: 1; }
+      98% { opacity: .88; }
+      99% { opacity: 1; }
+    }
+
+    .lost-kicker {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--red-loss);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .lost-kicker::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--red-loss);
+      opacity: .7;
+    }
+
+    .lost-title {
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+      margin-bottom: 8px;
+      letter-spacing: .01em;
+    }
+
+    .lost-subtitle {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--red-loss);
+      letter-spacing: .06em;
+      margin-bottom: 18px;
+      opacity: .85;
+    }
+
+    .lost-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-bottom: 24px;
+      border-top: 1px solid rgba(216,90,78,.15);
+      padding-top: 18px;
+    }
+
+    .lost-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 28px;
+    }
+
+    .lost-stat {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid rgba(216,90,78,.32);
+      background: rgba(216,90,78,.08);
+      color: var(--red-loss);
+      border-radius: 999px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
+
+    .lost-foot {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 18px;
+      border-top: 1px solid rgba(216,90,78,.15);
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .lost-author {
+      font-size: 11px;
+      color: var(--text-faint);
+      font-style: italic;
+    }
+
+    .lost-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(200,164,93,.32);
+      background: rgba(200,164,93,.08);
+      color: var(--gold-primary);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: all .2s;
+      text-decoration: none;
+    }
+    .lost-cta:hover {
+      border-color: rgba(200,164,93,.58);
+      background: rgba(200,164,93,.14);
+      color: var(--gold-bright);
+      transform: translateY(-1px);
+    }
+
+    /* Corrupted text glitch effect on title */
+    .glitch {
+      position: relative;
+      display: inline-block;
+    }
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .glitch::before {
+      color: rgba(216,90,78,.6);
+      clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
+      transform: translateX(-2px);
+      animation: glitch-top 4s infinite linear;
+    }
+    .glitch::after {
+      color: rgba(74,131,216,.5);
+      clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+      transform: translateX(2px);
+      animation: glitch-bot 4s infinite linear;
+    }
+    @keyframes glitch-top {
+      0%, 88%, 100% { transform: translateX(0); opacity: 0; }
+      90% { transform: translateX(-3px); opacity: 1; }
+      92% { transform: translateX(2px); opacity: .8; }
+      94% { transform: translateX(0); opacity: 0; }
+    }
+    @keyframes glitch-bot {
+      0%, 88%, 100% { transform: translateX(0); opacity: 0; }
+      90% { transform: translateX(3px); opacity: 1; }
+      92% { transform: translateX(-2px); opacity: .8; }
+      94% { transform: translateX(0); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-bg-img"></div>
+
+  <svg class="hex-bg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="hexGrid" width="50" height="84" patternUnits="userSpaceOnUse">
+        <polygon points="25,0 50,14 50,42 25,56 0,42 0,14" fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <polygon points="0,42 25,56 25,84 0,98 -25,84 -25,56" fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <polygon points="50,42 75,56 75,84 50,98 25,84 25,56" fill="none" stroke="#1A3055" stroke-width="0.8"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexGrid)"/>
+  </svg>
+
+  <div id="site-header" data-active-game="none"></div>
+
+  <div class="lost-wrap">
+    <div class="lost-card">
+      <div class="lost-kicker">Instance Failed · Error 404</div>
+      <h1 class="lost-title">
+        <span class="glitch" data-text="Loot Lost">Loot Lost</span>
+      </h1>
+      <div class="lost-subtitle">Page Not Found — The RNG Gods Have Spoken</div>
+      <p class="lost-body">
+        This page rolled a 0% drop chance and didn't survive the instance.
+        Whatever you were looking for got yeeted into the void — probably
+        bad luck, probably a skill issue, definitely not your fault.
+        Chat would have warned you.
+      </p>
+      <div class="lost-stats">
+        <span class="lost-stat">DROP RATE: 0.00%</span>
+        <span class="lost-stat">RUNS ATTEMPTED: 1</span>
+        <span class="lost-stat">LOOT FOUND: NONE</span>
+        <span class="lost-stat">STRATEGY: UNKNOWN</span>
+      </div>
+      <div class="lost-foot">
+        <span class="lost-author">— Submitted by: The Void</span>
+        <a href="/" class="lost-cta">← Back to Hub</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="/shared/header.js"></script>
+</body>
+</html>
