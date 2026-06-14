@@ -189,52 +189,42 @@
     }
 
 
-    /* ── Hello Gamers text ── */
-    .hub-hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      align-items: center;
-      text-align: left;
-      max-width: none;
-      margin-left: 0;
-      margin-right: 0;
-    }
-    .hub-hero-tagline { justify-content: flex-start; }
-    .hub-hero-tagline::before { display: block; }
-    .hub-hero-bio { margin-left: 0; margin-right: 0; }
+    /* ── Hello Gamers opening ── */
 
-    .hello-text {
+    /* Full-screen opening stage */
+    .hello-stage {
+      position: fixed;
+      inset: 0;
+      z-index: 8000;
       display: flex;
-      flex-direction: row;
-      align-items: baseline;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
-      gap: 12px;
-      text-align: center;
-      flex-wrap: wrap;
+      gap: 8px;
+      pointer-events: none;
+      background: transparent;
     }
     .hello-line {
       font-family: var(--font-display);
       font-weight: 700;
       color: var(--gold-bright);
-      text-shadow: 0 0 32px rgba(230,199,122,.20);
+      text-shadow: 0 0 48px rgba(230,199,122,.28);
       line-height: 1.1;
-      display: block;
-    }
-    /* HELLLLLOOOO line */
-    .hello-line--hello {
-      font-size: 36px;
+      text-align: center;
       letter-spacing: .06em;
+    }
+    .hello-line--hello {
+      font-size: clamp(22px, 4vw, 42px);
       opacity: 0;
     }
-    /* GAMERS line */
     .hello-line--gamers {
-      font-size: 36px;
-      letter-spacing: .08em;
+      font-size: clamp(38px, 7vw, 72px);
       opacity: 0;
       transform: scale(1);
       display: inline-block;
-      transition: transform 0.35s cubic-bezier(.22,1,.36,1), font-size 0.35s cubic-bezier(.22,1,.36,1), opacity 0.2s;
+      transition: transform 0.38s cubic-bezier(.22,1,.36,1),
+                  font-size 0.38s cubic-bezier(.22,1,.36,1),
+                  opacity 0.2s;
     }
 
     @keyframes blink {
@@ -250,16 +240,54 @@
       animation: blink .55s step-end infinite;
     }
 
+    /* Hero — hidden until animation completes */
+    .hub-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+      text-align: left;
+      max-width: none;
+      margin-left: 0;
+      margin-right: 0;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .hub-hero.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hub-hero-tagline { justify-content: flex-start; }
+    .hub-hero-tagline::before { display: block; }
+    .hub-hero-bio { margin-left: 0; margin-right: 0; }
+
+    /* Right side hello text — final resting state */
+    .hello-text {
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .hello-text .hello-line {
+      font-size: clamp(24px, 3vw, 36px);
+      opacity: 0;
+      transition: opacity 0.3s;
+      text-shadow: 0 0 28px rgba(230,199,122,.18);
+    }
+    .hello-text .hello-line.is-visible {
+      opacity: 1;
+    }
+
     @media (max-width: 860px) {
       .hub-hero { grid-template-columns: 1fr; }
-      .hello-text { margin-top: 8px; }
       .hub-community-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 560px) {
       .hub-hero-name { font-size: 28px; }
       .hub-hero { padding: 28px 0 20px; }
-      .hello-line--gamers { font-size: 26px; }
-      .hello-line--hello { font-size: 26px; }
     }
 
   </style>
@@ -280,6 +308,12 @@
   </svg>
 
   <div id="site-header" data-active-game="none"></div>
+
+  <!-- ── HELLO GAMERS OPENING STAGE ── -->
+  <div class="hello-stage" id="helloStage" aria-hidden="true">
+    <span class="hello-line hello-line--hello" id="helloLineHello"></span>
+    <span class="hello-line hello-line--gamers" id="helloLineGamers"></span>
+  </div>
 
   <main class="main">
 
