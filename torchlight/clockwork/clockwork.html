@@ -1012,8 +1012,6 @@ function render(){
     const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
     const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
     const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
-    const inlineWarn=s.isRoulette?(roulFailModel==='escalating'
-                       ?`<div class="svc-inline-warn">~1 per 100 maps · ~89% wipe to cog 6 · barely break-even even ignoring variance</div>`
     const inlineWarn='';
     let extra='';
     const lbBtn=(id,label)=>`<button onclick="document.getElementById('${id}-lightbox').style.display='flex';document.body.style.overflow='hidden'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px;display:inline-flex;align-items:center;gap:4px;transition:background .15s,border-color .15s">📊 ${label} ↗</button>`;
