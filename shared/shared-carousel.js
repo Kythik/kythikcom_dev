@@ -89,13 +89,13 @@
             Next Season &middot; ${nextLabel}
           </div>` : '';
 
-        mediaHtml = `
-          <div style="display:flex;flex-direction:column;justify-content:center;height:100%;padding:24px;box-sizing:border-box;">
+        metaHtml = `
+          <div style="margin-top:14px;">
             ${progressBar}
             ${nextRow}
           </div>`;
 
-        metaHtml = '';
+        mediaHtml = '';
         break;
       }
       case 'countdown': {
@@ -120,27 +120,36 @@
 
     const ctaLabel = item.linkLabel || (item.link ? 'View' : '');
 
-    return `
-      <div class="feat-screenshot">
-        ${mediaHtml}
-        <div class="feat-screenshot-fade"></div>
-      </div>
-      <div class="feat-art-panel" style="background-image:url('/images/featured-panel.png')">
-        <div class="feat-art-overlay"></div>
-        <div class="feat-art-content">
-          <div>
-            <div class="feat-eyebrow">${eyebrow}</div>
-            <h2 class="feat-title">${title}</h2>
-            <p class="subtext" style="margin-top:6px">${blurb}</p>
-            ${metaHtml}
-            ${tagsRow}
-          </div>
-          <div class="feat-foot">
-            <div></div>
-            ${ctaLabel ? `<div class="feat-author-name">${ctaLabel} →</div>` : ''}
-          </div>
+    // Left panel: all text content + any type-specific mediaHtml (progress bar, etc.)
+    // Right panel: background image only (feat-art-panel), no text overlay
+    const hasTextContent = eyebrow || title || blurb || metaHtml || tagsRow || ctaLabel;
+    const leftPanel = hasTextContent ? `
+      <div class="feat-art-content" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;height:100%;padding:24px;box-sizing:border-box;min-width:320px;max-width:45%;">
+        <div>
+          ${eyebrow ? `<div class="feat-eyebrow">${eyebrow}</div>` : ''}
+          ${title   ? `<h2 class="feat-title">${title}</h2>` : ''}
+          ${blurb   ? `<p class="subtext" style="margin-top:6px">${blurb}</p>` : ''}
+          ${metaHtml}
+          ${tagsRow}
         </div>
-      </div>`;
+        <div class="feat-foot">
+          <div></div>
+          ${ctaLabel ? `<div class="feat-author-name">${ctaLabel} →</div>` : ''}
+        </div>
+      </div>` : mediaHtml;
+
+    // For season/countdown types, mediaHtml is already in leftPanel above via metaHtml,
+    // so right side is just the art panel image. For other types, mediaHtml goes right.
+    const rightPanel = (item.type === 'season' || item.type === 'countdown')
+      ? `<div class="feat-art-panel" style="flex:1;background-image:url('/images/featured-panel.png');position:relative;">
+           <div class="feat-art-overlay"></div>
+         </div>`
+      : `<div class="feat-screenshot" style="flex:1;">
+           ${mediaHtml}
+           <div class="feat-screenshot-fade"></div>
+         </div>`;
+
+    return `${leftPanel}${rightPanel}`;
   }
 
   function render(inst) {
