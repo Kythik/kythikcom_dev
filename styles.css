@@ -481,8 +481,10 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 /* Featured card — two panel: screenshot left, AI art right */
 .feat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-soft);
+  background:
+    radial-gradient(circle at 16% 0%, rgba(230,199,122,.10), transparent 40%),
+    linear-gradient(180deg, rgba(13,24,40,.98), rgba(4,8,15,.99));
+  border: 1px solid rgba(230,199,122,.32);
   border-radius: var(--radius-lg);
   overflow: hidden;
   display: grid;
@@ -490,7 +492,10 @@ button { cursor: pointer; font-family: var(--font-body); }
   height: 280px;
   cursor: pointer;
   position: relative;
-  transition: border-color .25s, box-shadow .25s;
+  box-shadow:
+    0 24px 72px rgba(0,0,0,.46),
+    inset 0 1px 0 rgba(230,199,122,.08);
+  transition: border-color .25s, box-shadow .25s, transform .25s;
 }
 
 .feat-card::before {
