@@ -63,7 +63,7 @@
     }
     .hub-hero-name {
       font-family: var(--font-display);
-      font-size: 38px;
+      font-size: 52px;
       font-weight: 700;
       color: var(--gold-bright);
       letter-spacing: .06em;
@@ -205,8 +205,8 @@
       justify-content: center;
       gap: 8px;
       pointer-events: none;
-      padding: 36px 0 28px;
-      min-height: 180px;
+      padding: 0;
+      min-height: 0;
       opacity: 1;
       transition: opacity 0.3s;
       z-index: 1;
@@ -225,11 +225,11 @@
       letter-spacing: .06em;
     }
     .hello-line--hello {
-      font-size: clamp(22px, 4vw, 42px);
+      font-size: clamp(28px, 3.5vw, 46px);
       opacity: 0;
     }
     .hello-line--gamers {
-      font-size: clamp(38px, 7vw, 72px);
+      font-size: clamp(52px, 8vw, 96px);
       opacity: 0;
       transform: scale(1);
       display: inline-block;
@@ -257,7 +257,7 @@
       gap: 40px;
       align-items: center;
       text-align: left;
-      padding: 36px 0 28px;
+      padding: 28px 0 24px;
       opacity: 0;
       transition: opacity 0.45s ease;
       z-index: 2;
@@ -282,14 +282,19 @@
       flex-direction: row;
       align-items: baseline;
       justify-content: center;
-      gap: 12px;
-      flex-wrap: wrap;
+      gap: 14px;
+      flex-wrap: nowrap;
+      white-space: nowrap;
     }
     .hello-text .hello-line {
-      font-size: clamp(24px, 3vw, 36px);
+      font-size: 46px;
       opacity: 0;
       transition: opacity 0.3s;
       text-shadow: 0 0 28px rgba(230,199,122,.18);
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--gold-bright);
+      letter-spacing: .04em;
     }
     .hello-text .hello-line.is-visible {
       opacity: 1;
@@ -298,10 +303,12 @@
     @media (max-width: 860px) {
       .hub-hero { grid-template-columns: 1fr; }
       .hub-community-grid { grid-template-columns: 1fr; }
+      .hello-text { justify-content: flex-start; }
     }
     @media (max-width: 560px) {
-      .hub-hero-name { font-size: 28px; }
-      .hub-hero { padding: 28px 0 20px; }
+      .hub-hero-name { font-size: 36px; }
+      .hub-hero { padding: 20px 0 16px; }
+      .hello-text .hello-line { font-size: 32px; }
     }
 
   </style>
