@@ -385,6 +385,56 @@
       .hub-community-side { grid-template-columns: 1fr; }
     }
 
+
+    /* ── Hero/carousel alignment fix ──
+       Match the hero split to the featured carousel split.
+       Keep the divider as a layout rule, not something the greeting can collide with. */
+    .hub-hero {
+      max-width: 1224px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 0;
+      padding: 20px 0 22px;
+    }
+    .hello-text-wrap {
+      justify-content: flex-end;
+      padding-right: 48px;
+      border-right-color: rgba(200,164,93,.20);
+      min-width: 0;
+    }
+    .hello-text {
+      font-size: clamp(30px, 3.35vw, 50px);
+      max-width: 100%;
+      text-align: right;
+    }
+    .hub-hero-right {
+      padding-left: 48px;
+      min-width: 0;
+    }
+    .hub-hero-bio {
+      max-width: 540px;
+    }
+
+    @media (max-width: 920px) {
+      .hub-hero {
+        max-width: 980px;
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .hello-text-wrap {
+        justify-content: flex-start;
+        border-right: 0;
+        border-bottom: 1px solid rgba(200,164,93,.16);
+        padding-right: 0;
+        padding-bottom: 14px;
+      }
+      .hello-text {
+        text-align: left;
+      }
+      .hub-hero-right {
+        padding-left: 0;
+      }
+    }
+
   </style>
 </head>
 <body>
