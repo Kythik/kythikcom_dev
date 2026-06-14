@@ -1,152 +1,58 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-06-10",
+  "updated": "2026-06-14",
   "defaultByBoard": {
-    "special1": "Special1_Staging_Loaded",
+    "special1": "Special1_Payload_First",
     "special2": "Special2_Bank_And_Cross",
     "special3": "Special3_RainbowRed_HighCeiling"
   },
   "boards": {
     "special1": {
       "label": "Special Board 1",
-      "summary": "Chest zone first, trap wall second, red-upgrade zone last. Board 1 is a staging board: load early chest payload, stage near tiles 24–30, cross from a better wall position, then cash red upgrades after the wall.",
+      "summary": "Corrected 60-tile Special Board 1: chest payload first, trap wall second, immediate red-upgrade conversion last. Load early chest bodies, solve the wall cleanly, then cash owned chests with the post-wall red upgrade zone.",
       "strategies": [
         {
-          "id": "Special1_Staging_Loaded",
-          "label": "Special 1: Staging Loaded",
+          "id": "Special1_Payload_First",
+          "label": "Special 1: Payload First",
           "kicker": "Recommended",
-          "summary": "Best tested Board 1 route. Load early chest payload, deliberately stage near tiles 24–30, then cross and convert owned chests with post-wall red upgrades.",
+          "summary": "Corrected 60-tile Board 1 route. Build chest payload efficiently, cross when the wall is naturally solved, then cash red upgrades immediately.",
           "rules": {
-            "boardRole": "wall_staging_payload",
-            "coreRule": "Stage first. Cross second.",
+            "boardRole": "payload_then_upgrade_conversion",
+            "coreRule": "Build payload first. Cross cleanly. Upgrade immediately.",
             "ownedChestUpgrades": true,
             "wallSolver": true,
-            "stagingEnabled": true,
-            "stagingZoneTiles": [
-              24,
-              25,
-              26,
-              27,
-              28,
-              29,
-              30
-            ],
-            "minPayloadChests": 5,
-            "crossFromTileMin": 24,
-            "wallPlanSteps": 8,
-            "stagingZoneBonus": 25,
-            "approachStagingBonus": 10,
-            "wallProgressValue": 22,
-            "trapPenalty": 8,
-            "postWallStopScore": -20,
+            "minChestsBeforeWall": 5,
+            "preferredChestsBeforeWall": 6,
+            "minUpgradeTilesAhead": 3,
+            "wallLifeBuffer": 0,
+            "crossScoreThreshold": 24,
+            "stagingEnabled": false,
+            "stagingZoneBonus": 4,
+            "approachStagingBonus": 4,
+            "chestZoneUpgradeSlotValue": 20,
+            "chestZoneNoUpgradeSlotValue": 8,
+            "fillChestSlotBonus": 6,
+            "movementTileBase": 9,
+            "movementTilePreWallBonus": 5,
+            "lifeTileLowLifeValue": 24,
+            "lifeTileBase": 7,
+            "upgradeTileBase": 34,
+            "upgradeTileGainMultiplier": 0.9,
+            "upgradeTileGainCap": 95,
+            "wallTrapLifeCost": 16,
+            "trapWallTollBase": 20,
+            "trapWallBlockedPenalty": 85,
+            "trapWallNoCrossPenalty": 55,
+            "preWallEnterBlockedPenalty": 70,
+            "upgradeZonePathScore": 8,
+            "chestZoneEmptyScore": -2,
+            "genericEmptyScore": -7,
+            "handCardSpendPenalty": 2,
             "autoUseOwnedUpgradeCards": true,
             "offsetProtection": {
               "enabled": true,
               "protectUntilTile": 36,
-              "note": "Protect correction cards while loading/staging; spend them when they create a real staging/cross line."
-            },
-            "targetingModel": "owned upgrade cards highest eligible rarity first, random within that bucket"
-          },
-          "walkthrough": [
-            {
-              "heading": "Load early chest payload",
-              "steps": [
-                "Treat early chests as upgradeable bodies, not just their current rarity.",
-                "Loaded route wants enough owned chest slots before committing to the wall.",
-                "Life and movement are valuable if they help you stage or cross."
-              ]
-            },
-            {
-              "heading": "Stage near tiles 24–30",
-              "steps": [
-                "Do not only ask whether you can cross immediately.",
-                "Move into the staging band when payload is loaded.",
-                "The staging band gives the wall solver much better odds than crossing from too far back."
-              ]
-            },
-            {
-              "heading": "Cross and cash",
-              "steps": [
-                "Once staged, prioritize a real wall solve to tile 37+.",
-                "After the wall, red upgrades convert owned chests toward rainbow.",
-                "If the wall succeeds, Board 1 behaves like a very premium special board."
-              ]
-            }
-          ],
-          "metrics": {
-            "runsPerStrategyPerStartingHand": 700,
-            "testedStartingHands": "4–6",
-            "weighted4to6EV": 90.74,
-            "avgRainbow": 0.567,
-            "wallSuccessRate": 0.452,
-            "avgChests": 4.97,
-            "avgPostWallUpgrades": 1.85,
-            "wallSuccessEV": 168.28,
-            "wallFailEV": 26.68,
-            "source": "arcana_s1_staging_battery_700",
-            "perStartingHand": {
-              "source": "arcana_s1_staging_battery_700",
-              "hand4": {
-                "EV": 87.19,
-                "rainbow": 0.556,
-                "wall": 0.483
-              },
-              "hand5": {
-                "EV": 93.71,
-                "rainbow": 0.593,
-                "wall": 0.454
-              },
-              "hand6": {
-                "EV": 91.31,
-                "rainbow": 0.553,
-                "wall": 0.42
-              },
-              "note": "Board 1 is not very hand-size sensitive after staging; staging behavior matters more than +1 card."
-            }
-          }
-        },
-        {
-          "id": "Special1_Rainbow_Wall",
-          "label": "Special 1: Rainbow Wall",
-          "kicker": "Legacy / no-staging",
-          "summary": "Older immediate-wall route. Kept for comparison, but the staging test shows it under-crosses Board 1 badly.",
-          "rules": {
-            "ownedChestUpgrades": true,
-            "wallSolver": true,
-            "minChestsBeforeWall": 5,
-            "minUpgradeTilesAhead": 4,
-            "wallLifeBuffer": 0,
-            "wallTrapLifeCost": 18,
-            "slotQualityValue": 6,
-            "crossScoreThreshold": 25,
-            "chestZoneUpgradeSlotValue": 18,
-            "chestZoneNoUpgradeSlotValue": 8,
-            "currentRarityMultiplierWithUpgrades": 0.25,
-            "currentRarityMultiplierNoUpgrades": 1.0,
-            "purpleChestBonus": 5,
-            "premiumChestBonus": 10,
-            "fillChestSlotBonus": 5,
-            "movementTileBase": 8,
-            "movementTilePreWallBonus": 4,
-            "lifeTileLowLifeValue": 22,
-            "lifeTileBase": 6,
-            "upgradeTileBase": 20,
-            "upgradeTileGainMultiplier": 0.6,
-            "upgradeTileGainCap": 80,
-            "trapWallTollBase": 18,
-            "trapWallBlockedPenalty": 90,
-            "trapWallNoCrossPenalty": 60,
-            "preWallEnterBlockedPenalty": 80,
-            "chestZoneEmptyScore": -1,
-            "safeGapActiveScore": 4,
-            "safeGapInactiveScore": -6,
-            "upgradeZonePathScore": 6,
-            "genericEmptyScore": -6,
-            "handCardSpendPenalty": 2,
-            "offsetProtection": {
-              "enabled": true,
-              "protectUntilTile": 36,
-              "lastOffsetPenalty": 18,
+              "lastOffsetPenalty": 14,
               "lastOffsetAllowedPenalty": 2,
               "nonLastOffsetPenalty": 1,
               "trueOffsetCards": [
@@ -156,77 +62,134 @@
                 "move_any",
                 "move_even",
                 "move_odd"
-              ]
+              ],
+              "note": "Protect correction cards until the wall is solved, but spend them when they create payload, life, movement, or a real wall line."
             },
-            "postWallAssessment": {
-              "enabled": true
-            }
+            "targetingModel": "owned upgrade cards highest eligible rarity first, random within that bucket"
           },
           "walkthrough": [
             {
-              "heading": "Chest zone",
+              "heading": "Chest payload",
               "steps": [
-                "Treat early chests as upgradeable slots, not just their current rarity.",
-                "Green and blue chests can be correct if the wall and red upgrades look reachable.",
-                "Take life and movement tiles that make the wall solve more realistic."
+                "Before the wall, prioritize chest bodies over empty repositioning. Even green and blue chests can become real value because Board 1 gives immediate red-upgrade access after the trap wall.",
+                "Aim for five owned chests as the normal crossing floor. Six is preferred when it does not cost a clean wall line.",
+                "Take useful movement and low-life recovery, but do not burn your whole hand trying to land on perfect staging tiles."
               ]
             },
             {
-              "heading": "Trap wall",
+              "heading": "Wall timing",
               "steps": [
-                "Before crossing, solve the current hand to tile 37+.",
-                "Cross only when trap hits plus remaining life make sense.",
-                "Do not enter the wall just because it is reachable; owned upgrade payoff must justify it."
+                "Do not force the wall with a tiny payload. The wall is worth crossing when you have enough chest bodies, enough life, and a deterministic movement line.",
+                "If the hand naturally solves the trap wall after five or six chests, cross instead of dancing around the pre-wall area.",
+                "Preserve offset cards until they either collect payload or create the wall solve."
               ]
             },
             {
-              "heading": "Red upgrade zone",
+              "heading": "Upgrade zone",
               "steps": [
-                "After the wall, red upgrade tiles convert owned chests toward rainbow.",
-                "Keep recommendations simple: target high upgrade gain, reachable red upgrades, and avoid pointless empty pathing."
+                "After the wall, red upgrade tiles become the priority. They should be treated as conversion payoff for the chests you already secured.",
+                "Use owned upgrade cards and upgrade tiles immediately when they have eligible targets. Do not save upgrades while good owned chest targets exist.",
+                "Once the red upgrade chain is exhausted, clean up only if it adds real chest value or safe completion."
               ]
             }
-          ],
-          "metrics": {
-            "runs": 2000,
-            "targetingModel": "highest eligible rarity first, random within bucket",
-            "avgValue": 34.4639,
-            "completion7Rate": 0.109,
-            "avgChests": 5.069,
-            "avgRainbow": 0.0635,
-            "wallSuccessRate": 0.0525,
-            "avgOwnedUpgradesUsed": 1.827,
-            "rankByValue": 1,
-            "deprecatedBy": "Special1_Staging_Loaded",
-            "note": "No-staging route tested around 30 EV versus about 91 EV for staging."
-          }
+          ]
         },
         {
-          "id": "Special1_Safer_Wall",
-          "label": "Special 1: Safer Wall",
-          "kicker": "Conservative / legacy",
-          "summary": "Conservative legacy wall route. Use the staging route unless you specifically want old no-staging behavior.",
+          "id": "Special1_Upgrade_Conversion",
+          "label": "Special 1: Upgrade Conversion",
+          "kicker": "High EV",
+          "summary": "Greedier corrected-board route. Crosses with fewer chest bodies when red upgrade access is strong, prioritizing fast conversion over 7-chest consistency.",
           "rules": {
-            "extends": "Special1_Rainbow_Wall",
-            "minChestsBeforeWall": 6,
-            "minUpgradeTilesAhead": 5,
+            "extends": "Special1_Payload_First",
+            "minChestsBeforeWall": 4,
+            "preferredChestsBeforeWall": 5,
+            "minUpgradeTilesAhead": 3,
+            "wallLifeBuffer": 0,
+            "crossScoreThreshold": 16,
+            "stagingZoneBonus": 0,
+            "approachStagingBonus": 0,
+            "upgradeTileBase": 42,
+            "upgradeTileGainMultiplier": 1.05,
+            "upgradeTileGainCap": 110,
+            "wallTrapLifeCost": 14,
+            "trapWallTollBase": 22,
+            "preWallEnterBlockedPenalty": 55,
+            "fillChestSlotBonus": 3
+          },
+          "walkthrough": [
+            {
+              "heading": "Conversion setup",
+              "steps": [
+                "This route accepts a smaller payload when the post-wall red upgrade zone is reachable. Four chests can be enough if the wall line is clean and upgrades are waiting.",
+                "Do not overfill weak chest slots just to chase 7-chest completion. The goal is fewer better chests, not seven mediocre chests.",
+                "Movement cards are premium when they turn a partial payload into immediate upgrade access."
+              ]
+            },
+            {
+              "heading": "Aggressive wall crossing",
+              "steps": [
+                "Cross earlier than the recommended route when the hand solves the wall and the upgrade zone has enough payoff.",
+                "Life buffer is less strict here. A wall toll is acceptable if it unlocks immediate red-upgrade conversion.",
+                "Avoid empty pre-wall movement unless it directly creates the crossing line."
+              ]
+            },
+            {
+              "heading": "Payoff",
+              "steps": [
+                "After the wall, take red upgrades aggressively. They are the reason this route crosses early.",
+                "Upgrade owned chests immediately using the highest eligible owned tier first.",
+                "Expect more variance: this route can outperform when upgrades chain well, but it may complete seven chests less often."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Special1_Conservative_Conversion",
+          "label": "Special 1: Conservative Conversion",
+          "kicker": "Safer",
+          "summary": "Safer corrected-board route. Requires stronger payload and safer life before crossing, then still prioritizes immediate red-upgrade conversion.",
+          "rules": {
+            "extends": "Special1_Payload_First",
+            "minChestsBeforeWall": 5,
+            "preferredChestsBeforeWall": 6,
+            "minUpgradeTilesAhead": 4,
             "wallLifeBuffer": 1,
             "crossScoreThreshold": 30,
-            "trapWallBlockedPenalty": 110,
-            "preWallEnterBlockedPenalty": 100
+            "stagingZoneBonus": 6,
+            "approachStagingBonus": 6,
+            "wallTrapLifeCost": 18,
+            "trapWallBlockedPenalty": 100,
+            "trapWallNoCrossPenalty": 70,
+            "preWallEnterBlockedPenalty": 85,
+            "lifeTileLowLifeValue": 30,
+            "fillChestSlotBonus": 7
           },
-          "metrics": {
-            "runs": 2000,
-            "targetingModel": "highest eligible rarity first, random within bucket",
-            "avgValue": 33.8772,
-            "completion7Rate": 0.138,
-            "avgChests": 5.1735,
-            "avgRainbow": 0.058,
-            "wallSuccessRate": 0.047,
-            "avgOwnedUpgradesUsed": 1.817,
-            "rankByValue": 2,
-            "deprecatedBy": "Special1_Staging_Loaded"
-          }
+          "walkthrough": [
+            {
+              "heading": "Safer payload",
+              "steps": [
+                "Build at least five chest bodies before crossing, with six preferred when available.",
+                "Take life more seriously than the other Board 1 routes. A small EV loss is acceptable if it prevents a wall brick.",
+                "Use movement cards to secure payload and preserve a clean wall line, not to chase low-value empty repositioning."
+              ]
+            },
+            {
+              "heading": "Safer wall check",
+              "steps": [
+                "Cross only when the line is deterministic and you have a life buffer.",
+                "If the wall line is ugly or leaves you near death, keep collecting useful pre-wall value instead.",
+                "This route is allowed to be slower because its job is consistency, not maximum ceiling."
+              ]
+            },
+            {
+              "heading": "Controlled conversion",
+              "steps": [
+                "Once across, red upgrades are still the payoff. Do not ignore upgrade tiles just because this is the safer route.",
+                "Use owned upgrade cards as soon as they have eligible targets.",
+                "Finish by taking safe remaining value, but do not risk a stabilized board for unnecessary filler."
+              ]
+            }
+          ]
         }
       ],
       "wallStagingFinding": {
