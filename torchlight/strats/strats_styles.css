@@ -1,0 +1,177 @@
+/* ═══════════════════════════════════════════
+   STRATS PAGE — /torchlight/strats/strats_styles.css
+   Page-specific layout polish only.
+   Root /styles.css owns tokens, cards, typography, buttons, and brand system.
+   ═══════════════════════════════════════════ */
+
+/* ── Strats page polish: page-specific layout only, root styles own the brand system ── */
+.strats-page .main {
+  max-width: 1220px;
+  padding-top: 0;
+}
+
+.strats-page .page-title {
+  padding: 24px 0 10px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(200,164,93,.12);
+  position: relative;
+}
+.strats-page .page-title::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 220px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(230,199,122,.45), transparent);
+  pointer-events: none;
+}
+
+.strats-page .featured-section {
+  padding-top: 20px;
+}
+.strats-page .featured-header {
+  margin-bottom: 14px;
+  padding: 0 0 2px;
+}
+.strats-page .featured-label {
+  color: var(--gold-bright);
+  text-shadow: 0 0 18px rgba(230,199,122,.10);
+}
+.strats-page .featured-label::before {
+  color: var(--gold-bright);
+  filter: drop-shadow(0 0 8px rgba(230,199,122,.16));
+}
+.strats-page .featured-nav {
+  padding: 4px 0;
+}
+
+.strats-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px 18px;
+  align-items: end;
+  margin: 26px 0 14px;
+  padding: 14px 0 0;
+  border-top: 1px solid rgba(200,164,93,.12);
+  position: relative;
+}
+.strats-toolbar::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 180px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(230,199,122,.42), transparent);
+  pointer-events: none;
+}
+.strats-toolbar .db-header {
+  display: contents;
+  padding: 0;
+}
+.strats-toolbar .db-header > div:first-child {
+  display: none;
+}
+.strats-toolbar .db-count {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  background: rgba(4,8,15,.28);
+  border-color: rgba(200,164,93,.20);
+  color: var(--text-faint);
+}
+.strats-toolbar .filters {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr) auto auto auto;
+  gap: 8px;
+  padding: 0;
+  align-items: center;
+}
+.strats-toolbar .search {
+  min-height: 38px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(230,199,122,.04), transparent 42%),
+    linear-gradient(180deg, rgba(13,24,40,.72), rgba(7,17,31,.88));
+  border-color: rgba(140,165,210,.18);
+  box-shadow: inset 0 1px 0 rgba(230,199,122,.035);
+}
+.strats-toolbar .search:focus {
+  border-color: rgba(230,199,122,.48);
+  box-shadow: 0 0 0 3px rgba(230,199,122,.07), inset 0 1px 0 rgba(230,199,122,.055);
+}
+.strats-toolbar .pill {
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13,24,40,.55);
+  border-color: rgba(140,165,210,.16);
+}
+.strats-toolbar .pill.active,
+.strats-toolbar .pill:hover {
+  background: rgba(200,164,93,.10);
+  border-color: rgba(200,164,93,.42);
+  color: var(--gold-bright);
+}
+.strats-toolbar .tag-filter-row {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  padding: 2px 0 0;
+  gap: 7px;
+}
+
+.strats-page .grid-frame {
+  padding: 14px;
+  border-color: rgba(200,164,93,.16);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(230,199,122,.045), transparent 34%),
+    linear-gradient(180deg, rgba(11,21,36,.18), rgba(4,8,15,.14));
+  box-shadow:
+    inset 0 1px 0 rgba(230,199,122,.035),
+    inset 0 0 42px rgba(0,0,0,.12);
+}
+.strats-page .grid-frame::before {
+  background: linear-gradient(90deg, rgba(230,199,122,.34), transparent 54%);
+}
+.strats-page .grid {
+  grid-template-columns: repeat(auto-fill, minmax(315px, 1fr));
+  gap: 14px;
+}
+
+.strats-page .card {
+  border-color: rgba(200,164,93,.24);
+}
+.strats-page .card-thumb {
+  height: 168px;
+  background: var(--bg-void);
+}
+.strats-page .card-inner {
+  padding: 15px 16px 16px;
+}
+.strats-page .card-title {
+  font-size: 14px;
+  line-height: 1.24;
+}
+.strats-page .card-foot {
+  padding-top: 12px;
+}
+
+@media (max-width: 760px) {
+  .strats-page .main { padding-left: 16px; padding-right: 16px; }
+  .strats-toolbar {
+    grid-template-columns: 1fr;
+  }
+  .strats-toolbar .db-count {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: start;
+  }
+  .strats-toolbar .filters {
+    grid-template-columns: 1fr;
+  }
+  .strats-page .grid-frame { padding: 10px; }
+  .strats-page .grid { grid-template-columns: 1fr; }
+}

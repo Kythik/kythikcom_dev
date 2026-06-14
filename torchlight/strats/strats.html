@@ -13,6 +13,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
+  <link rel="stylesheet" href="/torchlight/strats/strats_styles.css" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -29,8 +30,10 @@
     }
   }
   </script>
+
+
 </head>
-<body>
+<body class="strats-page">
 
   <!-- ── PAGE BACKGROUND IMAGE ── -->
   <div class="page-bg-img"></div>
@@ -76,19 +79,21 @@
       <div class="featured-track" id="featuredTrack"></div>
     </div>
 
-    <div class="db-header">
-      <div></div>
-      <div class="db-count" id="stratCount">Loading...</div>
-    </div>
+    <section class="strats-toolbar" aria-label="Strategy filters">
+      <div class="db-header">
+        <div></div>
+        <div class="db-count" id="stratCount">Loading...</div>
+      </div>
 
-    <div class="filters">
-      <input class="search" type="text" id="searchInput" placeholder="Search strategies, builds, authors..." aria-label="Search strategies" />
-      <button class="pill active" data-filter="all">All</button>
-      <button class="pill" data-filter="Farms">Farms</button>
-      <button class="pill" data-filter="Builds">Builds</button>
-    </div>
+      <div class="filters">
+        <input class="search" type="text" id="searchInput" placeholder="Search strategies, builds, authors..." aria-label="Search strategies" />
+        <button class="pill active" data-filter="all">All</button>
+        <button class="pill" data-filter="Farms">Farms</button>
+        <button class="pill" data-filter="Builds">Builds</button>
+      </div>
 
-    <div class="tag-filter-row" id="tagFilters"></div>
+      <div class="tag-filter-row" id="tagFilters"></div>
+    </section>
 
     <div class="grid-frame">
       <div class="grid" id="stratGrid">
