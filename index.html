@@ -75,13 +75,14 @@
     .hub-hero-tagline {
       font-size: 10px;
       color: var(--gold-muted);
-      letter-spacing: .18em;
+      letter-spacing: .10em;
       text-transform: uppercase;
       font-weight: 700;
       margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 10px;
+      white-space: nowrap;
     }
     .hub-hero-tagline::before {
       content: '';
@@ -95,7 +96,7 @@
       font-size: 13px;
       line-height: 1.75;
       color: var(--text-muted);
-      max-width: 54ch;
+      max-width: none;
     }
 
 
@@ -271,6 +272,11 @@
       align-items: center;
       justify-content: center;
       min-height: 120px;
+      border-right: 1px solid var(--border-soft);
+      padding-right: 56px;
+    }
+    .hub-hero-right {
+      padding-left: 0;
     }
 
     /* Right side hello text — final resting state */
