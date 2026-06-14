@@ -640,6 +640,9 @@ const D9={grey:0.211,blue:0.3028,purple:0.2385,gold:0.2477};
 
 const SEASON='s12'; // S12 Lunaria — season toggle removed
 let RANKINGS=null;
+let _roulFail='flat';
+let _rdist='expected';
+let _roulExpanded=false;
 
 // Fetch rankings JSON on load
 fetch('clockwork_rankings.json')
@@ -784,7 +787,7 @@ function roulBlock(gearsVal,rdist,base){
   const isAvg=gearsVal==='avg',gl=isAvg?[5,6,7]:[parseInt(gearsVal)];
   const maxCog=isAvg?6:parseInt(gearsVal);
   const dl=rdist===RDIST_HIGH?'high rarity (observed, unverified)':'expected (conservative)';
-  const failModel=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
+  const failModel=document.getElementById('roulFail')?_roulFail:'flat';
   const isEsc=failModel==='escalating';
 
   // Survival to max cog, encounter table values, headline guidance
@@ -926,7 +929,7 @@ function render(){
   const gearsVal='6'; // fixed: 6 cogs current season
   const alice=ALICE[document.getElementById('alice')?.value||'none']||ALICE['none']||{};
   const sort=document.getElementById('sort').value;
-  const rdist=(document.getElementById('rdist')?.value||'expected')==='highrarity'?RDIST_HIGH:RDIST_EXP;
+  const rdist=_rdist==='highrarity'?RDIST_HIGH:RDIST_EXP;
   // base removed — using theorBase for relative scaling
   // Doll affects compass cogwheel rate but we use calibrated base so just affects relative EV
 
@@ -972,13 +975,18 @@ function render(){
 
   const tagMap={combat:'<span class="svc-tag tag-combat">combat</span>',conditional:'<span class="svc-tag tag-conditional">conditional</span>',nonviable:'<span class="svc-tag tag-nonviable">not viable</span>',builddep:'<span class="svc-tag tag-builddep">build-dep</span>'};
   const tbody=document.getElementById('tbody');
+  // Preserve expanded state and dropdown values before clearing
+  const roulExpandedBefore=tbody.querySelector('.svc-row-roulette .svc-card-detail[style*="block"]')||tbody.querySelector('.svc-row-roulette div[style*="display: block"]');
+  // _roulExpanded tracks whether roulette card was open
+  const savedRoulFail=_roulFail;
+  const savedRdist=document.getElementById('rdist')?.value||'expected';
   tbody.innerHTML='';
   svcs.forEach((s,i)=>{
     let t2={l:s.tier,c:'tier-'+s.tier.toLowerCase().replace('+','p')};
     const seasonBadge=nodeSeasonal&&s.id===11?'<span style="font-size:10px;color:var(--gold-bright);margin-left:4px">★ season</span>':'';
     let bw=s.pct||0;
     if(s.isRoulette){
-      const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
+      const roulFailModel=document.getElementById('roulFail')?_roulFail:'flat';
       if(roulFailModel==='escalating'){
         // Recompute Roulette's EV under escalating model, relative to theorBase
         const maxCogR=6; // fixed: 6 cogs current season
@@ -994,7 +1002,7 @@ function render(){
     const th=s.tag?tagMap[s.tag]||'':'';
     const nameHtml=(s.name?`<span class="svc-name">${s.name}</span>`:'')+seasonBadge;
     const effClass=s.name?'svc-effect':'svc-effect svc-effect-primary';
-    const rFM=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
+    const rFM=document.getElementById('roulFail')?_roulFail:'flat';
     const rawEffect=s.isRoulette
       ?(rFM==='escalating'
         ?'Escalating: 10%→47% fail per cog. EV negative at max — optimal stop at cog 4. Fail = event ends.'
@@ -1002,7 +1010,7 @@ function render(){
       :(s.effect||s.desc||'');
     const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
     const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
-    const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
+    const roulFailModel=document.getElementById('roulFail')?_roulFail:'flat';
     const inlineWarn='';
     let extra='';
     const lbBtn=(id,label)=>`<button onclick="document.getElementById('${id}-lightbox').style.display='flex';document.body.style.overflow='hidden'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px;display:inline-flex;align-items:center;gap:4px;transition:background .15s,border-color .15s">📊 ${label} ↗</button>`;
@@ -1010,7 +1018,7 @@ function render(){
     if(s.id===11)extra=lbBtn('id11','why SSS matters here');
     if(s.id===29)extra=lbBtn('id29','how this is calculated');
     if(s.id===32)extra=lbBtn('id32','how this is calculated');
-    if(s.isRoulette)extra=`<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px" title="Roulette breakdown">📊</button><div style="display:none"><div style="display:flex;gap:10px;flex-wrap:wrap;padding:8px 0 6px;border-bottom:1px solid var(--border-blue);margin-bottom:8px"><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Fail model</label><select id="roulFail" onchange="render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="flat">Flat 10%/cog</option><option value="escalating">Escalating 10%→47%</option></select></div><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Voucher dist.</label><select id="rdist" onchange="render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="expected">Expected</option><option value="highrarity">High rarity (observed)</option></select></div></div>`+roulBlock(gearsVal,rdist,base)+`</div>`;
+    if(s.isRoulette)extra=`<button onclick="const d=this.nextElementSibling;const open=d.style.display==='none';d.style.display=open?'block':'none';_roulExpanded=open;" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px" title="Roulette breakdown">📊</button><div style="display:none"><div style="display:flex;gap:10px;flex-wrap:wrap;padding:8px 0 6px;border-bottom:1px solid var(--border-blue);margin-bottom:8px"><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Fail model</label><select id="roulFail" onchange="_roulFail=this.value;_roulExpanded=true;render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="flat">Flat 10%/cog</option><option value="escalating">Escalating 10%→47%</option></select></div><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Voucher dist.</label><select id="rdist" onchange="_rdist=this.value;_roulExpanded=true;render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="expected">Expected</option><option value="highrarity">High rarity (observed)</option></select></div></div>`+roulBlock(gearsVal,rdist,base)+`</div>`;
     if(s.isID23)extra=`<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px">📊 show outcome breakdown ▾</button><div style="display:none">`+id23Block(gearsVal,base,nodeWasteful,nodeOstentatious,nodeCb59)+`</div>`;
     if(s.id===35){const nt=NUT[parseInt(gearsVal)]||NUT[6];extra=`<div class="svc-info">P(0 proc): ${(nt.p0*100).toFixed(1)}% · P(1 proc): ${(nt.p1*100).toFixed(1)}% · P(2 procs): ${(nt.p2*100).toFixed(1)}%</div>`+lbBtn('id35','how this is calculated');}
     const TIER_DESCS={'S+':'Best ceiling services — these define the run.','S':'Strong picks — take if S+ isn\'t offered.','A':'Solid value — good when S/S+ aren\'t available.','B':'Interchangeable — pick whatever\'s offered.','C':'Low value — only if nothing better is available.','F':'Skip — negative or negligible EV.'};
@@ -1057,7 +1065,7 @@ function render(){
     }
   });
 
-  const roulFailModelFoot=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
+  const roulFailModelFoot=document.getElementById('roulFail')?_roulFail:'flat';
   const roulFootEl=document.getElementById('roul-footnote');
   if(roulFootEl){
     roulFootEl.innerHTML=roulFailModelFoot==='escalating'
@@ -1068,6 +1076,15 @@ function render(){
   // ── Reroll recommendation ──────────────────────────────────────────────
 
   updateVerdict();
+
+  // Restore roulette expanded state
+  if(_roulExpanded){
+    const roulCard=tbody.querySelector('.svc-row-roulette');
+    if(roulCard){
+      const detail=roulCard.querySelector('div[style*="display:none"]');
+      if(detail) detail.style.display='block';
+    }
+  }
   }catch(e){console.error('render() error:',e);}
 }
 
