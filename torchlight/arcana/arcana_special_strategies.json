@@ -3,7 +3,7 @@
   "updated": "2026-06-14",
   "defaultByBoard": {
     "special1": "Special1_Payload_First",
-    "special2": "Special2_Bank_And_Cross",
+    "special2": "Special2_Chest_Zone_Fill",
     "special3": "Special3_RainbowRed_HighCeiling"
   },
   "boards": {
@@ -209,134 +209,42 @@
     },
     "special2": {
       "label": "Special Board 2",
-      "summary": "Board 2 is wall-access-gated and heavily affected by starting hand size. With realistic 4–6 starting cards, Bank & Cross is the default. Unlike Board 1, staging does not freely improve EV because delay can weaken the upgrade/access balance. At 7+ cards or with strong confusion-card setup, the board becomes much more premium and Aggro Cross can compete.",
+      "summary": "Corrected 60-tile Special Board 2: the trap wall now opens directly into the chest zone. Validation favored decisive chest-zone entry over over-banking red upgrades.",
       "strategies": [
-        {
-          "id": "Special2_Bank_And_Cross",
-          "label": "Special 2: Bank & Cross",
-          "kicker": "Realistic default",
-          "summary": "Default Board 2 route for realistic 4–6 starting-card runs. Bank red upgrades, preserve enough access to cross, then cash the late chest zone. The wall is the run.",
-          "rules": {
-            "board2Enabled": true,
-            "targetUpgradeCards": 7,
-            "minUpgradeCardsBeforeWall": 4,
-            "minChestsAfterWall": 4,
-            "wallLifeBuffer": 0,
-            "allowSurvivalWallCross": true,
-            "survivalWallMinLife": 4,
-            "survivalWallMinUpgrades": 4,
-            "maxLeftUpgradesBeforeSurvivalCross": 2,
-            "crossScoreThreshold": 35,
-            "wallTrapLifeCost": 18,
-            "upgradeCardInventoryValue": 10,
-            "upgradeTileValue": 28,
-            "upgradeDeficitBonus": 5,
-            "handCardSpendPenalty": 4,
-            "preWallMoveCardPreservePenalty": 14,
-            "desiredWallPackageScore": 18,
-            "weakWallPackageUpgradePenalty": 10,
-            "movementTileValue": 8,
-            "preWallMovementBonus": 10,
-            "lifeTileValue": 6,
-            "desiredLifeForWall": 4,
-            "lowLifeBonus": 16,
-            "wallProgressValue": 24,
-            "trapPenalty": 9,
-            "blockedWallPenalty": 90,
-            "preWallEnterBlockedPenalty": 90,
-            "chestSlotValue": 16,
-            "chestRarityMultiplier": 0.35,
-            "heldUpgradeChestBonus": 4,
-            "purpleChestBonus": 5,
-            "premiumChestBonus": 10,
-            "safeGapValue": 4,
-            "emptyValue": -6,
-            "stopScore": -40,
-            "upgradeUseMode": "future_first",
-            "handManagement": {
-              "enabled": true,
-              "principle": "Movement cards are access; red upgrade cards are payoff. Extra movement cards can clog the hand.",
-              "targetMovementBeforeWall": "keep only enough movement to solve access or wall crossing",
-              "redUpgradePriority": "red upgrade cards are preferred payoff slots once access is adequate",
-              "doNotOverPreserveMovement": true,
-              "testedHeavyHandPressure": "underperformed in 1,000-run directional test; current default keeps this as guidance, not a hard penalty"
-            }
-          },
-          "metrics": {
-            "runs": 2000,
-            "targetingModel": "highest eligible rarity first, random within bucket",
-            "avgValue": 59.4569,
-            "completion7Rate": 0.05,
-            "avgChests": 3.3555,
-            "avgRainbow": 0.397,
-            "wallSuccessRate": 0.822,
-            "avgUpgradeTilesTaken": 4.9715,
-            "avgMapUpgradesUsed": 5.553,
-            "rankByValue": 2,
-            "realistic4to6EV": 52.81,
-            "realistic4to6Rainbow": 0.344,
-            "realistic4to6WallSuccess": 0.784,
-            "perStartingHand": {
-              "source": "arcana_b2_starting_hand_lite_500",
-              "hand4": {
-                "EV": 46.61,
-                "rainbow": 0.296,
-                "wall": 0.754
-              },
-              "hand5": {
-                "EV": 50.6,
-                "rainbow": 0.328,
-                "wall": 0.768
-              },
-              "hand6": {
-                "EV": 61.23,
-                "rainbow": 0.408,
-                "wall": 0.83
-              },
-              "note": "Board 2 is meaningfully hand-size sensitive; 6 cards is much healthier than 4–5, while 7+ is a rare/high-setup case."
-            }
-          },
-          "walkthrough": [
-            {
-              "heading": "Upgrade zone",
-              "steps": [
-                "Bank red upgrade cards first.",
-                "Do not spend all movement just to grab one more upgrade.",
-                "Life and movement tiles matter because the chest zone is behind the wall."
-              ]
-            },
-            {
-              "heading": "Wall",
-              "steps": [
-                "Cross after enough upgrades are banked and life is high enough.",
-                "Board 2 may use survival crossing instead of requiring a perfect deterministic wall solve.",
-                "Do not cross early if too many red upgrades are still easy to collect."
-              ]
-            },
-            {
-              "heading": "Chest zone",
-              "steps": [
-                "Use banked red upgrades on future chest tiles as they enter range.",
-                "Every late chest is a possible conversion target."
-              ]
-            }
-          ]
-        },
         {
           "id": "Special2_Chest_Zone_Fill",
           "label": "Special 2: Chest Zone Fill",
-          "kicker": "Completion focus",
-          "summary": "Cross earlier and fill more chest slots. Lower value ceiling, better 7-chest rate in the test.",
+          "kicker": "Recommended",
+          "summary": "Validated best-EV corrected Board 2 route. Crosses decisively into the immediate chest zone and fills reward bodies instead of over-banking red upgrades.",
           "rules": {
-            "extends": "Special2_Bank_And_Cross",
+            "board2Enabled": true,
+            "boardRole": "cross_then_fill_chests",
+            "coreRule": "Reach the chest zone. Fill bodies. Use upgrades opportunistically.",
             "targetUpgradeCards": 0,
             "minUpgradeCardsBeforeWall": 0,
+            "preferredUpgradeCardsBeforeWall": 0,
+            "minChestsAfterWall": 4,
+            "wallLifeBuffer": 0,
+            "allowSurvivalWallCross": true,
+            "survivalWallMinLife": 3,
             "survivalWallMinUpgrades": 0,
+            "maxLeftUpgradesBeforeSurvivalCross": 99,
             "crossScoreThreshold": -10,
+            "wallTrapLifeCost": 12,
+            "upgradeCardInventoryValue": 0,
             "upgradeTileValue": 4,
             "upgradeDeficitBonus": 0,
-            "upgradeCardInventoryValue": 0,
-            "wallTrapLifeCost": 12,
+            "handCardSpendPenalty": 3,
+            "preWallMoveCardPreservePenalty": 4,
+            "desiredWallPackageScore": 10,
+            "weakWallPackageUpgradePenalty": 0,
+            "movementTileValue": 10,
+            "preWallMovementBonus": 12,
+            "lifeTileValue": 8,
+            "desiredLifeForWall": 3,
+            "lowLifeBonus": 18,
+            "wallProgressValue": 30,
+            "trapPenalty": 7,
             "blockedWallPenalty": 40,
             "preWallEnterBlockedPenalty": 40,
             "chestSlotValue": 18,
@@ -344,104 +252,178 @@
             "heldUpgradeChestBonus": 1,
             "purpleChestBonus": 8,
             "premiumChestBonus": 14,
+            "safeGapValue": 0,
+            "emptyValue": -6,
+            "stopScore": -35,
+            "upgradeUseMode": "opportunistic",
+            "targetingModel": "prioritize chest bodies after the wall; upgrades are bonus, not the primary gate",
             "handManagement": {
               "enabled": true,
-              "principle": "Movement cards are access; red upgrade cards are payoff. Extra movement cards can clog the hand.",
-              "targetMovementBeforeWall": "keep only enough movement to solve access or wall crossing",
-              "redUpgradePriority": "red upgrade cards are preferred payoff slots once access is adequate",
-              "doNotOverPreserveMovement": true,
-              "testedHeavyHandPressure": "underperformed in 1,000-run directional test; current default keeps this as guidance, not a hard penalty"
+              "principle": "Movement is access to the chest zone. Red upgrades are useful, but waiting too long to bank them underperformed on the corrected layout.",
+              "targetMovementBeforeWall": "keep enough movement to cross and reach chests quickly",
+              "redUpgradePriority": "use upgrades opportunistically after chest bodies are secured",
+              "doNotOverPreserveMovement": true
             }
           },
-          "metrics": {
-            "runs": 2000,
-            "targetingModel": "highest eligible rarity first, random within bucket",
-            "avgValue": 52.1698,
-            "completion7Rate": 0.115,
-            "avgChests": 4.2215,
-            "avgRainbow": 0.276,
-            "wallSuccessRate": 0.9505,
-            "avgUpgradeTilesTaken": 2.432,
-            "avgMapUpgradesUsed": 3.9085,
-            "rankByValue": 4,
-            "perStartingHand": {
-              "source": "arcana_b2_starting_hand_lite_500",
-              "hand4": {
-                "EV": 35.39,
-                "rainbow": 0.172,
-                "wall": 0.77
-              },
-              "hand5": {
-                "EV": 48.63,
-                "rainbow": 0.26,
-                "wall": 0.894
-              },
-              "hand6": {
-                "EV": 52.1,
-                "rainbow": 0.276,
-                "wall": 0.946
-              },
-              "note": "Safer wall/completion style, but lower EV because it sacrifices payoff."
+          "walkthrough": [
+            {
+              "heading": "Access phase",
+              "steps": [
+                "Before the wall, prioritize movement and life that help you reach the chest zone.",
+                "Do not wait for a perfect red-upgrade bank. The corrected board removed the empty gap, so chest payoff starts immediately after the trap wall.",
+                "Upgrade tiles before the wall are optional value, not the main gate for this route."
+              ]
+            },
+            {
+              "heading": "Wall timing",
+              "steps": [
+                "Cross decisively when the line is available and non-lethal.",
+                "This route accepts earlier wall entry because the chest zone starts right after the wall.",
+                "Avoid wasting moves before the wall if they do not improve access, life safety, or immediate chest payoff."
+              ]
+            },
+            {
+              "heading": "Chest zone",
+              "steps": [
+                "After the wall, fill chest bodies aggressively. This is where the validated EV came from.",
+                "Use banked upgrades when they have eligible secured chest targets, but do not delay chest collection just to create a perfect upgrade setup.",
+                "Premium chests are still better, but completion and body count matter more here than in the bank-heavy routes."
+              ]
             }
-          }
+          ]
         },
         {
           "id": "Special2_Aggro_Cross",
           "label": "Special 2: Aggro Cross",
-          "kicker": "High-hand variant",
-          "summary": "Variant for unusually large starting hands or high-access/confusion setups. Not the default for normal 4–6 card starts.",
+          "kicker": "High Rainbow",
+          "summary": "Validated high-rainbow/high-median route. Crosses with a smaller bank than traditional Bank & Cross, chasing stronger upgraded outcomes with more variance.",
           "rules": {
             "extends": "Special2_Bank_And_Cross",
-            "targetUpgradeCards": 6,
-            "minUpgradeCardsBeforeWall": 2,
+            "targetUpgradeCards": 5,
+            "minUpgradeCardsBeforeWall": 3,
+            "preferredUpgradeCardsBeforeWall": 4,
             "survivalWallMinUpgrades": 3,
-            "crossScoreThreshold": 20,
-            "wallTrapLifeCost": 16,
-            "wallProgressValue": 28,
+            "crossScoreThreshold": 18,
+            "wallTrapLifeCost": 14,
+            "upgradeCardInventoryValue": 9,
+            "upgradeTileValue": 24,
+            "upgradeDeficitBonus": 3,
+            "wallProgressValue": 30,
             "trapPenalty": 7,
-            "blockedWallPenalty": 70,
+            "blockedWallPenalty": 65,
+            "preWallEnterBlockedPenalty": 60,
+            "chestSlotValue": 20,
+            "heldUpgradeChestBonus": 3,
+            "preWallMoveCardPreservePenalty": 8,
+            "emptyValue": -8
+          },
+          "walkthrough": [
+            {
+              "heading": "Fast bank",
+              "steps": [
+                "This route banks enough red-upgrade payoff to matter, but does not wait for a perfect setup.",
+                "Three to four upgrades can be enough when the wall line is clean.",
+                "Movement that creates wall progress or chest-zone entry is premium."
+              ]
+            },
+            {
+              "heading": "Aggressive cross",
+              "steps": [
+                "Cross earlier than Bank & Cross when the hand solves the wall and the chest zone is immediately reachable.",
+                "The goal is higher-quality converted outcomes, not maximum chest body count.",
+                "Do not cross with no payoff: the route is aggressive, not random."
+              ]
+            },
+            {
+              "heading": "Conversion payoff",
+              "steps": [
+                "Once across, secure chest bodies and spend the bank as soon as eligible targets exist.",
+                "This route validated with better median and rainbow output than the slower bank routes, but lower overall EV than Chest Zone Fill.",
+                "Expect more variance and fewer filled chests than the recommended route."
+              ]
+            }
+          ]
+        },
+        {
+          "id": "Special2_Bank_And_Cross",
+          "label": "Special 2: Bank & Cross",
+          "kicker": "Balanced",
+          "summary": "Balanced banked-upgrade route. Slower than Chest Zone Fill, but keeps the classic Board 2 plan of banking red upgrades before entering the chest zone.",
+          "rules": {
+            "board2Enabled": true,
+            "boardRole": "bank_then_chest_conversion",
+            "coreRule": "Bank upgrades first. Cross cleanly. Convert chests immediately.",
+            "targetUpgradeCards": 6,
+            "minUpgradeCardsBeforeWall": 4,
+            "preferredUpgradeCardsBeforeWall": 5,
+            "minChestsAfterWall": 4,
+            "wallLifeBuffer": 0,
+            "allowSurvivalWallCross": true,
+            "survivalWallMinLife": 4,
+            "survivalWallMinUpgrades": 4,
+            "maxLeftUpgradesBeforeSurvivalCross": 2,
+            "crossScoreThreshold": 30,
+            "wallTrapLifeCost": 16,
+            "upgradeCardInventoryValue": 11,
+            "upgradeTileValue": 30,
+            "upgradeDeficitBonus": 5,
+            "handCardSpendPenalty": 4,
+            "preWallMoveCardPreservePenalty": 12,
+            "desiredWallPackageScore": 18,
+            "weakWallPackageUpgradePenalty": 8,
+            "movementTileValue": 9,
+            "preWallMovementBonus": 10,
+            "lifeTileValue": 7,
+            "desiredLifeForWall": 4,
+            "lowLifeBonus": 18,
+            "wallProgressValue": 26,
+            "trapPenalty": 8,
+            "blockedWallPenalty": 80,
+            "preWallEnterBlockedPenalty": 80,
+            "chestSlotValue": 18,
+            "chestRarityMultiplier": 0.4,
+            "heldUpgradeChestBonus": 4,
+            "purpleChestBonus": 5,
+            "premiumChestBonus": 10,
+            "safeGapValue": 0,
+            "emptyValue": -7,
+            "stopScore": -40,
+            "upgradeUseMode": "future_first",
+            "targetingModel": "banked red upgrade cards convert owned chest slots after crossing",
             "handManagement": {
               "enabled": true,
-              "principle": "Movement cards are access; red upgrade cards are payoff. Extra movement cards can clog the hand.",
-              "targetMovementBeforeWall": "keep only enough movement to solve access or wall crossing",
-              "redUpgradePriority": "red upgrade cards are preferred payoff slots once access is adequate",
-              "doNotOverPreserveMovement": true,
-              "testedHeavyHandPressure": "underperformed in 1,000-run directional test; current default keeps this as guidance, not a hard penalty"
+              "principle": "Movement cards are access; red upgrade cards are payoff. Keep enough movement to solve the wall, but do not overfill the hand with dead access.",
+              "targetMovementBeforeWall": "keep only enough movement to solve chest access or wall crossing",
+              "redUpgradePriority": "red upgrade cards are preferred payoff slots once wall access is adequate",
+              "doNotOverPreserveMovement": true
             }
           },
-          "metrics": {
-            "runs": 2000,
-            "targetingModel": "highest eligible rarity first, random within bucket",
-            "avgValue": 60.1087,
-            "completion7Rate": 0.05,
-            "avgChests": 3.1865,
-            "avgRainbow": 0.4075,
-            "wallSuccessRate": 0.762,
-            "avgUpgradeTilesTaken": 4.95,
-            "avgMapUpgradesUsed": 5.0045,
-            "rankByValue": 1,
-            "realistic4to6EV": 51.91,
-            "highHandNote": "At 8 starting cards, Aggro edged Bank in the test, but 8-card starts are not baseline realistic.",
-            "perStartingHand": {
-              "source": "arcana_b2_starting_hand_lite_500",
-              "hand4": {
-                "EV": 45.42,
-                "rainbow": 0.294,
-                "wall": 0.676
-              },
-              "hand5": {
-                "EV": 50.1,
-                "rainbow": 0.334,
-                "wall": 0.706
-              },
-              "hand6": {
-                "EV": 60.2,
-                "rainbow": 0.404,
-                "wall": 0.778
-              },
-              "note": "Close to Bank at 4–6, but Bank wins the realistic baseline; Aggro is mainly for high-hand/high-access starts."
+          "walkthrough": [
+            {
+              "heading": "Bank phase",
+              "steps": [
+                "Before the wall, prioritize red upgrade cards and the movement needed to cross.",
+                "Four banked upgrades is the normal floor; five or more is preferred when available.",
+                "Do not over-collect movement. Movement is access; red upgrades are the payoff."
+              ]
+            },
+            {
+              "heading": "Wall timing",
+              "steps": [
+                "Cross when you have enough banked upgrades, enough life, and a deterministic or survival-safe wall line.",
+                "This route is more patient than Chest Zone Fill and less aggressive than Aggro Cross.",
+                "Do not wait forever for a perfect seven-upgrade bank if the chest zone is already available."
+              ]
+            },
+            {
+              "heading": "Chest zone",
+              "steps": [
+                "After the wall, secure chest targets so the banked upgrades have something to convert.",
+                "Spend upgrade cards as soon as they have eligible secured chest targets.",
+                "This route is the classic balanced Board 2 plan, but validation showed it is no longer the top EV default on the corrected layout."
+              ]
             }
-          }
+          ]
         }
       ],
       "startingHandImpact": {

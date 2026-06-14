@@ -207,290 +207,237 @@
       }
     },
     {
-      "id": "Special2_Bank_And_Cross",
-      "title": "Special 2: Bank & Cross",
-      "kicker": "Realistic Default",
-      "meta": "Board 2 / 4–6 card starts",
-      "cardSummary": "Default for realistic 4–6 card Board 2 starts. Bank red upgrades, preserve enough access, then cross decisively.",
-      "profile": "Special Board 2 is wall-access-gated and starting-hand sensitive. With realistic 4–6 starting cards, Bank & Cross is the default. Unlike Board 1, staging does not freely improve EV because every delay can weaken the upgrade/access balance. The wall is still the run: cross it and the board has premium payoff; fail it and chest value can be near-zero.",
+      "id": "Special2_Chest_Zone_Fill",
+      "title": "Special 2: Chest Zone Fill",
+      "kicker": "Recommended",
+      "meta": "Board 2 / validated corrected 60-tile route",
+      "cardSummary": "Validated best-EV corrected Board 2 route. Crosses decisively into the immediate chest zone and fills reward bodies instead of over-banking red upgrades.",
+      "profile": "Chest Zone Fill is the validated default for corrected Board 2. Because the empty post-wall gap is gone, reaching the chest zone quickly and filling bodies beat over-banking red upgrades in the full validation pass.",
       "notes": [
         [
-          "Board shape",
-          "Red upgrades first, trap wall second, chest zone last."
+          "Validation result",
+          "Best EV in the corrected 60-tile validation pass."
         ],
         [
-          "Hand-size impact",
-          "Board 2 is meaningfully hand-size sensitive; 6 cards is much healthier than 4–5, while 7+ is a rare/high-setup case."
+          "Core rule",
+          "Reach the chest zone. Fill bodies. Use upgrades opportunistically."
         ],
         [
-          "Starting hand size EV",
-          "Hand 4: EV 46.61 / rainbow 0.296 / wall 75.4%. Hand 5: EV 50.60 / rainbow 0.328 / wall 76.8%. Hand 6: EV 61.23 / rainbow 0.408 / wall 83.0%."
+          "Why it wins",
+          "The chest zone starts immediately after the trap wall, so body count and access matter more than waiting for a perfect upgrade bank."
         ],
         [
-          "Main question",
-          "How many red upgrades can you bank before the wall without bricking movement?"
+          "Tradeoff",
+          "Lower rainbow rate than Aggro Cross, but much better total EV and 7-chest completion."
         ],
         [
-          "Crossing logic",
-          "Uses deterministic wall solve when available, but can use survival crossing after enough upgrades/life are banked."
-        ],
-        [
-          "Upgrade logic",
-          "Banked red upgrade cards are used on future chest tiles in the late chest zone."
-        ],
-        [
-          "Upgrade targeting",
-          "Banked red upgrades target the highest eligible future chest rarity tier, random within that tier."
-        ],
-        [
-          "Validation",
-          "Corrected targeting test: strong value route, but Aggro Cross narrowly ranked higher by average value."
-        ],
-        [
-          "Starting hand",
-          "4–6 starting cards are the realistic baseline. In this band, Bank & Cross is the default."
-        ],
-        [
-          "High-hand caveat",
-          "7+ cards sharply improves Board 2 EV, but those starts are rare or confusion-card dependent."
-        ],
-        [
-          "Wall framing",
-          "The wall is the run. Wall success tests near ~67–70 EV; wall failure can be near-zero."
-        ],
-        [
-          "Hand pressure",
-          "Movement cards are access, red upgrades are payoff. Keep enough movement to cross; do not let extra movement crowd out red upgrades."
-        ],
-        [
-          "Board 1 contrast",
-          "Board 1 can stage freely because early chests are already owned value. Board 2 must preserve upgrade payload and access."
-        ],
-        [
-          "Staging test",
-          "Life-first staging improved wall success but did not beat Bank/ForceCross EV in 4–6 starts."
-        ],
-        [
-          "Final rule",
-          "Bank first. Cross decisively."
+          "Use case",
+          "Default Board 2 route for most runs."
         ]
       ],
-      "useWhen": "Use for normal Board 2 starts with 4–6 cards.",
-      "avoidWhen": "Avoid treating this as guaranteed premium if your wall access is weak. For rare 7+ card/high-access starts, compare Aggro Cross.",
+      "useWhen": "Use as the default Special Board 2 route.",
+      "avoidWhen": "Avoid only when you specifically want higher rainbow/median outcomes and accept lower total EV.",
       "walkthrough": [
         {
-          "heading": "Starting hand check",
+          "heading": "Access phase",
           "steps": [
-            "4–6 cards: play Bank & Cross as the default.",
-            "7+ cards or strong confusion setup: Board 2 becomes much more premium; Aggro Cross may compete.",
-            "Do not evaluate Board 2 EV without noting starting hand size."
+            "Before the wall, prioritize movement and life that help you reach the chest zone.",
+            "Do not wait for a perfect red-upgrade bank. The corrected board removed the empty gap, so chest payoff starts immediately after the trap wall.",
+            "Upgrade tiles before the wall are optional value, not the main gate for this route."
           ]
         },
         {
-          "heading": "Upgrade zone",
+          "heading": "Wall timing",
           "steps": [
-            "Bank red upgrades as payoff.",
-            "Keep movement only when it solves upgrade access, wall access, or late chest-zone access.",
-            "Remember every extra movement card competes with a red upgrade card."
-          ]
-        },
-        {
-          "heading": "Wall",
-          "steps": [
-            "Prioritize wall success. The trap wall is not guaranteed.",
-            "If you cross, the board acts like a premium special board.",
-            "If you fail, the early zone may produce little or no chest value."
+            "Cross decisively when the line is available and non-lethal.",
+            "This route accepts earlier wall entry because the chest zone starts right after the wall.",
+            "Avoid wasting moves before the wall if they do not improve access, life safety, or immediate chest payoff."
           ]
         },
         {
           "heading": "Chest zone",
           "steps": [
-            "Spend banked red upgrades into late chests.",
-            "Upgrade cards target highest eligible rarity first, random within that tier.",
-            "After wall access is solved, payoff comes from converting chest-zone targets."
+            "After the wall, fill chest bodies aggressively. This is where the validated EV came from.",
+            "Use banked upgrades when they have eligible secured chest targets, but do not delay chest collection just to create a perfect upgrade setup.",
+            "Premium chests are still better, but completion and body count matter more here than in the bank-heavy routes."
           ]
         }
       ],
       "metrics": {
-        "perStartingHand": {
-          "source": "arcana_b2_starting_hand_lite_500",
-          "hand4": {
-            "EV": 46.61,
-            "rainbow": 0.296,
-            "wall": 0.754
-          },
-          "hand5": {
-            "EV": 50.6,
-            "rainbow": 0.328,
-            "wall": 0.768
-          },
-          "hand6": {
-            "EV": 61.23,
-            "rainbow": 0.408,
-            "wall": 0.83
-          },
-          "note": "Board 2 is meaningfully hand-size sensitive; 6 cards is much healthier than 4–5, while 7+ is a rare/high-setup case."
-        }
-      }
-    },
-    {
-      "id": "Special2_Chest_Zone_Fill",
-      "title": "Special 2: Chest Zone Fill",
-      "kicker": "Completion focus",
-      "meta": "Board 2 7-chest route",
-      "cardSummary": "Crosses earlier and fills more chest slots. Lower value ceiling, better 7-chest rate in testing.",
-      "profile": "A completion-oriented Board 2 route. It sacrifices some red-upgrade banking to reach and fill the late chest zone more often.",
-      "notes": [
-        [
-          "Strength",
-          "Best 7-chest rate among the Board 2 tested strategies."
+        "source": "board2_validation_results",
+        "layout": "corrected_60_tile_no_post_wall_gap",
+        "runsPerStartingHand": 10000,
+        "testedStartingHands": [
+          4,
+          5,
+          6
         ],
-        [
-          "Hand-size impact",
-          "Safer wall/completion style, but lower EV because it sacrifices payoff."
-        ],
-        [
-          "Starting hand size EV",
-          "Hand 4: EV 35.39 / rainbow 0.172 / wall 77.0%. Hand 5: EV 48.63 / rainbow 0.260 / wall 89.4%. Hand 6: EV 52.10 / rainbow 0.276 / wall 94.6%."
-        ],
-        [
-          "Weakness",
-          "Lower average value and lower rainbow rate than Bank & Cross."
-        ],
-        [
-          "Use case",
-          "Good when chest count matters more than upgrade value."
-        ],
-        [
-          "Hand pressure",
-          "This route accepts lower upgrade banking to reach/fill the chest zone more often."
-        ]
-      ],
-      "useWhen": "Use when you want more 7-chest completions on Board 2.",
-      "avoidWhen": "Avoid when you want the highest expected value.",
-      "metrics": {
-        "perStartingHand": {
-          "source": "arcana_b2_starting_hand_lite_500",
-          "hand4": {
-            "EV": 35.39,
-            "rainbow": 0.172,
-            "wall": 0.77
-          },
-          "hand5": {
-            "EV": 48.63,
-            "rainbow": 0.26,
-            "wall": 0.894
-          },
-          "hand6": {
-            "EV": 52.1,
-            "rainbow": 0.276,
-            "wall": 0.946
-          },
-          "note": "Safer wall/completion style, but lower EV because it sacrifices payoff."
-        }
+        "totalRuns": 30000,
+        "EV": 30.134,
+        "median": 30.2,
+        "completion7Rate": 0.3267,
+        "deathRate": 0.0,
+        "wallCrossRate": 0.9624,
+        "avgRainbow": 0.417,
+        "avgChests": 5.383,
+        "rankByEV": 1,
+        "note": "Validated best overall EV and chest completion on corrected Board 2."
       }
     },
     {
       "id": "Special2_Aggro_Cross",
       "title": "Special 2: Aggro Cross",
-      "kicker": "High-Hand Variant",
-      "meta": "Board 2 / 7+ card or high-access setup",
-      "cardSummary": "Aggressive Board 2 variant for rare 7+ card, high-access, or confusion-card starts. Not baseline default.",
-      "profile": "Aggro Cross improves when you enter Board 2 with unusually strong hand size/access. In realistic 4–6 starts, Bank & Cross is slightly better. At 7–8 starting cards, Board 2 EV rises sharply and Aggro can compete or edge ahead.",
+      "kicker": "High Rainbow",
+      "meta": "Board 2 / validated corrected 60-tile route",
+      "cardSummary": "Validated high-rainbow/high-median route. Crosses with a smaller bank than traditional Bank & Cross, chasing stronger upgraded outcomes with more variance.",
+      "profile": "Aggro Cross is the high-rainbow Board 2 route. It did not beat Chest Zone Fill on total EV, but it validated with better median and much higher rainbow output.",
       "notes": [
         [
-          "Difference",
-          "Lower upgrade banking requirement than Bank & Cross."
+          "Validation result",
+          "Second by EV, but strongest visible route for rainbow output and median value."
         ],
         [
-          "Hand-size impact",
-          "Close to Bank at 4–6, but Bank wins the realistic baseline; Aggro is mainly for high-hand/high-access starts."
+          "Core rule",
+          "Bank enough to matter, then cross earlier than the classic bank route."
         ],
         [
-          "Starting hand size EV",
-          "Hand 4: EV 45.42 / rainbow 0.294 / wall 67.6%. Hand 5: EV 50.10 / rainbow 0.334 / wall 70.6%. Hand 6: EV 60.20 / rainbow 0.404 / wall 77.8%."
+          "Why it exists",
+          "Good when you want upgraded outcomes instead of maximum chest body count."
         ],
         [
           "Tradeoff",
-          "Faster access to chests, slightly lower average value."
+          "Higher rainbow rate, lower 7-chest completion, lower total EV than Chest Zone Fill."
         ],
         [
           "Use case",
-          "Good when the wall package is strong but upgrade-zone routing is poor."
-        ],
-        [
-          "Validation",
-          "Corrected targeting test: ranked #1 by average value in the 2,000-run Board 2 retest."
-        ],
-        [
-          "Hand pressure",
-          "Every stored movement card competes with a red upgrade card. Movement is access, not payoff."
-        ],
-        [
-          "Rule of thumb",
-          "Keep enough movement to cross/reach chests; do not hoard weak or extra movement if red upgrades are available."
-        ],
-        [
-          "Retest",
-          "Heavy hand-pressure penalties underperformed. The current default keeps hand pressure as guidance rather than a hard dump rule."
-        ],
-        [
-          "Default status",
-          "Not the default for realistic 4–6 starts."
-        ],
-        [
-          "Starting hand",
-          "Use this more seriously with 7+ starting cards, strong access, or confusion-card setup."
+          "Greedier conversion route when the wall line is clean."
         ]
       ],
-      "useWhen": "Use as the current default Board 2 route when you want the highest corrected-test value.",
-      "avoidWhen": "Avoid when safe red upgrade tiles are still easy to collect.",
+      "useWhen": "Use when the hand has a clean crossing line and enough upgrade payoff to chase better converted chests.",
+      "avoidWhen": "Avoid when you want the highest average return or need chest completion consistency.",
       "walkthrough": [
         {
-          "heading": "Upgrade zone",
+          "heading": "Fast bank",
           "steps": [
-            "Prioritize red upgrades as the payoff cards.",
-            "Take movement only when it solves access to more upgrades, the wall, or the chest zone.",
-            "Do not let weak movement cards crowd out red upgrade cards."
+            "This route banks enough red-upgrade payoff to matter, but does not wait for a perfect setup.",
+            "Three to four upgrades can be enough when the wall line is clean.",
+            "Movement that creates wall progress or chest-zone entry is premium."
           ]
         },
         {
-          "heading": "Wall",
+          "heading": "Aggressive cross",
           "steps": [
-            "Cross once you have enough upgrade payoff and enough life/access.",
-            "Board 2 does not want infinite banking; hand pressure can make earlier crossing correct.",
-            "The wall behavior itself is the same as Board 1."
+            "Cross earlier than Bank & Cross when the hand solves the wall and the chest zone is immediately reachable.",
+            "The goal is higher-quality converted outcomes, not maximum chest body count.",
+            "Do not cross with no payoff: the route is aggressive, not random."
+          ]
+        },
+        {
+          "heading": "Conversion payoff",
+          "steps": [
+            "Once across, secure chest bodies and spend the bank as soon as eligible targets exist.",
+            "This route validated with better median and rainbow output than the slower bank routes, but lower overall EV than Chest Zone Fill.",
+            "Expect more variance and fewer filled chests than the recommended route."
+          ]
+        }
+      ],
+      "metrics": {
+        "source": "board2_validation_results",
+        "layout": "corrected_60_tile_no_post_wall_gap",
+        "runsPerStartingHand": 10000,
+        "testedStartingHands": [
+          4,
+          5,
+          6
+        ],
+        "totalRuns": 30000,
+        "EV": 28.76,
+        "median": 34.8,
+        "completion7Rate": 0.1225,
+        "deathRate": 0.0,
+        "wallCrossRate": 0.6785,
+        "avgRainbow": 0.732,
+        "avgChests": 3.324,
+        "rankByEV": 2,
+        "note": "Validated high-median and high-rainbow route, but lower total EV than Chest Zone Fill."
+      }
+    },
+    {
+      "id": "Special2_Bank_And_Cross",
+      "title": "Special 2: Bank & Cross",
+      "kicker": "Balanced",
+      "meta": "Board 2 / validated corrected 60-tile route",
+      "cardSummary": "Balanced banked-upgrade route. Slower than Chest Zone Fill, but keeps the classic Board 2 plan of banking red upgrades before entering the chest zone.",
+      "profile": "Bank & Cross is the balanced classic route. It preserves the old Board 2 identity of banking red upgrades before crossing, but validation showed it is no longer the best default after the layout correction.",
+      "notes": [
+        [
+          "Validation result",
+          "Kept as a balanced alternative, but it ranked below Chest Zone Fill and Aggro Cross by EV."
+        ],
+        [
+          "Core rule",
+          "Bank upgrades first. Cross cleanly. Convert chests immediately."
+        ],
+        [
+          "Why it exists",
+          "Useful when you naturally collect a strong upgrade bank before the wall."
+        ],
+        [
+          "Tradeoff",
+          "More patient than Aggro Cross, but can under-fill chest bodies."
+        ],
+        [
+          "Use case",
+          "Good when the board gives upgrades naturally without delaying chest-zone access."
+        ]
+      ],
+      "useWhen": "Use when you naturally bank several red upgrades before the wall and still have clean access.",
+      "avoidWhen": "Avoid when waiting for more upgrades delays a clear chest-zone entry.",
+      "walkthrough": [
+        {
+          "heading": "Bank phase",
+          "steps": [
+            "Before the wall, prioritize red upgrade cards and the movement needed to cross.",
+            "Four banked upgrades is the normal floor; five or more is preferred when available.",
+            "Do not over-collect movement. Movement is access; red upgrades are the payoff."
+          ]
+        },
+        {
+          "heading": "Wall timing",
+          "steps": [
+            "Cross when you have enough banked upgrades, enough life, and a deterministic or survival-safe wall line.",
+            "This route is more patient than Chest Zone Fill and less aggressive than Aggro Cross.",
+            "Do not wait forever for a perfect seven-upgrade bank if the chest zone is already available."
           ]
         },
         {
           "heading": "Chest zone",
           "steps": [
-            "Cash banked red upgrades on the late chest zone.",
-            "Upgrade cards target the highest eligible chest tier first, random inside that tier.",
-            "If hand pressure was managed well, most stored cards should now be payoff cards, not dead access."
+            "After the wall, secure chest targets so the banked upgrades have something to convert.",
+            "Spend upgrade cards as soon as they have eligible secured chest targets.",
+            "This route is the classic balanced Board 2 plan, but validation showed it is no longer the top EV default on the corrected layout."
           ]
         }
       ],
       "metrics": {
-        "perStartingHand": {
-          "source": "arcana_b2_starting_hand_lite_500",
-          "hand4": {
-            "EV": 45.42,
-            "rainbow": 0.294,
-            "wall": 0.676
-          },
-          "hand5": {
-            "EV": 50.1,
-            "rainbow": 0.334,
-            "wall": 0.706
-          },
-          "hand6": {
-            "EV": 60.2,
-            "rainbow": 0.404,
-            "wall": 0.778
-          },
-          "note": "Close to Bank at 4–6, but Bank wins the realistic baseline; Aggro is mainly for high-hand/high-access starts."
-        }
+        "source": "board2_validation_results",
+        "layout": "corrected_60_tile_no_post_wall_gap",
+        "runsPerStartingHand": 10000,
+        "testedStartingHands": [
+          4,
+          5,
+          6
+        ],
+        "totalRuns": 30000,
+        "EV": 26.477,
+        "median": 32.6,
+        "completion7Rate": 0.0838,
+        "deathRate": 0.0,
+        "wallCrossRate": 0.5993,
+        "avgRainbow": 0.711,
+        "avgChests": 2.804,
+        "rankByEV": 4,
+        "note": "Balanced classic bank route; kept as a visible alternative, but no longer default."
       }
     },
     {
