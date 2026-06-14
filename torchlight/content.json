@@ -3,9 +3,11 @@
     {
       "type": "season",
       "eyebrow": "SS12 · Lunaria",
-      "title": "Season Countdown",
+      "title": "Season 12 — Lunaria",
+      "blurb": "The clockwork city stirs. Farm your heart out.",
       "seasonStartISO": "2026-04-16T19:00:00-07:00",
-      "blurb": "Lunaria is live. Next season info and countdown will appear here when announced.",
+      "seasonEndISO": "2026-07-15T19:00:00-07:00",
+      "nextSeasonISO": "2026-07-16T19:00:00-07:00",
       "link": null
     },
     {
@@ -33,20 +35,15 @@
       "linkLabel": "Open Calculator"
     }
   ],
-  "youtube_official": [
+  "officialYoutube": [
     {
-    "title": "S12 Lunaria Reveal",
-    "link": "https://www.youtube.com/watch?v=KEnNJp_yyro"
-  },
-  {
-    "title": "S12 Crow's Corner + Developer Q&A",
-    "link": "https://www.youtube.com/watch?v=wcJmLmCSMjg"
-  }
-  ],
-  "youtube_kythik": [
+      "title": "S12 Lunaria Reveal",
+      "link": "https://www.youtube.com/watch?v=KEnNJp_yyro"
+    },
     {
-      "title": "My TLI Highlight",
-      "link": "https://www.youtube.com/watch?v="
+      "title": "S12 Crow's Corner + Developer Q&A",
+      "link": "https://www.youtube.com/watch?v=wcJmLmCSMjg"
     }
-  ]
+  ],
+  "youtube": []
 }
