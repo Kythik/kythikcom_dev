@@ -106,6 +106,7 @@
       </div>
       <div class="feat-art-panel" style="${rightStyle}">
         <div class="feat-art-overlay"></div>
+        <div style="position:absolute;inset:0;background:linear-gradient(to right, rgba(4,8,15,.95) 0%, rgba(4,8,15,.4) 30%, transparent 60%);z-index:2;pointer-events:none;"></div>
       </div>`;
   }
 
