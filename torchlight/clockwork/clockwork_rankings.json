@@ -1,249 +1,397 @@
 {
+  "version": "clockwork_service_rankings_v1_2",
+  "generated_from": "clockwork_v12_site_json_handoff.md",
+  "default_pool": "chinese_doc_as_is",
   "ceiling_fe": 2929,
-  "ceiling_note": "Theoretical perfect run: 7 compass-type Rainbow cogwheels, SSS rating + clockwork_51, max Alice procs. Probability ~0; used as 100% reference only.",
+  "ceiling_note": "Theoretical perfect run: 7 compass-type Rainbow cogwheels, SSS+clockwork_51, max Alice procs. P\u22480; used as 100% reference only.",
   "tier_ranges": {
-    "S+": "942-1653 fe",
-    "S": "305-391 fe",
-    "A": "126-219 fe",
-    "B": "50-94 fe",
-    "C": "10-49 fe",
-    "F": "\u22649 fe (or negative under sensitivity models)"
+    "S+": "942\u20131653 fe \u2014 best ceiling services, define the run",
+    "S": "305\u2013391 fe \u2014 strong picks, take if S+ not offered",
+    "A": "127\u2013219 fe \u2014 solid value, good when S/S+ unavailable",
+    "B": "50\u201394 fe \u2014 interchangeable, pick whatever is offered",
+    "C": "10\u201349 fe \u2014 low value, only if nothing better available",
+    "F": "\u22649 fe or negative \u2014 skip"
   },
+  "reroll_thresholds": {
+    "first_offer_keep_fe": 106.83,
+    "second_offer_keep_fe": 86.17,
+    "note": "First offer: keep if best option \u2265 106.83 fe (ID23 or better). Second offer: keep if best \u2265 86.17 fe (ID19/Dolls or better). Final offer: take best."
+  },
+  "player_rule": {
+    "first_offer": "Keep ID23 or better. Otherwise reroll.",
+    "second_offer": "Keep ID19 / Dolls' Hunting Ground or better. Otherwise reroll.",
+    "final_offer": "Take best available.",
+    "roulette_caveat": "EV-max: keep Roulette. Stable farming: skip if variance is a problem."
+  },
+  "service_offer_structure": {
+    "offers_per_game": 3,
+    "services_per_offer": 3,
+    "no_duplicates_per_offer": true,
+    "reroll_replaces_all_3": true,
+    "services_returned_to_pool_before_next_offer": true,
+    "alice6_rerolls": 2,
+    "base_rerolls": 0
+  },
+  "cog_count_assumption": {
+    "pre_selection_expected_cogs": 6,
+    "note": "5/6/7 cogs equally likely. Services selected before cog count revealed. EV uses expected 6."
+  },
+  "warnings": [
+    "Roulette is positive EV only under flat 10% fail model. See sensitivity_only entry for escalating model.",
+    "Chinese service pool may or may not include +60% Gold/Rainbow service-frequency nodes; used as-is by default.",
+    "ID19 and ID27 corrected in v1.2 from global 15% proc to 15% per completed cog.",
+    "Do not use v0.9/v1.0 ranking data \u2014 predates ID19/ID27 per-cog correction."
+  ],
   "services": [
     {
       "id": 31,
       "rank": 1,
       "name": "Roses in the No-Man's Land",
-      "effect": "All monsters in the stage are replaced with Low-Level Doll Employees. There are only 7 Rainbow Cogwheels in this stage.",
-      "fe": 1652.95,
-      "pct": 56.43,
-      "tier": "S+"
+      "mean_delta_fe": 1652.95,
+      "pct_of_ceiling": 56.43,
+      "tier": "S+",
+      "decision": "keep_on_first_offer",
+      "notes": [],
+      "mechanic_flags": []
     },
     {
       "id": 35,
       "rank": 2,
       "name": "Nut Trick",
-      "effect": "Upon obtaining 3 Cogwheel Vouchers of the same rarity in a row, change the rarity of these 3 Cogwheel Vouchers to Rainbow.",
-      "fe": 942.5,
-      "pct": 32.18,
-      "tier": "S+"
+      "mean_delta_fe": 942.5,
+      "pct_of_ceiling": 32.18,
+      "tier": "S+",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "Assume 100% of possible same-rarity 3-cog combos made. Two triples possible if 6 same-rarity cogs exist."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 33,
       "rank": 3,
       "name": "Clockwork Ballet Heist",
-      "effect": "When completing the last Operation Cogwheel in the stage, 3 Runaway Dancers will appear. You obtain 1 Cogwheel Voucher of a random rarity, up to Red, for each Runaway Dancer defeated.",
-      "fe": 391.28,
-      "pct": 13.36,
-      "tier": "S"
+      "mean_delta_fe": 391.28,
+      "pct_of_ceiling": 13.36,
+      "tier": "S",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "3 vouchers on last cog; each voucher 50/50 Orange or Red."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 30,
       "rank": 4,
       "name": "Clockwork Roulette",
-      "effect": "Every time you obtain a Cogwheel Voucher, you also obtain 1 additional Cogwheel Voucher of a random rarity, and +1 to the number of Cogwheel Vouchers you obtain next time. +10% chance to immediately lose the challenge when starting Operation Cogwheel. When defeated, you lose all Cogwheel Vouchers and this Member Service expires.",
-      "fe": 384.68,
-      "pct": 13.13,
-      "tier": "S"
+      "mean_delta_fe": 384.68,
+      "pct_of_ceiling": 13.13,
+      "tier": "S",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "Positive EV only under flat 10% fail model. If fail escalates this becomes negative."
+      ],
+      "mechanic_flags": [
+        "high_variance",
+        "flat_fail_default"
+      ]
     },
     {
       "id": 32,
       "rank": 5,
       "name": "Bloody Mary",
-      "effect": "After Clockwork Ballet Games begin, immediately obtain 3-5 Cogwheel Vouchers (Purple or above). Failure to submit Cogwheel Vouchers causes you to lose the challenge. Default rating SS, default time 15s, but Bloody Mary starts chasing after 3s.",
-      "fe": 344.17,
-      "pct": 11.75,
-      "tier": "S"
+      "mean_delta_fe": 344.17,
+      "pct_of_ceiling": 11.75,
+      "tier": "S",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "3\u20135 Purple+ vouchers immediately. SS rating, 15s default, Mary chases after 3s."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 28,
       "rank": 6,
       "name": "All Tabs on Me",
-      "effect": "1-2 Rainbow Cogwheels appear in the stage. Cogwheel Vouchers can't be exchanged until Operation Cogwheel is fully completed.",
-      "fe": 305.18,
-      "pct": 10.42,
-      "tier": "S"
+      "mean_delta_fe": 305.18,
+      "pct_of_ceiling": 10.42,
+      "tier": "S",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "Upgrades 1\u20132 existing cogs to Rainbow. Does not add extra cogs. 1 vs 2 upgrades split 50/50."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 21,
       "rank": 7,
       "name": "Best Doll Employee",
-      "effect": "A Best Doll Employee appears at start. Upon completing Operation Cogwheel, 20% chance to obtain 1 additional Cogwheel Voucher more likely to be a higher rarity.",
-      "fe": 219.37,
-      "pct": 7.49,
-      "tier": "A"
+      "mean_delta_fe": 219.37,
+      "pct_of_ceiling": 7.49,
+      "tier": "A",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "20% chance per completed cog for extra voucher skewed toward higher rarity."
+      ],
+      "mechanic_flags": [
+        "per_cog_proc"
+      ]
     },
     {
       "id": 20,
       "rank": 8,
       "name": "Triple Combo Bonus",
-      "effect": "Upon completing Operation Cogwheel 3 times in a row within 30s, obtain 2 additional Orange Cogwheel Vouchers.",
-      "fe": 210.6,
-      "pct": 7.19,
-      "tier": "A"
+      "mean_delta_fe": 210.6,
+      "pct_of_ceiling": 7.19,
+      "tier": "A",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "3 completions in 30s \u2192 2 Orange Vouchers. Condition effectively always passed for normal play \u2014 model as 100%."
+      ],
+      "mechanic_flags": [
+        "condition_always_met"
+      ]
     },
     {
       "id": 9,
       "rank": 9,
       "name": "Instant Voucher Cache",
-      "effect": "After Clockwork Ballet Games begin, immediately obtain 2-3 Cogwheel Vouchers (up to Orange).",
-      "fe": 139.37,
-      "pct": 4.76,
-      "tier": "A"
+      "mean_delta_fe": 139.37,
+      "pct_of_ceiling": 4.76,
+      "tier": "A",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "2\u20133 vouchers (up to Orange) immediately at start."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 23,
       "rank": 10,
       "name": "Cogwheel Gambler",
-      "effect": "Upon completing Operation Cogwheel: 40% chance +1 Cogwheel Voucher, 20% chance +2, 5% chance +3, and 10% chance to end the game and exchange all owned Cogwheels immediately.",
-      "fe": 126.76,
-      "pct": 4.33,
-      "tier": "A"
+      "mean_delta_fe": 126.76,
+      "pct_of_ceiling": 4.33,
+      "tier": "A",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "40%/+1, 20%/+2, 5%/+3 vouchers per completion. 10% chance safe early end."
+      ],
+      "mechanic_flags": []
+    },
+    {
+      "id": 19,
+      "rank": 11,
+      "name": "Runaway Dancer Hunt",
+      "mean_delta_fe": 94.32,
+      "pct_of_ceiling": 3.22,
+      "tier": "B",
+      "decision": "keep_on_second_offer",
+      "notes": [
+        "15% chance per completed cog \u2192 Runaway Dancer \u2192 1 Orange Voucher. EV uses expected 6 cogs pre-reveal."
+      ],
+      "mechanic_flags": [
+        "per_cog_proc",
+        "v1_2_corrected"
+      ]
     },
     {
       "id": 29,
-      "rank": 11,
+      "rank": 12,
       "name": "Dolls' Hunting Ground",
-      "effect": "Time gained is doubled at start, and 50% chance to obtain 1 additional Cogwheel Voucher more likely to be higher rarity. Game ends immediately if defeated. Default time 15s, default rating S.",
-      "fe": 93.17,
-      "pct": 3.18,
-      "tier": "B"
+      "mean_delta_fe": 93.17,
+      "pct_of_ceiling": 3.18,
+      "tier": "B",
+      "decision": "keep_on_second_offer",
+      "notes": [
+        "Time doubled at start. 50% per completion \u2192 extra higher-rarity voucher. Death ends run early. Extra voucher pool diluted."
+      ],
+      "mechanic_flags": [
+        "per_cog_proc"
+      ]
     },
     {
       "id": 11,
-      "rank": 12,
-      "name": "All-or-Nothing Rating",
-      "effect": "The stage has 6 Cogwheels. If your rating is below B, you won't obtain any rating effects, but you obtain all rating effects at once when achieving B or higher.",
-      "fe": 81.55,
-      "pct": 2.78,
-      "tier": "B"
-    },
-    {
-      "id": 13,
       "rank": 13,
-      "name": "Booster Drinks",
-      "effect": "There are 2 Booster Drinks in this stage. Touching a Booster Drink drops additional rewards.",
-      "fe": 76.02,
-      "pct": 2.6,
-      "tier": "B"
+      "name": "All-or-Nothing Rating",
+      "mean_delta_fe": 81.55,
+      "pct_of_ceiling": 2.78,
+      "tier": "B",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "6 Cogwheels. Hit B \u2192 jumps to SSS rating."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 8,
       "rank": 14,
       "name": "Dual Rarity Boost",
-      "effect": "After Clockwork Ballet Games begin, +1 rarity for 2 randomly selected Cogwheel(s) in the stage.",
-      "fe": 74.03,
-      "pct": 2.53,
-      "tier": "B"
+      "mean_delta_fe": 74.03,
+      "pct_of_ceiling": 2.53,
+      "tier": "B",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "+1 rarity for 2 randomly selected Cogwheels at start."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 15,
       "rank": 15,
       "name": "Lucky Upgrade + Time",
-      "effect": "Upon completing Operation Cogwheel, 30% chance to +1 rarity for all obtained Cogwheel Vouchers and gain 10s remaining time.",
-      "fe": 66.8,
-      "pct": 2.28,
-      "tier": "B"
+      "mean_delta_fe": 66.8,
+      "pct_of_ceiling": 2.28,
+      "tier": "B",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "30% per completed cog \u2192 that cog's voucher upgrades +1 rarity + 10s. Independent per-cog roll."
+      ],
+      "mechanic_flags": [
+        "per_cog_proc"
+      ]
     },
     {
       "id": 17,
       "rank": 16,
       "name": "Lucky Upgrade",
-      "effect": "Upon completing Operation Cogwheel, 30% chance to +1 rarity for all obtained Cogwheel Vouchers.",
-      "fe": 66.59,
-      "pct": 2.27,
-      "tier": "B"
+      "mean_delta_fe": 66.59,
+      "pct_of_ceiling": 2.27,
+      "tier": "B",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "30% per completed cog \u2192 that cog's voucher upgrades +1 rarity. Independent per-cog roll."
+      ],
+      "mechanic_flags": [
+        "per_cog_proc"
+      ]
     },
     {
       "id": 10,
       "rank": 17,
       "name": "Cogwheel Culling",
-      "effect": "After Clockwork Ballet Games begin, randomly remove 1-2 Cogwheels from the stage and +1 rarity for the remaining Cogwheels.",
-      "fe": 54.93,
-      "pct": 1.88,
-      "tier": "B"
+      "mean_delta_fe": 54.93,
+      "pct_of_ceiling": 1.88,
+      "tier": "C",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "Remove 1\u20132 Cogwheels, remaining all +1 rarity. Paired-delta logic applied."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 16,
       "rank": 18,
       "name": "Rare Bonus Voucher",
-      "effect": "Upon completing Operation Cogwheel, 10% chance to obtain 1 additional Cogwheel Voucher more likely to be a higher rarity.",
-      "fe": 49.06,
-      "pct": 1.67,
-      "tier": "C"
-    },
-    {
-      "id": 2,
-      "rank": 19,
-      "name": "Single Rarity Boost",
-      "effect": "After Clockwork Ballet Games begin, +1 rarity for 1 randomly selected Cogwheel in the stage.",
-      "fe": 36.92,
-      "pct": 1.26,
-      "tier": "C"
-    },
-    {
-      "id": 1,
-      "rank": 20,
-      "name": "Starter Voucher",
-      "effect": "After Clockwork Ballet Games begin, immediately obtain 1 Cogwheel Voucher (Blue).",
-      "fe": 31.83,
-      "pct": 1.09,
-      "tier": "C"
-    },
-    {
-      "id": 3,
-      "rank": 21,
-      "name": "Every-4th Bonus",
-      "effect": "For every 4 Operation Cogwheel completions, obtain 1 additional Blue Cogwheel Voucher.",
-      "fe": 31.57,
-      "pct": 1.08,
-      "tier": "C"
-    },
-    {
-      "id": 14,
-      "rank": 22,
-      "name": "Time Extender",
-      "effect": "There is 1 Time Extender in this stage. Touching a Time Extender drops additional rewards.",
-      "fe": 16.83,
-      "pct": 0.57,
-      "tier": "C"
-    },
-    {
-      "id": 19,
-      "rank": 23,
-      "name": "Runaway Dancer Hunt",
-      "effect": "After completing Operation Cogwheel, 15% chance a Runaway Dancer appears. Defeat it for 1 Orange Cogwheel Voucher.",
-      "fe": 15.72,
-      "pct": 0.54,
-      "tier": "C"
+      "mean_delta_fe": 49.06,
+      "pct_of_ceiling": 1.67,
+      "tier": "C",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "10% chance per completion \u2192 extra higher-rarity voucher."
+      ],
+      "mechanic_flags": [
+        "per_cog_proc"
+      ]
     },
     {
       "id": 27,
-      "rank": 24,
+      "rank": 19,
       "name": "Late-Game Bonus",
-      "effect": "Upon completing Operation Cogwheel, if remaining time is greater than 20s, 15% chance to obtain 1 additional Cogwheel Voucher.",
-      "fe": 6.65,
-      "pct": 0.23,
-      "tier": "F"
+      "mean_delta_fe": 39.9,
+      "pct_of_ceiling": 1.36,
+      "tier": "C",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        ">20s remaining per cog \u2192 15% chance extra voucher. EV uses expected 6 cogs pre-reveal."
+      ],
+      "mechanic_flags": [
+        "per_cog_proc",
+        "v1_2_corrected"
+      ]
+    },
+    {
+      "id": 2,
+      "rank": 20,
+      "name": "Single Rarity Boost",
+      "mean_delta_fe": 36.92,
+      "pct_of_ceiling": 1.26,
+      "tier": "C",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "+1 rarity for 1 randomly selected Cogwheel at start."
+      ],
+      "mechanic_flags": []
+    },
+    {
+      "id": 1,
+      "rank": 21,
+      "name": "Starter Voucher",
+      "mean_delta_fe": 31.83,
+      "pct_of_ceiling": 1.09,
+      "tier": "C",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "Immediately obtain 1 Blue Cogwheel Voucher at start."
+      ],
+      "mechanic_flags": []
+    },
+    {
+      "id": 3,
+      "rank": 22,
+      "name": "Every-4th Bonus",
+      "mean_delta_fe": 31.57,
+      "pct_of_ceiling": 1.08,
+      "tier": "C",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "Every 4 completions \u2192 1 extra Blue Voucher."
+      ],
+      "mechanic_flags": []
+    },
+    {
+      "id": 14,
+      "rank": 23,
+      "name": "Time Extender",
+      "mean_delta_fe": 16.83,
+      "pct_of_ceiling": 0.57,
+      "tier": "C",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "1 Time Extender in stage."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 26,
-      "rank": 25,
+      "rank": 24,
       "name": "Rush Bonus",
-      "effect": "Upon completing Operation Cogwheel, if remaining time is under 20s, 30% chance to obtain 1 additional Cogwheel Voucher.",
-      "fe": 0.0,
-      "pct": 0.0,
-      "tier": "F"
-    },
+      "mean_delta_fe": 0.0,
+      "pct_of_ceiling": 0.0,
+      "tier": "F",
+      "decision": "reroll_if_any_reroll_remains",
+      "notes": [
+        "<20s remaining \u2192 30% extra voucher. Normal-play EV = 0; player does not intentionally slow cogs."
+      ],
+      "mechanic_flags": []
+    }
+  ],
+  "sensitivity_variants": [
     {
       "id": 30,
-      "rank": null,
       "name": "Clockwork Roulette (escalating fail model)",
-      "effect": "Every time you obtain a Cogwheel Voucher, you also obtain 1 additional Cogwheel Voucher of a random rarity, and +1 to the number of Cogwheel Vouchers you obtain next time. +10% chance to immediately lose the challenge when starting Operation Cogwheel. When defeated, you lose all Cogwheel Vouchers and this Member Service expires.",
-      "fe": -136.82,
-      "pct": -4.67,
+      "mean_delta_fe": -136.82,
+      "pct_of_ceiling": -4.67,
       "tier": "F",
-      "sensitivity_only": true
+      "rank": null,
+      "decision": "skip",
+      "sensitivity_only": true,
+      "notes": [
+        "Under escalating fail model (10%\u219247% per cog), EV is negative. Optimal stop at cog 4."
+      ],
+      "mechanic_flags": [
+        "high_variance",
+        "escalating_fail_sensitivity"
+      ]
     }
   ]
 }
