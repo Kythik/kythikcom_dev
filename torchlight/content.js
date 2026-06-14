@@ -66,6 +66,13 @@
   async function init() {
     const data = await fetch('/torchlight/content.json').then(r => r.json()).catch(() => ({}));
 
+    // Hero season subtitle — pulled from first season entry eyebrow
+    const seasonEntry = data.featured && data.featured.find(i => i.type === 'season');
+    if (seasonEntry && seasonEntry.eyebrow) {
+      const hero = document.getElementById('heroSeason');
+      if (hero) hero.textContent = seasonEntry.eyebrow;
+    }
+
     // Featured carousel
     if (data.featured && data.featured.length) {
       KythikCarousel.init({ mountId: 'tliCarousel', items: data.featured, autoRotateMs: 6000 });
