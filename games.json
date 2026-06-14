@@ -28,7 +28,7 @@
       "id": "everquest-legends",
       "name": "EverQuest Legends",
       "shortName": "EQL",
-      "icon": "/images/icons/eql.svg",
+      "icon": "/images/icons/EverquestLegends.png",
       "path": "/everquest-legends/",
       "theme": "everquest-legends.css",
       "status": "upcoming",
