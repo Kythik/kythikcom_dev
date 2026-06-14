@@ -248,3 +248,24 @@
   opacity: 0.8;
   transform: translateY(-1px);
 }
+
+/* ── Active game icon — same as default, no pill ── */
+.header-game-icon-default--active {
+  opacity: 1;
+}
+
+/* ── Collapsed other-game icons — bare logo, dimmed ── */
+.header-game-icon-default--collapsed {
+  opacity: 0.45;
+  filter: grayscale(0.3);
+  padding: 8% 6px;
+}
+.header-game-icon-default--collapsed:hover {
+  opacity: 0.85;
+  filter: grayscale(0);
+  transform: translateY(-1px);
+}
+
+/* Remove old round pill collapsed styles — superseded above */
+.header-icon-collapsed { display: none; }
+.header-game-icon-active { display: none; }

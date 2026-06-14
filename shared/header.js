@@ -70,8 +70,8 @@
 
       activeHtml = `
         <div class="header-active-game">
-          <a href="${gameHref(active)}" class="header-game-icon-active" data-game="${active.id}" aria-label="${active.name}" title="${active.name}">
-            <img src="${active.icon}" alt="${active.name}" width="32" height="32" style="display:block;object-fit:contain;" onerror="this.style.display='none'" />
+          <a href="${gameHref(active)}" class="header-game-icon-default header-game-icon-default--active" data-game="${active.id}" aria-label="${active.name}" title="${active.name}">
+            <img src="${active.icon}" alt="${active.name}" onerror="this.style.display='none'" />
           </a>
           ${subpages}
         </div>`;
@@ -86,8 +86,8 @@
     if (!others.length) return '';
 
     return `<div class="header-collapsed-row">${others.map(g => `
-      <a href="${gameHref(g)}" class="header-icon-collapsed" data-game="${g.id}" aria-label="${g.name}" title="${g.name}">
-        ${gameIconSvg(g)}
+      <a href="${gameHref(g)}" class="header-game-icon-default header-game-icon-default--collapsed" data-game="${g.id}" aria-label="${g.name}" title="${g.name}">
+        <img src="${g.icon}" alt="${g.name}" onerror="this.style.display='none'" />
       </a>`).join('')}</div>`;
   }
 
