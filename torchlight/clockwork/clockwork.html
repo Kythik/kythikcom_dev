@@ -787,7 +787,7 @@ function roulBlock(gearsVal,rdist,base){
   const isAvg=gearsVal==='avg',gl=isAvg?[5,6,7]:[parseInt(gearsVal)];
   const maxCog=isAvg?6:parseInt(gearsVal);
   const dl=rdist===RDIST_HIGH?'high rarity (observed, unverified)':'expected (conservative)';
-  const failModel=document.getElementById('roulFail')?_roulFail:'flat';
+  const failModel=_roulFail;
   const isEsc=failModel==='escalating';
 
   // Survival to max cog, encounter table values, headline guidance
@@ -979,14 +979,14 @@ function render(){
   const roulExpandedBefore=tbody.querySelector('.svc-row-roulette .svc-card-detail[style*="block"]')||tbody.querySelector('.svc-row-roulette div[style*="display: block"]');
   // _roulExpanded tracks whether roulette card was open
   const savedRoulFail=_roulFail;
-  const savedRdist=document.getElementById('rdist')?.value||'expected';
+  // _rdist is module-level, no DOM read needed
   tbody.innerHTML='';
   svcs.forEach((s,i)=>{
     let t2={l:s.tier,c:'tier-'+s.tier.toLowerCase().replace('+','p')};
     const seasonBadge=nodeSeasonal&&s.id===11?'<span style="font-size:10px;color:var(--gold-bright);margin-left:4px">★ season</span>':'';
     let bw=s.pct||0;
     if(s.isRoulette){
-      const roulFailModel=document.getElementById('roulFail')?_roulFail:'flat';
+      const roulFailModel=_roulFail;
       if(roulFailModel==='escalating'){
         // Recompute Roulette's EV under escalating model, relative to theorBase
         const maxCogR=6; // fixed: 6 cogs current season
@@ -1002,7 +1002,7 @@ function render(){
     const th=s.tag?tagMap[s.tag]||'':'';
     const nameHtml=(s.name?`<span class="svc-name">${s.name}</span>`:'')+seasonBadge;
     const effClass=s.name?'svc-effect':'svc-effect svc-effect-primary';
-    const rFM=document.getElementById('roulFail')?_roulFail:'flat';
+    const rFM=_roulFail;
     const rawEffect=s.isRoulette
       ?(rFM==='escalating'
         ?'Escalating: 10%→47% fail per cog. EV negative at max — optimal stop at cog 4. Fail = event ends.'
@@ -1010,7 +1010,7 @@ function render(){
       :(s.effect||s.desc||'');
     const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
     const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
-    const roulFailModel=document.getElementById('roulFail')?_roulFail:'flat';
+    const roulFailModel=_roulFail;
     const inlineWarn='';
     let extra='';
     const lbBtn=(id,label)=>`<button onclick="document.getElementById('${id}-lightbox').style.display='flex';document.body.style.overflow='hidden'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px;display:inline-flex;align-items:center;gap:4px;transition:background .15s,border-color .15s">📊 ${label} ↗</button>`;
@@ -1065,7 +1065,7 @@ function render(){
     }
   });
 
-  const roulFailModelFoot=document.getElementById('roulFail')?_roulFail:'flat';
+  const roulFailModelFoot=_roulFail;
   const roulFootEl=document.getElementById('roul-footnote');
   if(roulFootEl){
     roulFootEl.innerHTML=roulFailModelFoot==='escalating'
