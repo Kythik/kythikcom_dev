@@ -21,44 +21,6 @@
     }
   }
 
-  function buildSeasonMeta(item) {
-    const now   = new Date();
-    const start = item.seasonStartISO ? new Date(item.seasonStartISO) : null;
-    const end   = item.seasonEndISO   ? new Date(item.seasonEndISO)   : null;
-    const next  = item.nextSeasonISO  ? new Date(item.nextSeasonISO)  : null;
-
-    let html = '';
-
-    if (start && end) {
-      const total         = end - start;
-      const elapsed       = Math.max(0, now - start);
-      const pct           = Math.min(100, Math.round((elapsed / total) * 100));
-      const elapsedDays   = Math.floor(elapsed / 86400000);
-      const remainingDays = Math.max(0, Math.ceil((end - now) / 86400000));
-
-      html += `
-        <div style="margin-top:12px">
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px">
-            <span>${elapsedDays}d elapsed</span>
-            <span>${remainingDays}d remaining</span>
-          </div>
-          <div style="height:6px;border-radius:4px;background:rgba(255,255,255,0.08);overflow:hidden">
-            <div style="height:100%;width:${pct}%;background:var(--gold-primary);border-radius:4px"></div>
-          </div>
-        </div>`;
-    }
-
-    if (next) {
-      const label = next.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-      html += `
-        <div style="margin-top:10px;font-size:11px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase">
-          Next Season · <span style="color:var(--gold-primary)">${label}</span>
-        </div>`;
-    }
-
-    return html;
-  }
-
   /* ── YouTube card HTML ────────────────────── */
 
   function buildVideoCard(v) {
@@ -102,10 +64,9 @@
   async function init() {
     const data = await fetch('/torchlight/content.json').then(r => r.json()).catch(() => ({}));
 
-    // Featured carousel
+    // Featured carousel — season card rendering handled by shared-carousel.js
     if (data.featured && data.featured.length) {
-      const items = processFeatured(data.featured);
-      KythikCarousel.init({ mountId: 'tliCarousel', items, autoRotateMs: 6000 });
+      KythikCarousel.init({ mountId: 'tliCarousel', items: data.featured, autoRotateMs: 6000 });
     }
 
     // Official (XD developer) YouTube videos
