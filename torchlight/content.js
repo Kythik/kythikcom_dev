@@ -75,7 +75,7 @@
 
     // Featured carousel
     if (data.featured && data.featured.length) {
-      KythikCarousel.init({ mountId: 'tliCarousel', items: data.featured, autoRotateMs: 6000 });
+      KythikCarousel.init({ mountId: 'tliCarousel', items: data.featured, autoRotateMs: 6000, fallbackImage: '/images/fallback/torchlight.png' });
     }
 
     // Resources grid
