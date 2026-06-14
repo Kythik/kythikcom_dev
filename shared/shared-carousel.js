@@ -2,19 +2,21 @@
    shared-carousel.js — Generic rotating card carousel
    Reuses .feat-card / .featured-* styles from styles.css.
 
+   Structure: LEFT = text content, RIGHT = background image
+
    Usage:
      KythikCarousel.init({
-       mountId: 'tliCarousel',     // container with featured-section structure
-       items: [ ... ],             // array of card data objects (see types below)
-       autoRotateMs: 6000,         // 0 to disable
+       mountId: 'tliCarousel',
+       items: [ ... ],
+       autoRotateMs: 6000,
+       fallbackImage: '/images/fallbacks/torchlight.png',
      });
 
    Card item shape (by "type"):
-     { type:"link",     eyebrow, title, blurb, link, linkLabel }
-     { type:"youtube",  eyebrow, title, blurb, link }
-     { type:"season",   eyebrow, title, blurb, seasonStartISO, seasonEndISO, nextSeasonISO, link }
-     { type:"countdown",eyebrow, title, blurb, targetISO, link }
-     { type:"strategy", ...same shape as existing feat-card strategy object }
+     { type:"link",      eyebrow, title, blurb, link, linkLabel, image }
+     { type:"youtube",   eyebrow, title, blurb, link, image }
+     { type:"season",    eyebrow, title, blurb, seasonStartISO, seasonEndISO, nextSeasonISO, link }
+     { type:"countdown", eyebrow, title, blurb, targetISO, link }
    ═══════════════════════════════════════════ */
 
 (function () {
@@ -26,7 +28,7 @@
   }
 
   function fmtDuration(ms) {
-    if (ms <= 0) return 'Live now';
+    if (ms <= 0) return '0d';
     const days = Math.floor(ms / 86400000);
     const hrs  = Math.floor((ms % 86400000) / 3600000);
     if (days > 0) return `${days}d ${hrs}h`;
@@ -34,132 +36,77 @@
     return `${hrs}h ${mins}m`;
   }
 
-  function renderCardInner(item, fallbackImage) {
-    const eyebrow = item.eyebrow || '';
-    const title   = item.title || '';
-    const blurb   = item.blurb || '';
+  function renderCard(item, fallbackImage) {
+    const eyebrow  = item.eyebrow  || '';
+    const title    = item.title    || '';
+    const blurb    = item.blurb    || '';
+    const ctaLabel = item.linkLabel || (item.link ? 'View' : '');
 
-    let mediaHtml = '';
-    let metaHtml  = '';
+    // ── Extra content per type ──
+    let extra = '';
+    if (item.type === 'season') {
+      const now   = new Date();
+      const start = item.seasonStartISO ? new Date(item.seasonStartISO) : null;
+      const end   = item.seasonEndISO   ? new Date(item.seasonEndISO)   : null;
+      const next  = item.nextSeasonISO  ? new Date(item.nextSeasonISO)  : null;
 
-    switch (item.type) {
-      case 'youtube': {
-        const videoId = parseYouTubeId(item.link);
-        const thumb = videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
-        mediaHtml = thumb
-          ? `<img src="${thumb}" alt="${title}" loading="lazy" />`
-          : `<div class="feat-screenshot-empty"><span>▶ Video</span></div>`;
-        break;
-      }
-      case 'season': {
-        const now   = new Date();
-        const start = item.seasonStartISO ? new Date(item.seasonStartISO) : null;
-        const end   = item.seasonEndISO   ? new Date(item.seasonEndISO)   : null;
-        const next  = item.nextSeasonISO  ? new Date(item.nextSeasonISO)  : null;
-
-        let elapsedDays = 0, remainDays = 0, pct = 0;
-        if (start && end) {
-          const total   = end - start;
-          const elapsed = Math.max(0, now - start);
-          elapsedDays   = Math.floor(elapsed / 86400000);
-          remainDays    = Math.max(0, Math.ceil((end - now) / 86400000));
-          pct           = Math.min(100, Math.round((elapsed / total) * 100));
-        } else if (start) {
-          elapsedDays = Math.floor((now - start) / 86400000);
-        }
-
-        const nextLabel = next
-          ? next.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-          : null;
-
-        const progressBar = (start && end) ? `
-          <div style="margin:12px 0 6px;font-size:11px;color:var(--text-muted);display:flex;justify-content:space-between;letter-spacing:.04em;">
-            <span>${elapsedDays}d elapsed</span>
-            <span>${remainDays}d remaining</span>
-          </div>
-          <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;">
-            <div style="height:100%;width:${pct}%;background:var(--gold-primary);border-radius:2px;transition:width .4s;"></div>
-          </div>` : `
-          <div style="margin:12px 0 6px;font-size:11px;color:var(--text-muted);letter-spacing:.04em;">
-            ${elapsedDays}d elapsed
+      if (start && end) {
+        const total      = end - start;
+        const elapsed    = Math.max(0, now - start);
+        const elapsedD   = Math.floor(elapsed / 86400000);
+        const remainD    = Math.max(0, Math.ceil((end - now) / 86400000));
+        const pct        = Math.min(100, Math.round((elapsed / total) * 100));
+        extra += `
+          <div style="margin-top:14px">
+            <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin-bottom:6px;">
+              <span>${elapsedD}d elapsed</span><span>${remainD}d remaining</span>
+            </div>
+            <div style="height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;">
+              <div style="height:100%;width:${pct}%;background:var(--gold-primary);border-radius:2px;"></div>
+            </div>
           </div>`;
-
-        const nextRow = nextLabel ? `
-          <div style="margin-top:16px;font-size:11px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;">
-            Next Season &middot; ${nextLabel}
-          </div>` : '';
-
-        metaHtml = `
-          <div style="margin-top:14px;">
-            ${progressBar}
-            ${nextRow}
-          </div>`;
-
-        mediaHtml = '';
-        break;
+      } else if (start) {
+        extra += `<div style="margin-top:10px;font-size:11px;color:var(--text-muted);">${fmtDuration(now - start)} elapsed</div>`;
       }
-      case 'countdown': {
-        const target = item.targetISO ? new Date(item.targetISO) : null;
-        if (target) {
-          const remain = fmtDuration(target - new Date());
-          metaHtml = `<div class="feat-eyebrow" style="margin-top:8px">Launches in: ${remain}</div>`;
-        }
-        mediaHtml = `<div class="feat-screenshot-empty"><span>🗺️</span></div>`;
-        break;
-      }
-      case 'link':
-      default: {
-        mediaHtml = `<div class="feat-screenshot-empty"><span>${item.linkLabel || 'Open'}</span></div>`;
-        break;
+      if (next) {
+        const dateStr = next.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        extra += `<div style="margin-top:12px;font-size:10px;color:var(--text-faint);letter-spacing:.08em;text-transform:uppercase;">Next Season · ${dateStr}</div>`;
       }
     }
 
-    const tagsRow = item.tags
-      ? `<div class="feat-tags-row">${item.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+    if (item.type === 'countdown') {
+      const target = item.targetISO ? new Date(item.targetISO) : null;
+      if (target) {
+        extra += `<div style="margin-top:10px;font-size:11px;color:var(--text-muted);">Launches in: ${fmtDuration(target - new Date())}</div>`;
+      }
+    }
+
+    // ── Right panel image ──
+    const videoId = item.type === 'youtube' ? parseYouTubeId(item.link) : null;
+    const rightBg = videoId
+      ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+      : (item.image || fallbackImage || null);
+
+    const rightStyle = rightBg
+      ? `background-image:url('${rightBg}');background-size:cover;background-position:center;`
       : '';
 
-    const ctaLabel = item.linkLabel || (item.link ? 'View' : '');
-
-    // Left panel: all text content + any type-specific mediaHtml (progress bar, etc.)
-    // Left panel: text content
-    // Right panel: background image with absolute-positioned text overlay
-    const hasRealThumb = item.type === 'youtube' && mediaHtml && mediaHtml.includes('<img');
-    const rightBg = item.image || fallbackImage || null;
-
-    // Left: screenshot for youtube, empty div for others (text goes in right overlay)
-    const leftPanel = hasRealThumb
-      ? `<div class="feat-screenshot">
-           ${mediaHtml}
-           <div class="feat-screenshot-fade"></div>
-         </div>`
-      : `<div class="feat-screenshot">
-           ${mediaHtml || '<div class="feat-screenshot-empty"></div>'}
-         </div>`;
-
-    // Right: art panel with content overlay on top
-    const bgStyle = rightBg
-      ? `background-image:url('${rightBg}');background-size:cover;background-position:center;`
-      : `background-image:url('/images/featured-panel.png');background-size:cover;background-position:center;`;
-
-    const rightPanel = `
-      <div class="feat-art-panel" style="${bgStyle}">
-        <div class="feat-art-overlay"></div>
-        <div class="feat-art-content">
-          <div>
-            ${eyebrow ? `<div class="feat-eyebrow">${eyebrow}</div>` : ''}
-            ${title   ? `<h2 class="feat-title">${title}</h2>` : ''}
-            ${blurb   ? `<p class="subtext" style="margin-top:6px">${blurb}</p>` : ''}
-            ${metaHtml}
-            ${tagsRow}
-          </div>
-          <div class="feat-foot">
-            <div></div>
-            ${ctaLabel ? `<div class="feat-author-name">${ctaLabel} →</div>` : ''}
-          </div>
+    return `
+      <div class="feat-art-content">
+        <div>
+          ${eyebrow ? `<div class="feat-eyebrow">${eyebrow}</div>` : ''}
+          ${title   ? `<h2 class="feat-title">${title}</h2>` : ''}
+          ${blurb   ? `<p class="subtext" style="margin-top:6px">${blurb}</p>` : ''}
+          ${extra}
         </div>
+        <div class="feat-foot">
+          <div></div>
+          ${ctaLabel ? `<div class="feat-author-name">${ctaLabel} →</div>` : ''}
+        </div>
+      </div>
+      <div class="feat-art-panel" style="${rightStyle}">
+        <div class="feat-art-overlay"></div>
       </div>`;
-
-    return `${leftPanel}${rightPanel}`;
   }
 
   function render(inst) {
@@ -173,13 +120,12 @@
     if (!track) return;
 
     const clickable = !!item.link;
-    track.innerHTML = `
-      <div class="feat-card" ${clickable ? `style="cursor:pointer"` : ''}>
-        ${renderCardInner(item, inst.fallbackImage)}
-      </div>`;
+    const card = document.createElement('div');
+    card.className = 'feat-card';
+    card.innerHTML = renderCard(item, inst.fallbackImage);
 
     if (clickable) {
-      const card = track.querySelector('.feat-card');
+      card.style.cursor = 'pointer';
       card.addEventListener('click', () => {
         if (item.link.startsWith('http')) {
           window.open(item.link, '_blank', 'noopener');
@@ -188,6 +134,9 @@
         }
       });
     }
+
+    track.innerHTML = '';
+    track.appendChild(card);
   }
 
   function nav(mountId, dir) {
