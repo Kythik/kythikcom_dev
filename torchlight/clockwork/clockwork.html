@@ -664,7 +664,7 @@ fetch('clockwork_rankings.json')
 
 
 function getRerollsFromAlice(){
-  const a=document.getElementById('alice').value;
+  const a=document.getElementById('alice')?.value||'none';
   if(a==='lv23')return 1;
   if(a==='lv45'||a==='lv6')return 2;
   return 0;
@@ -683,7 +683,7 @@ function updateVerdict(){
   document.getElementById('reroll-decision-panel').style.display='block';
   if(noRerolls)noRerolls.style.display='none';
   hasRerolls.style.display='block';
-  const aliceVal=document.getElementById('alice').value;
+  const aliceVal=document.getElementById('alice')?.value||'none';
   aliceNote.textContent=rerolls+' reroll'+(rerolls>1?'s':'')+' available (Alice '+aliceVal.replace('lv','Lv')+')';
   const verdict=document.getElementById('reroll-verdict');
   const label=document.getElementById('verdict-label');
@@ -799,7 +799,7 @@ function roulBlock(gearsVal,rdist,base){
   const isAvg=gearsVal==='avg',gl=isAvg?[5,6,7]:[parseInt(gearsVal)];
   const maxCog=isAvg?6:parseInt(gearsVal);
   const dl=rdist===RDIST_HIGH?'high rarity (observed, unverified)':'expected (conservative)';
-  const failModel=document.getElementById('roulFail')?document.getElementById('roulFail').value:'flat';
+  const failModel=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
   const isEsc=failModel==='escalating';
 
   // Survival to max cog, encounter table values, headline guidance
@@ -939,9 +939,9 @@ const S12_SVCS=[
 function render(){
   try{
   const gearsVal='6'; // fixed: 6 cogs current season
-  const alice=ALICE[document.getElementById('alice').value];
+  const alice=ALICE[document.getElementById('alice')?.value||'none']||ALICE['none']||{};
   const sort=document.getElementById('sort').value;
-  const rdist=document.getElementById('rdist').value==='highrarity'?RDIST_HIGH:RDIST_EXP;
+  const rdist=(document.getElementById('rdist')?.value||'expected')==='highrarity'?RDIST_HIGH:RDIST_EXP;
   // base removed — using theorBase for relative scaling
   // Doll affects compass cogwheel rate but we use calibrated base so just affects relative EV
 
@@ -993,7 +993,7 @@ function render(){
     const seasonBadge=nodeSeasonal&&s.id===11?'<span style="font-size:10px;color:var(--gold-bright);margin-left:4px">★ season</span>':'';
     let bw=s.pct||0;
     if(s.isRoulette){
-      const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail').value:'flat';
+      const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
       if(roulFailModel==='escalating'){
         // Recompute Roulette's EV under escalating model, relative to theorBase
         const maxCogR=6; // fixed: 6 cogs current season
@@ -1009,7 +1009,7 @@ function render(){
     const th=s.tag?tagMap[s.tag]||'':'';
     const nameHtml=(s.name?`<span class="svc-name">${s.name}</span>`:'')+seasonBadge;
     const effClass=s.name?'svc-effect':'svc-effect svc-effect-primary';
-    const rFM=document.getElementById('roulFail')?document.getElementById('roulFail').value:'flat';
+    const rFM=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
     const rawEffect=s.isRoulette
       ?(rFM==='escalating'
         ?'Escalating: 10%→47% fail per cog. EV negative at max — optimal stop at cog 4. Fail = event ends.'
@@ -1017,7 +1017,7 @@ function render(){
       :(s.effect||s.desc||'');
     const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
     const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
-    const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail').value:'flat';
+    const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
     const inlineWarn=s.isRoulette?(roulFailModel==='escalating'
                        ?`<div class="svc-inline-warn">~1 per 100 maps · ~89% wipe to cog 6 · barely break-even even ignoring variance</div>`
                        :`<div class="svc-inline-warn">~1 per 100 maps · 43% wipe rate · ~500 maps to be reliably profitable</div>`):
@@ -1053,7 +1053,7 @@ function render(){
     }
   });
 
-  const roulFailModelFoot=document.getElementById('roulFail')?document.getElementById('roulFail').value:'flat';
+  const roulFailModelFoot=document.getElementById('roulFail')?document.getElementById('roulFail')?.value||'flat':'flat';
   const roulFootEl=document.getElementById('roul-footnote');
   if(roulFootEl){
     roulFootEl.innerHTML=roulFailModelFoot==='escalating'
