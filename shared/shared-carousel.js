@@ -34,7 +34,7 @@
     return `${hrs}h ${mins}m`;
   }
 
-  function renderCardInner(item) {
+  function renderCardInner(item, fallbackImage) {
     const eyebrow = item.eyebrow || '';
     const title   = item.title || '';
     const blurb   = item.blurb || '';
@@ -138,16 +138,20 @@
         </div>
       </div>` : mediaHtml;
 
-    // For season/countdown types, mediaHtml is already in leftPanel above via metaHtml,
-    // so right side is just the art panel image. For other types, mediaHtml goes right.
-    const rightPanel = (item.type === 'season' || item.type === 'countdown')
-      ? `<div class="feat-art-panel" style="flex:1;background-image:url('/images/featured-panel.png');position:relative;">
-           <div class="feat-art-overlay"></div>
-         </div>`
-      : `<div class="feat-screenshot" style="flex:1;">
+    // Right panel image priority: item.image → fallbackImage → default panel
+    const rightBg = item.image || fallbackImage || null;
+    const rightPanel = (item.type === 'youtube' && mediaHtml)
+      ? `<div class="feat-screenshot" style="flex:1;">
            ${mediaHtml}
            <div class="feat-screenshot-fade"></div>
-         </div>`;
+         </div>`
+      : rightBg
+        ? `<div class="feat-art-panel" style="flex:1;background-image:url('${rightBg}');background-size:cover;background-position:center;position:relative;">
+             <div class="feat-art-overlay"></div>
+           </div>`
+        : `<div class="feat-art-panel" style="flex:1;background-image:url('/images/featured-panel.png');position:relative;">
+             <div class="feat-art-overlay"></div>
+           </div>`;
 
     return `${leftPanel}${rightPanel}`;
   }
@@ -165,7 +169,7 @@
     const clickable = !!item.link;
     track.innerHTML = `
       <div class="feat-card" ${clickable ? `style="cursor:pointer"` : ''}>
-        ${renderCardInner(item)}
+        ${renderCardInner(item, inst.fallbackImage)}
       </div>`;
 
     if (clickable) {
@@ -202,7 +206,7 @@
     startTimer(inst);
   }
 
-  function init({ mountId, items, autoRotateMs = 6000 }) {
+  function init({ mountId, items, autoRotateMs = 6000, fallbackImage = null }) {
     const section = document.getElementById(mountId);
     if (!section) return;
     if (!items || !items.length) {
@@ -211,7 +215,7 @@
     }
     section.style.display = 'block';
 
-    const inst = { mountId, items, index: 0, autoRotateMs, timer: null };
+    const inst = { mountId, items, index: 0, autoRotateMs, fallbackImage, timer: null };
     instances[mountId] = inst;
 
     render(inst);
