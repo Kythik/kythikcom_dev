@@ -227,6 +227,8 @@
     .hello-line--hello {
       font-size: clamp(28px, 3.5vw, 46px);
       opacity: 0;
+      white-space: nowrap;
+      overflow: hidden;
     }
     .hello-line--gamers {
       font-size: clamp(52px, 8vw, 96px);
@@ -253,8 +255,8 @@
 
     .hub-hero {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      grid-template-columns: 1fr 2fr;
+      gap: 56px;
       align-items: center;
       padding: 28px 0 24px;
       border-bottom: 1px solid var(--border-soft);
