@@ -1018,7 +1018,7 @@ function render(){
     if(s.id===11)extra=lbBtn('id11','why SSS matters here');
     if(s.id===29)extra=lbBtn('id29','how this is calculated');
     if(s.id===32)extra=lbBtn('id32','how this is calculated');
-    if(s.isRoulette)extra=`<button onclick="const d=this.nextElementSibling;const open=d.style.display==='none';d.style.display=open?'block':'none';_roulExpanded=open;" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px" title="Roulette breakdown">📊</button><div style="display:none"><div style="display:flex;gap:10px;flex-wrap:wrap;padding:8px 0 6px;border-bottom:1px solid var(--border-blue);margin-bottom:8px"><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Fail model</label><select id="roulFail" onchange="_roulFail=this.value;_roulExpanded=true;render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="flat">Flat 10%/cog</option><option value="escalating">Escalating 10%→47%</option></select></div><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Voucher dist.</label><select id="rdist" onchange="_rdist=this.value;_roulExpanded=true;render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="expected">Expected</option><option value="highrarity">High rarity (observed)</option></select></div></div>`+roulBlock(gearsVal,rdist,base)+`</div>`;
+    if(s.isRoulette)extra=`<button onclick="const d=this.nextElementSibling;const open=d.style.display==='none';d.style.display=open?'block':'none';_roulExpanded=open;" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px" title="Roulette breakdown">📊</button><div style="display:none"><div style="display:flex;gap:10px;flex-wrap:wrap;padding:8px 0 6px;border-bottom:1px solid var(--border-blue);margin-bottom:8px"><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Fail model</label><select id="roulFail" onchange="_roulFail=this.value;_roulExpanded=true;setTimeout(render,0)" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="flat">Flat 10%/cog</option><option value="escalating">Escalating 10%→47%</option></select></div><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Voucher dist.</label><select id="rdist" onchange="_rdist=this.value;_roulExpanded=true;setTimeout(render,0)" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="expected">Expected</option><option value="highrarity">High rarity (observed)</option></select></div></div>`+roulBlock(gearsVal,rdist,base)+`</div>`;
     if(s.isID23)extra=`<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px">📊 show outcome breakdown ▾</button><div style="display:none">`+id23Block(gearsVal,base,nodeWasteful,nodeOstentatious,nodeCb59)+`</div>`;
     if(s.id===35){const nt=NUT[parseInt(gearsVal)]||NUT[6];extra=`<div class="svc-info">P(0 proc): ${(nt.p0*100).toFixed(1)}% · P(1 proc): ${(nt.p1*100).toFixed(1)}% · P(2 procs): ${(nt.p2*100).toFixed(1)}%</div>`+lbBtn('id35','how this is calculated');}
     const TIER_DESCS={'S+':'Best ceiling services — these define the run.','S':'Strong picks — take if S+ isn\'t offered.','A':'Solid value — good when S/S+ aren\'t available.','B':'Interchangeable — pick whatever\'s offered.','C':'Low value — only if nothing better is available.','F':'Skip — negative or negligible EV.'};
@@ -1077,13 +1077,19 @@ function render(){
 
   updateVerdict();
 
-  // Restore roulette expanded state
+  // Restore roulette expanded state then reset flag
   if(_roulExpanded){
     const roulCard=tbody.querySelector('.svc-row-roulette');
     if(roulCard){
       const detail=roulCard.querySelector('div[style*="display:none"]');
       if(detail) detail.style.display='block';
     }
+    _roulExpanded=false;
+    // Restore dropdown selected values in the newly built card
+    const rf=document.getElementById('roulFail');
+    if(rf&&rf.value!==_roulFail) rf.value=_roulFail;
+    const rd=document.getElementById('rdist');
+    if(rd&&rd.value!==_rdist) rd.value=_rdist;
   }
   }catch(e){console.error('render() error:',e);}
 }
