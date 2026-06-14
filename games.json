@@ -4,7 +4,7 @@
       "id": "torchlight",
       "name": "Torchlight Infinite",
       "shortName": "TLI",
-      "icon": "/images/icons/torchlight.svg",
+      "icon": "/images/icons/torchlight.png",
       "path": "/torchlight/",
       "theme": "torchlight.css",
       "status": "live",
