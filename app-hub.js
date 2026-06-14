@@ -43,7 +43,7 @@
         </div>`;
 
       container.appendChild(section);
-      KythikCarousel.init({ mountId, items, autoRotateMs: 6000 });
+      KythikCarousel.init({ mountId, items, autoRotateMs: 6000, fallbackImage: game.fallbackImage || null });
     });
   }
 

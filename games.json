@@ -9,10 +9,20 @@
       "theme": "torchlight.css",
       "status": "live",
       "subpages": [
-        { "label": "Strats", "path": "/torchlight/strats/strats.html" },
-        { "label": "Clockwork", "path": "/torchlight/clockwork/clockwork.html" },
-        { "label": "Arcana", "path": "/torchlight/arcana/arcana.html" }
-      ]
+        {
+          "label": "Strats",
+          "path": "/torchlight/strats/strats.html"
+        },
+        {
+          "label": "Clockwork",
+          "path": "/torchlight/clockwork/clockwork.html"
+        },
+        {
+          "label": "Arcana",
+          "path": "/torchlight/arcana/arcana.html"
+        }
+      ],
+      "fallbackImage": "/images/fallbacks/torchlight.jpg"
     },
     {
       "id": "everquest-legends",
@@ -23,7 +33,8 @@
       "theme": "everquest-legends.css",
       "status": "upcoming",
       "launchDate": "2026-07-01",
-      "subpages": []
+      "subpages": [],
+      "fallbackImage": "/images/fallbacks/everquest-legends.jpg"
     }
   ]
 }
