@@ -204,3 +204,26 @@
   .hub-community-grid { grid-template-columns: 1fr; }
   .header-center { display: none; } /* mobile nav handled separately if needed */
 }
+
+/* ── Active game icon (no pill, icon only, prominent) ── */
+.header-game-icon-active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(200,164,93,.35);
+  background: rgba(200,164,93,.08);
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.header-game-icon-active:hover {
+  border-color: rgba(200,164,93,.6);
+  background: rgba(200,164,93,.14);
+}
+.header-game-icon-active img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}

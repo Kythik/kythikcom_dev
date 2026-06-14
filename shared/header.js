@@ -53,7 +53,7 @@
   function renderDefaultCenter(games) {
     return games.map(g => `
       <a href="${gameHref(g)}" class="header-pill header-pill--game" data-game="${g.id}" style="display:flex;align-items:center;gap:6px;">
-        ${gameIconSvg(g)}<span>${g.shortName || g.name}</span>
+        <img src="${g.icon}" alt="${g.name}" width="20" height="20" style="display:block;object-fit:contain;" onerror="this.style.display='none'" /><span>${g.shortName || g.name}</span>
       </a>`).join('');
   }
 
@@ -70,8 +70,8 @@
 
       activeHtml = `
         <div class="header-active-game">
-          <a href="${gameHref(active)}" class="header-pill header-pill--game header-pill--active" data-game="${active.id}" style="display:flex;align-items:center;gap:6px;">
-            ${gameIconSvg(active)}<span>${active.shortName || active.name}</span>
+          <a href="${gameHref(active)}" class="header-game-icon-active" data-game="${active.id}" aria-label="${active.name}" title="${active.name}">
+            <img src="${active.icon}" alt="${active.name}" width="32" height="32" style="display:block;object-fit:contain;" onerror="this.style.display='none'" />
           </a>
           ${subpages}
         </div>`;
