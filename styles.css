@@ -1620,13 +1620,13 @@ button { cursor: pointer; font-family: var(--font-body); }
    Use alongside a layout class for sizing/flex. */
 .panel-card {
   background:
-    radial-gradient(circle at 14% 0%, rgba(200,164,93,.08), transparent 42%),
-    linear-gradient(180deg, rgba(13,24,40,.96), rgba(5,10,22,.99));
-  border: 1px solid rgba(200,164,93,.22);
+    radial-gradient(circle at 12% 0%, rgba(230,199,122,.10), transparent 38%),
+    linear-gradient(180deg, rgba(13,24,40,.98), rgba(5,10,22,.99));
+  border: 1px solid rgba(200,164,93,.26);
   border-radius: var(--radius-lg);
   box-shadow:
-    0 18px 48px rgba(0,0,0,.38),
-    inset 0 1px 0 rgba(230,199,122,.05);
+    0 18px 52px rgba(0,0,0,.42),
+    inset 0 1px 0 rgba(230,199,122,.08);
   position: relative;
   overflow: hidden;
   transition: border-color .2s, box-shadow .2s;
