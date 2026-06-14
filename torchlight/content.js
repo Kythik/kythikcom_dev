@@ -89,9 +89,9 @@
   function processFeatured(items) {
     return items.map(item => {
       if (item.type === 'season') {
-        // Inject rendered season meta as blurb extension
-        // shared-carousel renders item.blurb then item.metaHtml if present
-        return { ...item, metaHtml: buildSeasonMeta(item) };
+        // Append progress bar + next season HTML directly into blurb
+        // since shared-carousel renders item.blurb and nothing else extra
+        return { ...item, blurb: (item.blurb || '') + buildSeasonMeta(item) };
       }
       return item;
     });
