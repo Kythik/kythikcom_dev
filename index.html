@@ -29,6 +29,176 @@
     }
   }
   </script>
+  <style>
+    /* ── Page atmosphere ── */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(230,199,122,.10), transparent 42%),
+        radial-gradient(circle at 15% 20%, rgba(38,58,87,.22), transparent 34%),
+        linear-gradient(180deg, rgba(4,8,15,.38), rgba(4,8,15,.88));
+    }
+
+    /* ── Hero ── */
+    .hub-hero {
+      padding: 56px 0 32px;
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .hub-hero-name {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 700;
+      color: var(--gold-bright);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      text-shadow: 0 0 40px rgba(230,199,122,.18);
+      margin-bottom: 14px;
+      line-height: 1.1;
+    }
+    .hub-hero-name::after {
+      content: "";
+      display: block;
+      width: 60%;
+      height: 1px;
+      margin: 16px auto 0;
+      background: linear-gradient(90deg, transparent, rgba(230,199,122,.55), transparent);
+    }
+    .hub-hero-tagline {
+      font-size: 10px;
+      color: var(--gold-muted);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .hub-hero-bio {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-soft);
+      margin-bottom: 28px;
+      max-width: 56ch;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hub-hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 11px 24px;
+      border-radius: 24px;
+      background: rgba(145,71,255,.10);
+      border: 1px solid rgba(145,71,255,.38);
+      color: #C9A6FF;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: all .2s;
+    }
+    .hub-hero-cta:hover {
+      background: rgba(145,71,255,.18);
+      border-color: rgba(145,71,255,.62);
+      transform: translateY(-1px);
+      box-shadow: 0 0 22px rgba(145,71,255,.18);
+    }
+
+    /* ── Community section ── */
+    .hub-community {
+      margin-top: 48px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .hub-community-kicker {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--gold-muted);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hub-community-kicker::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border-soft), transparent);
+    }
+    .hub-community-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: 16px;
+    }
+    .hub-twitch-panel {
+      background: linear-gradient(180deg, rgba(13,24,40,.94), rgba(11,21,36,.96));
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 18px 52px var(--shadow-card);
+      aspect-ratio: 16/9;
+    }
+    .hub-twitch-panel iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+    .hub-community-side {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .hub-community-card {
+      background: linear-gradient(180deg, rgba(13,24,40,.94), rgba(11,21,36,.96));
+      border: 1px solid var(--border-soft);
+      border-radius: var(--radius-lg);
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+      box-shadow: 0 12px 36px var(--shadow-card);
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .hub-community-card:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 16px 46px var(--shadow-deep), 0 0 0 1px var(--gold-glow);
+    }
+    .hub-community-card h3 {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold-primary);
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .hub-community-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      flex: 1;
+    }
+    .hub-community-card .header-pill {
+      align-self: flex-start;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 860px) {
+      .hub-community-grid { grid-template-columns: 1fr; }
+      .hub-twitch-panel { aspect-ratio: 16/9; }
+    }
+    @media (max-width: 600px) {
+      .hub-hero-name { font-size: 30px; }
+      .hub-hero { padding: 40px 0 24px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -54,7 +224,7 @@
 
     <!-- ── HERO / BIO ── -->
     <section class="hub-hero">
-      <h1 class="display display--xl">Kythik</h1>
+      <h1 class="hub-hero-name">Kythik</h1>
       <div class="hub-hero-tagline">S-Tier Yapper · ARPG Strategy & Live Commentary</div>
       <p class="hub-hero-bio">
         Former hardcore MMO raider turned ARPG streamer — you'll get more talking than killing,
@@ -62,21 +232,19 @@
         and whatever loot-pinata game catches my attention this patch.
       </p>
       <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener" class="hub-hero-cta">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
         Watch Live on Twitch
       </a>
     </section>
 
-    <!-- ── PER-GAME SECTIONS (rendered by app-hub.js from games.json) ── -->
+    <!-- ── PER-GAME CAROUSELS (rendered by app-hub.js) ── -->
     <div id="gameSections"></div>
 
-    <!-- ── COMMUNITY SECTION ── -->
+    <!-- ── COMMUNITY ── -->
     <section class="hub-community">
-      <div class="hub-game-header">
-        <div class="hub-game-title">Community</div>
-      </div>
+      <div class="hub-community-kicker">Community</div>
       <div class="hub-community-grid">
-        <div class="hub-twitch-embed">
+        <div class="hub-twitch-panel">
           <iframe
             src="https://player.twitch.tv/?channel=kythikx&parent=kythik.com&muted=true"
             allowfullscreen>
