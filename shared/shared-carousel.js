@@ -12,7 +12,7 @@
    Card item shape (by "type"):
      { type:"link",     eyebrow, title, blurb, link, linkLabel }
      { type:"youtube",  eyebrow, title, blurb, link }
-     { type:"season",   eyebrow, title, blurb, seasonStartISO, nextSeasonISO, link }
+     { type:"season",   eyebrow, title, blurb, seasonStartISO, seasonEndISO, nextSeasonISO, link }
      { type:"countdown",eyebrow, title, blurb, targetISO, link }
      { type:"strategy", ...same shape as existing feat-card strategy object }
    ═══════════════════════════════════════════ */
@@ -52,13 +52,50 @@
         break;
       }
       case 'season': {
-        const start = item.seasonStartISO ? new Date(item.seasonStartISO) : null;
         const now   = new Date();
-        if (start) {
-          const elapsed = fmtDuration(now - start).replace('Live now', '0h 0m');
-          metaHtml = `<div class="feat-eyebrow" style="margin-top:8px">Season age: ${elapsed}</div>`;
+        const start = item.seasonStartISO ? new Date(item.seasonStartISO) : null;
+        const end   = item.seasonEndISO   ? new Date(item.seasonEndISO)   : null;
+        const next  = item.nextSeasonISO  ? new Date(item.nextSeasonISO)  : null;
+
+        let elapsedDays = 0, remainDays = 0, pct = 0;
+        if (start && end) {
+          const total   = end - start;
+          const elapsed = Math.max(0, now - start);
+          elapsedDays   = Math.floor(elapsed / 86400000);
+          remainDays    = Math.max(0, Math.ceil((end - now) / 86400000));
+          pct           = Math.min(100, Math.round((elapsed / total) * 100));
+        } else if (start) {
+          elapsedDays = Math.floor((now - start) / 86400000);
         }
-        mediaHtml = `<div class="feat-screenshot-empty"><span>⏳</span></div>`;
+
+        const nextLabel = next
+          ? next.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+          : null;
+
+        const progressBar = (start && end) ? `
+          <div style="margin:12px 0 6px;font-size:11px;color:var(--text-muted);display:flex;justify-content:space-between;letter-spacing:.04em;">
+            <span>${elapsedDays}d elapsed</span>
+            <span>${remainDays}d remaining</span>
+          </div>
+          <div style="height:4px;background:rgba(255,255,255,0.08);border-radius:2px;overflow:hidden;">
+            <div style="height:100%;width:${pct}%;background:var(--gold-primary);border-radius:2px;transition:width .4s;"></div>
+          </div>` : `
+          <div style="margin:12px 0 6px;font-size:11px;color:var(--text-muted);letter-spacing:.04em;">
+            ${elapsedDays}d elapsed
+          </div>`;
+
+        const nextRow = nextLabel ? `
+          <div style="margin-top:16px;font-size:11px;color:var(--text-muted);letter-spacing:.06em;text-transform:uppercase;">
+            Next Season &middot; ${nextLabel}
+          </div>` : '';
+
+        mediaHtml = `
+          <div style="display:flex;flex-direction:column;justify-content:center;height:100%;padding:24px;box-sizing:border-box;">
+            ${progressBar}
+            ${nextRow}
+          </div>`;
+
+        metaHtml = '';
         break;
       }
       case 'countdown': {
