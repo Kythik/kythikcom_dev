@@ -7,18 +7,18 @@
       "subtitle": "Human value route",
       "badge": "Practical default",
       "sourcePolicy": "local_031",
-      "summary": "Practical human route: protect chest slots, upgrade real targets, and do not chase cute lines that waste movement.",
+      "summary": "Default normal-board route. Build a strong chest package, upgrade real targets, and avoid cute detours that waste movement.",
       "details": [
-        "Priority 1: Take a good chest now if it does not block better chest quality later.",
-        "Priority 2: Take movement/cards/? tiles when they create access to better chests or upgrades.",
-        "Priority 3: Use upgrades on chests that will actually matter; do not save upgrades forever waiting for a miracle.",
-        "Avoid: Do not fill low chests just because a chest is available. A bad filled slot can be worse than waiting.",
-        "When to stop greeding: When you already have a strong chest package or the remaining path is mostly empty/trap/low-value mystery, cash in the clean line."
+        "Core rule: Improve the final chest package, not just the current tile.",
+        "Chest priority: Take a good chest now if it does not block better chest quality later.",
+        "Upgrade priority: Spend upgrades on chests that actually matter; do not save them forever waiting for a miracle.",
+        "Pathing priority: Take movement, card, or ? tiles when they create access to better chests or upgrades.",
+        "Common mistake: Do not fill low chests just because a chest is available. A bad filled slot can be worse than waiting."
       ],
       "playPattern": [
-        "Look for a path that reaches chest + card/? support, not just the nearest chest.",
-        "Start asking: “Am I improving my final seven, or just filling space?”",
-        "Stop fishing if the remaining ? tiles are far away or mostly delay the finish."
+        "Open by looking for chest access plus support tiles, not just the nearest chest.",
+        "Ask: “Does this improve my final seven, or am I just filling space?”",
+        "Cash in the clean line once the remaining board is mostly empty, trap-heavy, or too far away."
       ],
       "metrics": {
         "source": "normal_board_tune_highconf_v2_stageC_25000_paired_seeds",
@@ -82,49 +82,51 @@
       ],
       "walkthrough": [
         {
-          "heading": "Opening priority",
+          "heading": "Build the package",
           "steps": [
-            "Look for a path that reaches chest + card/? support, not just the nearest chest.",
-            "Green/blue chests are acceptable if they are cheap, but do not bend the whole route around them.",
-            "If the choice is weak chest now versus card/? that opens multiple future chests, take the setup."
+            "Start with the best reachable chest path, then check what cards and ? tiles support it.",
+            "Take strong chests early when they do not block better future options.",
+            "Avoid low-value chest filler unless it protects the final package."
           ]
         },
         {
-          "heading": "Middle priority",
+          "heading": "Upgrade real targets",
           "steps": [
-            "Start asking: “Am I improving my final seven, or just filling space?”",
-            "Upgrade purple/gold/red/rainbow candidates before wasting upgrades on low chests.",
-            "Backtrack if it converts a bad move into chest quality, not just because backtracking is available."
+            "Use upgrades when the target is already good enough or clearly reachable.",
+            "Do not hoard upgrades for a perfect target that may never appear.",
+            "Use movement and cards to create access to better upgrade targets."
           ]
         },
         {
-          "heading": "End priority",
+          "heading": "Stop the cute line",
           "steps": [
-            "Stop fishing if the remaining ? tiles are far away or mostly delay the finish.",
-            "Prefer a clean 5–6 good chest finish over forcing 7 bad chests.",
-            "Lock in value once the board stops offering realistic upgrades."
+            "Stop greeding when the remaining path is mostly empty, traps, or low-value mystery.",
+            "Protect the clean finish instead of chasing one more maybe-payoff.",
+            "The goal is a strong final package, not a board that looks perfectly solved."
           ]
         }
-      ]
+      ],
+      "whenToUse": "Use as the normal-board default when you want practical, human-readable value routing.",
+      "whenToAvoid": "Avoid only when you are specifically chasing fastest average value or a pure seven-chest completion line."
     },
     {
       "id": "Kythiks",
       "title": "Best Found",
-      "subtitle": "Solver EV route",
-      "badge": "Highest EV",
+      "subtitle": "Value-tempo route",
+      "badge": "Highest average",
       "sourcePolicy": "local_060",
-      "summary": "Highest EV route: aggressive value tempo, early conversion, hard empty-tile avoidance, fewer cute late gambles.",
+      "summary": "Fast value route. Convert movement into chest value early, spend upgrades sooner, and cut off late detours before they tax the run.",
       "details": [
-        "Priority 1: Convert movement into chest value quickly. Do not wander for theoretical future upside.",
-        "Priority 2: Spend upgrade cards when they create real value now or in the next reachable chest band.",
-        "Priority 3: Avoid empty tiles harder than feels natural; empty movement is usually the hidden tax that kills EV.",
-        "Avoid: Do not chase late ? tiles unless they are cheap and directly improve the finish.",
-        "Human warning: This can look unintuitive because it is not trying to make the board look clean; it is trying to win the average."
+        "Core rule: Take efficient value now instead of over-planning a perfect board.",
+        "Tempo priority: Convert movement into chest value quickly; wandering is usually the hidden tax.",
+        "Upgrade priority: Spend upgrade cards when they improve a good target now or in the next reachable band.",
+        "Pathing priority: Avoid empty tiles harder than feels natural.",
+        "Common mistake: Do not chase late ? tiles unless they are cheap and directly improve the finish."
       ],
       "playPattern": [
-        "Take efficient early value instead of over-planning the perfect board.",
+        "Take efficient early value instead of trying to make the board look clean.",
         "Use upgrades sooner when the target is already good enough.",
-        "Cut off late detours quickly."
+        "Cut off late detours quickly if they do not convert into chest value."
       ],
       "metrics": {
         "source": "normal_board_tune_highconf_v2_stageC_25000_paired_seeds",
@@ -188,49 +190,51 @@
       ],
       "walkthrough": [
         {
-          "heading": "Opening priority",
+          "heading": "Take tempo",
           "steps": [
-            "Take efficient early value instead of over-planning the perfect board.",
-            "Favor routes that touch chest/card/upgrade clusters.",
-            "Skip scenic paths through empty tiles unless they unlock immediate payoff."
+            "Look for the fastest route that turns movement into real chest value.",
+            "Prefer clean early value over a perfect long setup.",
+            "Do not spend multiple moves setting up a reward that is only slightly better."
           ]
         },
         {
-          "heading": "Middle priority",
+          "heading": "Upgrade sooner",
           "steps": [
-            "Use upgrades sooner when the target is already good enough.",
-            "Do not hoard tools waiting for rainbow/red if the current board is offering strong gold/purple value.",
-            "Choose paths that keep producing value every move."
+            "Upgrade good-enough targets when they are already secured or easy to secure.",
+            "Do not wait for a miracle chest if a strong target is available now.",
+            "Use cards to support the next reachable value band, not a fantasy end state."
           ]
         },
         {
-          "heading": "End priority",
+          "heading": "Kill bad detours",
           "steps": [
-            "Cut off late detours quickly.",
-            "Finish with the best value pile available.",
-            "Let 7-chest completion happen when it is efficient; do not force it when the cost is ugly."
+            "Treat empty movement as a real cost.",
+            "Skip late ? tiles unless they are cheap and directly improve the finish.",
+            "End with efficient value instead of a half-finished greed route."
           ]
         }
-      ]
+      ],
+      "whenToUse": "Use when you want the strongest average-value normal-board route and are comfortable with faster decisions.",
+      "whenToAvoid": "Avoid when you prefer a more conservative human route or are specifically forcing seven-chest completion."
     },
     {
       "id": "Seven_Chests_Rarity",
       "title": "7 Chests → Rarity",
-      "subtitle": "Completion pressure",
+      "subtitle": "Completion route",
       "badge": "Best 7-chest rate",
       "sourcePolicy": "local_002",
-      "summary": "Completion route: keep seven chests alive, take chest access earlier, but do not completely abandon rarity.",
+      "summary": "Completion-focused route. Keep seven chests realistic, take chest access earlier, then improve rarity when the cost is reasonable.",
       "details": [
-        "Priority 1: Keep a realistic 7-chest path open.",
-        "Priority 2: Take chest count earlier than the other strategies, especially if future access is uncertain.",
-        "Priority 3: Still prefer upgraded or higher-rarity chests when the cost is reasonable.",
-        "Avoid: Do not chase perfect rarity so long that you end with only four or five chests.",
-        "When to switch mindset: Once 7 chests is nearly secured, stop being picky and complete the package."
+        "Core rule: Keep the seven-chest finish alive without completely ignoring rarity.",
+        "Chest priority: Take chest count earlier than the other routes when future access is uncertain.",
+        "Pathing priority: Protect the route to chest six and seven.",
+        "Upgrade priority: Still prefer upgraded or higher-rarity chests when the cost is reasonable.",
+        "Common mistake: Do not chase perfect rarity so long that you finish with only four or five chests."
       ],
       "playPattern": [
-        "Map out whether seven chests is realistic from the first few moves.",
-        "Protect the path to chest #6 and #7.",
-        "Secure the seventh chest if the cost is reasonable."
+        "Check whether seven chests is realistic from the first few moves.",
+        "Protect access to the sixth and seventh chest.",
+        "Once seven chests is nearly secured, stop being picky and complete the package."
       ],
       "metrics": {
         "source": "normal_board_tune_highconf_v2_stageC_25000_paired_seeds",
@@ -294,30 +298,32 @@
       ],
       "walkthrough": [
         {
-          "heading": "Opening priority",
+          "heading": "Count the route",
           "steps": [
-            "Map out whether seven chests is realistic from the first few moves.",
-            "Take cheap chests sooner than the value routes would.",
-            "Use cards/? tiles if they increase chest access, not just chest quality."
+            "Start by asking whether seven chests is actually reachable.",
+            "Prioritize paths that keep chest six and seven alive.",
+            "Take earlier chest bodies when waiting could close the completion line."
           ]
         },
         {
-          "heading": "Middle priority",
+          "heading": "Add rarity carefully",
           "steps": [
-            "Protect the path to chest #6 and #7.",
-            "Upgrade when it does not risk missing chest count.",
-            "Prefer routes with multiple chest landing options."
+            "Upgrade or favor higher-rarity chests when the cost is reasonable.",
+            "Do not sacrifice the seventh chest for a tiny rarity improvement.",
+            "Use movement cards to preserve completion access first, then improve quality."
           ]
         },
         {
-          "heading": "End priority",
+          "heading": "Finish the package",
           "steps": [
-            "Secure the seventh chest if the cost is reasonable.",
-            "Stop passing reachable chests for speculative upgrades.",
-            "Accept a slightly worse final rarity mix if it completes the board."
+            "Once seven chests is close, stop being overly picky.",
+            "Secure the final chest if the cost is reasonable.",
+            "This route wins by finishing the package, not by chasing the prettiest possible board."
           ]
         }
-      ]
+      ],
+      "whenToUse": "Use when the board shows a realistic seven-chest line and you want completion pressure.",
+      "whenToAvoid": "Avoid when the seven-chest line is fake, too expensive, or blocks clearly better upgraded chest value."
     }
   ],
   "comparison": {

@@ -209,13 +209,13 @@
     },
     "special2": {
       "label": "Special Board 2",
-      "summary": "Corrected 60-tile Special Board 2: the trap wall now opens directly into the chest zone. Validation favored decisive chest-zone entry over over-banking red upgrades.",
+      "summary": "Special Board 2 now plays as immediate chest-zone access after the trap wall. Default to filling chests quickly, and only bank upgrades when the board gives them cleanly.",
       "strategies": [
         {
           "id": "Special2_Chest_Zone_Fill",
           "label": "Special 2: Chest Zone Fill",
           "kicker": "Recommended",
-          "summary": "Validated best-EV corrected Board 2 route. Crosses decisively into the immediate chest zone and fills reward bodies instead of over-banking red upgrades.",
+          "summary": "Default Board 2 route. Get through the wall, fill the immediate chest zone, and use upgrades as bonus value.",
           "rules": {
             "board2Enabled": true,
             "boardRole": "cross_then_fill_chests",
@@ -296,7 +296,7 @@
           "id": "Special2_Aggro_Cross",
           "label": "Special 2: Aggro Cross",
           "kicker": "High Rainbow",
-          "summary": "Validated high-rainbow/high-median route. Crosses with a smaller bank than traditional Bank & Cross, chasing stronger upgraded outcomes with more variance.",
+          "summary": "Greedier Board 2 route. Bank enough red upgrade value to matter, then cross early for stronger converted outcomes.",
           "rules": {
             "extends": "Special2_Bank_And_Cross",
             "targetUpgradeCards": 5,
@@ -348,7 +348,7 @@
           "id": "Special2_Bank_And_Cross",
           "label": "Special 2: Bank & Cross",
           "kicker": "Balanced",
-          "summary": "Balanced banked-upgrade route. Slower than Chest Zone Fill, but keeps the classic Board 2 plan of banking red upgrades before entering the chest zone.",
+          "summary": "Balanced Board 2 route. Bank upgrades first when they come naturally, then cross and convert chests cleanly.",
           "rules": {
             "board2Enabled": true,
             "boardRole": "bank_then_chest_conversion",

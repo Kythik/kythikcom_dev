@@ -2,16 +2,15 @@
   "defaultStrategy": "Math_Says_Best",
   "version": "normal_board_retuned_v2_25000",
   "notes": [
-    "Normal-board autoplay strategies retuned after broad discovery, local mutation search, and 25,000 paired-seed finalist validation.",
     "Only the three public normal-board strategies are displayed.",
-    "Autoplay assumes value recovery backtracking.",
-    "Special board strategy JSON is unchanged in this package."
+    "Player-facing normal strategy cards use human guidance: core rule, priorities, common mistake, and walkthrough.",
+    "Metrics and tuning details remain in the metrics/weights data, not in the readable card guidance."
   ],
   "strategies": {
     "Math_Says_Best": {
       "label": "Kythik’s",
       "kicker": "Human value route",
-      "role": "What you were really doing, clarified and tested",
+      "role": "Practical default route: chest package first, upgrades on real targets, avoid wasted detours",
       "sourcePolicy": "local_031",
       "weights": {
         "q": 4.425244276702663,
@@ -127,7 +126,7 @@
     "Kythiks": {
       "label": "Best Found",
       "kicker": "Solver EV route",
-      "role": "Best discovered profile from the large retune",
+      "role": "Highest-average route: faster value tempo, earlier upgrades, hard empty-tile avoidance",
       "sourcePolicy": "local_060",
       "weights": {
         "q": 7.1817137501623725,
@@ -243,7 +242,7 @@
     "Seven_Chests_Rarity": {
       "label": "7 Chests → Rarity",
       "kicker": "Completion pressure",
-      "role": "Highest 7-chest rate among the retuned finalists",
+      "role": "Completion route: keep seven chests alive, then improve rarity when the cost is reasonable",
       "sourcePolicy": "local_002",
       "weights": {
         "q": 7.4353371080279995,
