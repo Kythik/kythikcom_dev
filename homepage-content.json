@@ -5,9 +5,10 @@
       "eyebrow": "SS12 \u00b7 Lunaria",
       "title": "Season Countdown",
       "seasonStartISO": "2026-04-16T19:00:00-07:00",
-      "nextSeasonISO": null,
+      "nextSeasonISO": "2026-07-16T19:00:00-07:00",
       "blurb": "Next season info drops soon \u2014 check back for patch notes & countdown.",
-      "link": null
+      "link": null,
+      "seasonEndISO": "2026-07-16T19:00:00-07:00"
     },
     {
       "type": "link",
