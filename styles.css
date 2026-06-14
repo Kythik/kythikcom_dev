@@ -134,19 +134,21 @@ button { cursor: pointer; font-family: var(--font-body); }
 .header-left { display: flex; align-items: center; gap: 12px; }
 
 .brand-mark {
-  width: 22px; height: 22px;
+  width: 26px; height: 26px;
   display: flex; align-items: center; justify-content: center;
-  color: var(--gold-primary);
+  color: var(--gold-bright);
   flex-shrink: 0;
+  filter: drop-shadow(0 0 10px rgba(230,199,122,.18));
 }
 
 .header-name {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 18px;
   font-weight: 700;
-  color: var(--gold-primary);
-  letter-spacing: .18em;
+  color: var(--gold-bright);
+  letter-spacing: .15em;
   text-transform: uppercase;
+  text-shadow: 0 0 16px rgba(230,199,122,.16);
 }
 
 .live-badge {
