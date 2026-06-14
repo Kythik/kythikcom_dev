@@ -1557,3 +1557,435 @@ button { cursor: pointer; font-family: var(--font-body); }
 @media (max-width: 700px) {
   .grid--info { grid-template-columns: 1fr; }
 }
+
+
+/* ═══════════════════════════════════════════
+   PREMIUM COMPONENT EXPANSION II
+   Score modules, tool cards, ranking cards,
+   control panels — for subpage inheritance.
+   ═══════════════════════════════════════════ */
+
+/* ── TOOL CARD ──────────────────────────── */
+/* More prominent than resource-card.
+   Use for featured tools, calculators, major resources. */
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(200,164,93,.08), transparent 45%),
+    linear-gradient(180deg, rgba(13,24,40,.98), rgba(5,10,22,.99));
+  border: 1px solid rgba(200,164,93,.32);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color .2s, box-shadow .2s, transform .18s;
+  box-shadow: 0 6px 24px rgba(0,0,0,.38), inset 0 1px 0 rgba(230,199,122,.06);
+  gap: 10px;
+}
+.tool-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold-muted) 55%, transparent);
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+}
+.tool-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(230,199,122,.5), transparent 50%);
+}
+.tool-card:hover {
+  border-color: rgba(200,164,93,.58);
+  box-shadow: 0 12px 40px rgba(0,0,0,.48), 0 0 0 1px var(--gold-glow), 0 0 24px rgba(200,164,93,.10);
+  transform: translateY(-2px);
+}
+.tool-card__kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-muted);
+}
+.tool-card__title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  line-height: 1.2;
+  letter-spacing: .02em;
+}
+.tool-card__body {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+  flex: 1;
+}
+.tool-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-blue);
+  margin-top: auto;
+  gap: 8px;
+}
+.tool-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+/* ── SCORE MODULE ───────────────────────── */
+/* Primary result display — big number, label, context.
+   Use for DPS, EV, profit, any key calc output. */
+.score-module {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(200,164,93,.12), transparent 55%),
+    linear-gradient(180deg, rgba(11,21,36,.96), rgba(4,8,15,.99));
+  border: 1px solid rgba(200,164,93,.30);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 0 1px rgba(200,164,93,.06), 0 8px 28px rgba(0,0,0,.38);
+}
+.score-module::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 20%; right: 20%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(230,199,122,.55), transparent);
+}
+.score-module__label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-muted);
+  margin-bottom: 6px;
+}
+.score-module__value {
+  font-family: var(--font-display);
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--gold-bright);
+  line-height: 1.05;
+  letter-spacing: .01em;
+  text-shadow: 0 0 28px rgba(230,199,122,.22);
+}
+.score-module__value--lg { font-size: 48px; }
+.score-module__value--sm { font-size: 24px; }
+.score-module__sub {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-top: 5px;
+  letter-spacing: .04em;
+}
+/* Highlight state — used when result is notably good */
+.score-module--highlight {
+  border-color: rgba(200,164,93,.52);
+  box-shadow: 0 0 0 1px rgba(200,164,93,.12), 0 0 28px rgba(200,164,93,.12), 0 8px 28px rgba(0,0,0,.38);
+}
+.score-module--highlight .score-module__value {
+  text-shadow: 0 0 36px rgba(230,199,122,.36);
+}
+
+/* ── RANK CARD ──────────────────────────── */
+/* Horizontal ranked item — number, name, stat, badge.
+   Use for leaderboards, tier lists, top-N lists. */
+.rank-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: linear-gradient(90deg, rgba(13,24,40,.96), rgba(7,14,28,.98));
+  border: 1px solid rgba(200,164,93,.20);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  position: relative;
+  transition: border-color .18s, box-shadow .18s;
+}
+.rank-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--gold-muted), transparent);
+  opacity: .5;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+.rank-card:hover {
+  border-color: rgba(200,164,93,.40);
+  box-shadow: 0 4px 18px rgba(0,0,0,.28), 0 0 12px rgba(200,164,93,.06);
+}
+.rank-card__pos {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--gold-muted);
+  min-width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+  letter-spacing: .01em;
+}
+.rank-card__pos--gold { color: var(--gold-bright); text-shadow: 0 0 12px rgba(230,199,122,.28); }
+.rank-card__pos--silver { color: #B0BAC8; }
+.rank-card__pos--bronze { color: #C8814A; }
+.rank-card__content {
+  flex: 1;
+  min-width: 0;
+}
+.rank-card__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.rank-card__meta {
+  font-size: 11px;
+  color: var(--text-faint);
+  margin-top: 2px;
+}
+.rank-card__stat {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--gold-primary);
+  flex-shrink: 0;
+  letter-spacing: .01em;
+}
+.rank-card__badge {
+  flex-shrink: 0;
+}
+
+/* ── CONTROL PANEL ──────────────────────── */
+/* Input/config area for tools and calculators.
+   Dark inset surface, organized into rows. */
+.control-panel {
+  background: linear-gradient(180deg, rgba(7,14,28,.98), rgba(4,8,15,.99));
+  border: 1px solid var(--border-blue);
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: inset 0 2px 12px rgba(0,0,0,.28);
+}
+.control-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-blue);
+}
+.control-panel__title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-muted);
+}
+.control-panel__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.control-panel__label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  min-width: 80px;
+  flex-shrink: 0;
+}
+.control-panel__field {
+  flex: 1;
+  min-width: 120px;
+}
+.control-panel__divider {
+  height: 1px;
+  background: var(--border-blue);
+  margin: 2px 0;
+}
+.control-panel__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-blue);
+}
+
+/* ── STAT ROW ───────────────────────────── */
+/* Horizontal key/value pair — use inside panels, cards, modals. */
+.stat-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border-blue);
+  font-size: 12px;
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-row__key {
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: .04em;
+  flex-shrink: 0;
+}
+.stat-row__val {
+  color: var(--text-primary);
+  font-weight: 700;
+  text-align: right;
+}
+.stat-row__val--gold { color: var(--gold-primary); }
+.stat-row__val--bright { color: var(--gold-bright); }
+.stat-row__val--muted { color: var(--text-faint); font-weight: 500; }
+.stat-row__val--good { color: var(--green-gain); }
+.stat-row__val--bad { color: var(--red-loss); }
+
+/* ── SECTION HEADER ─────────────────────── */
+/* Consistent section title treatment across all pages. */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.section-header__title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-header__title::after {
+  content: '';
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(200,164,93,.45), transparent);
+}
+.section-header__action {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-faint);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  transition: color .18s;
+  text-decoration: none;
+}
+.section-header__action:hover { color: var(--gold-primary); }
+
+/* ── NOTICE / CALLOUT ───────────────────── */
+/* Inline notice box — info, warning, tip. */
+.notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(38,58,87,.22);
+  border: 1px solid var(--border-blue);
+  border-left: 2px solid var(--blue-light);
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 12px;
+  color: var(--text-soft);
+  line-height: 1.6;
+}
+.notice--gold {
+  background: rgba(200,164,93,.06);
+  border-color: rgba(200,164,93,.22);
+  border-left-color: var(--gold-primary);
+  color: var(--text-soft);
+}
+.notice--warn {
+  background: rgba(216,137,51,.08);
+  border-color: rgba(216,137,51,.28);
+  border-left-color: #D88933;
+}
+.notice--danger {
+  background: rgba(216,90,78,.08);
+  border-color: rgba(216,90,78,.28);
+  border-left-color: var(--red-loss);
+}
+.notice__icon {
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* ── TAB BAR ────────────────────────────── */
+/* Horizontal tab navigation for tool sub-views. */
+.tab-bar {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  border-bottom: 1px solid var(--border-blue);
+  padding: 0 2px;
+  margin-bottom: 20px;
+}
+.tab-bar__item {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  padding: 10px 14px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+  white-space: nowrap;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-family: var(--font-body);
+}
+.tab-bar__item:hover { color: var(--text-soft); }
+.tab-bar__item.is-active {
+  color: var(--gold-primary);
+  border-bottom-color: var(--gold-primary);
+}
+
+/* ── EMPTY STATE ────────────────────────── */
+/* Placeholder for empty lists, no results, loading failed. */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 48px 24px;
+  text-align: center;
+  color: var(--text-faint);
+}
+.empty-state__icon {
+  font-size: 32px;
+  opacity: .5;
+}
+.empty-state__title {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+.empty-state__body {
+  font-size: 12px;
+  line-height: 1.65;
+  max-width: 36ch;
+}
