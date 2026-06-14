@@ -2,8 +2,7 @@
    content.js — Torchlight landing page
    Loads content.json and drives:
      · Featured carousel (via KythikCarousel)
-     · Season card pre-processing (progress bar,
-       next season row) before carousel init
+     · Resources grid (#resourcesSection)
      · Official YouTube grid (#ytOfficialSection)
      · Kythik YouTube grid (#ytKythikSection)
    ═══════════════════════════════════════════ */
@@ -21,7 +20,7 @@
     }
   }
 
-  /* ── YouTube card HTML ────────────────────── */
+  /* ── YouTube card ─────────────────────────── */
 
   function buildVideoCard(v) {
     const videoId = parseYouTubeId(v.link);
@@ -30,16 +29,18 @@
       : `<div style="height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-navy)"><span>▶ Video</span></div>`;
     return `
       <a href="${v.link}" target="_blank" rel="noopener" style="text-decoration:none;display:block">
-        <div class="card" style="cursor:pointer;overflow:hidden"><div class="card-inner" style="padding:0;position:relative">
-          <div style="height:220px;overflow:hidden;border-radius:var(--radius-lg);position:relative;background:var(--bg-navy)">
+        <div class="resource-card" style="cursor:pointer;overflow:hidden">
+          <div style="height:200px;overflow:hidden;border-radius:var(--radius-lg) var(--radius-lg) 0 0;position:relative;background:var(--bg-navy)">
             ${thumb}
-            <div style="position:absolute;bottom:0;left:0;right:0;padding:10px 14px 12px;background:linear-gradient(to top,rgba(8,14,26,0.95) 0%,transparent 100%)">
-              <h3 class="card-title" style="margin:0;font-size:13px">${v.title}</h3>
-            </div>
           </div>
-        </div></div>
+          <div style="padding:12px 14px 14px">
+            <div class="card-title" style="font-size:13px;margin:0">${v.title}</div>
+          </div>
+        </div>
       </a>`;
   }
+
+  /* ── Section header ───────────────────────── */
 
   function buildSectionHeader(title, channelUrl, linkLabel) {
     return `
@@ -47,17 +48,17 @@
       <a href="${channelUrl}" target="_blank" rel="noopener" class="hub-game-link">${linkLabel}</a>`;
   }
 
-  /* ── Pre-process featured items ───────────── */
+  /* ── Resource card ────────────────────────── */
 
-  function processFeatured(items) {
-    return items.map(item => {
-      if (item.type === 'season') {
-        // Append progress bar + next season HTML directly into blurb
-        // since shared-carousel renders item.blurb and nothing else extra
-        return { ...item, blurb: (item.blurb || '') + buildSeasonMeta(item) };
-      }
-      return item;
-    });
+  function buildResourceCard(r) {
+    return `
+      <a href="${r.link}" style="text-decoration:none;display:block">
+        <div class="resource-card">
+          <div class="kicker" style="margin-bottom:6px">Tool</div>
+          <div class="card-title">${r.title}</div>
+          <p class="subtext" style="margin:6px 0 0;font-size:12px">${r.blurb}</p>
+        </div>
+      </a>`;
   }
 
   /* ── Main ─────────────────────────────────── */
@@ -65,7 +66,7 @@
   async function init() {
     const data = await fetch('/torchlight/content.json').then(r => r.json()).catch(() => ({}));
 
-    // Featured carousel — season card rendering handled by shared-carousel.js
+    // Featured carousel
     if (data.featured && data.featured.length) {
       KythikCarousel.init({ mountId: 'tliCarousel', items: data.featured, autoRotateMs: 6000 });
     }
@@ -74,14 +75,7 @@
     if (data.resources && data.resources.length) {
       const section = document.getElementById('resourcesSection');
       const grid    = document.getElementById('resourcesGrid');
-      grid.innerHTML = data.resources.map(r => `
-        <div class="card"><div class="card-inner">
-          <div class="card-top">
-            <h3 class="card-title">${r.title}</h3>
-          </div>
-          <p class="subtext" style="margin:8px 0 14px">${r.blurb}</p>
-          <a href="${r.link}" class="header-pill">${r.linkLabel}</a>
-        </div></div>`).join('');
+      grid.innerHTML = data.resources.map(buildResourceCard).join('');
       section.style.display = 'block';
     }
 
