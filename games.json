@@ -37,6 +37,18 @@
       "subpages": [],
       "fallbackImage": "/images/fallbacks/everquest-legends.png",
       "iconScale": 1.6
+    },
+    {
+      "id": "hero-siege",
+      "name": "Hero Siege",
+      "shortName": "HS",
+      "icon": "/images/icons/HeroSiege.png",
+      "path": "/hero-siege/",
+      "theme": "hero-siege.css",
+      "status": "upcoming",
+      "subpages": [],
+      "fallbackImage": "/images/fallbacks/hero-siege.png",
+      "iconScale": 1.0
     }
   ]
 }
