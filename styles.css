@@ -612,9 +612,6 @@ button { cursor: pointer; font-family: var(--font-body); }
   justify-content: space-between;
   padding-top: 14px;
   border-top: 1px solid rgba(200,164,93,.18);
-  background: rgba(4,8,15,.28);
-  margin: 0 -24px -24px;
-  padding: 14px 24px;
   gap: 8px;
 }
 
