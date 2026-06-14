@@ -1031,7 +1031,14 @@ function render(){
     const th=s.tag?tagMap[s.tag]||'':'';
     const nameHtml=(s.name?`<span class="svc-name">${s.name}</span>`:'')+seasonBadge;
     const effClass=s.name?'svc-effect':'svc-effect svc-effect-primary';
-    const eff=`<div class="${effClass}">${(s.effect||s.desc||'').substring(0,100)}${(s.effect||s.desc||'').length>100?'…':''}${th}</div>`;
+    const rFM=document.getElementById('roulFail')?document.getElementById('roulFail').value:'flat';
+    const rawEffect=s.isRoulette
+      ?(rFM==='escalating'
+        ?'Escalating: 10%→47% fail per cog. EV negative at max — optimal stop at cog 4. Fail = event ends.'
+        :'Flat: 10% fail per cog (compounding). Escalating bonus vouchers if survived. Fail = event ends.')
+      :(s.effect||s.desc||'');
+    const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
+    const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
     const roulFailModel=document.getElementById('roulFail')?document.getElementById('roulFail').value:'flat';
     const inlineWarn=s.isRoulette?(roulFailModel==='escalating'
                        ?`<div class="svc-inline-warn">~1 per 100 maps · ~89% wipe to cog 6 · barely break-even even ignoring variance</div>`
