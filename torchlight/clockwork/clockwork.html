@@ -252,14 +252,7 @@ select:focus{border-color:var(--gold-muted)}
   <div class="ctrl-card">
   <div class="ctrl-card-title">Setup</div>
   <div class="ctrls">
-    <div class="ctrl-group">
-      <label>Cogwheels</label>
-      <select id="gears">
-        <option value="5">5 gears (S ×1.3)</option>
-        <option value="6" selected>6 gears (SS ×1.45)</option>
-        <option value="7">7 gears (SSS ×1.6)</option>
-      </select>
-    </div>
+
     <div class="ctrl-group">
       <label>Collection Doll Astrolabe</label>
       <select id="doll">
@@ -296,20 +289,7 @@ select:focus{border-color:var(--gold-muted)}
         <option value="tier">Tier</option>
       </select>
     </div>
-    <div class="ctrl-group">
-      <label>Roulette dist.</label>
-      <select id="rdist">
-        <option value="expected">Expected</option>
-        <option value="highrarity">High rarity (observed)</option>
-      </select>
-    </div>
-    <div class="ctrl-group">
-      <label>Roulette fail model</label>
-      <select id="roulFail" onchange="render()">
-        <option value="flat">Flat 10%/cog</option>
-        <option value="escalating">Escalating 10%→47%</option>
-      </select>
-    </div>
+
     <div class="ctrl-group" style="display:flex;align-items:flex-end;padding-bottom:8px">
       <label class="chk-row">
         <input type="checkbox" id="showz" onchange="render()">
@@ -1048,7 +1028,7 @@ function render(){
     if(s.id===11)extra=lbBtn('id11','why SSS matters here');
     if(s.id===29)extra=lbBtn('id29','how this is calculated');
     if(s.id===32)extra=lbBtn('id32','how this is calculated');
-    if(s.isRoulette)extra=`<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px">📊 show cog-by-cog breakdown ▾</button><div style="display:none">`+roulBlock(gearsVal,rdist,base)+`</div>`;
+    if(s.isRoulette)extra=`<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px" title="Roulette breakdown">📊</button><div style="display:none"><div style="display:flex;gap:10px;flex-wrap:wrap;padding:8px 0 6px;border-bottom:1px solid var(--border-blue);margin-bottom:8px"><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Fail model</label><select id="roulFail" onchange="render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="flat">Flat 10%/cog</option><option value="escalating">Escalating 10%→47%</option></select></div><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Voucher dist.</label><select id="rdist" onchange="render()" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="expected">Expected</option><option value="highrarity">High rarity (observed)</option></select></div></div>`+roulBlock(gearsVal,rdist,base)+`</div>`;
     if(s.isID23)extra=`<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px">📊 show outcome breakdown ▾</button><div style="display:none">`+id23Block(gearsVal,base,nodeWasteful,nodeOstentatious,nodeCb59)+`</div>`;
     if(s.id===35){const nt=NUT[parseInt(gearsVal)]||NUT[6];extra=`<div class="svc-info">P(0 proc): ${(nt.p0*100).toFixed(1)}% · P(1 proc): ${(nt.p1*100).toFixed(1)}% · P(2 procs): ${(nt.p2*100).toFixed(1)}%</div>`+lbBtn('id35','how this is calculated');}
     const tr=document.createElement('tr');
