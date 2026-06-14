@@ -15,24 +15,8 @@
       "eyebrow": "Official",
       "title": "SS12 Patch Notes",
       "blurb": "Full breakdown of Lunaria mechanics, balance changes, and new systems.",
-      "link": "https://www.torchlightinfinite.com/",
+      "link": "https://torchlight.xd.com/us/news/single?id=8t9xbvgnO52x",
       "linkLabel": "Read Patch Notes"
-    },
-    {
-      "type": "link",
-      "eyebrow": "Strategy Hub",
-      "title": "Top Farm Strategies",
-      "blurb": "Browse the community-sourced farm route and build database.",
-      "link": "/torchlight/strats/strats.html",
-      "linkLabel": "Browse Strats"
-    },
-    {
-      "type": "link",
-      "eyebrow": "Tool",
-      "title": "Clockwork Ballet Calculator",
-      "blurb": "Season 12 farm calculator — fully updated with Astrolabe & Probe support.",
-      "link": "/torchlight/clockwork/clockwork.html",
-      "linkLabel": "Open Calculator"
     }
   ],
   "officialYoutube": [
@@ -45,5 +29,20 @@
       "link": "https://www.youtube.com/watch?v=wcJmLmCSMjg"
     }
   ],
-  "youtube": []
+  "youtube": [
+	{
+      "title": "How To Check Over Dummy Cap DPS",
+      "link": "https://www.youtube.com/watch?v=L7i1tHyCtHs"
+    },
+    {
+      "title": "S8 Rehan Autobomber AFK SS21 KILL",
+      "link": "https://www.youtube.com/watch?v=XDjrRXBnz-8"
+    },
+	{
+      "title": "S8 Rehan Autobomber AFK SS20 KILL",
+      "link": "https://www.youtube.com/watch?v=xLEYnA9hm2s"
+    }
+  
+  
+  ]
 }
