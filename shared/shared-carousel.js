@@ -138,9 +138,14 @@
         </div>
       </div>` : mediaHtml;
 
-    // Right panel image priority: item.image → fallbackImage → default panel
+    // Right panel image priority:
+    // youtube with real thumbnail → thumbnail
+    // item.image → per-card override
+    // fallbackImage → per-game fallback
+    // /images/featured-panel.png → last resort
+    const hasRealThumb = item.type === 'youtube' && mediaHtml && mediaHtml.includes('<img');
     const rightBg = item.image || fallbackImage || null;
-    const rightPanel = (item.type === 'youtube' && mediaHtml)
+    const rightPanel = hasRealThumb
       ? `<div class="feat-screenshot" style="flex:1;">
            ${mediaHtml}
            <div class="feat-screenshot-fade"></div>
