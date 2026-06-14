@@ -342,8 +342,8 @@
           <span class="hello-line" id="heroGamers"></span>
         </div>
       </div>
-      <!-- RIGHT: Bio — always visible -->
-      <div class="hub-hero-right">
+      <!-- RIGHT: Bio — hidden until animation ends -->
+      <div class="hub-hero-right" id="heroBio" style="opacity:0;transition:opacity 0.45s ease">
         <h1 class="hub-hero-name">Kythik</h1>
         <div class="hub-hero-tagline">S-Tier Yapper · Game Strategy &amp; Live Commentary</div>
         <p class="hub-hero-bio">
@@ -449,11 +449,13 @@
       function revealFinal() {
         const stage = document.getElementById('helloStage');
         const final = document.getElementById('helloFinal');
+        const bio   = document.getElementById('heroBio');
 
         if (stage) stage.style.display = 'none';
         if (final) final.style.display = 'flex';
         if (heroHello)  { heroHello.textContent  = 'Hello,';  heroHello.classList.add('is-visible'); }
         if (heroGamers) { heroGamers.textContent = 'Gamers.'; heroGamers.classList.add('is-visible'); }
+        if (bio) bio.style.opacity = '1';
       }
 
       // Sequence: type HELLO → fadeout → GAMERS slam → reveal final
