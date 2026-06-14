@@ -568,13 +568,13 @@ button { cursor: pointer; font-family: var(--font-body); }
 }
 
 .feat-art-content {
-  position: absolute;
-  inset: 0;
-  padding: 26px 28px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  z-index: 2;
+  padding: 24px;
+  background: linear-gradient(180deg, rgb(9,18,34), rgb(4,8,15));
+  min-width: 0;
+  overflow: hidden;
 }
 
 .feat-eyebrow {
