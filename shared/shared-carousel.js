@@ -124,7 +124,7 @@
     // Right panel: background image only (feat-art-panel), no text overlay
     const hasTextContent = eyebrow || title || blurb || metaHtml || tagsRow || ctaLabel;
     const leftPanel = hasTextContent ? `
-      <div class="feat-art-content" style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;height:100%;padding:24px;box-sizing:border-box;min-width:320px;max-width:45%;">
+      <div class="feat-art-content">
         <div>
           ${eyebrow ? `<div class="feat-eyebrow">${eyebrow}</div>` : ''}
           ${title   ? `<h2 class="feat-title">${title}</h2>` : ''}
