@@ -22,7 +22,8 @@
           "path": "/torchlight/arcana/arcana.html"
         }
       ],
-      "fallbackImage": "/images/fallbacks/torchlight.png"
+      "fallbackImage": "/images/fallbacks/torchlight.png",
+      "iconScale": 1.0
     },
     {
       "id": "everquest-legends",
@@ -34,7 +35,8 @@
       "status": "upcoming",
       "launchDate": "2026-07-01",
       "subpages": [],
-      "fallbackImage": "/images/fallbacks/everquest-legends.png"
+      "fallbackImage": "/images/fallbacks/everquest-legends.png",
+      "iconScale": 1.3
     }
   ]
 }
