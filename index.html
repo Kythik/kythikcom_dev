@@ -143,48 +143,18 @@
       gap: 10px;
     }
     .hub-community-card {
-      background: linear-gradient(180deg, rgba(13,24,40,.96), rgba(7,14,28,.98));
-      border: 1px solid rgba(200,164,93,.22);
-      border-radius: var(--radius-lg);
       padding: 18px 20px;
       display: flex;
       flex-direction: column;
       gap: 8px;
       flex: 1;
-      box-shadow: 0 6px 24px rgba(0,0,0,.32), inset 0 1px 0 rgba(230,199,122,.04);
-      transition: border-color .2s, box-shadow .2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .hub-community-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; bottom: 0;
-      width: 2px;
-      background: linear-gradient(180deg, var(--gold-bright), var(--gold-muted) 55%, transparent);
-      opacity: .45;
-    }
-    .hub-community-card:hover {
-      border-color: rgba(200,164,93,.42);
-      box-shadow: 0 8px 32px rgba(0,0,0,.42), 0 0 0 1px var(--gold-glow);
-    }
-    .hub-community-card h3 {
-      font-family: var(--font-display);
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--gold-primary);
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-    .hub-community-card p {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.65;
-      flex: 1;
     }
     .hub-community-card .header-pill {
       align-self: flex-start;
-      margin-top: 4px;
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px solid rgba(200,164,93,.12);
+      width: 100%;
     }
 
 
@@ -372,14 +342,14 @@
           </iframe>
         </div>
         <div class="hub-community-side">
-          <div class="hub-community-card">
-            <h3>Watch Live</h3>
-            <p>ARPGs, 5 days a week, ~6 hours a stream. Torchlight Infinite, Diablo IV, Hero Siege, Dwarven Realms — and a lot of commentary.</p>
+          <div class="hub-community-card panel-card">
+            <h3 class="panel-card__title">Watch Live</h3>
+            <p class="panel-card__body">ARPGs, 5 days a week, ~6 hours a stream. Torchlight Infinite, Diablo IV, Hero Siege, Dwarven Realms — and a lot of commentary.</p>
             <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener" class="header-pill">Go to Twitch</a>
           </div>
-          <div class="hub-community-card">
-            <h3>Join the Discord</h3>
-            <p>Strategy discussion, build help, community-sourced farm routes synced straight into the strat hub.</p>
+          <div class="hub-community-card panel-card">
+            <h3 class="panel-card__title">Join the Discord</h3>
+            <p class="panel-card__body">Strategy discussion, build help, community-sourced farm routes synced straight into the strat hub.</p>
             <a href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener" class="header-pill">Join Discord</a>
           </div>
         </div>
