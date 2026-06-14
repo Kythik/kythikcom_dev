@@ -255,7 +255,7 @@ select:focus{border-color:var(--gold-muted)}
 
     <div class="ctrl-group">
       <label>Collection Doll Astrolabe</label>
-      <select id="doll">
+      <select class="select" id="doll">
         <option value="none">Doll Astrolabe (base, ~6% est.)</option>
         <option value="regular">Collection Doll (~19% est., unverified)</option>
         <option value="artifact" selected>Collection Doll Artifact (~45% observed)</option>
@@ -263,7 +263,7 @@ select:focus{border-color:var(--gold-muted)}
     </div>
     <div class="ctrl-group">
       <label>Probe</label>
-      <select id="probe">
+      <select class="select" id="probe">
         <option value="none">None</option>
         <option value="compass" selected>Compass Deep Space Probe</option>
         <option value="doll">Doll Deep Space Probe</option>
@@ -272,7 +272,7 @@ select:focus{border-color:var(--gold-muted)}
 
     <div class="ctrl-group">
       <label>Alice tier</label>
-      <select id="alice">
+      <select class="select" id="alice">
         <option value="none">None</option>
         <option value="lv1">Lv1 (25% double)</option>
         <option value="lv23">Lv2-3 (25% double + 8% proc)</option>
@@ -283,7 +283,7 @@ select:focus{border-color:var(--gold-muted)}
 
     <div class="ctrl-group">
       <label>Sort by</label>
-      <select id="sort" onchange="render()">
+      <select class="select" id="sort" onchange="render()">
         <option value="ev">EV added</option>
         <option value="rarity">Rarity</option>
         <option value="tier">Tier</option>
@@ -292,8 +292,8 @@ select:focus{border-color:var(--gold-muted)}
 
   </div>
 
-  <div class="node-group">
-    <div class="node-group-title">Clockwork Tree Nodes</div>
+  <div class="panel--inset" style="margin-top:14px">
+    <span class="kicker" style="margin-bottom:12px;display:block">Clockwork Tree Nodes</span>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 28px">
 
       <label class="chk-row">
@@ -375,7 +375,7 @@ select:focus{border-color:var(--gold-muted)}
   </div>
 </div>
 
-<div class="tbl-wrap"><table class="svc-table tbl-sticky">
+<div class="tbl-wrap"><table class="svc-table data-table tbl-sticky">
     <thead>
       <tr>
         <th style="width:24px">#</th>
@@ -394,9 +394,9 @@ select:focus{border-color:var(--gold-muted)}
 
 
 <!-- ID10 Lightbox -->
-<div id="id10-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px">
-  <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:520px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="document.getElementById('id10-lightbox').style.display='none';document.body.style.overflow='';" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-faint);font-size:18px;cursor:pointer">✕</button>
+<div id="id10-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center">
+  <div onclick="event.stopPropagation()" class="overlay-panel" style="max-width:520px;width:100%;max-height:85vh;overflow-y:auto">
+    <button onclick="document.getElementById('id10-lightbox').style.display='none';document.body.style.overflow='';" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">ID10 — Remove &amp; Upgrade</h2>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:12px">
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Mechanic</div>
@@ -411,9 +411,9 @@ select:focus{border-color:var(--gold-muted)}
 </div>
 
 <!-- ID11 Lightbox -->
-<div id="id11-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px">
-  <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:520px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="document.getElementById('id11-lightbox').style.display='none';document.body.style.overflow='';" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-faint);font-size:18px;cursor:pointer">✕</button>
+<div id="id11-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center">
+  <div onclick="event.stopPropagation()" class="overlay-panel" style="max-width:520px;width:100%;max-height:85vh;overflow-y:auto">
+    <button onclick="document.getElementById('id11-lightbox').style.display='none';document.body.style.overflow='';" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">ID11 — 6 Cog SSS Stage</h2>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:12px">
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Mechanic</div>
@@ -433,9 +433,9 @@ select:focus{border-color:var(--gold-muted)}
 </div>
 
 <!-- ID29 Lightbox -->
-<div id="id29-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px">
-  <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:520px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="document.getElementById('id29-lightbox').style.display='none';document.body.style.overflow='';" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-faint);font-size:18px;cursor:pointer">✕</button>
+<div id="id29-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center">
+  <div onclick="event.stopPropagation()" class="overlay-panel" style="max-width:520px;width:100%;max-height:85vh;overflow-y:auto">
+    <button onclick="document.getElementById('id29-lightbox').style.display='none';document.body.style.overflow='';" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">ID29 — Hunting Ground</h2>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:12px">
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Mechanic</div>
@@ -449,9 +449,9 @@ select:focus{border-color:var(--gold-muted)}
 </div>
 
 <!-- ID32 Lightbox -->
-<div id="id32-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px">
-  <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:520px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="document.getElementById('id32-lightbox').style.display='none';document.body.style.overflow='';" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-faint);font-size:18px;cursor:pointer">✕</button>
+<div id="id32-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center">
+  <div onclick="event.stopPropagation()" class="overlay-panel" style="max-width:520px;width:100%;max-height:85vh;overflow-y:auto">
+    <button onclick="document.getElementById('id32-lightbox').style.display='none';document.body.style.overflow='';" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">ID32 — Bloody Mary</h2>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:12px">
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Mechanic</div>
@@ -464,9 +464,9 @@ select:focus{border-color:var(--gold-muted)}
 </div>
 
 <!-- ID35 Lightbox -->
-<div id="id35-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px">
-  <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:520px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="document.getElementById('id35-lightbox').style.display='none';document.body.style.overflow='';" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-faint);font-size:18px;cursor:pointer">✕</button>
+<div id="id35-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center">
+  <div onclick="event.stopPropagation()" class="overlay-panel" style="max-width:520px;width:100%;max-height:85vh;overflow-y:auto">
+    <button onclick="document.getElementById('id35-lightbox').style.display='none';document.body.style.overflow='';" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">ID35 — Nut Trick</h2>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:12px">
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Mechanic</div>
@@ -487,9 +487,9 @@ select:focus{border-color:var(--gold-muted)}
   </div>
 </div>
 <!-- ID23 Lightbox -->
-<div id="id23-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px">
+<div id="id23-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center">
   <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:560px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="hideId23Lightbox()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-faint);font-size:18px;cursor:pointer">✕</button>
+    <button onclick="hideId23Lightbox()" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">ID23 — Completing Operation Cogwheel</h2>
     <p style="font-size:11px;color:var(--text-faint);margin-bottom:18px">How the EV model works for this service</p>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:14px">
@@ -519,9 +519,9 @@ select:focus{border-color:var(--gold-muted)}
 </div>
 
 <!-- Alice Proc Lightbox -->
-<div id="alice-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px">
-  <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:520px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="hideAliceLightbox()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-faint);font-size:18px;cursor:pointer">✕</button>
+<div id="alice-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center">
+  <div onclick="event.stopPropagation()" class="overlay-panel" style="max-width:520px;width:100%;max-height:85vh;overflow-y:auto">
+    <button onclick="hideAliceLightbox()" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">Alice — Proc Voucher Bonus</h2>
     <p style="font-size:11px;color:var(--text-faint);margin-bottom:18px">How the per-run bonus is calculated</p>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:14px">
@@ -536,9 +536,9 @@ select:focus{border-color:var(--gold-muted)}
 </div>
 
 <!-- Roulette Lightbox -->
-<div id="roulette-lightbox" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px">
+<div id="roulette-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center">
   <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:560px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="hideRouletteLightbox()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-faint);font-size:18px;cursor:pointer">✕</button>
+    <button onclick="hideRouletteLightbox()" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">Clockwork Roulette — Strategy</h2>
     <p style="font-size:11px;color:var(--text-faint);margin-bottom:18px">The math depends on which fail model is true — pick one above to see how it changes things</p>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:14px">
@@ -585,9 +585,9 @@ select:focus{border-color:var(--gold-muted)}
 </div>
 
 <!-- Reroll Decision Lightbox -->
-<div id="lightbox-overlay" onclick="hideLightbox()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;padding:20px">
+<div id="lightbox-overlay" onclick="hideLightbox()" class="overlay" style="display:none;align-items:center;justify-content:center">
   <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:560px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="hideLightbox()" style="position:absolute;top:16px;right:16px;background:transparent;border:none;color:var(--text-faint);font-size:18px;cursor:pointer">✕</button>
+    <button onclick="hideLightbox()" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">Reroll Recommendation</h2>
     <p style="font-size:11px;color:var(--text-faint);margin-bottom:18px">How the Keep / Reroll decision is calculated</p>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:14px">
