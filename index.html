@@ -46,8 +46,6 @@
     /* ── Hero ── */
     .hub-hero {
       padding: 36px 0 28px;
-      border-bottom: 1px solid var(--border-soft);
-      margin-bottom: 32px;
       max-width: 640px;
       margin-left: auto;
       margin-right: auto;
@@ -191,7 +189,15 @@
 
     /* ── Hello Gamers opening ── */
 
-    /* Opening stage — sits above hero, same height, centered */
+    /* Hero wrapper — stage and hero share identical space via CSS grid overlay */
+    .hero-wrap {
+      display: grid;
+    }
+    .hero-wrap > * {
+      grid-area: 1 / 1;
+    }
+
+    /* Stage — centered in the shared space */
     .hello-stage {
       display: flex;
       flex-direction: column;
@@ -199,8 +205,15 @@
       justify-content: center;
       gap: 8px;
       pointer-events: none;
-      min-height: 160px;
       padding: 36px 0 28px;
+      min-height: 180px;
+      opacity: 1;
+      transition: opacity 0.3s;
+      z-index: 1;
+    }
+    .hello-stage.is-hidden {
+      opacity: 0;
+      pointer-events: none;
     }
     .hello-line {
       font-family: var(--font-display);
@@ -244,16 +257,13 @@
       gap: 40px;
       align-items: center;
       text-align: left;
-      max-width: none;
-      margin-left: 0;
-      margin-right: 0;
+      padding: 36px 0 28px;
       opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.45s ease, transform 0.45s ease;
+      transition: opacity 0.45s ease;
+      z-index: 2;
     }
     .hub-hero.is-visible {
       opacity: 1;
-      transform: translateY(0);
     }
     .hub-hero-tagline { justify-content: flex-start; }
     .hub-hero-tagline::before { display: block; }
@@ -438,26 +448,13 @@
         const stage = document.getElementById('helloStage');
         const final = document.getElementById('helloFinal');
         const hero  = document.getElementById('hubHero');
-        if (!stage) return;
 
-        // Fade out stage
-        stage.style.transition = 'opacity 0.3s';
-        stage.style.opacity = '0';
-
-        setTimeout(() => {
-          // Collapse stage height so hero takes its place
-          stage.style.transition = 'max-height 0.35s ease, padding 0.35s ease, opacity 0s';
-          stage.style.overflow   = 'hidden';
-          stage.style.maxHeight  = '0';
-          stage.style.padding    = '0';
-          stage.style.minHeight  = '0';
-
-          // Fade in hero
-          if (final) final.style.display = 'flex';
-          if (heroHello)  { heroHello.textContent  = 'Hello,';  heroHello.classList.add('is-visible'); }
-          if (heroGamers) { heroGamers.textContent = 'Gamers.'; heroGamers.classList.add('is-visible'); }
-          if (hero) hero.classList.add('is-visible');
-        }, 320);
+        // Fade out stage, fade in hero — no layout shift, same grid cell
+        if (stage) stage.classList.add('is-hidden');
+        if (final) final.style.display = 'flex';
+        if (heroHello)  { heroHello.textContent  = 'Hello,';  heroHello.classList.add('is-visible'); }
+        if (heroGamers) { heroGamers.textContent = 'Gamers.'; heroGamers.classList.add('is-visible'); }
+        setTimeout(() => { if (hero) hero.classList.add('is-visible'); }, 50);
       }
 
       // Sequence: type HELLO → fadeout → GAMERS slam → reveal final
