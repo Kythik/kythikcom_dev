@@ -81,10 +81,12 @@
       margin-bottom: 14px;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 10px;
       white-space: nowrap;
     }
-    .hub-hero-tagline::before {
+    .hub-hero-tagline::before,
+    .hub-hero-tagline::after {
       content: '';
       display: block;
       width: 20px;
@@ -223,8 +225,6 @@
       margin-left: auto;
       margin-right: auto;
     }
-    .hub-hero-tagline { justify-content: flex-start; }
-    .hub-hero-tagline::before { display: block; }
 
     .hello-text-wrap {
       display: flex;
