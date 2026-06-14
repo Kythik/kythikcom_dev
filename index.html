@@ -191,7 +191,7 @@
 
     /* ── Hello Gamers opening ── */
 
-    /* Opening stage — lives in hero right column */
+    /* Opening stage — sits above hero, same height, centered */
     .hello-stage {
       display: flex;
       flex-direction: column;
@@ -199,7 +199,8 @@
       justify-content: center;
       gap: 8px;
       pointer-events: none;
-      min-height: 80px;
+      min-height: 160px;
+      padding: 36px 0 28px;
     }
     .hello-line {
       font-family: var(--font-display);
@@ -247,7 +248,7 @@
       margin-left: 0;
       margin-right: 0;
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(6px);
       transition: opacity 0.45s ease, transform 0.45s ease;
     }
     .hub-hero.is-visible {
@@ -316,6 +317,12 @@
 
   <main class="main">
 
+    <!-- ── HELLO GAMERS OPENING STAGE ── -->
+    <div class="hello-stage" id="helloStage" aria-hidden="true">
+      <span class="hello-line hello-line--hello" id="helloLineHello"></span>
+      <span class="hello-line hello-line--gamers" id="helloLineGamers"></span>
+    </div>
+
     <!-- ── HERO ── -->
     <section class="hub-hero" id="hubHero">
       <div class="hub-hero-left">
@@ -328,10 +335,6 @@
         </p>
       </div>
       <div class="hello-text-wrap">
-        <div class="hello-stage" id="helloStage" aria-hidden="true">
-          <span class="hello-line hello-line--hello" id="helloLineHello"></span>
-          <span class="hello-line hello-line--gamers" id="helloLineGamers"></span>
-        </div>
         <div class="hello-text" id="helloFinal" style="display:none">
           <span class="hello-line" id="heroHello"></span>
           <span class="hello-line" id="heroGamers"></span>
@@ -432,20 +435,29 @@
       }
 
       function revealFinal() {
-        const stage  = document.getElementById('helloStage');
-        const final  = document.getElementById('helloFinal');
-        const hero   = document.getElementById('hubHero');
-        if (stage) {
-          stage.style.transition = 'opacity 0.25s';
-          stage.style.opacity = '0';
-          setTimeout(() => {
-            stage.style.display = 'none';
-            if (final) final.style.display = 'flex';
-            if (heroHello)  { heroHello.textContent  = 'Hello,';  heroHello.classList.add('is-visible'); }
-            if (heroGamers) { heroGamers.textContent = 'Gamers.'; heroGamers.classList.add('is-visible'); }
-            if (hero) hero.classList.add('is-visible');
-          }, 260);
-        }
+        const stage = document.getElementById('helloStage');
+        const final = document.getElementById('helloFinal');
+        const hero  = document.getElementById('hubHero');
+        if (!stage) return;
+
+        // Fade out stage
+        stage.style.transition = 'opacity 0.3s';
+        stage.style.opacity = '0';
+
+        setTimeout(() => {
+          // Collapse stage height so hero takes its place
+          stage.style.transition = 'max-height 0.35s ease, padding 0.35s ease, opacity 0s';
+          stage.style.overflow   = 'hidden';
+          stage.style.maxHeight  = '0';
+          stage.style.padding    = '0';
+          stage.style.minHeight  = '0';
+
+          // Fade in hero
+          if (final) final.style.display = 'flex';
+          if (heroHello)  { heroHello.textContent  = 'Hello,';  heroHello.classList.add('is-visible'); }
+          if (heroGamers) { heroGamers.textContent = 'Gamers.'; heroGamers.classList.add('is-visible'); }
+          if (hero) hero.classList.add('is-visible');
+        }, 320);
       }
 
       // Sequence: type HELLO → fadeout → GAMERS slam → reveal final
