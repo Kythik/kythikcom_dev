@@ -256,14 +256,9 @@
       grid-template-columns: 1fr 1fr;
       gap: 40px;
       align-items: center;
-      text-align: left;
       padding: 28px 0 24px;
-      opacity: 0;
-      transition: opacity 0.45s ease;
-      z-index: 2;
-    }
-    .hub-hero.is-visible {
-      opacity: 1;
+      border-bottom: 1px solid var(--border-soft);
+      margin-bottom: 24px;
     }
     .hub-hero-tagline { justify-content: flex-start; }
     .hub-hero-tagline::before { display: block; }
@@ -273,7 +268,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 80px;
+      min-height: 120px;
     }
 
     /* Right side hello text — final resting state */
@@ -334,28 +329,28 @@
 
   <main class="main">
 
-    <!-- ── HELLO GAMERS OPENING STAGE ── -->
-    <div class="hello-stage" id="helloStage" aria-hidden="true">
-      <span class="hello-line hello-line--hello" id="helloLineHello"></span>
-      <span class="hello-line hello-line--gamers" id="helloLineGamers"></span>
-    </div>
-
     <!-- ── HERO ── -->
     <section class="hub-hero" id="hubHero">
-      <div class="hub-hero-left">
+      <!-- LEFT: Hello Gamers — stage during anim, final text after -->
+      <div class="hello-text-wrap">
+        <div class="hello-stage" id="helloStage" aria-hidden="true">
+          <span class="hello-line hello-line--hello" id="helloLineHello"></span>
+          <span class="hello-line hello-line--gamers" id="helloLineGamers"></span>
+        </div>
+        <div class="hello-text" id="helloFinal" style="display:none">
+          <span class="hello-line" id="heroHello"></span>
+          <span class="hello-line" id="heroGamers"></span>
+        </div>
+      </div>
+      <!-- RIGHT: Bio — always visible -->
+      <div class="hub-hero-right">
         <h1 class="hub-hero-name">Kythik</h1>
-        <div class="hub-hero-tagline">S-Tier Yapper · Game Strategy & Live Commentary</div>
+        <div class="hub-hero-tagline">S-Tier Yapper · Game Strategy &amp; Live Commentary</div>
         <p class="hub-hero-bio">
           Former hardcore MMO raider turned ARPG loot scientist. I test builds, chase currency,
           break down systems, and yap through the grind — covering MMOs, ARPGs, and whatever game
           catches the loot goblin brain next.
         </p>
-      </div>
-      <div class="hello-text-wrap">
-        <div class="hello-text" id="helloFinal" style="display:none">
-          <span class="hello-line" id="heroHello"></span>
-          <span class="hello-line" id="heroGamers"></span>
-        </div>
       </div>
     </section>
 
@@ -454,14 +449,11 @@
       function revealFinal() {
         const stage = document.getElementById('helloStage');
         const final = document.getElementById('helloFinal');
-        const hero  = document.getElementById('hubHero');
 
-        // Fade out stage, fade in hero — no layout shift, same grid cell
-        if (stage) stage.classList.add('is-hidden');
+        if (stage) stage.style.display = 'none';
         if (final) final.style.display = 'flex';
         if (heroHello)  { heroHello.textContent  = 'Hello,';  heroHello.classList.add('is-visible'); }
         if (heroGamers) { heroGamers.textContent = 'Gamers.'; heroGamers.classList.add('is-visible'); }
-        setTimeout(() => { if (hero) hero.classList.add('is-visible'); }, 50);
       }
 
       // Sequence: type HELLO → fadeout → GAMERS slam → reveal final
