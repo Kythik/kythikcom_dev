@@ -9,218 +9,8 @@
 <link rel="stylesheet" href="/torchlight/clockwork/clockwork_styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
-<style>
-/* ── TOKENS ── */
-:root {
-  --bg-void:#04080F;--bg-navy:#07111F;--bg-panel:#0D1828;--bg-panel-soft:#111F33;--bg-card:#0B1524;
-  --gold-primary:#C8A45D;--gold-bright:#E6C77A;--gold-muted:#8F6F35;--gold-dark:#5A421E;--gold-glow:rgba(230,199,122,0.28);
-  --text-primary:#E8EDF6;--text-soft:#C7D0DE;--text-muted:#8996AA;--text-faint:#5E6A7D;
-  --border-soft:rgba(200,164,93,0.18);--border-strong:rgba(200,164,93,0.42);--border-blue:rgba(140,165,210,0.14);
-  --blue-steel:#263A57;--blue-muted:#1A2A42;--blue-light:#6F86A8;
-  --green-recording:#2FD36B;--red-loss:#D85A4E;--orange-fire:#F28A2E;
-  --shadow-deep:rgba(0,0,0,0.55);
-  --font-display:'Cinzel',serif;--font-body:'DM Sans',sans-serif;
-  --radius-sm:4px;--radius:8px;--radius-lg:12px;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--font-body);background:var(--bg-void);color:var(--text-primary);min-height:100vh;-webkit-font-smoothing:antialiased;padding-bottom:60px}
-a{color:inherit;text-decoration:none}
-button{cursor:pointer;font-family:var(--font-body)}
-
-/* ── PAGE HEADER ── */
-.page-header{
-  border-bottom:1px solid var(--border-soft);
-  padding:36px 28px 28px;
-  max-width:1100px;margin:0 auto;
-}
-.page-eyebrow{
-  font-size:10px;color:var(--gold-muted);letter-spacing:.16em;text-transform:uppercase;
-  display:flex;align-items:center;gap:8px;margin-bottom:12px;
-}
-.page-eyebrow::before{content:'';display:block;width:16px;height:1px;background:var(--gold-muted)}
-.page-title{font-family:var(--font-display);font-size:28px;font-weight:700;color:var(--gold-primary);letter-spacing:.02em;margin-bottom:8px}
-.page-sub{font-size:13px;color:var(--text-muted);line-height:1.6;max-width:600px}
-.calib-tag{
-  display:inline-flex;align-items:center;gap:6px;
-  background:rgba(200,164,93,0.07);border:1px solid var(--border-soft);
-  border-radius:20px;padding:5px 12px;font-size:11px;color:var(--gold-muted);
-  margin-top:12px;
-}
-
-/* ── MAIN ── */
-.main{max-width:1100px;margin:0 auto;padding:28px 28px 0}
-
-/* ── SECTION LABEL ── */
-.slabel{
-  font-size:10px;color:var(--gold-muted);letter-spacing:.12em;text-transform:uppercase;
-  margin-bottom:10px;margin-top:24px;padding-bottom:6px;
-  border-bottom:1px solid var(--border-soft);
-  display:flex;align-items:center;gap:8px;
-}
-.slabel::before{content:'';display:block;width:12px;height:1px;background:var(--gold-muted)}
-
-/* ── CONTROLS ── */
-.ctrls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:flex-end}
-.ctrl-group{display:flex;flex-direction:column;gap:4px}
-.ctrl-group label{font-size:11px;color:var(--text-faint);letter-spacing:.03em}
-select{
-  background:var(--bg-panel);border:1px solid var(--border-blue);
-  color:var(--text-primary);padding:8px 12px;border-radius:var(--radius);
-  font-family:var(--font-body);font-size:12px;outline:none;
-  transition:border-color .15s;
-}
-select:focus{border-color:var(--gold-muted)}
-
-/* ── PRESET PILLS ── */
-.preset-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
-.preset-pill{
-  background:var(--bg-panel);border:1px solid var(--border-blue);
-  border-radius:20px;padding:6px 14px;font-size:11px;font-weight:500;
-  color:var(--text-muted);letter-spacing:.03em;transition:all .15s;
-}
-.preset-pill:hover{border-color:var(--gold-muted);color:var(--gold-bright)}
-.preset-pill.active{background:rgba(200,164,93,0.1);border-color:var(--gold-muted);color:var(--gold-bright)}
-
-
-/* ── SERVICE TABLE ── */
-.svc-table{width:100%;border-collapse:collapse}
-.svc-table th{
-  font-size:10px;color:var(--text-faint);text-align:left;
-  padding:8px 12px;border-bottom:1px solid var(--border-blue);
-  font-weight:500;letter-spacing:.05em;text-transform:uppercase;
-}
-.svc-table td{padding:10px 12px;border-bottom:1px solid rgba(140,165,210,0.07);vertical-align:middle}
-.svc-table tr:hover td{background:rgba(13,24,40,0.6)}
-.svc-name{font-size:13px;color:var(--text-soft);font-weight:500}
-.svc-effect{font-size:11px;color:var(--text-faint);margin-top:2px;line-height:1.4}
-.svc-note{font-size:10px;color:var(--red-loss);margin-top:3px;font-style:italic}
-.svc-info{font-size:10px;color:var(--blue-light);margin-top:3px}
-
-/* ── RARITY BADGES ── */
-.badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;letter-spacing:.04em}
-.badge-rainbow{background:rgba(147,51,234,0.15);color:#c084fc;border:1px solid rgba(147,51,234,0.3)}
-.badge-gold{background:rgba(200,164,93,0.12);color:var(--gold-bright);border:1px solid var(--border-soft)}
-.badge-purple{background:rgba(99,72,165,0.15);color:#a78bfa;border:1px solid rgba(99,72,165,0.3)}
-.badge-blue{background:rgba(37,99,235,0.1);color:#60a5fa;border:1px solid rgba(37,99,235,0.2)}
-
-/* ── TIER BADGES ── */
-.tier{font-weight:700;font-size:13px}
-.tier-sp{color:#ff9ef5;text-shadow:0 0 8px rgba(255,158,245,0.4)}
-.tier-s{color:var(--gold-bright)}
-.tier-a{color:#a78bfa}
-.tier-b{color:#60a5fa}
-.tier-c{color:var(--text-faint)}
-.tier-f{color:var(--blue-steel)}
-
-/* ── EV BAR ── */
-.ev-bar-wrap{display:flex;align-items:center;gap:8px}
-.ev-bar{height:4px;border-radius:2px;background:var(--gold-muted);min-width:2px;transition:width .3s}
-.ev-val{font-size:12px;font-variant-numeric:tabular-nums;font-weight:500}
-.ev-pos{color:var(--text-soft)}
-.ev-neg{color:var(--red-loss)}
-.ev-zero{color:var(--text-faint)}
-
-/* ── SERVICE TAGS ── */
-.svc-tag{font-size:10px;padding:1px 6px;border-radius:3px;margin-left:4px;vertical-align:middle;font-weight:500}
-.tag-combat{background:rgba(47,211,107,0.1);color:var(--green-recording);border:1px solid rgba(47,211,107,0.2)}
-.tag-conditional{background:rgba(242,138,46,0.1);color:var(--orange-fire);border:1px solid rgba(242,138,46,0.2)}
-.tag-nonviable{background:rgba(216,90,78,0.1);color:var(--red-loss);border:1px solid rgba(216,90,78,0.2)}
-.tag-builddep{background:rgba(147,51,234,0.1);color:#c084fc;border:1px solid rgba(147,51,234,0.2)}
-
-/* ── ROULETTE BLOCK ── */
-.roul-block{
-  background:rgba(13,24,40,0.8);border:1px solid rgba(99,72,165,0.2);
-  border-radius:var(--radius);padding:10px;margin-top:6px;
-}
-.roul-header{font-size:10px;color:var(--text-faint);margin-bottom:6px;line-height:1.4}
-.roul-row{display:flex;gap:8px;font-size:11px;padding:3px 0;border-bottom:1px solid rgba(140,165,210,0.06)}
-.roul-row:last-of-type{border-bottom:none}
-.roul-row-head{color:var(--text-faint);font-size:10px}
-.roul-cog{width:55px;color:var(--text-muted)}
-.roul-p{width:65px;color:var(--text-faint)}
-.roul-ev{width:85px;font-weight:500}
-.roul-ev10{width:85px;color:var(--text-faint)}
-.roul-v{color:var(--text-faint)}
-.roul-ev.pos{color:var(--green-recording)}
-.roul-ev.neg{color:var(--red-loss)}
-.roul-note{font-size:10px;color:var(--text-faint);margin-top:6px;padding-top:6px;border-top:1px solid rgba(140,165,210,0.06);line-height:1.4}
-
-/* ── ID23 BLOCK ── */
-.id23-block{
-  background:rgba(13,24,40,0.8);border:1px solid rgba(47,211,107,0.15);
-  border-radius:var(--radius);padding:10px;margin-top:6px;
-}
-.id23-row{display:flex;gap:8px;font-size:11px;padding:3px 0;border-bottom:1px solid rgba(140,165,210,0.06)}
-.id23-row:last-of-type{border-bottom:none}
-.id23-outcome{width:90px;color:var(--text-muted)}
-.id23-prob{width:55px;color:var(--text-faint)}
-.id23-ev{width:85px;font-weight:500}
-.id23-rating{font-size:10px}
-
-/* ── TOGGLE ── */
-
-
-/* ── CALIB NOTE ── */
-.calib-note-box{
-  background:var(--bg-card);border:1px solid var(--border-soft);
-  border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;
-  font-size:11px;color:var(--text-faint);line-height:1.6;
-}
-.calib-note-box strong{color:var(--text-muted)}
-
-/* ── FOOTER ── */
-.page-footer{border-top:1px solid var(--border-soft);padding:20px 28px;text-align:center;font-size:11px;color:var(--text-faint);max-width:1100px;margin:40px auto 0}
-.page-footer a{color:var(--blue-light)}
-.page-footer a:hover{color:var(--gold-primary)}
-.tip{position:relative;display:inline-flex;align-items:center;gap:5px}
-.tip-icon{width:14px;height:14px;border-radius:50%;background:var(--blue-steel);color:var(--blue-light);font-size:9px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;cursor:help}
-.tip-text{visibility:hidden;opacity:0;position:absolute;bottom:calc(100% + 6px);left:0;background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius);padding:8px 10px;font-size:11px;color:var(--text-muted);line-height:1.5;width:260px;z-index:100;pointer-events:none;transition:opacity .15s}
-.tip:hover .tip-text{visibility:visible;opacity:1}
-.chk-row{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:12px;color:var(--text-muted);padding:4px 0}
-.chk-row input[type=checkbox]{accent-color:var(--gold-primary);width:14px;height:14px;cursor:pointer;flex-shrink:0}
-.chk-label-text{color:var(--text-soft);font-weight:500}
-.node-group{background:var(--bg-card);border:1px solid var(--border-blue);border-radius:var(--radius);padding:12px 14px;margin-bottom:12px}
-.node-group-title{font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
-.node-exclusive-note{font-size:10px;color:var(--orange-fire);margin-top:6px;padding-top:6px;border-top:1px solid var(--border-blue)}
-.reroll-panel{background:var(--bg-card);border:1px solid var(--border-soft);border-radius:var(--radius-lg);padding:16px;margin-bottom:14px}
-.reroll-panel-title{font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
-.reroll-alice-note{font-size:11px;color:var(--text-faint)}
-.tier-picker{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.tier-pick-btn{padding:8px 16px;border-radius:var(--radius);border:1px solid var(--border-blue);background:var(--bg-panel);font-family:var(--font-display);font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;min-width:52px;text-align:center}
-.tier-pick-btn:hover{border-color:var(--gold-muted)}
-.tier-pick-btn.sel-s{background:rgba(216,90,78,0.15);border-color:var(--red-loss);color:var(--red-loss)}
-.tier-pick-btn.sel-a{background:rgba(167,139,250,0.15);border-color:#a78bfa;color:#a78bfa}
-.tier-pick-btn.sel-b{background:rgba(96,165,250,0.15);border-color:#60a5fa;color:#60a5fa}
-.tier-pick-btn.sel-c{background:rgba(94,106,125,0.15);border-color:var(--text-faint);color:var(--text-faint)}
-.tier-pick-btn.sel-f{background:rgba(38,58,87,0.15);border-color:var(--blue-steel);color:var(--blue-steel)}
-.reroll-verdict{border-radius:var(--radius);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:4px}
-.v-keep{background:rgba(200,164,93,0.1);border:1px solid var(--border-soft)}
-.v-reroll{background:rgba(96,165,250,0.08);border:1px solid rgba(96,165,250,0.3)}
-.v-consider{background:rgba(242,138,46,0.08);border:1px solid rgba(242,138,46,0.3)}
-.v-idle{background:var(--bg-panel);border:1px solid var(--border-blue)}
-.verdict-label{font-family:var(--font-display);font-size:16px;font-weight:700;letter-spacing:.04em}
-.v-keep .verdict-label{color:var(--gold-bright)}
-.v-reroll .verdict-label{color:#60a5fa}
-.v-consider .verdict-label{color:var(--orange-fire)}
-.v-idle .verdict-label{color:var(--text-faint)}
-.verdict-sub{font-size:11px;color:var(--text-faint);margin-top:2px}
-.verdict-icon{font-size:22px;flex-shrink:0}
-.reroll-pick-label{font-size:11px;color:var(--text-faint);margin-bottom:8px}
-.no-rerolls-note{font-size:12px;color:var(--text-faint);padding:4px 0}
-
-/* ── RESPONSIVE ── */
-@media(max-width:860px){
-  .page-title{font-size:22px}
-}
-@media(max-width:600px){
-  .main{padding:16px 16px 0}
-  .page-header{padding:24px 16px 20px}
-  .svc-table th:nth-child(4),.svc-table td:nth-child(4){display:none}
-}
-</style>
 </head>
-<body>
+<body class="clockwork-page">
 
 <!-- Background effects matching kythik.com -->
 <div class="page-bg-img"></div>
@@ -240,18 +30,28 @@ select:focus{border-color:var(--gold-muted)}
 
 <div id="site-header" data-active-game="torchlight"></div>
 
-<div class="page-header">
-  <span class="kicker">Torchlight Infinite — SS12</span>
-  <h1 class="display display--lg" style="margin:8px 0 10px">Clockwork Ballet</h1>
-  <p class="subtext">Member Service EV rankings. Select your setup to see which services add the most value to your runs.</p>
-
-</div>
+<header class="page-header clockwork-hero">
+  <div class="clockwork-hero-copy">
+    <span class="kicker">Torchlight Infinite — SS12</span>
+    <h1 class="display display--lg clockwork-title">Clockwork Ballet</h1>
+    <p class="subtext clockwork-sub">Member Service EV rankings, reroll guidance, and setup-aware value checks for deep-space Clockwork runs.</p>
+  </div>
+  <aside class="clockwork-hero-card" aria-label="Clockwork quick reference">
+    <span class="clockwork-card-kicker">Quick Reference</span>
+    <h2>Need the cheat sheet?</h2>
+    <p>Jump to the compact pick-order view when you only need the answer mid-run.</p>
+    <a class="btn clockwork-cheat-link" href="cheetsheet.html">Open Cheat Sheet</a>
+  </aside>
+</header>
 
 <div class="main">
 
 
-  <div class="panel" style="margin-bottom:16px">
-  <span class="kicker" style="margin-bottom:14px;display:block">Setup</span>
+  <section class="panel clockwork-setup-panel">
+  <div class="clockwork-panel-head">
+    <span class="kicker">Setup</span>
+    <p>Calibrate the rankings around your doll, probe, Alice tier, and tree nodes.</p>
+  </div>
   <div class="ctrls">
 
     <div class="ctrl-group">
@@ -293,9 +93,9 @@ select:focus{border-color:var(--gold-muted)}
 
   </div>
 
-  <div class="panel--inset" style="margin-top:14px">
-    <span class="kicker" style="margin-bottom:12px;display:block">Clockwork Tree Nodes</span>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 28px">
+  <div class="panel--inset clockwork-node-panel">
+    <span class="kicker">Clockwork Tree Nodes</span>
+    <div class="node-grid">
 
       <label class="chk-row">
         <input type="checkbox" id="node-indulgent" onchange="render()">
@@ -355,14 +155,14 @@ select:focus{border-color:var(--gold-muted)}
     </div>
     <div class="node-exclusive-note" id="exclusive-note" style="display:none">⚠ Sub-60s and Over-60s Podium are mutually exclusive — only one can be active.</div>
   </div>
-  </div><!-- /ctrl-card -->
+  </section><!-- /clockwork-setup-panel -->
 
 <div id="reroll-decision-panel" class="reroll-panel">
   <div class="reroll-panel-title">
     <span>Reroll Decision</span>
     <div style="display:flex;align-items:center;gap:10px">
       <span class="reroll-alice-note" id="reroll-alice-note"></span>
-      <button onclick="showLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:11px;cursor:pointer;padding:0">how this works ↗</button>
+      <button class="link-button" onclick="showLightbox()">how this works ↗</button>
     </div>
   </div>
   <div id="reroll-has-rerolls" style="display:none">
@@ -378,7 +178,7 @@ select:focus{border-color:var(--gold-muted)}
 
 <div class="svc-list-wrap">
     <div class="svc-list" id="tbody"></div>
-  <div id="roul-footnote" style="padding:10px 0;font-size:10px;color:var(--text-faint);border-top:1px solid var(--border-blue);margin-top:8px"></div>
+  <div id="roul-footnote" class="clockwork-footnote"></div>
 </div><!-- /svc-list-wrap -->
 
 </div>
@@ -614,9 +414,9 @@ select:focus{border-color:var(--gold-muted)}
   </div>
 </div>
 
-<div class="page-footer">
-  Data: tlidb.com · <a href="https://kythik.com">kythik.com</a>
-</div>
+<footer class="page-footer">
+  Data: tlidb.com · <a href="cheetsheet.html">Clockwork Cheat Sheet</a> · <a href="https://kythik.com">kythik.com</a>
+</footer>
 
 <script>
 const DIST={grey:0.0002,blue:0.68886,purple:0.25295,gold:0.05399,red:0.0038,rainbow:0.0002};
@@ -1024,14 +824,11 @@ function render(){
     const TIER_DESCS={'S+':'Best ceiling services — these define the run.','S':'Strong picks — take if S+ isn\'t offered.','A':'Solid value — good when S/S+ aren\'t available.','B':'Interchangeable — pick whatever\'s offered.','C':'Low value — only if nothing better is available.','F':'Skip — negative or negligible EV.'};
     const TIER_COLORS={'S+':'var(--gold-primary)','S':'#a78bfa','A':'#60a5fa','B':'var(--border-strong)','C':'var(--text-faint)','F':'var(--blue-steel)'};
     const isTop=(s.rank||i+1)<=2;
-    const cardExtraStyle=isTop
-      ?'background:linear-gradient(135deg,rgba(200,164,93,0.08),var(--bg-card) 60%);border-color:rgba(230,199,122,0.28);'
-      :s.isRoulette?'border-color:rgba(216,90,78,0.25);background:rgba(216,90,78,0.03);':'';
+    const cardExtraStyle='';
     const roulNote=s.isRoulette?`<span style="font-size:10px;color:var(--red-loss);margin-left:6px">★ high variance</span>`:'';
 
     const tr=document.createElement('div');
     tr.className='svc-card'+(isTop?' svc-card--top':'')+(s.isRoulette?' svc-row-roulette':'')+(s.isID23?' svc-row-id23':'');
-    if(cardExtraStyle)tr.setAttribute('style',cardExtraStyle);
     tr.innerHTML=`
       <span class="svc-rank">${s.rank||i+1}</span>
       <div class="svc-body">
