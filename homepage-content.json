@@ -2,13 +2,13 @@
   "torchlight": [
     {
       "type": "season",
-      "eyebrow": "SS12 \u00b7 Lunaria",
-      "title": "Season Countdown",
+      "eyebrow": "SS12 · Lunaria",
+      "title": "Season 12 — Lunaria",
       "seasonStartISO": "2026-04-16T19:00:00-07:00",
+      "seasonEndISO": "2026-07-16T19:00:00-07:00",
       "nextSeasonISO": "2026-07-16T19:00:00-07:00",
-      "blurb": "Next season info drops soon \u2014 check back for patch notes & countdown.",
-      "link": null,
-      "seasonEndISO": "2026-07-16T19:00:00-07:00"
+      "blurb": "Lunaria is live. Track season progress and check back for next season info.",
+      "link": null
     },
     {
       "type": "link",
@@ -17,13 +17,6 @@
       "blurb": "Full breakdown of Lunaria mechanics, balance changes, and new systems.",
       "link": "https://www.torchlightinfinite.com/",
       "linkLabel": "Read Patch Notes"
-    },
-    {
-      "type": "youtube",
-      "eyebrow": "Dev Q&A",
-      "title": "Lunaria Reveal Stream",
-      "blurb": "Official dev breakdown of the new season's mechanics and Astrolabe changes.",
-      "link": "https://www.youtube.com/@TorchlightInfinite"
     },
     {
       "type": "link",
@@ -37,19 +30,9 @@
       "type": "link",
       "eyebrow": "Tool",
       "title": "Clockwork Ballet Calculator",
-      "blurb": "Season 12 farm calculator \u2014 fully updated with Astrolabe & Probe support.",
-      "link": "/clockwork/clockwork.html",
+      "blurb": "Season 12 farm calculator — fully updated with Astrolabe & Probe support.",
+      "link": "/torchlight/clockwork/clockwork.html",
       "linkLabel": "Open Calculator"
-    }
-  ],
-  "everquest-legends": [
-    {
-      "type": "countdown",
-      "eyebrow": "Coming Soon",
-      "title": "EverQuest Legends",
-      "blurb": "New game, new content hub \u2014 launching alongside the stream lineup.",
-      "targetISO": "2026-07-01T00:00:00-07:00",
-      "link": null
     }
   ]
 }

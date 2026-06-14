@@ -32,7 +32,7 @@
       section.innerHTML = `
         <div class="featured-section" id="${mountId}" style="display:none">
           <div class="featured-header">
-            <div class="featured-label">${game.name}</div>
+            <a href="${game.path}" class="featured-label" style="text-decoration:none;">${game.name} ↗</a>
             <div class="featured-nav">
               <button class="featured-btn" onclick="KythikCarousel.nav('${mountId}', -1)" aria-label="Previous">‹</button>
               <span class="featured-counter" id="${mountId}Counter"></span>
