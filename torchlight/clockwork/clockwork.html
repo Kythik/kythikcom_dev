@@ -283,14 +283,13 @@ select:focus{border-color:var(--gold-muted)}
 
     <div class="ctrl-group">
       <label>Sort by</label>
-      <select id="sort">
+      <select id="sort" onchange="render()">
         <option value="ev">EV added</option>
         <option value="rarity">Rarity</option>
         <option value="tier">Tier</option>
       </select>
     </div>
-
-    <div class="ctrl-group" style="display:flex;align-items:flex-end;padding-bottom:8px">
+    <div class="ctrl-group" style="justify-content:flex-end;padding-bottom:10px">
       <label class="chk-row">
         <input type="checkbox" id="showz" onchange="render()">
         <span style="font-size:12px;color:var(--text-muted)">Show zero-value services</span>
