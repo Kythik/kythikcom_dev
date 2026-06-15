@@ -15,12 +15,24 @@
   .cs-back{font-size:10px;color:var(--text-faint);text-decoration:none}
   .cs-back:hover{color:var(--gold-muted)}
 
-  .cs-tier-block{margin-bottom:7px}
-  .cs-tier-hdr{
+  .cs-rule-block{margin-bottom:10px;padding:8px 10px;background:rgba(200,164,93,0.04);border:1px solid var(--border-soft);border-radius:6px}
+  .cs-rule-hdr{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--gold-muted);margin-bottom:4px}
+  .cs-rule-text{font-size:11px;color:var(--text-soft);line-height:1.5}
+  .cs-rule-keep{color:#7dd3a0;font-weight:600}
+  .cs-rule-reroll{color:#60a5fa;font-weight:600}
+
+  .cs-section{margin-bottom:8px}
+  .cs-section-hdr{
     font-size:9px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;
-    padding:3px 8px;border-radius:4px;margin-bottom:3px;display:inline-block;
-    background:rgba(140,165,210,0.08);color:var(--text-faint);
+    padding:4px 8px;border-radius:4px;margin-bottom:4px;display:flex;align-items:baseline;gap:6px;
+    background:rgba(140,165,210,0.08);
   }
+  .cs-section-hdr .lbl{color:var(--text-faint)}
+  .cs-section-hdr .sub{font-size:9px;font-weight:400;color:var(--text-faint);letter-spacing:.04em;text-transform:none}
+  .cs-section-hdr.keep{background:rgba(125,211,160,0.08)}
+  .cs-section-hdr.keep .lbl{color:#7dd3a0}
+  .cs-section-hdr.reroll{background:rgba(96,165,250,0.06)}
+  .cs-section-hdr.reroll .lbl{color:#60a5fa}
 
   .cs-row{padding:2px 8px;font-size:12px;line-height:1.5;border-left:2px solid transparent;padding-left:8px}
   .cs-row.rainbow{color:#F4F6FB;border-left-color:#ff9ef5}
@@ -28,9 +40,7 @@
   .cs-row.purple{color:#cfc4f9;border-left-color:#a78bfa}
   .cs-row.blue{color:#bcd2f5;border-left-color:#60a5fa}
 
-  .cs-bnote{margin-top:8px;padding:6px 8px;background:rgba(140,165,210,0.05);border:1px solid var(--border-soft);border-radius:6px;font-size:10px;color:var(--text-faint);line-height:1.4}
-
-  .cs-roul{margin-top:8px;padding:6px 8px;background:rgba(216,90,78,0.06);border:1px solid rgba(216,90,78,0.15);border-radius:6px;font-size:10px;color:var(--red-loss);line-height:1.4}
+  .cs-roul{margin-top:10px;padding:6px 8px;background:rgba(216,90,78,0.06);border:1px solid rgba(216,90,78,0.15);border-radius:6px;font-size:10px;color:var(--red-loss);line-height:1.4}
 
   .cs-legend{display:flex;gap:12px;font-size:9px;color:var(--text-faint);margin-top:10px;padding-top:8px;border-top:1px solid var(--border-blue);flex-wrap:wrap}
   .cs-legend span{display:flex;align-items:center;gap:4px}
@@ -48,38 +58,43 @@
     <a href="/torchlight/clockwork/clockwork.html" class="cs-back">full calculator ↗</a>
   </div>
 
-  <div class="cs-tier-block">
-    <div class="cs-tier-hdr">S+</div>
-    <div class="cs-row rainbow">Roses in the No-Man's Land</div>
-    <div class="cs-row rainbow">Nut Trick</div>
+  <div class="cs-rule-block">
+    <div class="cs-rule-hdr">Decision Rule</div>
+    <div class="cs-rule-text">
+      <b>First offer (2 rerolls left):</b> <span class="cs-rule-keep">Keep</span> Cogwheel Gambler or better.<br>
+      <b>Second offer (1 reroll left):</b> <span class="cs-rule-keep">Keep</span> Runaway Dancer / Hunting Ground or better.<br>
+      <b>Final offer:</b> Take best available.
+    </div>
   </div>
 
-  <div class="cs-tier-block">
-    <div class="cs-tier-hdr">S</div>
+  <div class="cs-section">
+    <div class="cs-section-hdr keep"><span class="lbl">Keep on first offer</span><span class="sub">always take these</span></div>
+    <div class="cs-row rainbow">Roses in the No-Man's Land</div>
+    <div class="cs-row rainbow">Nut Trick</div>
     <div class="cs-row rainbow">Clockwork Ballet Heist</div>
     <div class="cs-row rainbow">Bloody Mary</div>
     <div class="cs-row rainbow">All Tabs on Me</div>
-  </div>
-
-  <div class="cs-tier-block">
-    <div class="cs-tier-hdr">A</div>
-    <div class="cs-row gold">Best Doll Employee — 20% per completion → extra voucher, skewed toward higher rarity</div>
-    <div class="cs-row gold">3 completions within 30s → 2 Orange Vouchers</div>
+    <div class="cs-row gold">Best Doll Employee</div>
+    <div class="cs-row gold">3 completions in 30s → 2 Orange Vouchers</div>
     <div class="cs-row blue">Immediate 2-3 vouchers (up to Orange) at start</div>
-    <div class="cs-row gold">40%×+1 / 20%×+2 / 5%×+3 vouchers per completion, 10% chance to safe-end early</div>
+    <div class="cs-row gold">40%×+1 / 20%×+2 / 5%×+3 vouchers per completion, 10% safe-end</div>
   </div>
 
-  <div class="cs-tier-block">
-    <div class="cs-tier-hdr">B</div>
+  <div class="cs-section">
+    <div class="cs-section-hdr keep"><span class="lbl">Keep on second offer</span><span class="sub">reroll first, keep these on the second</span></div>
+    <div class="cs-row gold">15% per cog → Runaway Dancer drops 1 Orange Voucher</div>
     <div class="cs-row rainbow">Dolls' Hunting Ground</div>
-    <div class="cs-row purple">6 Cogwheels. Hit B by cog 3 → jumps straight to SSS rating</div>
-    <div class="cs-row purple">2 Booster Drinks in the stage — touching one drops extra rewards</div>
+  </div>
+
+  <div class="cs-section">
+    <div class="cs-section-hdr reroll"><span class="lbl">Reroll if any rerolls remain</span><span class="sub">only keep on final/forced offer</span></div>
+    <div class="cs-row purple">6 Cogwheels. Hit B by cog 3 → SSS rating</div>
     <div class="cs-row blue">+1 rarity for 2 randomly selected Cogwheels at start</div>
-    <div class="cs-row purple">30% per completion → all vouchers +1 rarity</div>
+    <div class="cs-row purple">30% per cog → that cog's voucher +1 rarity</div>
   </div>
 
   <div class="cs-roul">
-    <b>Clockwork Roulette</b> — high EV under the default fail model, but ~1 per 100 maps and ~10% instant-loss risk at start. If using the escalating fail model instead, EV drops to negative — treat as skip.
+    <b>Clockwork Roulette</b> — keep on first offer under flat 10% fail model. Under escalating fail model, EV drops to negative — skip.
   </div>
 
   <div class="cs-legend">
