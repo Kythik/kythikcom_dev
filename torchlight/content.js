@@ -52,7 +52,7 @@
 
   function buildResourceCard(r) {
     return `
-      <a href="${r.link}" style="text-decoration:none;display:block">
+      <a href="${r.link}" target="_blank" rel="noopener" style="text-decoration:none;display:block">
         <div class="resource-card">
           <div class="kicker" style="margin-bottom:6px">Tool</div>
           <div class="card-title">${r.title}</div>
