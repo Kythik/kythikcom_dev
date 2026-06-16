@@ -3,10 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#04080F" />
   <title>Coming Soon — Kythik</title>
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
+  <style>
+    @media (max-width: 700px) {
+      .hub-hero { padding: 40px 16px !important; text-align: center; }
+      .display--xl { font-size: 28px !important; }
+      .hub-hero-tagline { justify-content: center; }
+      .hub-hero-bio { font-size: 13px; line-height: 1.65; }
+      .hub-hero-cta { margin-top: 12px; }
+    }
+  </style>
 </head>
 <body>
 
@@ -72,5 +88,10 @@
         .catch(() => {});
     })();
   </script>
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

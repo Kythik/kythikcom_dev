@@ -716,7 +716,7 @@
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 700px) {
   .clockwork-page .cw-page-head {
     padding: 24px 16px 18px;
   }
@@ -739,5 +739,16 @@
     grid-column: 1 / -1;
     align-items: flex-start;
     min-width: 0;
+  }
+
+  /* Lightbox panels — tighten padding on mobile */
+  .clockwork-page .overlay-panel {
+    padding: 20px 16px !important;
+  }
+
+  /* Roulette/ID23 inner grids — allow horizontal scroll if needed */
+  .clockwork-page .roul-block,
+  .clockwork-page .id23-block {
+    overflow-x: auto;
   }
 }

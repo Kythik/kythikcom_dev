@@ -3,6 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#04080F" />
   <title>404 — Loot Lost | Kythik</title>
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="/styles.css" />
@@ -207,6 +214,18 @@
       92% { transform: translateX(-2px); opacity: .8; }
       94% { transform: translateX(0); opacity: 0; }
     }
+
+    @media (max-width: 700px) {
+      .lost-wrap { padding: 24px 16px; min-height: calc(100vh - var(--header-h) - 40px); }
+      .lost-card { padding: 24px 22px 22px; }
+      .lost-title { font-size: 22px; }
+      .lost-subtitle { font-size: 12px; }
+      .lost-body { font-size: 12px; line-height: 1.65; margin-bottom: 18px; padding-top: 14px; }
+      .lost-stats { gap: 6px; margin-bottom: 22px; }
+      .lost-stat { font-size: 10px; padding: 3px 8px; }
+      .lost-foot { padding-top: 14px; }
+      .lost-cta { padding: 8px 16px; font-size: 11px; }
+    }
   </style>
 </head>
 <body>
@@ -253,5 +272,10 @@
   </div>
 
   <script src="/shared/header.js"></script>
+
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

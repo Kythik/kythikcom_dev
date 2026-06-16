@@ -7,19 +7,20 @@
      <div id="site-header" data-active-game="torchlight"></div>
    Omit or set "none" for the homepage default state.
 
-   Relies on shared styles.css already loaded,
-   and fetches /games.json for the game registry.
+   Mobile (≤700px) collapses to:
+     [brand] ........ [hamburger]
+   Tapping hamburger opens a slide-down menu with
+   game links + subpages + Twitch/Discord.
+
+   Relies on shared styles.css + header-additions.css
+   already loaded, and fetches /games.json.
    ═══════════════════════════════════════════ */
 
 (function () {
   const BRAND_HTML = `
     <a href="/" class="brand-link" aria-label="Kythik home" style="display:flex;align-items:center;gap:12px;">
       <div class="brand-mark" aria-hidden="true">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4">
-          <path d="M12 2 L20 7 L20 17 L12 22 L4 17 L4 7 Z" stroke-opacity="0.6"/>
-          <circle cx="12" cy="12" r="3" stroke-opacity="0.9"/>
-          <path d="M12 9 L12 5 M12 19 L12 15 M9 12 L5 12 M19 12 L15 12" stroke-opacity="0.5"/>
-        </svg>
+        <img src="/images/favicon/android-chrome-192x192.png" alt="" width="28" height="28" style="display:block;width:100%;height:100%;object-fit:contain;" />
       </div>
       <span class="header-name">Kythik</span>
     </a>
@@ -36,12 +37,11 @@
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.003.022.015.043.032.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
     </a>`;
 
-  function gameIconSvg(game) {
-    const scale = game.iconScale && game.iconScale !== 1.0 ? `transform:scale(${game.iconScale});` : '';
-    return `<img src="${game.icon}" alt="" width="18" height="18" style="display:block;${scale}" onerror="this.style.display='none'" />`;
-  }
+  const HAMBURGER_HTML = `
+    <button class="header-hamburger" id="headerHamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>`;
 
-  // Games without a built landing page route to the shared coming-soon page
   function gameHref(game) {
     if (game.status === 'upcoming') {
       return `/coming-soon.html?game=${encodeURIComponent(game.id)}`;
@@ -49,7 +49,6 @@
     return game.path;
   }
 
-  // ── Default state: all games visible with names ──
   function renderDefaultCenter(games) {
     return games.map(g => `
       <a href="${gameHref(g)}" class="header-game-icon-default" data-game="${g.id}" aria-label="${g.name}" title="${g.name}">
@@ -57,9 +56,6 @@
       </a>`).join('');
   }
 
-  // ── Game-active state: active game's icon + subpage pills appear
-  //    leftmost in header-center; other games collapse to icon-only
-  //    (greyed) and move into header-right near Twitch/Discord ──
   function renderActiveCenter(games, activeId) {
     const active = games.find(g => g.id === activeId);
 
@@ -80,7 +76,6 @@
     return activeHtml;
   }
 
-  // ── Collapsed icon row for non-active games (game-active state only) ──
   function renderCollapsedIcons(games, activeId) {
     const others = games.filter(g => g.id !== activeId);
     if (!others.length) return '';
@@ -89,6 +84,49 @@
       <a href="${gameHref(g)}" class="header-game-icon-default header-game-icon-default--collapsed" data-game="${g.id}" aria-label="${g.name}" title="${g.name}">
         <img src="${g.icon}" alt="${g.name}" style="${g.iconScale && g.iconScale !== 1.0 ? 'transform:scale(' + g.iconScale + ');' : ''}" onerror="this.style.display='none'" />
       </a>`).join('')}</div>`;
+  }
+
+  function renderMobileMenu(games, activeId) {
+    const isActive = activeId && activeId !== 'none';
+    const active = isActive ? games.find(g => g.id === activeId) : null;
+
+    let gameLinks = games.map(g => {
+      const isCurrent = g.id === activeId;
+      return `
+        <a href="${gameHref(g)}" class="mobile-menu__game ${isCurrent ? 'is-current' : ''}">
+          <img src="${g.icon}" alt="" style="${g.iconScale && g.iconScale !== 1.0 ? 'transform:scale(' + g.iconScale + ');' : ''}" onerror="this.style.display='none'" />
+          <span>${g.name}</span>
+          ${isCurrent ? '<span class="mobile-menu__current">current</span>' : ''}
+        </a>`;
+    }).join('');
+
+    let subpageLinks = '';
+    if (active && active.subpages && active.subpages.length) {
+      subpageLinks = `
+        <div class="mobile-menu__section">
+          <div class="mobile-menu__label">${active.shortName || active.name} Pages</div>
+          ${active.subpages.map(sp => `<a href="${sp.path}" class="mobile-menu__sublink">${sp.label}</a>`).join('')}
+        </div>`;
+    }
+
+    return `
+      <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu__section">
+          <div class="mobile-menu__label">Games</div>
+          ${gameLinks}
+        </div>
+        ${subpageLinks}
+        <div class="mobile-menu__section mobile-menu__section--social">
+          <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener" class="mobile-menu__social mobile-menu__social--twitch">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+            <span>Watch on Twitch</span>
+          </a>
+          <a href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener" class="mobile-menu__social mobile-menu__social--discord">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.003.022.015.043.032.056a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+            <span>Join Discord</span>
+          </a>
+        </div>
+      </div>`;
   }
 
   function buildHeader(games, activeId) {
@@ -113,8 +151,35 @@
           ${collapsedIconsHtml}
           ${TWITCH_DISCORD_HTML}
         </nav>
+        ${HAMBURGER_HTML}
       </div>
+      ${renderMobileMenu(games, activeId)}
     </header>`;
+  }
+
+  function attachHamburger() {
+    const btn  = document.getElementById('headerHamburger');
+    const menu = document.getElementById('mobileMenu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', () => {
+      const isOpen = btn.classList.toggle('is-open');
+      menu.classList.toggle('is-open', isOpen);
+      btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      menu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      document.body.style.overflow = isOpen ? 'hidden' : '';
+    });
+
+    // Close menu when a link is tapped (in-page navigation)
+    menu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => {
+        btn.classList.remove('is-open');
+        menu.classList.remove('is-open');
+        btn.setAttribute('aria-expanded', 'false');
+        menu.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      });
+    });
   }
 
   const mount = document.getElementById('site-header');
@@ -127,9 +192,9 @@
     .then(data => {
       const games = data.games || [];
       mount.outerHTML = buildHeader(games, activeGame);
+      attachHamburger();
     })
     .catch(() => {
-      // Fallback: render brand + twitch/discord only if games.json fails
       mount.outerHTML = `
       <header class="site-header">
         <div class="header-inner">
@@ -140,7 +205,6 @@
       </header>`;
     });
 
-  // ── Live status check ─────────────────────
   window.kythikUpdateLiveBadge = function (isLive) {
     const hl = document.getElementById('headerLive');
     if (!hl) return;

@@ -3,13 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <!-- Favicons -->
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
-  <link rel="manifest" href="/site.webmanifest" />
-  <meta name="theme-color" content="#04080F" />
   <title>Kythik — ARPG Strategy, Builds & Live Commentary</title>
   <meta name="description" content="Kythik (kythikx) — Twitch streamer covering Torchlight Infinite, Diablo IV, Hero Siege, and more. Farm strategies, builds, and live ARPG commentary." />
   <meta name="keywords" content="Kythik, KythikX, Kyth, kythik streamer, kythikx twitch, kythik twitch streamer, kythik arpg, Torchlight Infinite, EverQuest Legends, ARPG builds, ARPG streamer, ARPG Twitch streamer, Diablo IV, Hero Siege, Dwarven Realms" />
@@ -88,12 +81,10 @@
       margin-bottom: 14px;
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 10px;
       white-space: nowrap;
     }
-    .hub-hero-tagline::before,
-    .hub-hero-tagline::after {
+    .hub-hero-tagline::before {
       content: '';
       display: block;
       width: 20px;
@@ -232,6 +223,8 @@
       margin-left: auto;
       margin-right: auto;
     }
+    .hub-hero-tagline { justify-content: flex-start; }
+    .hub-hero-tagline::before { display: block; }
 
     .hello-text-wrap {
       display: flex;
@@ -442,74 +435,6 @@
       }
     }
 
-
-
-    /* ═══════════════════════════════════════════
-       MOBILE RESPONSIVE — phones ≤560px
-       ═══════════════════════════════════════════ */
-    @media (max-width: 700px) {
-      /* Hero — keep stacked, smaller fonts */
-      .hub-hero {
-        padding: 14px 0 16px;
-        gap: 14px;
-      }
-      .hub-hero-name {
-        font-size: clamp(28px, 9vw, 36px);
-      }
-      .hub-hero-tagline {
-        font-size: 9px;
-        letter-spacing: .12em;
-        white-space: normal;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-      .hub-hero-bio {
-        font-size: 13px;
-        line-height: 1.65;
-      }
-      .hello-text {
-        font-size: clamp(28px, 7vw, 40px);
-      }
-      .hello-text-wrap {
-        min-height: 80px;
-        padding-bottom: 10px;
-      }
-      .hello-stage {
-        gap: 4px;
-      }
-      .hello-line--hello {
-        font-size: clamp(22px, 5vw, 30px);
-      }
-      .hello-line--gamers {
-        font-size: clamp(36px, 9vw, 56px);
-      }
-
-      /* Community — single column, twitch on top, cards stack */
-      .hub-community { margin-top: 24px; padding-top: 18px; }
-      .hub-community-grid {
-        grid-template-columns: 1fr !important;
-        gap: 12px;
-      }
-      .hub-community-side {
-        display: flex !important;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      /* Main padding tighter */
-      .main { padding: 0 16px 60px; }
-      .footer { padding: 16px; }
-    }
-
-    /* ═══════════════════════════════════════════
-       VERY SMALL PHONES — ≤400px
-       ═══════════════════════════════════════════ */
-    @media (max-width: 400px) {
-      .hub-hero-name { font-size: 26px; }
-      .hello-text { font-size: 26px; }
-      .hub-hero-bio { font-size: 12px; }
-    }
-
   </style>
 </head>
 <body>
@@ -566,7 +491,7 @@
       <div class="hub-community-grid">
         <div class="hub-twitch-panel">
           <iframe
-            src="https://player.twitch.tv/?channel=kythikx&parent=kythik.com&parent=www.kythik.com&parent=kythikcom-dev.vercel.app&muted=true"
+            src="https://player.twitch.tv/?channel=kythikx&parent=kythik.com&muted=true"
             allowfullscreen>
           </iframe>
         </div>
@@ -688,10 +613,5 @@
   <script src="/shared/header.js"></script>
   <script src="/shared/shared-carousel.js"></script>
   <script src="/app-hub.js"></script>
-
-  <!-- Vercel Analytics -->
-  <script defer src="/_vercel/insights/script.js"></script>
-  <!-- Vercel Speed Insights -->
-  <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>

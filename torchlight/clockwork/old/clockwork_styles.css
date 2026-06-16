@@ -1,0 +1,211 @@
+/* ═══════════════════════════════════════════
+   clockwork_styles.css
+   Page-specific overrides for /torchlight/clockwork/
+   styles.css + header-additions.css loaded first.
+   ═══════════════════════════════════════════ */
+
+/* ── PAGE LAYOUT ─────────────────────────── */
+.page-header {
+  border-bottom: 1px solid var(--border-soft);
+  padding: 40px 28px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.main { max-width: 1100px; margin: 0 auto; padding: 32px 28px 0; } /* narrower than root — intentional for tool page */
+
+/* ── CONTROLS ROW ────────────────────────── */
+.ctrls { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; align-items: flex-end; }
+.ctrl-group { display: flex; flex-direction: column; gap: 4px; }
+.ctrl-group label { font-size: 11px; color: var(--text-faint); letter-spacing: .03em; }
+
+/* ── SERVICE TABLE ───────────────────────── */
+.svc-table { width: 100%; border-collapse: collapse; }
+.svc-table th {
+  font-size: 10px; color: var(--text-faint); text-align: left;
+  padding: 14px 18px; border-bottom: 1px solid var(--border-soft);
+  font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+}
+.svc-table td { padding: 16px 18px; border-bottom: 1px solid rgba(140,165,210,0.06); vertical-align: middle; }
+.svc-table tr:hover td { background: rgba(13,24,40,0.6); }
+.svc-name { font-size: 14px; color: var(--text-primary); font-weight: 600; letter-spacing: .01em; }
+.svc-effect { font-size: 11.5px; color: #A3ABBE; margin-top: 4px; line-height: 1.5; }
+.svc-effect-primary { font-size: 13px; color: #D8DEEA; font-weight: 500; line-height: 1.4; }
+.svc-note { font-size: 10px; color: var(--red-loss); margin-top: 3px; font-style: italic; }
+.svc-info { font-size: 10px; color: var(--blue-light); margin-top: 3px; }
+
+/* ── RARITY BADGES ───────────────────────── */
+/* tag-stat base from styles.css; color variants here */
+.badge-rainbow { background: rgba(147,51,234,0.15); color: #c084fc; border-color: rgba(147,51,234,0.3); }
+.badge-gold    { background: rgba(200,164,93,0.12);  color: var(--gold-bright); border-color: var(--border-soft); }
+.badge-purple  { background: rgba(99,72,165,0.15);   color: #a78bfa; border-color: rgba(99,72,165,0.3); }
+.badge-blue    { background: rgba(37,99,235,0.1);    color: #60a5fa; border-color: rgba(37,99,235,0.2); }
+
+/* ── TIER LABELS ─────────────────────────── */
+.tier { font-weight: 700; font-size: 13px; }
+.tier-sp { color: #ff9ef5; text-shadow: 0 0 8px rgba(255,158,245,0.4); }
+.tier-s  { color: var(--gold-bright); }
+.tier-a  { color: #a78bfa; }
+.tier-b  { color: #60a5fa; }
+.tier-c  { color: var(--text-faint); }
+.tier-f  { color: var(--blue-steel); }
+
+/* ── EV BAR ──────────────────────────────── */
+.ev-bar-wrap { display: flex; align-items: center; gap: 8px; }
+.ev-bar { height: 4px; border-radius: 2px; background: var(--gold-muted); min-width: 2px; transition: width .3s; }
+.ev-val { font-size: 12px; font-variant-numeric: tabular-nums; font-weight: 500; }
+.ev-pos { color: var(--text-soft); }
+.ev-neg { color: var(--red-loss); }
+.ev-zero { color: var(--text-faint); }
+
+/* ── SERVICE TAGS ────────────────────────── */
+.svc-tag { font-size: 10px; padding: 1px 6px; border-radius: 3px; margin-left: 4px; vertical-align: middle; font-weight: 500; }
+.tag-combat     { background: rgba(47,211,107,0.1); color: var(--green-recording); border: 1px solid rgba(47,211,107,0.2); }
+.tag-conditional{ background: rgba(242,138,46,0.1); color: var(--orange-fire); border: 1px solid rgba(242,138,46,0.2); }
+.tag-nonviable  { background: rgba(216,90,78,0.1);  color: var(--red-loss); border: 1px solid rgba(216,90,78,0.2); }
+.tag-builddep   { background: rgba(147,51,234,0.1); color: #c084fc; border: 1px solid rgba(147,51,234,0.2); }
+
+/* ── ROULETTE BLOCK ──────────────────────── */
+.roul-block { background: rgba(13,24,40,0.8); border: 1px solid rgba(99,72,165,0.2); border-radius: var(--radius); padding: 10px; margin-top: 6px; }
+.roul-header { font-size: 10px; color: var(--text-faint); margin-bottom: 6px; line-height: 1.4; }
+.roul-row { display: flex; gap: 8px; font-size: 11px; padding: 3px 0; border-bottom: 1px solid rgba(140,165,210,0.06); }
+.roul-row:last-of-type { border-bottom: none; }
+.roul-row-head { color: var(--text-faint); font-size: 10px; }
+.roul-cog { width: 55px; color: var(--text-muted); }
+.roul-p   { width: 65px; color: var(--text-faint); }
+.roul-ev  { width: 85px; font-weight: 500; }
+.roul-v   { color: var(--text-faint); }
+.roul-ev.pos { color: var(--green-recording); }
+.roul-ev.neg { color: var(--red-loss); }
+.roul-note { font-size: 10px; color: var(--text-faint); margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(140,165,210,0.06); line-height: 1.4; }
+
+/* ── ID23 BLOCK ──────────────────────────── */
+.id23-block { background: rgba(13,24,40,0.8); border: 1px solid rgba(47,211,107,0.15); border-radius: var(--radius); padding: 10px; margin-top: 6px; }
+.id23-row { display: flex; gap: 8px; font-size: 11px; padding: 3px 0; border-bottom: 1px solid rgba(140,165,210,0.06); }
+.id23-row:last-of-type { border-bottom: none; }
+.id23-outcome { width: 90px; color: var(--text-muted); }
+.id23-prob    { width: 55px; color: var(--text-faint); }
+.id23-ev      { width: 85px; font-weight: 500; }
+.id23-rating  { font-size: 10px; }
+
+/* ── TIER GROUP SEPARATORS ───────────────── */
+.tier-sep { height: 1px; background: rgba(140,165,210,0.06); margin: 0 14px; }
+.tier-sep-label {
+  font-size: 10px; color: var(--gold-muted); text-transform: uppercase; letter-spacing: .16em;
+  padding: 10px 18px; background: rgba(200,164,93,0.06); font-weight: 700;
+  border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);
+}
+
+/* ── SERVICE ROW VARIANTS ────────────────── */
+.svc-row-roulette td { background: rgba(216,90,78,0.04) !important; }
+.svc-row-roulette td:first-child { box-shadow: inset 2px 0 0 rgba(216,90,78,0.4); }
+.svc-row-id23 td:first-child { box-shadow: inset 2px 0 0 rgba(47,211,107,0.3); }
+
+/* ── TABLE WRAPPER ───────────────────────── */
+.tbl-wrap { background: var(--bg-panel-soft); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+.tbl-sticky th { position: sticky; top: 0; background: rgba(7,17,31,0.95); backdrop-filter: blur(4px); z-index: 2; }
+
+/* ── TOOLTIP ─────────────────────────────── */
+.tip { position: relative; display: inline-flex; align-items: center; gap: 5px; }
+.tip-icon { width: 14px; height: 14px; border-radius: 50%; background: var(--blue-steel); color: var(--blue-light); font-size: 9px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: help; }
+.tip-text { visibility: hidden; opacity: 0; position: absolute; bottom: calc(100% + 6px); left: 0; background: var(--bg-panel); border: 1px solid var(--border-soft); border-radius: var(--radius); padding: 8px 10px; font-size: 11px; color: var(--text-muted); line-height: 1.5; width: 260px; z-index: 100; pointer-events: none; transition: opacity .15s; }
+.tip:hover .tip-text { visibility: visible; opacity: 1; }
+
+/* ── CHECKBOXES ──────────────────────────── */
+.chk-row { display: flex; align-items: center; gap: 9px; cursor: pointer; font-size: 12.5px; color: var(--text-muted); padding: 6px 0; transition: color .15s; }
+.chk-row:hover { color: var(--text-soft); }
+.chk-row input[type=checkbox] { accent-color: var(--gold-primary); width: 14px; height: 14px; cursor: pointer; flex-shrink: 0; }
+.chk-label-text { color: var(--text-soft); font-weight: 500; }
+.node-exclusive-note { font-size: 10px; color: var(--orange-fire); margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border-blue); }
+
+/* ── REROLL TOOL ─────────────────────────── */
+.reroll-panel { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--radius-lg); padding: 16px; margin-bottom: 14px; }
+.reroll-panel-title { font-size: 10px; color: var(--gold-muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+.reroll-alice-note { font-size: 11px; color: var(--text-faint); }
+.tier-picker { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.tier-pick-btn { padding: 8px 16px; border-radius: var(--radius); border: 1px solid var(--border-blue); background: var(--bg-panel); font-family: var(--font-display); font-size: 14px; font-weight: 700; cursor: pointer; transition: all .15s; min-width: 52px; text-align: center; }
+.tier-pick-btn:hover { border-color: var(--gold-muted); }
+.tier-pick-btn.sel-s  { background: rgba(216,90,78,0.15);  border-color: var(--red-loss); color: var(--red-loss); }
+.tier-pick-btn.sel-a  { background: rgba(167,139,250,0.15); border-color: #a78bfa; color: #a78bfa; }
+.tier-pick-btn.sel-b  { background: rgba(96,165,250,0.15);  border-color: #60a5fa; color: #60a5fa; }
+.tier-pick-btn.sel-c  { background: rgba(94,106,125,0.15);  border-color: var(--text-faint); color: var(--text-faint); }
+.tier-pick-btn.sel-f  { background: rgba(38,58,87,0.15);    border-color: var(--blue-steel); color: var(--blue-steel); }
+.reroll-verdict { border-radius: var(--radius); padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px; }
+.v-keep    { background: rgba(200,164,93,0.1);  border: 1px solid var(--border-soft); }
+.v-reroll  { background: rgba(96,165,250,0.08); border: 1px solid rgba(96,165,250,0.3); }
+.v-consider{ background: rgba(242,138,46,0.08); border: 1px solid rgba(242,138,46,0.3); }
+.v-idle    { background: var(--bg-panel);       border: 1px solid var(--border-blue); }
+.verdict-label { font-family: var(--font-display); font-size: 16px; font-weight: 700; letter-spacing: .04em; }
+.v-keep    .verdict-label { color: var(--gold-bright); }
+.v-reroll  .verdict-label { color: #60a5fa; }
+.v-consider.verdict-label { color: var(--orange-fire); }
+.v-idle    .verdict-label { color: var(--text-faint); }
+.verdict-sub  { font-size: 11px; color: var(--text-faint); margin-top: 2px; }
+.verdict-icon { font-size: 22px; flex-shrink: 0; }
+.reroll-pick-label { font-size: 11px; color: var(--text-faint); margin-bottom: 8px; }
+.no-rerolls-note { font-size: 12px; color: var(--text-faint); padding: 4px 0; }
+
+/* ── PAGE FOOTER ─────────────────────────── */
+.page-footer { border-top: 1px solid var(--border-soft); padding: 20px 28px; text-align: center; font-size: 11px; color: var(--text-faint); max-width: 1100px; margin: 40px auto 0; }
+.page-footer a { color: var(--blue-light); }
+.page-footer a:hover { color: var(--gold-primary); }
+
+/* ── RESPONSIVE ──────────────────────────── */
+
+@media (max-width: 600px) {
+  .main { padding: 16px 16px 0; }
+  .page-header { padding: 24px 16px 20px; }
+  .svc-table th:nth-child(4), .svc-table td:nth-child(4) { display: none; }
+}
+
+/* ── CARD LIST LAYOUT ────────────────────── */
+.svc-list-wrap { margin-bottom: 24px; }
+.svc-list { display: flex; flex-direction: column; gap: 0; }
+
+.tier-banner {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 16px 18px 10px;
+  border-top: 2px solid var(--border-soft);
+  margin-top: 20px; margin-bottom: 4px;
+  background: rgba(200,164,93,0.03);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.tier-banner--roulette { border-top-color: var(--red-loss); margin-top: 8px; }
+.tier-banner__label {
+  font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; font-family: var(--font-display);
+}
+.tier-banner__desc { font-size: 12px; color: var(--text-faint); }
+
+.svc-card {
+  display: flex; align-items: flex-start; gap: 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-blue);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  margin-bottom: 6px;
+  transition: border-color .15s, background .15s;
+}
+.svc-card:hover { border-color: var(--border-soft); }
+.svc-card--top { }
+
+.svc-rank {
+  font-size: 11px; color: var(--text-faint);
+  min-width: 18px; padding-top: 2px;
+  text-align: right; flex-shrink: 0;
+}
+.svc-body { flex: 1; min-width: 0; }
+.svc-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.svc-tier-badge { font-size: 13px; font-weight: 700; }
+
+.svc-ev-block {
+  display: flex; flex-direction: column; align-items: flex-end;
+  gap: 2px; flex-shrink: 0; min-width: 80px;
+}
+.svc-ev-pct {
+  font-size: 18px; font-weight: 700; color: var(--text-primary);
+  line-height: 1; font-variant-numeric: tabular-nums;
+}
+.svc-ev-sub {
+  font-size: 10px; color: var(--text-faint);
+  letter-spacing: .06em; text-transform: uppercase;
+}
