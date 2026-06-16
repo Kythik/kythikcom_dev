@@ -142,7 +142,7 @@ button { cursor: pointer; font-family: var(--font-body); }
 
 .header-name {
   font-family: var(--font-display);
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
   color: var(--gold-bright);
   letter-spacing: .22em;
