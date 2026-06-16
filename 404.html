@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Favicon -->
+  <!-- Favicons -->
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
@@ -274,8 +274,14 @@
   <script src="/shared/header.js"></script>
 
   <!-- Vercel Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
   <script defer src="/_vercel/insights/script.js"></script>
   <!-- Vercel Speed Insights -->
+  <script>
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  </script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
