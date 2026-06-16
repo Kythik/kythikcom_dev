@@ -1,0 +1,36 @@
+# robots.txt for kythik.com
+# Allow all standard crawlers, block our internal API endpoints from being indexed.
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_vercel/
+Disallow: /coming-soon.html
+Disallow: /404.html
+
+# AI scraper opt-outs (their official tokens; many ignore these anyway)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+Sitemap: https://www.kythik.com/sitemap.xml
