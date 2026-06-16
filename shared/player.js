@@ -58,7 +58,7 @@
 
     const channel = (window.CONFIG && CONFIG.TWITCH_CHANNEL) || 'kythikx';
     const domain  = (window.CONFIG && CONFIG.VERCEL_DOMAIN)  || 'kythik.com';
-    const base    = `https://player.twitch.tv/?parent=${domain}&parent=www.${domain}&autoplay=true&muted=true`;
+    const base    = `https://player.twitch.tv/?parent=${domain}&parent=www.${domain}&parent=kythikcom-dev.vercel.app&autoplay=true&muted=true`;
     const src     = isLive
       ? `${base}&channel=${channel}`
       : vodId

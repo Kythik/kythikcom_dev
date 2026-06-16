@@ -48,7 +48,7 @@
       "status": "upcoming",
       "subpages": [],
       "fallbackImage": "/images/fallbacks/hero-siege.png",
-      "iconScale": 1.0
+      "iconScale": 0.78
     }
   ]
 }

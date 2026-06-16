@@ -3,6 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#04080F" />
   <title>Kythik — Torchlight Infinite Farm Builds, ARPG Strategy & Live Commentary</title>
   <meta name="description" content="Your source for Torchlight Infinite farm strategies, builds, and guides — plus live ARPG commentary from Kythik (kythikx). Community-sourced strategies from the Kythik Discord." />
   <meta name="keywords" content="Kythik, KythikX, Kyth, kythik streamer, kythikx twitch, kythik twitch streamer, kythik arpg, Torchlight Infinite, Torchlight Infinite builds, Torchlight Infinite farm, Torchlight Infinite guide 2024, Torchlight Infinite guide 2025, TLI farm guide, TLI builds, TLI strategy, TLI season 12, ARPG builds, ARPG farm guide, ARPG strategy, ARPG streamer, ARPG Twitch streamer, ARPG commentary, ARPG loot game, ARPG tier list, action RPG builds, action RPG streamer, Path of Exile alternative, PoE like games, Path of Exile 2 alternative, best ARPG 2024, best ARPG 2025, Diablo IV builds, Diablo 4 streamer, Diablo alternative, Hero Siege, Dwarven Realms, loot game builds, loot game streamer, hack and slash builds, hack and slash streamer, Twitch ARPG streamer, gaming streamer builds, farm strategy guide, endgame builds, boss farming guide, speed farming builds, currency farming ARPG" />
@@ -30,11 +36,20 @@
     }
   }
   </script>
-
-
 </head>
-<body class="strats-page">
+<body>
 
+  <!-- Vercel Analytics -->
+		<script>
+		window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+		</script>
+		<script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+		<script>
+		window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+		</script>
+		<script defer src="/_vercel/speed-insights/script.js"></script>
+  
   <!-- ── PAGE BACKGROUND IMAGE ── -->
   <div class="page-bg-img"></div>
 
@@ -79,21 +94,19 @@
       <div class="featured-track" id="featuredTrack"></div>
     </div>
 
-    <section class="strats-toolbar" aria-label="Strategy filters">
-      <div class="db-header">
-        <div></div>
-        <div class="db-count" id="stratCount">Loading...</div>
-      </div>
+    <div class="db-header">
+      <div></div>
+      <div class="db-count" id="stratCount">Loading...</div>
+    </div>
 
-      <div class="filters">
-        <input class="search" type="text" id="searchInput" placeholder="Search strategies, builds, authors..." aria-label="Search strategies" />
-        <button class="pill active" data-filter="all">All</button>
-        <button class="pill" data-filter="Farms">Farms</button>
-        <button class="pill" data-filter="Builds">Builds</button>
-      </div>
+    <div class="filters">
+      <input class="search" type="text" id="searchInput" placeholder="Search strategies, builds, authors..." aria-label="Search strategies" />
+      <button class="pill active" data-filter="all">All</button>
+      <button class="pill" data-filter="Farms">Farms</button>
+      <button class="pill" data-filter="Builds">Builds</button>
+    </div>
 
-      <div class="tag-filter-row" id="tagFilters"></div>
-    </section>
+    <div class="tag-filter-row" id="tagFilters"></div>
 
     <div class="grid-frame">
       <div class="grid" id="stratGrid">
@@ -155,5 +168,9 @@
   <script src="/shared/header.js"></script>
   <script src="/shared/player.js"></script>
   <script src="/torchlight/strats/app.js"></script>
+  <!-- Vercel Analytics -->
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
