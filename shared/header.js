@@ -18,11 +18,9 @@
 
 (function () {
   const BRAND_HTML = `
-    <a href="/" class="brand-link" aria-label="Kythik home" style="display:flex;align-items:center;gap:12px;">
-      <div class="brand-mark" aria-hidden="true">
-        <img src="/images/favicon/android-chrome-192x192.png" alt="" width="28" height="28" style="display:block;width:100%;height:100%;object-fit:contain;" />
-      </div>
-      <span class="header-name">Kythik</span>
+    <a href="/" class="brand-link" aria-label="Kythik home" style="display:flex;align-items:center;gap:0;">
+      <img src="/images/favicon/android-chrome-192x192.png" alt="K" class="brand-icon-k" />
+      <span class="header-name header-name--no-k">ythik</span>
     </a>
     <div class="live-badge" id="headerLive" style="display:none">
       <div class="live-dot"></div>
