@@ -107,7 +107,7 @@
       const grid    = document.getElementById('ytKythikGrid');
       header.innerHTML = buildSectionHeader(
         'Latest from Kythik',
-        'https://www.youtube.com/@kythikx',
+        'https://www.youtube.com/@kythik',
         'More on YouTube →'
       );
       grid.innerHTML = data.youtube.map(buildVideoCard).join('');
