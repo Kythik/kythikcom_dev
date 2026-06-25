@@ -231,6 +231,186 @@
       display:none;
     }
   }
+
+  /* Mobile gameplay dock: compact bottom sheet rather than a desktop-sized overlay. */
+  @media (max-width: 700px){
+    .arcana-page .floatingHandDock{
+      position:fixed !important;
+      inset:auto 8px 8px 8px !important;
+      width:auto !important;
+      max-width:none !important;
+      max-height:min(46vh, 390px) !important;
+      margin:0 !important;
+      overflow-y:auto !important;
+      overscroll-behavior:contain;
+      border-radius:18px !important;
+      z-index:180 !important;
+      box-shadow:0 18px 60px rgba(0,0,0,.72), 0 0 0 1px rgba(230,199,122,.16) !important;
+    }
+    .arcana-page .floatingHandInner{
+      padding:12px !important;
+    }
+    .arcana-page .floatingHandHead{
+      min-height:0 !important;
+      margin-bottom:8px !important;
+    }
+    .arcana-page .floatingHandTitle{
+      font-size:12px !important;
+    }
+    .arcana-page .floatingHandRows{
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) 86px !important;
+      grid-template-areas:
+        "cards refill"
+        "confirm confirm" !important;
+      align-items:start !important;
+      gap:10px !important;
+    }
+    .arcana-page .floatingHandCards{
+      grid-area:cards;
+      display:grid !important;
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      gap:7px !important;
+      overflow:visible !important;
+      padding:0 !important;
+    }
+    .arcana-page .floatingHandCard{
+      width:100% !important;
+      min-width:0 !important;
+      height:86px !important;
+      padding:7px 5px !important;
+      border-radius:13px !important;
+    }
+    .arcana-page .floatingHandCard .floatingCardKicker,
+    .arcana-page .floatingHandCard .arcCardKicker{
+      font-size:8px !important;
+      letter-spacing:.10em !important;
+    }
+    .arcana-page .floatingHandCard .floatingCardFace,
+    .arcana-page .floatingHandCard .arcCardFace{
+      min-height:34px !important;
+      font-size:20px !important;
+    }
+    .arcana-page .floatingHandCard .floatingCardName,
+    .arcana-page .floatingHandCard .arcCardName{
+      font-size:11px !important;
+      line-height:1.1 !important;
+    }
+    .arcana-page .floatingMoveCard,
+    .arcana-page .floatingCurrentMoveBtn{
+      grid-area:refill;
+      width:86px !important;
+      min-width:86px !important;
+      height:86px !important;
+      min-height:86px !important;
+      padding:7px 5px !important;
+      border-radius:14px !important;
+      font-size:11px !important;
+      line-height:1.1 !important;
+    }
+    .arcana-page .floatingConfirmPanel{
+      grid-area:confirm;
+      padding:9px !important;
+      border-radius:14px !important;
+    }
+    .arcana-page .floatingConfirmText{
+      min-height:0 !important;
+      margin-bottom:8px !important;
+      font-size:11px !important;
+      line-height:1.35 !important;
+    }
+    .arcana-page .floatingDockActions{
+      display:grid !important;
+      grid-template-columns:repeat(3,minmax(0,1fr)) !important;
+      gap:6px !important;
+    }
+    .arcana-page .floatingDockActions button{
+      min-height:40px !important;
+      width:100% !important;
+      padding:7px 5px !important;
+      font-size:11px !important;
+      letter-spacing:.04em !important;
+      border-radius:11px !important;
+    }
+    .arcana-page .floatingChoiceTray{
+      max-height:42vh !important;
+      overflow:auto !important;
+      padding:10px !important;
+    }
+    .arcana-page .floatingChoiceCards{
+      display:grid !important;
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      gap:8px !important;
+      overflow:visible !important;
+    }
+    .arcana-page .floatingChoiceCard{
+      width:100% !important;
+      min-width:0 !important;
+      height:auto !important;
+      min-height:82px !important;
+    }
+    .arcana-page .wrap{
+      padding-bottom:310px !important;
+    }
+  }
+
+  /* Mobile board viewport: preserve the complete right edge and row connectors. */
+  @media (max-width: 700px){
+    .arcana-page .gamePanel{
+      display:block !important;
+      width:100% !important;
+      max-width:100% !important;
+      padding:12px 24px 16px 12px !important;
+      overflow-x:auto !important;
+      overflow-y:visible !important;
+      scroll-padding-inline:12px 24px;
+      scrollbar-gutter:stable;
+    }
+    .arcana-page .boardFrame{
+      display:block !important;
+      width:max-content !important;
+      min-width:max-content !important;
+      max-width:none !important;
+      margin:0 !important;
+      padding-right:32px !important;
+      overflow:visible !important;
+    }
+    .arcana-page .board,
+    .arcana-page .boardGrid,
+    .arcana-page .boardRows,
+    .arcana-page .boardRow{
+      overflow:visible !important;
+    }
+    .arcana-page .rowLink,
+    .arcana-page .row-link,
+    .arcana-page .boardLink,
+    .arcana-page .board-link{
+      overflow:visible !important;
+      pointer-events:none;
+    }
+  }
+
+  @media (max-width: 390px){
+    .arcana-page .floatingHandDock{
+      inset:auto 5px 5px 5px !important;
+      max-height:48vh !important;
+    }
+    .arcana-page .floatingHandInner{
+      padding:9px !important;
+    }
+    .arcana-page .floatingHandRows{
+      grid-template-columns:minmax(0,1fr) 76px !important;
+      gap:7px !important;
+    }
+    .arcana-page .floatingMoveCard,
+    .arcana-page .floatingCurrentMoveBtn{
+      width:76px !important;
+      min-width:76px !important;
+    }
+    .arcana-page .floatingDockActions button{
+      font-size:10px !important;
+    }
+  }
 </style>
 </head>
 <body class="arcana-page visual-fork">
@@ -2476,8 +2656,14 @@ window.addEventListener('load',async()=>{await loadMechanicsData();await loadStr
 <script src="/shared/header.js"></script>
 
 <!-- Vercel Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
   <script defer src="/_vercel/insights/script.js"></script>
   <!-- Vercel Speed Insights -->
+  <script>
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  </script>
   <script defer src="/_vercel/speed-insights/script.js"></script>
 </body>
 </html>
