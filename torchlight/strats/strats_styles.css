@@ -30,3 +30,8 @@
     padding: 16px;
   }
 }
+
+/* ── HIDE FLOATING PLAYER ON MOBILE ─────── */
+@media (max-width: 700px) {
+  .fp { display: none; }
+}
