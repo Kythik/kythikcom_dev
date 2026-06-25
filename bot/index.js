@@ -1,3 +1,19 @@
+/* ═══════════════════════════════════════════
+   KYTHIK HUB — bot/index.js
+   Live Discord bot — syncs forum threads to Airtable.
+
+   Image policy: OP-only.
+   Images come ONLY from the first message in each thread.
+   Reply images are intentionally excluded — replies are
+   discussion, not strategy content.
+
+   Triggers:
+   - threadCreate  → add record (OP body + images + tags + comment count)
+   - threadUpdate  → update title/tags only
+   - messageUpdate → update body + OP images (only if first message)
+   - threadDelete  → remove record (current-season only)
+   ═══════════════════════════════════════════ */
+
 const { Client, GatewayIntentBits } = require('discord.js');
 
 const client = new Client({
@@ -45,11 +61,19 @@ function isImageAttachment(a) {
   return IMAGE_EXTENSIONS.some(ext => url.endsWith(ext));
 }
 
-function getImages(attachments) {
-  return [...attachments.values()]
-    .filter(isImageAttachment)
-    .map(a => a.url)
-    .join(', ');
+/* Get images from a single message (OP).
+   This is the ONLY way images enter Airtable in this codebase. */
+function getOpImages(message) {
+  if (!message) return '';
+  const images = [];
+  for (const a of message.attachments.values()) {
+    if (isImageAttachment(a)) images.push(a.url);
+  }
+  for (const e of (message.embeds || [])) {
+    if (e.image?.url) images.push(e.image.url);
+    if (e.thumbnail?.url) images.push(e.thumbnail.url);
+  }
+  return [...new Set(images)].join(', ');
 }
 
 /* ── AIRTABLE HELPERS ───────────────────── */
@@ -119,10 +143,10 @@ client.on('threadCreate', async (thread) => {
   try {
     await new Promise(r => setTimeout(r, 2000));
     const messages     = await thread.messages.fetch({ limit: 100 });
-    const first        = messages.last();
-    const content      = first ? first.content : '';
-    const author       = first ? first.author.username : thread.ownerId;
-    const images       = first ? getImages(first.attachments) : '';
+    const op           = messages.last(); // first message = OP
+    const content      = op ? op.content : '';
+    const author       = op ? op.author.username : thread.ownerId;
+    const opImages     = op ? getOpImages(op) : '';
     const commentCount = Math.max(0, messages.size - 1);
     const url          = `https://discord.com/channels/${thread.guildId}/${thread.id}`;
     const tags         = getTags(thread);
@@ -134,9 +158,11 @@ client.on('threadCreate', async (thread) => {
       Body:              content,
       DiscordMessageURL: url,
       Tags:              tags,
-      ImageURLs:         images,
+      ImageURLs:         opImages,
       CommentCount:      commentCount,
       PostedAt:          thread.createdAt ? thread.createdAt.toISOString() : new Date().toISOString(),
+      LastSyncedAt:      new Date().toISOString(),
+      MissingCount:      0,
     });
     console.log(`✓ Saved: ${thread.name}`);
   } catch (err) {
@@ -169,28 +195,31 @@ client.on('threadUpdate', async (oldThread, newThread) => {
   }
 });
 
-/* ── MESSAGE UPDATED (body/images changed) ─ */
+/* ── MESSAGE UPDATED (body/images changed) ─
+   Only fires for the OP message (the first one in the thread).
+   Reply edits are intentionally ignored — replies don't contribute
+   images or body to the strategy record. */
 client.on('messageUpdate', async (oldMsg, newMsg) => {
   if (!newMsg.channel || !newMsg.channel.parentId) return;
   if (!isOurChannel(newMsg.channel.parentId)) return;
   if (!isCurrentSeason(newMsg.channel.createdAt)) return; // ignore old season
 
-  // Only care about the first message in the thread
   try {
+    // Verify this is the OP message of the thread, not a reply
     const messages = await newMsg.channel.messages.fetch({ limit: 1, after: '0' });
     const firstMsg = messages.last();
-    if (!firstMsg || firstMsg.id !== newMsg.id) return;
+    if (!firstMsg || firstMsg.id !== newMsg.id) return; // not the OP
 
     const url    = `https://discord.com/channels/${newMsg.guildId}/${newMsg.channel.id}`;
     const record = await findRecord(url);
     if (!record) return;
 
-    const images = getImages(newMsg.attachments);
     await updateAirtable(record.id, {
-      Body:      newMsg.content || '',
-      ImageURLs: images,
+      Body:         newMsg.content || '',
+      ImageURLs:    getOpImages(newMsg),
+      LastSyncedAt: new Date().toISOString(),
     });
-    console.log(`✓ Updated body/images: ${newMsg.channel.name}`);
+    console.log(`✓ Updated OP body/images: ${newMsg.channel.name}`);
   } catch (err) {
     console.error('messageUpdate error:', err.message);
   }

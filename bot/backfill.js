@@ -2,6 +2,11 @@
    KYTHIK HUB — bot/backfill.js
    One-time script to import/update existing
    Discord forum threads in Airtable.
+
+   Image policy: OP-only.
+   Images come from the first message in each thread.
+   Replies are excluded — they're discussion, not strategy content.
+
    Run with: node backfill.js
    ═══════════════════════════════════════════ */
 
@@ -79,7 +84,9 @@ async function getArchivedThreads(channelId) {
   return threads;
 }
 
-async function getThreadMessages(threadId) {
+/* Get thread data — body + author from OP, comment count from total messages,
+   IMAGES ONLY FROM THE OP (replies intentionally excluded). */
+async function getThreadData(threadId) {
   const res = await fetch(
     `https://discord.com/api/v10/channels/${threadId}/messages?limit=100`,
     { headers: { Authorization: `Bot ${DISCORD_TOKEN}` } }
@@ -89,23 +96,22 @@ async function getThreadMessages(threadId) {
   const messages = await res.json();
   if (!messages.length) return { content: '', author: '', images: '', commentCount: 0 };
 
-  const first = messages[messages.length - 1];
+  // OP = oldest message = last one in newest-first response
+  const op = messages[messages.length - 1];
 
-  const allImages = [];
-  for (const msg of messages) {
-    for (const a of (msg.attachments || [])) {
-      if (isImageAttachment(a)) allImages.push(a.url);
-    }
-    for (const e of (msg.embeds || [])) {
-      if (e.image?.url) allImages.push(e.image.url);
-      if (e.thumbnail?.url) allImages.push(e.thumbnail.url);
-    }
+  const opImages = [];
+  for (const a of (op.attachments || [])) {
+    if (isImageAttachment(a)) opImages.push(a.url);
+  }
+  for (const e of (op.embeds || [])) {
+    if (e.image?.url)     opImages.push(e.image.url);
+    if (e.thumbnail?.url) opImages.push(e.thumbnail.url);
   }
 
   return {
-    content:      first.content || '',
-    author:       first.author?.username || '',
-    images:       [...new Set(allImages)].join(', '),
+    content:      op.content || '',
+    author:       op.author?.username || '',
+    images:       [...new Set(opImages)].join(', '),
     commentCount: Math.max(0, messages.length - 1),
   };
 }
@@ -117,7 +123,7 @@ async function getExistingRecords() {
 
   while (true) {
     const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(TABLE)}` +
-      `?fields[]=DiscordMessageURL&fields[]=ImageURLs&fields[]=Tags&fields[]=PostedAt${offset ? `&offset=${offset}` : ''}`;
+      `?fields[]=DiscordMessageURL&fields[]=ImageURLs&fields[]=Tags&fields[]=PostedAt&fields[]=LastSyncedAt${offset ? `&offset=${offset}` : ''}`;
 
     const res  = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
     const data = await res.json();
@@ -125,10 +131,11 @@ async function getExistingRecords() {
     (data.records || []).forEach(r => {
       if (r.fields.DiscordMessageURL) {
         existing.set(r.fields.DiscordMessageURL, {
-          id:          r.id,
-          hasImages:   !!r.fields.ImageURLs,
-          hasTags:     !!r.fields.Tags,
-          hasPostedAt: !!r.fields.PostedAt,
+          id:           r.id,
+          hasImages:    !!r.fields.ImageURLs,
+          hasTags:      !!r.fields.Tags,
+          hasPostedAt:  !!r.fields.PostedAt,
+          hasLastSync:  !!r.fields.LastSyncedAt,
         });
       }
     });
@@ -167,6 +174,7 @@ async function patchAirtable(recordId, fields) {
 async function run() {
   console.log('═══════════════════════════════════');
   console.log('  Kythik Hub — Backfill Script');
+  console.log('  (OP images only)');
   console.log('═══════════════════════════════════');
 
   console.log('\nFetching channel tag maps...');
@@ -220,7 +228,7 @@ async function run() {
       .join(', ');
 
     try {
-      const { content, author, images, commentCount } = await getThreadMessages(thread.id);
+      const { content, author, images, commentCount } = await getThreadData(thread.id);
 
       const postedAt = thread.thread_metadata?.create_timestamp
         || thread.timestamp
@@ -228,9 +236,10 @@ async function run() {
 
       if (existing) {
         const patch = {};
-        if (!existing.hasImages && images)   patch.ImageURLs = images;
-        if (!existing.hasTags && tags)       patch.Tags = tags;
-        if (!existing.hasPostedAt && postedAt) patch.PostedAt = postedAt;
+        if (!existing.hasImages && images)         patch.ImageURLs    = images;
+        if (!existing.hasTags && tags)             patch.Tags         = tags;
+        if (!existing.hasPostedAt && postedAt)     patch.PostedAt     = postedAt;
+        if (!existing.hasLastSync)                 patch.LastSyncedAt = new Date().toISOString();
 
         if (Object.keys(patch).length) {
           await patchAirtable(existing.id, patch);
@@ -240,11 +249,6 @@ async function run() {
           skipped++;
         }
       } else {
-        // Discord thread creation timestamp
-        const postedAt = thread.thread_metadata?.create_timestamp
-          || thread.timestamp
-          || null;
-
         await addToAirtable({
           Title:             thread.name,
           Author:            author,
@@ -255,6 +259,8 @@ async function run() {
           Tags:              tags,
           CommentCount:      commentCount,
           PostedAt:          postedAt,
+          LastSyncedAt:      new Date().toISOString(),
+          MissingCount:      0,
         });
         console.log(`✓ Imported: ${thread.name}`);
         imported++;
