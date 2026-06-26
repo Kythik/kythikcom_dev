@@ -72,7 +72,7 @@ function renderStrategies(list) {
     const eyebrow  = [zone, dateStr].filter(Boolean).join(' · ');
     const hasImg   = s.ImageURLs && s.ImageURLs.trim();
     const thumbSrc = hasImg ? s.ImageURLs.split(',')[0].trim() : getPlaceholder(s.id);
-    const imgThumb = `<div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}"><img src="${thumbSrc}" alt="Strategy screenshot" loading="lazy" /></div>`;
+    const imgThumb = `<div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}"><img src="${thumbSrc}" alt="Strategy screenshot" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" /></div>`;
 
     return `<article class="card" data-id="${s.id}" onclick="openModal('${s.id}')">
       ${imgThumb}
@@ -308,7 +308,7 @@ function renderFeatured() {
     <div class="feat-card" onclick="openModal('${s.id}')">
       <div class="feat-screenshot">
         ${screenshot
-          ? `<img src="${screenshot}" alt="Strategy screenshot" loading="lazy" />`
+          ? `<img src="${screenshot}" alt="Strategy screenshot" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" />`
           : `<div class="feat-screenshot-empty"><span>No screenshot</span></div>`
         }
         <div class="feat-screenshot-fade"></div>
