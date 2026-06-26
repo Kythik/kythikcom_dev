@@ -144,7 +144,7 @@ async function deleteRecord(recordId) {
 async function getOpImages(threadId) {
   // Get first message in the thread (the OP)
   const res = await fetch(
-    `https://discord.com/api/v10/channels/${threadId}/messages?limit=100&after=0`,
+    `https://discord.com/api/v10/channels/${threadId}/messages?limit=100`,
     { headers: { Authorization: `Bot ${DISCORD_TOKEN}` } }
   );
 
