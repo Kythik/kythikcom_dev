@@ -348,101 +348,108 @@
   pointer-events: auto;
 }
 
-.mobile-menu__section {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border-soft);
-}
-.mobile-menu__section:last-child {
-  border-bottom: none;
-}
-.mobile-menu__section--social {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding-top: 14px;
-}
-
-.mobile-menu__label {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--gold-muted);
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.mobile-menu__label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, var(--border-soft), transparent);
-}
-
+/* Game/Home row — full-width tappable, icon left, name middle, tag right */
 .mobile-menu__game {
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 10px 6px;
+  padding: 14px 4px;
   color: var(--text-soft);
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   letter-spacing: .04em;
-  border-radius: var(--radius-sm);
+  border-bottom: 1px solid var(--border-soft);
   transition: background .15s, color .15s;
+  text-transform: uppercase;
 }
 .mobile-menu__game:hover {
-  background: rgba(200,164,93,.06);
+  background: rgba(200,164,93,.05);
   color: var(--gold-bright);
-}
-.mobile-menu__game img {
-  width: 28px;
-  height: 28px;
-  object-fit: contain;
 }
 .mobile-menu__game.is-current {
   color: var(--gold-bright);
 }
-.mobile-menu__current {
-  margin-left: auto;
+.mobile-menu__game.is-upcoming {
+  color: var(--text-muted);
+}
+.mobile-menu__game-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.mobile-menu__home-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  font-size: 22px;
+  color: var(--gold-primary);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.mobile-menu__game-name {
+  flex: 1;
+  min-width: 0;
+}
+.mobile-menu__tag {
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
-  letter-spacing: .12em;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--gold-muted);
   padding: 3px 8px;
-  border: 1px solid rgba(200,164,93,.32);
-  background: rgba(200,164,93,.08);
   border-radius: 999px;
+  flex-shrink: 0;
+}
+.mobile-menu__tag--current {
+  color: var(--gold-bright);
+  border: 1px solid rgba(200,164,93,.42);
+  background: rgba(200,164,93,.10);
+}
+.mobile-menu__tag--soon {
+  color: var(--text-faint);
+  border: 1px solid var(--border-blue);
+  background: rgba(38,58,87,.18);
 }
 
+/* Subpages — indented, smaller, listed directly under the current game */
 .mobile-menu__sublink {
   display: block;
-  padding: 12px 6px;
+  padding: 12px 6px 12px 48px;
   color: var(--text-muted);
+  font-family: var(--font-body);
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: .04em;
-  border-radius: var(--radius-sm);
+  letter-spacing: .02em;
+  border-bottom: 1px solid var(--border-soft);
   transition: background .15s, color .15s;
 }
 .mobile-menu__sublink:hover {
-  background: rgba(200,164,93,.06);
+  background: rgba(200,164,93,.05);
   color: var(--gold-primary);
 }
 
+/* Social row — Twitch + Discord side-by-side at the bottom */
+.mobile-menu__social-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
 .mobile-menu__social {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 10px;
   border-radius: var(--radius);
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: .04em;
+  letter-spacing: .06em;
+  text-transform: uppercase;
   transition: all .15s;
 }
 .mobile-menu__social--twitch {
