@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     let SEASON_START = '2026-04-16T19:00:00-07:00';
     let SEASON_NAME  = 'SS12: Lunaria';
     try {
-      const cfg = await fetch('https://raw.githubusercontent.com/kythikx/kythik-hub/main/season.json').then(r => r.json());
+      const cfg = await fetch('https://www.kythik.com/torchlight/season.json').then(r => r.json());
       if (cfg.seasonStart) SEASON_START = cfg.seasonStart;
       if (cfg.seasonName)  SEASON_NAME  = cfg.seasonName;
     } catch(e) { /* use defaults */ }

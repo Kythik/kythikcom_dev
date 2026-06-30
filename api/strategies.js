@@ -31,7 +31,7 @@ export default async function handler(req, res) {
   const TOKEN = process.env.AIRTABLE_TOKEN;
   const BASE  = process.env.AIRTABLE_BASE;
   const TABLE = 'Strategies';
-  const seasonCfg   = await fetch('https://raw.githubusercontent.com/kythikx/kythik-hub/main/season.json').then(r => r.json()).catch(() => ({ seasonStart: '2026-04-16T19:00:00-07:00', seasonName: 'Unknown' }));
+  const seasonCfg   = await fetch('https://www.kythik.com/torchlight/season.json').then(r => r.json()).catch(() => ({ seasonStart: '2026-04-16T19:00:00-07:00', seasonName: 'Unknown' }));
   const SEASON_START = seasonCfg.seasonStart;
   const SEASON_NAME  = seasonCfg.seasonName;
 
