@@ -45,6 +45,12 @@
       "linkLabel": "Donthecrown's herowik"
     },
 	{
+      "title": "TLI Compendium",
+      "blurb": "Comprehensive tools for Torchlight Infinite build planning and skill tree management.",
+      "link": "https://tlicompendium.com/",
+      "linkLabel": "TLI Compendium"
+    },
+	{
       "title": "TLIDB",
       "blurb": "The TLI database site",
       "link": "https://tlidb.com/",
