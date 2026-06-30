@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#04080F" />
+
+  <title>EverQuest Legends — Kythik Hub</title>
+  <meta name="description" content="EverQuest Legends is Kythik's old-school MMO archive: raid stories, class memories, server culture, and long-form EverQuest-era nostalgia." />
+  <link rel="canonical" href="https://www.kythik.com/everquest-legends/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="EverQuest Legends — Kythik Hub" />
+  <meta property="og:description" content="Old-school MMO history, EverQuest-era stories, raid memories, and long-form Kythik nostalgia." />
+  <meta property="og:url" content="https://www.kythik.com/everquest-legends/" />
+  <meta property="og:image" content="https://www.kythik.com/images/eql/eql-og.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="EverQuest Legends — Kythik Hub" />
+  <meta name="twitter:description" content="Old-school MMO history, EverQuest-era stories, raid memories, and long-form Kythik nostalgia." />
+  <meta name="twitter:image" content="https://www.kythik.com/images/eql/eql-og.png" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "EverQuest Legends — Kythik Hub",
+    "url": "https://www.kythik.com/everquest-legends/",
+    "description": "EverQuest Legends is Kythik's old-school MMO archive for raid stories, class memories, server culture, and long-form EverQuest-era nostalgia.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Kythik Hub",
+      "url": "https://www.kythik.com/"
+    },
+    "about": [
+      "EverQuest",
+      "MMO raiding",
+      "MMO history",
+      "Kythik"
+    ]
+  }
+  </script>
+
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/shared/header-additions.css" />
+  <style>
+    @media (max-width: 700px) {
+      .main { padding: 0 16px 64px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-bg-img"></div>
+
+  <svg class="hex-bg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="hexGrid" width="50" height="84" patternUnits="userSpaceOnUse">
+        <polygon points="25,0 50,14 50,42 25,56 0,42 0,14"   fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <polygon points="0,42 25,56 25,84 0,98 -25,84 -25,56" fill="none" stroke="#1A3055" stroke-width="0.8"/>
+        <polygon points="50,42 75,56 75,84 50,98 25,84 25,56"  fill="none" stroke="#1A3055" stroke-width="0.8"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexGrid)"/>
+  </svg>
+
+  <!-- ── STICKY HEADER ── -->
+  <div id="site-header" data-active-game="everquest-legends"></div>
+
+  <main class="main">
+
+    <!-- ── PAGE HERO ── -->
+    <div style="text-align:center;padding:48px 0 32px">
+      <span class="kicker">Kythik Since ’99</span>
+      <h1 class="display display--lg" style="font-size:clamp(26px,6vw,42px);margin:10px 0 0"><span class="accent">EverQuest</span> Legends</h1>
+      <p class="subtext" style="max-width:760px;margin:14px auto 0;font-size:14px">
+        Old-school MMO memories, raid history, class stories, server culture, and the kind of nostalgia that comes from living through the era instead of reading the patch notes later.
+      </p>
+    </div>
+
+    <!-- ── FEATURED CAROUSEL ── -->
+    <div class="featured-section" id="eqlCarousel" style="display:none">
+      <div class="featured-header">
+        <div class="featured-label">Featured</div>
+        <div class="featured-nav">
+          <button class="featured-btn" onclick="KythikCarousel.nav('eqlCarousel', -1)" aria-label="Previous">‹</button>
+          <span class="featured-counter" id="eqlCarouselCounter"></span>
+          <button class="featured-btn" onclick="KythikCarousel.nav('eqlCarousel',  1)" aria-label="Next">›</button>
+        </div>
+      </div>
+      <div class="featured-track" id="eqlCarouselTrack"></div>
+    </div>
+
+    <!-- ── START HERE ── -->
+    <section style="padding:36px 0 0">
+      <div class="section-header">
+        <h2 class="section-header__title">Start Here</h2>
+      </div>
+      <div class="grid grid--3" id="quickPathsGrid"></div>
+    </section>
+
+    <!-- ── LEGEND ARCHIVE ── -->
+    <section id="legendArchive" style="padding:36px 0 0">
+      <div class="section-header">
+        <h2 class="section-header__title">Legend Archive</h2>
+      </div>
+      <div class="grid grid--2" id="archiveGrid"></div>
+    </section>
+
+    <!-- ── RESOURCES ── -->
+    <section id="resourcesSection" style="display:none;padding:36px 0 0">
+      <div class="section-header">
+        <h2 class="section-header__title">Resources</h2>
+      </div>
+      <div class="grid" id="resourcesGrid"></div>
+    </section>
+
+    <!-- ── VIDEOS ── -->
+    <section id="videosSection" style="display:none;padding:36px 0 0">
+      <div class="section-header">
+        <h2 class="section-header__title">Videos & Stream Cuts</h2>
+        <a class="section-header__action" href="https://www.youtube.com/@kythik" target="_blank" rel="noopener">YouTube →</a>
+      </div>
+      <div class="grid" id="videosGrid"></div>
+    </section>
+
+    <!-- ── ABOUT ── -->
+    <section class="panel" style="margin-top:36px">
+      <span class="kicker">About the project</span>
+      <h2 class="display" style="font-size:22px;color:var(--gold-bright);margin:10px 0 10px">A home for the stories that made MMO history feel alive.</h2>
+      <p class="subtext" style="font-size:14px">
+        EverQuest Legends is the slower, more reflective side of the Kythik hub: a place for stories, context, memories, and the weird little details that made early MMO culture feel impossible to recreate. Less résumé, more campfire.
+      </p>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/shared/header.js"></script>
+  <script src="/shared/footer.js"></script>
+  <script src="/shared/shared-carousel.js"></script>
+  <script src="/everquest-legends/content.js"></script>
+  <!-- Vercel Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script>
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+
+</body>
+</html>

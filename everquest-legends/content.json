@@ -1,0 +1,92 @@
+{
+  "featured": [
+    {
+      "type": "link",
+      "eyebrow": "EverQuest Legends",
+      "title": "Kythik Since ’99",
+      "blurb": "A living MMO memory vault: old-school raiding, class identity, server culture, and the stories that made early online worlds feel dangerous, social, and strange.",
+      "link": "#legendArchive",
+      "linkLabel": "Open the Archive"
+    },
+    {
+      "type": "link",
+      "eyebrow": "Campfire Mode",
+      "title": "Raid Stories, Not Résumé Soup",
+      "blurb": "The point is the feel of the era: reputation, pressure, jank, late nights, clutch pulls, and the people who made games feel bigger than the map.",
+      "link": "https://www.twitch.tv/kythikx",
+      "linkLabel": "Watch Live"
+    }
+  ],
+  "quickPaths": [
+    {
+      "kicker": "History",
+      "title": "Era Timeline",
+      "blurb": "A player-first route through early MMO history: what mattered, why it mattered, and how the culture changed.",
+      "link": "#legendArchive",
+      "linkLabel": "Start reading"
+    },
+    {
+      "kicker": "Stories",
+      "title": "Raid Memory Vault",
+      "blurb": "Long-form stories about pressure, roles, guild expectations, and the weird social contract of hardcore raiding.",
+      "link": "#legendArchive",
+      "linkLabel": "Open vault"
+    },
+    {
+      "kicker": "Community",
+      "title": "Hello Gamer, Old School Edition",
+      "blurb": "A landing spot for viewers who want the MMO-history side of the stream without digging through modern ARPG pages.",
+      "link": "https://www.twitch.tv/kythikx",
+      "linkLabel": "Catch live"
+    }
+  ],
+  "archive": [
+    {
+      "kicker": "Origin Story",
+      "title": "Why EverQuest Felt Different",
+      "blurb": "Danger, downtime, travel friction, and server reputation created stories before games learned to label everything as content.",
+      "status": "Coming Soon",
+      "tag": "Essay",
+      "link": "#"
+    },
+    {
+      "kicker": "Class Identity",
+      "title": "Necromancer Brain, Forever",
+      "blurb": "A love letter to solo routes, utility, weird power curves, and the specific kind of player who enjoys winning by understanding systems better.",
+      "status": "Coming Soon",
+      "tag": "Class Story",
+      "link": "#"
+    },
+    {
+      "kicker": "Raid Culture",
+      "title": "The Pressure of Being Useful",
+      "blurb": "Hardcore raiding was not just boss mechanics. It was preparation, trust, logs before logs, and being someone the raid could count on.",
+      "status": "Coming Soon",
+      "tag": "Raid History",
+      "link": "#"
+    },
+    {
+      "kicker": "MMO Memory",
+      "title": "Server Legends and Forum Ghosts",
+      "blurb": "The old internet made player reputations feel permanent. Sometimes that was magic. Sometimes it was cursed. Often it was both.",
+      "status": "Coming Soon",
+      "tag": "Culture",
+      "link": "#"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Kythik on Twitch",
+      "blurb": "Live ARPG grinding, MMO stories, and high-yap strategy talk.",
+      "link": "https://www.twitch.tv/kythikx",
+      "linkLabel": "Watch Twitch"
+    },
+    {
+      "title": "Kythik on YouTube",
+      "blurb": "Stream cuts, guides, and long-form content as the archive grows.",
+      "link": "https://www.youtube.com/@kythik",
+      "linkLabel": "Open YouTube"
+    }
+  ],
+  "videos": []
+}
