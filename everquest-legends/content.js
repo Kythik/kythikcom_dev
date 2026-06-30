@@ -91,7 +91,7 @@
         mountId: 'eqlCarousel',
         items: data.featured,
         autoRotateMs: 6000,
-        fallbackImage: '/images/fallbacks/eql.png'
+        fallbackImage: '/images/fallbacks/everquest-legends.png'
       });
     }
 
