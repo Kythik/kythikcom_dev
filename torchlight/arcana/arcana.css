@@ -5171,3 +5171,84 @@ body.arcana-page .board {
   }
 }
 
+/* ═══════════════════════════════════════════
+   ARCANA MOBILE RANDOM REFILL CHIP V13
+   Hand dock only. Do not touch board layout.
+   Random/refill label sits above the mini card asset instead of
+   forcing the whole pill to be wide.
+   ═══════════════════════════════════════════ */
+@media (max-width: 700px) {
+  /* Give the random/refill control its own compact rail row. */
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard {
+    width: auto !important;
+    min-width: 74px !important;
+    max-width: 92px !important;
+    min-height: 58px !important;
+    max-height: 64px !important;
+    justify-self: start !important;
+    padding: 5px 6px !important;
+    border-radius: 9px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto 1fr auto !important;
+    place-items: center !important;
+    gap: 1px !important;
+    text-align: center !important;
+    overflow: hidden !important;
+  }
+
+  /* Label above the card asset. */
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardType {
+    display: block !important;
+    grid-row: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 6.5px !important;
+    line-height: 1 !important;
+    letter-spacing: .075em !important;
+    white-space: normal !important;
+    text-align: center !important;
+    overflow: hidden !important;
+  }
+
+  /* The actual random/refill card asset becomes small and centered. */
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardVisual,
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardVisual.cardArt,
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardVisual.lifeChip,
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardVisual.mysteryChip,
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardVisual.trapChip,
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardVisual.startArt,
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardVisual.emptyArt,
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardVisual.chestArt {
+    grid-row: 2 !important;
+    width: 24px !important;
+    height: 25px !important;
+    min-width: 24px !important;
+    min-height: 25px !important;
+    max-width: 24px !important;
+    max-height: 25px !important;
+    margin: 0 auto !important;
+    transform: none !important;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardValue {
+    grid-row: 2 !important;
+    justify-self: center !important;
+    align-self: center !important;
+    font-size: 13px !important;
+    line-height: 1 !important;
+    margin: 0 !important;
+    z-index: 2 !important;
+  }
+
+  /* Hide redundant move label inside the random indicator to save width/height. */
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard .floatingCardLabel {
+    display: none !important;
+  }
+
+  /* Make the dock row reserve only compact chip width for random/refill. */
+  .arcana-page.visual-fork #floatingHandDock .floatingHandRows {
+    grid-template-rows: auto auto auto !important;
+  }
+}
+
