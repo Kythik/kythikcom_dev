@@ -3702,3 +3702,323 @@ body.arcana-page .board {
   }
 }
 
+/* ═══════════════════════════════════════════
+   ARCANA MOBILE UX REORDER V3
+   Phone layout should prioritize the playable board first.
+   Strategy cards and setup details move below the board.
+   The hand dock becomes inline board controls instead of a fixed overlay.
+   ═══════════════════════════════════════════ */
+@media (max-width: 700px) {
+  body.arcana-page.visual-fork {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0 !important;
+    overflow-x: hidden;
+  }
+
+  body.arcana-page.visual-fork #site-header {
+    order: 0;
+    flex: 0 0 auto;
+  }
+
+  body.arcana-page.visual-fork .strategyLightbox,
+  body.arcana-page.visual-fork .modalOverlay,
+  body.arcana-page.visual-fork .moveConfirmOverlay {
+    order: 99;
+  }
+
+  /* Put the playable board before strategy cards and setup content. */
+  .arcana-page.visual-fork .wrap {
+    order: 1;
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: none !important;
+    gap: 14px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 12px 0 34px !important;
+  }
+
+  .arcana-page.visual-fork .strategyDeck {
+    order: 2;
+    padding: 16px 16px 34px !important;
+  }
+
+  .arcana-page.visual-fork .strategyDeckHead {
+    text-align: left !important;
+    margin-bottom: 10px !important;
+  }
+
+  .arcana-page.visual-fork .strategyDeckHead h2 {
+    font-size: clamp(20px, 6vw, 26px) !important;
+  }
+
+  .arcana-page.visual-fork .strategyDeckHead p {
+    margin: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Board first. */
+  .arcana-page.visual-fork .wrap > .gamePanel {
+    order: 1;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: auto !important;
+    margin: 0 !important;
+    padding: 10px 0 16px !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-radius: 0 !important;
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .arcana-page.visual-fork .wrap > .gamePanel::before,
+  .arcana-page.visual-fork .wrap > .gamePanel::after {
+    display: none !important;
+  }
+
+  /* Setup/stats/loot move below the board. */
+  .arcana-page.visual-fork .wrap > .panel:first-child {
+    order: 2;
+    margin: 0 16px !important;
+    padding: 14px !important;
+    border-radius: 16px !important;
+  }
+
+  .arcana-page.visual-fork .wrap > .panel:first-child h1 {
+    font-size: 21px !important;
+  }
+
+  .arcana-page.visual-fork .wrap > .panel:first-child .sub {
+    font-size: 12px !important;
+  }
+
+  /* Keep board full width internally, but make the viewport scroll instead of clipping. */
+  .arcana-page.visual-fork .boardFrame {
+    width: max-content !important;
+    min-width: max-content !important;
+    max-width: none !important;
+    margin: 0 84px 0 16px !important;
+    padding: 14px 84px 14px 14px !important;
+    overflow: visible !important;
+    border-radius: 18px !important;
+  }
+
+  .arcana-page.visual-fork .boardTitle {
+    font-size: clamp(20px, 6vw, 28px) !important;
+    white-space: nowrap !important;
+  }
+
+  .arcana-page.visual-fork .boardTitle::after {
+    display: none !important;
+  }
+
+  .arcana-page.visual-fork .boardHeader {
+    align-items: flex-start !important;
+    gap: 10px !important;
+    min-width: 390px !important;
+    max-width: calc(100vw - 44px) !important;
+  }
+
+  .arcana-page.visual-fork .boardLegend {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    max-width: calc(100vw - 56px) !important;
+    overflow-x: auto !important;
+    padding-bottom: 3px !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .arcana-page.visual-fork .legendPill {
+    flex: 0 0 auto;
+    font-size: 11px !important;
+  }
+
+  /* Critical: the hand/dock is no longer a screen-covering fixed overlay on phones. */
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock,
+  .arcana-page.visual-fork .floatingHandDock {
+    position: static !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    top: auto !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    z-index: 2 !important;
+    width: min(390px, calc(100vw - 54px)) !important;
+    max-width: min(390px, calc(100vw - 54px)) !important;
+    margin: 12px 0 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock.open,
+  .arcana-page.visual-fork .floatingHandDock.open {
+    transform: none !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingHandInner,
+  .arcana-page.visual-fork .floatingHandInner {
+    width: 100% !important;
+    max-height: none !important;
+    padding: 10px !important;
+    border-radius: 16px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .arcana-page.visual-fork .floatingHandHead {
+    display: none !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingHandRows,
+  .arcana-page.visual-fork .floatingHandRows {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingHandCards,
+  .arcana-page.visual-fork .floatingHandCards {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px !important;
+    max-height: 178px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    padding: 0 2px 2px 0 !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingHandCard,
+  .arcana-page.visual-fork .floatingHandCard {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 66px !important;
+    padding: 7px 5px 6px !important;
+    border-radius: 10px !important;
+  }
+
+  .arcana-page.visual-fork .floatingCardType {
+    font-size: 9px !important;
+    letter-spacing: .10em !important;
+  }
+
+  .arcana-page.visual-fork .floatingCardValue {
+    font-size: 20px !important;
+  }
+
+  .arcana-page.visual-fork .floatingCardLabel {
+    font-size: 10px !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingMoveCard.randomCard,
+  .arcana-page.visual-fork .floatingMoveCard.randomCard {
+    justify-self: stretch !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    padding: 8px 10px !important;
+    border-radius: 12px !important;
+  }
+
+  .arcana-page.visual-fork .floatingConfirmPanel {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    border-left: 0 !important;
+    border-top: 1px solid rgba(230,199,122,.16) !important;
+    padding: 8px 0 0 !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  .arcana-page.visual-fork .floatingConfirmText {
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    max-height: 34px !important;
+    overflow: hidden !important;
+  }
+
+  .arcana-page.visual-fork .floatingDockActions {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  .arcana-page.visual-fork .floatingDockActions button {
+    min-height: 38px !important;
+    padding: 6px 5px !important;
+    font-size: 10px !important;
+    letter-spacing: .06em !important;
+    border-radius: 11px !important;
+    white-space: normal !important;
+  }
+
+  /* Choice target cards become a compact inline tray instead of another huge overlay. */
+  .arcana-page.visual-fork .floatingChoiceTray {
+    width: 100% !important;
+    padding: 9px !important;
+    border-radius: 14px !important;
+  }
+
+  .arcana-page.visual-fork .floatingChoiceCards {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 7px !important;
+  }
+
+  .arcana-page.visual-fork .floatingChoiceCard {
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 68px !important;
+    padding: 7px 6px !important;
+  }
+
+  .arcana-page.visual-fork .floatingChoiceVisual.cardArt,
+  .arcana-page.visual-fork .floatingChoiceVisual.lifeChip,
+  .arcana-page.visual-fork .floatingChoiceVisual.mysteryChip,
+  .arcana-page.visual-fork .floatingChoiceVisual.trapChip,
+  .arcana-page.visual-fork .floatingChoiceVisual.startArt,
+  .arcana-page.visual-fork .floatingChoiceVisual.emptyArt {
+    width: 32px !important;
+    height: 38px !important;
+  }
+
+  .arcana-page.visual-fork .floatingChoiceVisual.chestArt {
+    width: 40px !important;
+    height: 36px !important;
+  }
+
+  /* Make lower setup content readable, but not the first thing users hit. */
+  .arcana-page.visual-fork .controls,
+  .arcana-page.visual-fork .autoplayControls,
+  .arcana-page.visual-fork .actionControls {
+    grid-template-columns: 1fr !important;
+  }
+
+  .arcana-page.visual-fork .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .arcana-page.visual-fork .lootColumns {
+    grid-template-columns: 1fr !important;
+  }
+
+  .arcana-page.visual-fork .strategyCards {
+    grid-template-columns: 1fr !important;
+    max-width: 420px !important;
+  }
+}
+
