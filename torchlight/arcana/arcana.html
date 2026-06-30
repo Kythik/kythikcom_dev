@@ -844,7 +844,7 @@ function makeBoard(){
   a[chooseOne(opener)]={type:'chest',rarity:openerChestRarity};
   a[chooseOne(opener)]={type:'upgrade',fixedFrom:upgradeAtOrAbove(openerChestRarity)};
   a[chooseOne(opener)]={type:'life',fixedN:randint(1,4)};
-  for(let i=0;i<openerCardCount&&opener.length;i++)a[chooseOne(opener)]={type:'movement'};
+  for(let i=0;i<openerCardCount&&opener.length;i++)a[chooseOne(opener)]={type:'movement',cardCount:randint(1,4)};
 
   // Row 3 / tiles 9–12: empty buffer row.
   for(let i=8;i<=11;i++)a[i]={type:'empty'};
@@ -888,6 +888,7 @@ function makeBoard(){
       if(type==='chest')a[idx]={type:'chest',rarity:wc(chestW)};
       else if(type==='upgrade')a[idx]={type:'upgrade',fixedFrom:wc(upgradeCardW)};
       else if(type==='life')a[idx]={type:'life',fixedN:randint(1,4)};
+      else if(type==='movement')a[idx]={type:'movement',cardCount:randint(1,4)};
       else a[idx]={type};
     }
   }
@@ -1966,7 +1967,7 @@ function targetTileSummary(i){
   let reward='';
   if(type==='chest')reward='Chest: '+lootLevelLabel(t.rarity)+' '+lootPrettyName(t.rarity);
   else if(type==='trap')reward='Trap: lose 1 life';
-  else if(type==='movement')reward=t.fixedN?'Gain Move '+t.fixedN:'Gain mapping card';
+  else if(type==='movement')reward=t.fixedN?'Gain Move '+t.fixedN:'Gain '+(t.cardCount||1)+' mapping card'+((t.cardCount||1)===1?'':'s');
   else if(type==='upgrade')reward='Gain upgrade card';
   else if(type==='life')reward=t.fixedN?('Gain +'+t.fixedN+' life'):'Gain life';
   else if(type==='question')reward='Mystery ? effect';
@@ -2011,7 +2012,7 @@ function targetRewardShort(i){
   const t=state.tiles[i]||{};
   if(t.type==='chest')return lootLevelLabel(t.rarity)+' '+lootPrettyName(t.rarity)+' chest';
   if(t.type==='trap')return 'Trap';
-  if(t.type==='movement')return t.fixedN?'Gain Move '+t.fixedN:'Gain mapping card';
+  if(t.type==='movement')return t.fixedN?'Gain Move '+t.fixedN:'Gain '+(t.cardCount||1)+' card'+((t.cardCount||1)===1?'':'s');
   if(t.type==='upgrade')return 'Gain upgrade card';
   if(t.type==='life')return t.fixedN?('Gain +'+t.fixedN+' life'):'Gain life';
   if(t.type==='question')return 'Mystery tile';
@@ -2032,7 +2033,7 @@ function floatingChoiceVisualHtml(tile){
   if(!tile)return `<span class="floatingChoiceVisual emptyArt">✧</span>`;
   if(tile.type==='chest') return `<span class="floatingChoiceVisual chestArt rarity-${tile.rarity||'orange'}"><span class="lid"></span><span class="body"></span><span class="lock"></span></span>`;
   if(tile.type==='upgrade') return `<span class="floatingChoiceVisual cardArt upgradeArt"><span class="cardGlyph">⇧</span></span>`;
-  if(tile.type==='movement') return `<span class="floatingChoiceVisual cardArt moveArt"><span class="cardStep">${Number.isFinite(tile.fixedN)?('+'+tile.fixedN):'CARD'}</span></span>`;
+  if(tile.type==='movement') return `<span class="floatingChoiceVisual cardArt moveArt"><span class="cardStep">${Number.isFinite(tile.fixedN)?('+'+tile.fixedN):('×'+(tile.cardCount||1))}</span></span>`;
   if(tile.type==='life') return `<span class="floatingChoiceVisual lifeChip"><span>♥</span><em>${Number.isFinite(tile.fixedN)?('+'+tile.fixedN):'+'}</em></span>`;
   if(tile.type==='question') return `<span class="floatingChoiceVisual mysteryChip">?</span>`;
   if(tile.type==='trap') return `<span class="floatingChoiceVisual trapChip">◆</span>`;
@@ -2130,7 +2131,23 @@ function resolveConfirmedMove(sel,i){
       }
     }
     else if(t.type==='trap'){state.life--;t.used=true;log('Trap at tile '+(i+1)+'. Lost 1 life.');if(state.life<=0){state.dead=true;state.done=true;log('Run bricked at tile '+(i+1)+'.')}}
-    else if(t.type==='movement'){let c=normalizeCard(t.fixedN?{type:'move',n:t.fixedN,name:'Move '+t.fixedN}:drawMappingCard());state.hand.push(c);t.used=true;log('Mapping-card tile gained: '+c.name+'.')}
+    else if(t.type==='movement'){
+      if(t.fixedN){
+        let c=normalizeCard({type:'move',n:t.fixedN,name:'Move '+t.fixedN});
+        state.hand.push(c);
+        log('Move-card tile gained: '+c.name+'.');
+      }else{
+        let count=Math.max(1,Math.min(3,Number.isFinite(t.cardCount)?t.cardCount:1));
+        let gained=[];
+        for(let k=0;k<count;k++){
+          let c=normalizeCard(drawMappingCard());
+          state.hand.push(c);
+          gained.push(c.name);
+        }
+        log('Card tile gained '+count+' card'+(count===1?'':'s')+': '+gained.join(', ')+'.');
+      }
+      t.used=true;
+    }
     else if(t.type==='upgrade'){
       let c=normalizeCard({type:'upgrade',from:t.fixedFrom||wc(upgradeCardW)});
       state.hand.push(c);t.used=true;log('Picked '+c.name+' card.');
@@ -2318,7 +2335,7 @@ function icon(t){
     return '<span class="chestIcon" aria-hidden="true">▰</span><span class="chestText">'+label+'</span>';
   }
   if(t.type==='trap')return '⚠';
-  if(t.type==='movement')return t.fixedN?'Move '+t.fixedN:'Card';
+  if(t.type==='movement')return t.fixedN?'Move '+t.fixedN:((t.cardCount||1)+' Card'+((t.cardCount||1)===1?'':'s'));
   if(t.type==='upgrade')return 'Up '+(t.fixedFrom||'?');
   if(t.type==='life')return t.fixedN?('+'+t.fixedN+' Life'):'+Life';
   if(t.type==='question')return '?';

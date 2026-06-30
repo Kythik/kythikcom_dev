@@ -4,6 +4,7 @@
   function chestLabel(r){ return ({green:'Green',blue:'Blue',purple:'Purple',orange:'Orange',red:'Red',rainbow:'Rainbow'})[r] || cap(r) || 'Chest'; }
   function upgradeLabel(r){ return ({blue:'Blue',purple:'Purple',orange:'Gold',red:'Red',rainbow:'Rainbow'})[r] || cap(r) || 'Upgrade'; }
   function toneForUpgrade(r){ return ({blue:'blue',purple:'purple',orange:'gold',red:'red',rainbow:'gold'})[r] || 'blue'; }
+  function cardTileCount(tile){ return Math.max(1, Math.min(3, Number.isFinite(tile?.cardCount) ? tile.cardCount : 1)); }
 
   function tileLabel(tile, spent){
     if(spent) return 'Empty';
@@ -12,7 +13,7 @@
       case 'start': return 'Start';
       case 'chest': return chestLabel(tile.rarity);
       case 'trap': return 'Trap';
-      case 'movement': return Number.isFinite(tile.fixedN) ? ('Move +' + tile.fixedN) : 'Card';
+      case 'movement': return Number.isFinite(tile.fixedN) ? ('Move +' + tile.fixedN) : (cardTileCount(tile) + ' Card' + (cardTileCount(tile) === 1 ? '' : 's'));
       case 'upgrade': return upgradeLabel(tile.fixedFrom);
       case 'life': return Number.isFinite(tile.fixedN) ? ('+' + tile.fixedN + ' Life') : 'Life';
       case 'question': return 'Mystery';
@@ -54,7 +55,7 @@
       case 'chest':
         return '<span class="tileArt chestArt"><span class="lid"></span><span class="body"></span><span class="lock"></span></span>';
       case 'movement':
-        return '<span class="tileArt cardArt moveArt"><span class="cardStep">' + (Number.isFinite(tile.fixedN) ? ('+' + tile.fixedN) : 'CARD') + '</span></span>';
+        return '<span class="tileArt cardArt moveArt"><span class="cardStep">' + (Number.isFinite(tile.fixedN) ? ('+' + tile.fixedN) : ('×' + cardTileCount(tile))) + '</span></span>';
       case 'upgrade':
         return '<span class="tileArt cardArt upgradeArt"><span class="cardGlyph">⇧</span></span>';
       case 'life':
