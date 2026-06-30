@@ -3627,3 +3627,78 @@ body.arcana-page .board {
 .arcana-page.visual-fork .floatingChoiceVisual.rarity-rainbow{filter:drop-shadow(0 8px 9px rgba(0,0,0,.40)) drop-shadow(0 0 9px rgba(242,214,138,.24))}
 .arcana-page.visual-fork .floatingChoiceVisual.rarity-rainbow .lid{background:linear-gradient(90deg,#E6547A,#9B6BFF,#4A83D8,#44A36F,#F2D68A)}
 .arcana-page.visual-fork .floatingChoiceVisual.rarity-rainbow .body{background:linear-gradient(90deg,#8F2445,#59389E,#1C528D,#24613D,#9C6F23)}
+
+/* ═══════════════════════════════════════════
+   SHARED HEADER ISOLATION FIX
+   Arcana has broad `.arcana-page button` rules for tool controls.
+   Prevent those page button styles from leaking into the shared
+   hamburger button injected by /shared/header.js.
+   ═══════════════════════════════════════════ */
+.arcana-page .site-header .header-hamburger {
+  display: none;
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid rgba(200,164,93,.28);
+  border-radius: var(--radius-sm);
+  padding: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  color: inherit;
+  box-shadow: none;
+  outline: none;
+  transform: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.arcana-page .site-header .header-hamburger:hover {
+  border-color: rgba(200,164,93,.55);
+  background: rgba(200,164,93,.06);
+  box-shadow: none;
+  transform: none;
+}
+
+.arcana-page .site-header .header-hamburger:focus,
+.arcana-page .site-header .header-hamburger:focus-visible,
+.arcana-page .site-header .header-hamburger:active {
+  background: rgba(200,164,93,.06);
+  border-color: rgba(200,164,93,.55);
+  box-shadow: none;
+  outline: none;
+  transform: none;
+}
+
+.arcana-page .site-header .header-hamburger span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--gold-primary);
+  border-radius: 1px;
+  transition: transform .25s, opacity .2s;
+  transform-origin: center;
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+}
+
+.arcana-page .site-header .header-hamburger.is-open span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.arcana-page .site-header .header-hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+
+.arcana-page .site-header .header-hamburger.is-open span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (max-width: 700px) {
+  .arcana-page .site-header .header-hamburger {
+    display: inline-flex;
+  }
+}
+
