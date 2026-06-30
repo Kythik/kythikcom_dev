@@ -32,8 +32,7 @@
       "icon": "/images/icons/EverquestLegends.png",
       "path": "/everquest-legends/",
       "theme": "everquest-legends.css",
-      "status": "upcoming",
-      "launchDate": "2026-07-01",
+      "status": "live",
       "subpages": [],
       "fallbackImage": "/images/fallbacks/everquest-legends.png",
       "iconScale": 1.6

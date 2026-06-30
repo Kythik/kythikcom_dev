@@ -4,41 +4,51 @@
   <!-- Homepage -->
   <url>
     <loc>https://www.kythik.com/</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+
+  <!-- About -->
+  <url>
+    <loc>https://www.kythik.com/about/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 
   <!-- Torchlight Infinite hub -->
   <url>
     <loc>https://www.kythik.com/torchlight/</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Torchlight Strats -->
   <url>
     <loc>https://www.kythik.com/torchlight/strats/strats.html</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
-
-  <!-- Torchlight Clockwork Ballet calculator -->
   <url>
     <loc>https://www.kythik.com/torchlight/clockwork/clockwork.html</loc>
-    <lastmod>2026-06-16</lastmod>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.kythik.com/torchlight/arcana/arcana.html</loc>
+    <lastmod>2026-07-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
-  <!-- Torchlight Arcana minigame -->
+  <!-- EverQuest Legends hub -->
   <url>
-    <loc>https://www.kythik.com/torchlight/arcana/arcana.html</loc>
-    <lastmod>2026-06-16</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <loc>https://www.kythik.com/everquest-legends/</loc>
+    <lastmod>2026-07-01</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
 </urlset>
