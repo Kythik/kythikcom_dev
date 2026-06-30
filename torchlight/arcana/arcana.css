@@ -4629,3 +4629,202 @@ body.arcana-page .board {
   }
 }
 
+/* ═══════════════════════════════════════════
+   ARCANA MOBILE GAME VIEW V10
+   Phone play view:
+   - hide the persistent board title/legend chrome
+   - reserve lower screen space for the hand dock
+   - board shows roughly 4 rows above the dock
+   - dock is visible without needing to scroll past the board
+   ═══════════════════════════════════════════ */
+@media (max-width: 700px) {
+  .arcana-page.visual-fork .wrap > .gamePanel {
+    height: calc(100dvh - var(--header-h, 52px) - 6px) !important;
+    max-height: calc(100dvh - var(--header-h, 52px) - 6px) !important;
+    padding: 8px !important;
+    overflow: hidden !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame {
+    height: 100% !important;
+    max-height: 100% !important;
+    min-height: 0 !important;
+    display: grid !important;
+    grid-template-rows: minmax(0, 1fr) auto !important;
+    gap: 8px !important;
+    padding: 8px !important;
+    overflow: hidden !important;
+  }
+
+  /* Board chrome was stealing the exact space the dock needs. Hide it on phones. */
+  .arcana-page.visual-fork .boardHeader {
+    display: none !important;
+  }
+
+  /* Board viewport gets top space; dock gets bottom space. */
+  .arcana-page.visual-fork .board {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    align-content: start !important;
+    padding: 2px 1px 10px !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  /* Slightly tighten tiles so 4 rows are the default visible play area. */
+  .arcana-page.visual-fork .boardRow {
+    min-height: clamp(63px, 15.9vw, 73px) !important;
+  }
+
+  .arcana-page.visual-fork .tile {
+    height: clamp(60px, 15.4vw, 70px) !important;
+  }
+
+  .arcana-page.visual-fork .tile::before {
+    bottom: 5px !important;
+    height: 36px !important;
+  }
+
+  .arcana-page.visual-fork .tile::after {
+    bottom: 17px !important;
+    height: 16px !important;
+  }
+
+  .arcana-page.visual-fork .tile .c {
+    font-size: 10px !important;
+  }
+
+  .arcana-page.visual-fork .tile.trap .c::before {
+    font-size: 29px !important;
+  }
+
+  .arcana-page.visual-fork .tile.question .c::before {
+    width: 25px !important;
+    height: 35px !important;
+    font-size: 22px !important;
+  }
+
+  .arcana-page.visual-fork .tile.life .c::before {
+    font-size: 26px !important;
+  }
+
+  .arcana-page.visual-fork .tile.movement .c,
+  .arcana-page.visual-fork .tile.upgrade .c {
+    width: 31px !important;
+    height: 42px !important;
+  }
+
+  .arcana-page.visual-fork .tile.chest .chestIcon {
+    width: 34px !important;
+    height: 24px !important;
+  }
+
+  /* Dock is always visible as the lower row of the board frame. */
+  .arcana-page.visual-fork #floatingHandDock,
+  .arcana-page.visual-fork .boardFrame > #floatingHandDock,
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock {
+    position: relative !important;
+    inset: auto !important;
+    transform: none !important;
+    translate: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    display: block !important;
+    overflow: hidden !important;
+    z-index: 3 !important;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingHandInner {
+    height: auto !important;
+    max-height: none !important;
+    min-height: 0 !important;
+    padding: 8px !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingHandRows {
+    display: grid !important;
+    grid-template-rows: auto auto auto !important;
+    gap: 6px !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingHandCards {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 7px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    min-height: 64px !important;
+    max-height: 70px !important;
+    padding: 1px 2px 6px 1px !important;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingHandCard {
+    flex: 0 0 70px !important;
+    width: 70px !important;
+    min-width: 70px !important;
+    max-width: 70px !important;
+    min-height: 58px !important;
+    padding: 5px 4px !important;
+    border-radius: 9px !important;
+    scroll-snap-align: start;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard {
+    min-height: 36px !important;
+    max-height: 40px !important;
+    padding: 6px 9px !important;
+    border-radius: 10px !important;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingConfirmPanel {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 5px !important;
+    padding: 6px 0 0 !important;
+    border-top: 1px solid rgba(230,199,122,.16) !important;
+    overflow: hidden !important;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingConfirmText {
+    display: none !important;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingDockActions {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .arcana-page.visual-fork #floatingHandDock .floatingDockActions button {
+    min-height: 32px !important;
+    padding: 5px 4px !important;
+    font-size: 9px !important;
+    border-radius: 9px !important;
+  }
+
+  .arcana-page.visual-fork #floatingChoiceTray {
+    max-height: 118px !important;
+    overflow: hidden !important;
+    margin-bottom: 6px !important;
+  }
+
+  .arcana-page.visual-fork #floatingChoiceCards {
+    max-height: 72px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+  }
+}
+
