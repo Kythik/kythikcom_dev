@@ -11,6 +11,40 @@
   <meta name="theme-color" content="#04080F" />
   <title>Torchlight Infinite — Kythik Hub</title>
   <meta name="description" content="Torchlight Infinite farm strategies, builds, the Clockwork Ballet calculator, and live ARPG commentary from Kythik (kythikx)." />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Torchlight Infinite — Kythik" />
+  <meta property="og:description" content="Farm strategies, builds, the Clockwork Ballet calculator, and live ARPG commentary for Torchlight Infinite." />
+  <meta property="og:url" content="https://www.kythik.com/torchlight/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kythik" />
+  <meta property="og:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Torchlight Infinite — Kythik" />
+  <meta name="twitter:description" content="Farm strategies, builds, the Clockwork Ballet calculator, and live ARPG commentary for Torchlight Infinite." />
+  <meta name="twitter:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
+  <meta name="twitter:site" content="@kythikx" />
+  <link rel="canonical" href="https://www.kythik.com/torchlight/" />
+  <!-- Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Torchlight Infinite — Kythik",
+    "description": "Farm strategies, builds, the Clockwork Ballet calculator, and live ARPG commentary for Torchlight Infinite.",
+    "url": "https://www.kythik.com/torchlight/",
+    "author": {
+      "@type": "Person",
+      "name": "Kythik",
+      "url": "https://twitch.tv/kythikx"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Kythik",
+      "url": "https://www.kythik.com/"
+    }
+  }
+  </script>
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
   <style>
@@ -18,6 +52,11 @@
       .main { padding: 0 16px; }
       .tli-hero { padding: 28px 0 20px; }
     }
+    /* CLS stabilizers — prevent layout shift while JS populates sections */
+    #tliCarousel { min-height: 280px; }
+    #resourcesSection .grid,
+    #ytOfficialSection .grid,
+    #ytKythikSection .grid { min-height: 120px; }
   </style>
 </head>
 <body>
@@ -39,6 +78,13 @@
   <div id="site-header" data-active-game="torchlight"></div>
 
   <main class="main">
+
+    <noscript>
+      <div style="padding:24px;color:#a0aec0;font-size:14px;line-height:1.7">
+        <strong style="color:#c8a45d">Torchlight Infinite Hub</strong> — Farm strategies, builds, the Clockwork Ballet calculator, and Arcana tools for Torchlight Infinite, curated by Kythik (kythikx).
+        JavaScript is required to load interactive content on this page.
+      </div>
+    </noscript>
 
     <!-- ── PAGE HERO ── -->
     <div class="tli-hero" style="text-align:center;padding:48px 0 32px">
