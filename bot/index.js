@@ -2,19 +2,21 @@
    KYTHIK HUB — bot/index.js
    Live Discord bot — syncs forum threads to Airtable.
 
-   Image policy: OP-only.
-   Images come ONLY from the first message in each thread.
-   Reply images are intentionally excluded — replies are
-   discussion, not strategy content.
+   Image policy: OP-only, Blob-cached.
+   - Images come ONLY from the first message in each thread (replies excluded).
+   - On thread create, OP images are downloaded from Discord and uploaded
+     to Vercel Blob. The Airtable ImageURLs field stores Blob URLs only.
+   - This eliminates Discord CDN token expiration entirely.
 
    Triggers:
-   - threadCreate  → add record (OP body + images + tags + comment count)
-   - threadUpdate  → update title/tags only
-   - messageUpdate → update body + OP images (only if first message)
-   - threadDelete  → remove record (current-season only)
+   - threadCreate  → upload OP images to Blob, add Airtable record
+   - threadUpdate  → update title/tags only (no image work)
+   - messageUpdate → re-upload OP images to Blob if OP edited
+   - threadDelete  → delete Blob images + Airtable record (current-season only)
    ═══════════════════════════════════════════ */
 
 const { Client, GatewayIntentBits } = require('discord.js');
+const { uploadDiscordImages, deleteThreadBlobs } = require('./blob');
 
 const client = new Client({
   intents: [
@@ -30,29 +32,25 @@ const TABLE          = 'Strategies';
 const FARMS_CHANNEL  = process.env.FARMS_CHANNEL_ID;
 const BUILDS_CHANNEL = process.env.BUILDS_CHANNEL_ID;
 
-// Season config — loaded from season.json, refreshed every 6 hours
+/* ── SEASON ─────────────────────────────── */
 let SEASON_START = new Date('2026-04-16T19:00:00-07:00');
 
 async function refreshSeasonConfig() {
   try {
-    const r = await fetch('https://raw.githubusercontent.com/kythikx/kythik-hub/main/season.json');
+    const r = await fetch('https://www.kythik.com/torchlight/season.json');
     const cfg = await r.json();
     if (cfg.seasonStart) SEASON_START = new Date(cfg.seasonStart);
-    console.log(`Season config loaded: ${cfg.seasonName} starts ${cfg.seasonStart}`);
-  } catch(e) {
-    console.warn('Could not load season.json, using default:', e.message);
-  }
+    console.log(`Season: ${cfg.seasonName} starts ${cfg.seasonStart}`);
+  } catch(e) { console.warn('season.json failed:', e.message); }
 }
-
 function isCurrentSeason(date) {
   if (!date) return true;
   return new Date(date) >= SEASON_START;
 }
-
-// Load on startup, refresh every 6 hours
 refreshSeasonConfig();
 setInterval(refreshSeasonConfig, 6 * 60 * 60 * 1000);
 
+/* ── IMAGE PARSING ──────────────────────── */
 const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
 
 function isImageAttachment(a) {
@@ -61,22 +59,21 @@ function isImageAttachment(a) {
   return IMAGE_EXTENSIONS.some(ext => url.endsWith(ext));
 }
 
-/* Get images from a single message (OP).
-   This is the ONLY way images enter Airtable in this codebase. */
-function getOpImages(message) {
-  if (!message) return '';
-  const images = [];
+/* Get array of Discord URLs from a single message (OP). */
+function getOpDiscordURLs(message) {
+  if (!message) return [];
+  const urls = [];
   for (const a of message.attachments.values()) {
-    if (isImageAttachment(a)) images.push(a.url);
+    if (isImageAttachment(a)) urls.push(a.url);
   }
   for (const e of (message.embeds || [])) {
-    if (e.image?.url) images.push(e.image.url);
-    if (e.thumbnail?.url) images.push(e.thumbnail.url);
+    if (e.image?.url) urls.push(e.image.url);
+    if (e.thumbnail?.url) urls.push(e.thumbnail.url);
   }
-  return [...new Set(images)].join(', ');
+  return [...new Set(urls)];
 }
 
-/* ── AIRTABLE HELPERS ───────────────────── */
+/* ── AIRTABLE ───────────────────────────── */
 async function findRecord(discordURL) {
   const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(TABLE)}` +
     `?filterByFormula=${encodeURIComponent(`{DiscordMessageURL}="${discordURL}"`)}`;
@@ -111,10 +108,10 @@ async function updateAirtable(recordId, fields) {
 
 async function deleteFromAirtable(discordURL) {
   const record = await findRecord(discordURL);
-  if (!record) { console.log(`No record found for ${discordURL}`); return; }
+  if (!record) return null;
   const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(TABLE)}/${record.id}`;
   await fetch(url, { method: 'DELETE', headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
-  console.log(`✓ Deleted record: ${record.id}`);
+  return record.id;
 }
 
 function getTags(thread) {
@@ -143,13 +140,17 @@ client.on('threadCreate', async (thread) => {
   try {
     await new Promise(r => setTimeout(r, 2000));
     const messages     = await thread.messages.fetch({ limit: 100 });
-    const op           = messages.last(); // first message = OP
+    const op           = messages.last();
     const content      = op ? op.content : '';
     const author       = op ? op.author.username : thread.ownerId;
-    const opImages     = op ? getOpImages(op) : '';
+    const opDiscordURLs = op ? getOpDiscordURLs(op) : [];
     const commentCount = Math.max(0, messages.size - 1);
     const url          = `https://discord.com/channels/${thread.guildId}/${thread.id}`;
     const tags         = getTags(thread);
+
+    // Upload OP images to Blob — get back permanent URLs
+    const blobURLs = await uploadDiscordImages(opDiscordURLs, thread.id);
+    const imageURLs = blobURLs.join(', ');
 
     await addToAirtable({
       Title:             thread.name,
@@ -158,22 +159,22 @@ client.on('threadCreate', async (thread) => {
       Body:              content,
       DiscordMessageURL: url,
       Tags:              tags,
-      ImageURLs:         opImages,
+      ImageURLs:         imageURLs,
       CommentCount:      commentCount,
       PostedAt:          thread.createdAt ? thread.createdAt.toISOString() : new Date().toISOString(),
       LastSyncedAt:      new Date().toISOString(),
       MissingCount:      0,
     });
-    console.log(`✓ Saved: ${thread.name}`);
+    console.log(`✓ Saved: ${thread.name} (${blobURLs.length} images uploaded to Blob)`);
   } catch (err) {
     console.error('threadCreate error:', err.message);
   }
 });
 
-/* ── THREAD UPDATED (title/tags changed) ── */
+/* ── THREAD UPDATED ─────────────────────── */
 client.on('threadUpdate', async (oldThread, newThread) => {
   if (!isOurChannel(newThread.parentId)) return;
-  if (!isCurrentSeason(newThread.createdAt)) return; // ignore old season threads
+  if (!isCurrentSeason(newThread.createdAt)) return;
 
   const titleChanged = oldThread.name !== newThread.name;
   const tagsChanged  = JSON.stringify(oldThread.appliedTags) !== JSON.stringify(newThread.appliedTags);
@@ -189,37 +190,39 @@ client.on('threadUpdate', async (oldThread, newThread) => {
     if (tagsChanged)  patch.Tags  = getTags(newThread);
 
     await updateAirtable(record.id, patch);
-    console.log(`✓ Updated thread: ${newThread.name} (${Object.keys(patch).join(', ')})`);
+    console.log(`✓ Updated thread: ${newThread.name}`);
   } catch (err) {
     console.error('threadUpdate error:', err.message);
   }
 });
 
-/* ── MESSAGE UPDATED (body/images changed) ─
-   Only fires for the OP message (the first one in the thread).
-   Reply edits are intentionally ignored — replies don't contribute
-   images or body to the strategy record. */
+/* ── MESSAGE UPDATED (OP only) ──────────── */
 client.on('messageUpdate', async (oldMsg, newMsg) => {
   if (!newMsg.channel || !newMsg.channel.parentId) return;
   if (!isOurChannel(newMsg.channel.parentId)) return;
-  if (!isCurrentSeason(newMsg.channel.createdAt)) return; // ignore old season
+  if (!isCurrentSeason(newMsg.channel.createdAt)) return;
 
   try {
-    // Verify this is the OP message of the thread, not a reply
+    // Verify this is the OP
     const messages = await newMsg.channel.messages.fetch({ limit: 1, after: '0' });
     const firstMsg = messages.last();
-    if (!firstMsg || firstMsg.id !== newMsg.id) return; // not the OP
+    if (!firstMsg || firstMsg.id !== newMsg.id) return;
 
     const url    = `https://discord.com/channels/${newMsg.guildId}/${newMsg.channel.id}`;
     const record = await findRecord(url);
     if (!record) return;
 
+    // Re-upload OP images to Blob (overwrites existing)
+    const opDiscordURLs = getOpDiscordURLs(newMsg);
+    const blobURLs = await uploadDiscordImages(opDiscordURLs, newMsg.channel.id);
+    const imageURLs = blobURLs.join(', ');
+
     await updateAirtable(record.id, {
       Body:         newMsg.content || '',
-      ImageURLs:    getOpImages(newMsg),
+      ImageURLs:    imageURLs,
       LastSyncedAt: new Date().toISOString(),
     });
-    console.log(`✓ Updated OP body/images: ${newMsg.channel.name}`);
+    console.log(`✓ Updated OP body/images: ${newMsg.channel.name} (${blobURLs.length} images)`);
   } catch (err) {
     console.error('messageUpdate error:', err.message);
   }
@@ -228,17 +231,20 @@ client.on('messageUpdate', async (oldMsg, newMsg) => {
 /* ── THREAD DELETED ─────────────────────── */
 client.on('threadDelete', async (thread) => {
   if (!isOurChannel(thread.parentId)) return;
-  if (!isCurrentSeason(thread.createdAt)) return; // don't auto-delete old season archives
+  if (!isCurrentSeason(thread.createdAt)) return;
   try {
     const url = `https://discord.com/channels/${thread.guildId}/${thread.id}`;
-    await deleteFromAirtable(url);
-    console.log(`✓ Deleted: ${thread.name}`);
+    const recordId = await deleteFromAirtable(url);
+
+    // Clean up Blob images
+    await deleteThreadBlobs(thread.id);
+
+    if (recordId) console.log(`✓ Deleted thread + Blob images: ${thread.name}`);
   } catch (err) {
     console.error('threadDelete error:', err.message);
   }
 });
 
-/* ── READY ──────────────────────────────── */
 client.once('ready', () => {
   console.log(`Bot online: ${client.user.tag}`);
 });

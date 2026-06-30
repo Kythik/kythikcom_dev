@@ -2,40 +2,34 @@
    KYTHIK HUB — bot/cron.js
    Runs every 6 hours via Railway cron.
 
-   Strategy:
-   - Diff-based writes — only PATCH when something actually changed
-   - Age-tiered refresh — recent threads checked every run,
-     mid-age daily, old weekly, ancient skipped
-   - Soft-delete — 3 consecutive misses before deleting (safety net)
-   - Season-aware — old-season records skipped entirely
-   - Comment count drift alone never triggers a write
-     (displayed as "N+" on the frontend)
+   Image storage strategy: Blob caching (see bot/blob.js).
+   Image URLs in Airtable are permanent Blob URLs.
+   This cron NO LONGER refreshes image URLs — they never expire.
+
+   Cron purpose now:
+   - Soft-delete: detect threads that were deleted while bot was offline
+   - Recover missing images: if a thread has no ImageURLs but Discord OP has images,
+     upload them to Blob and update Airtable (catches bot-offline misses)
+   - Update LastSyncedAt timestamp
 
    Airtable fields read/written:
-   READ:  DiscordMessageURL, CommentCount, ImageURLs, PostedAt,
-          LastSyncedAt, MissingCount
-   WRITE: ImageURLs (only on change),
-          LastSyncedAt (when image url changes),
+   READ:  DiscordMessageURL, ImageURLs, PostedAt, LastSyncedAt, MissingCount
+   WRITE: ImageURLs (only when recovering missing images),
+          LastSyncedAt (when a write happens),
           MissingCount (when thread missing)
-   NEVER WRITES: Featured (manual field), Title, Author, Tags,
-                 Body, CommentCount, Channel, PostedAt
+   NEVER WRITES: Title, Author, Tags, Body, CommentCount, Channel,
+                 PostedAt, Featured
    ═══════════════════════════════════════════ */
+
+const { uploadDiscordImages } = require('./blob');
 
 const AIRTABLE_TOKEN = process.env.AIRTABLE_TOKEN;
 const AIRTABLE_BASE  = process.env.AIRTABLE_BASE;
 const TABLE          = 'Strategies';
 const DISCORD_TOKEN  = process.env.DISCORD_BOT_TOKEN;
 
-// Soft-delete threshold: how many consecutive cron runs a thread
-// can be missing before we delete the Airtable record.
-// At 6hr cadence × 3 misses = ~18 hours buffer.
-const MAX_MISSING_COUNT = 3;
-
-// Age tiers — how old a record can be (PostedAt) and still be refreshed.
-// Older than ANCIENT_DAYS = skipped entirely.
-const RECENT_DAYS  = 7;   // refresh every cron run (every 6hr)
-const MID_DAYS     = 30;  // refresh once per day
-const ANCIENT_DAYS = 90;  // older = skip entirely
+const MAX_MISSING_COUNT = 3;        // 3 consecutive misses → delete
+const ANCIENT_DAYS      = 90;       // older than this = skip entirely
 
 const IMAGE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
 
@@ -45,51 +39,23 @@ function isImageAttachment(attachment) {
   return IMAGE_EXTENSIONS.some(ext => url.endsWith(ext));
 }
 
-/* ── SEASON CONFIG ──────────────────────── */
+/* ── SEASON ─────────────────────────────── */
 let SEASON_START = new Date('2026-04-16T19:00:00-07:00');
 async function loadSeason() {
   try {
-    const r = await fetch('https://raw.githubusercontent.com/kythikx/kythik-hub/main/season.json');
+    const r = await fetch('https://www.kythik.com/torchlight/season.json');
     const cfg = await r.json();
     if (cfg.seasonStart) SEASON_START = new Date(cfg.seasonStart);
-  } catch (e) { /* use default */ }
+  } catch (e) {}
 }
-
 function isCurrentSeason(postedAt) {
   if (!postedAt) return true;
   return new Date(postedAt) >= SEASON_START;
 }
-
-/* ── TIER CLASSIFICATION ────────────────── */
-function getTier(postedAt, lastSyncedAt) {
-  if (!postedAt) return 'recent'; // be conservative if we don't know
-
-  const now      = Date.now();
-  const ageMs    = now - new Date(postedAt).getTime();
-  const ageDays  = ageMs / (1000 * 60 * 60 * 24);
-
-  if (ageDays > ANCIENT_DAYS) return 'skip';
-
-  // Tier check based on POST age determines REFRESH cadence
-  if (ageDays <= RECENT_DAYS) return 'recent';  // every run
-  if (ageDays <= MID_DAYS)    return 'mid';     // every 24hr
-  return 'old';                                  // every 7d
-
-  // Synced-age check happens in shouldRefresh below
-}
-
-function shouldRefresh(tier, lastSyncedAt) {
-  if (tier === 'skip') return false;
-  if (tier === 'recent') return true; // always refresh recent
-
-  if (!lastSyncedAt) return true; // never synced, must refresh
-
-  const syncedAgeMs   = Date.now() - new Date(lastSyncedAt).getTime();
-  const syncedAgeHrs  = syncedAgeMs / (1000 * 60 * 60);
-
-  if (tier === 'mid') return syncedAgeHrs >= 24;
-  if (tier === 'old') return syncedAgeHrs >= 168; // 7 days
-  return true;
+function isAncient(postedAt) {
+  if (!postedAt) return false;
+  const ageDays = (Date.now() - new Date(postedAt).getTime()) / (1000 * 60 * 60 * 24);
+  return ageDays > ANCIENT_DAYS;
 }
 
 /* ── AIRTABLE ───────────────────────────── */
@@ -98,34 +64,25 @@ async function getAllRecords() {
   let offset = null;
 
   while (true) {
-    const fields = [
-      'DiscordMessageURL',
-      'CommentCount',
-      'ImageURLs',
-      'PostedAt',
-      'LastSyncedAt',
-      'MissingCount',
-    ].map(f => `fields[]=${f}`).join('&');
-
+    const fields = ['DiscordMessageURL', 'ImageURLs', 'PostedAt', 'LastSyncedAt', 'MissingCount']
+      .map(f => `fields[]=${f}`).join('&');
     const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(TABLE)}?${fields}${offset ? `&offset=${offset}` : ''}`;
-    const res  = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
     const data = await res.json();
     if (data.error) throw new Error(JSON.stringify(data.error));
-
     records.push(...(data.records || []));
     if (!data.offset) break;
     offset = data.offset;
   }
-
   return records;
 }
 
 async function patchRecord(recordId, fields) {
   const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(TABLE)}/${recordId}`;
   const res = await fetch(url, {
-    method:  'PATCH',
+    method: 'PATCH',
     headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}`, 'Content-Type': 'application/json' },
-    body:    JSON.stringify({ fields })
+    body: JSON.stringify({ fields })
   });
   const data = await res.json();
   if (data.error) throw new Error(JSON.stringify(data.error));
@@ -133,162 +90,122 @@ async function patchRecord(recordId, fields) {
 
 async function deleteRecord(recordId) {
   const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/${encodeURIComponent(TABLE)}/${recordId}`;
-  await fetch(url, {
-    method:  'DELETE',
-    headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` }
-  });
+  await fetch(url, { method: 'DELETE', headers: { Authorization: `Bearer ${AIRTABLE_TOKEN}` } });
 }
 
 /* ── DISCORD ────────────────────────────── */
-/* Fetch ONLY the OP (first message) — reply images intentionally excluded. */
-async function getOpImages(threadId) {
-  // Get first message in the thread (the OP)
+async function getOpDiscordURLs(threadId) {
   const res = await fetch(
-    `https://discord.com/api/v10/channels/${threadId}/messages?limit=100&after=0`,
+    `https://discord.com/api/v10/channels/${threadId}/messages?limit=100`,
     { headers: { Authorization: `Bot ${DISCORD_TOKEN}` } }
   );
-
   if (res.status === 404) return 'deleted';
   if (!res.ok) return null;
 
   const messages = await res.json();
-  if (!Array.isArray(messages) || !messages.length) return { imageURLs: '' };
+  if (!Array.isArray(messages) || !messages.length) return [];
 
-  // The OP is the oldest message — last one in the chronologically-descending list
-  // (Discord returns messages newest-first by default)
+  // Newest-first, so OP is last
   const op = messages[messages.length - 1];
-
-  const opImages = [];
+  const urls = [];
   for (const a of (op.attachments || [])) {
-    if (isImageAttachment(a)) opImages.push(a.url);
+    if (isImageAttachment(a)) urls.push(a.url);
   }
   for (const e of (op.embeds || [])) {
-    if (e.image?.url)     opImages.push(e.image.url);
-    if (e.thumbnail?.url) opImages.push(e.thumbnail.url);
+    if (e.image?.url) urls.push(e.image.url);
+    if (e.thumbnail?.url) urls.push(e.thumbnail.url);
   }
-
-  const imageURLs = [...new Set(opImages)].join(', ');
-  return { imageURLs };
-}
-
-/* ── IMAGE URL DIFF ─────────────────────── */
-/* Strips Discord CDN tokens so we don't trigger false "changed" detections.
-   Discord image URLs have ?ex=...&is=...&hm=... tokens that rotate. */
-function normalizeImageList(str) {
-  return (str || '')
-    .split(', ')
-    .map(u => u.trim().split('?')[0])
-    .filter(Boolean)
-    .sort()
-    .join(',');
-}
-
-function imagesChanged(existing, fresh) {
-  return normalizeImageList(existing) !== normalizeImageList(fresh);
+  return [...new Set(urls)];
 }
 
 /* ── MAIN ───────────────────────────────── */
 async function run() {
   console.log('═══════════════════════════════════');
-  console.log('  Kythik Hub — Cron Refresh');
+  console.log(`  Kythik Hub — Cron Refresh`);
   console.log(`  ${new Date().toISOString()}`);
   console.log('═══════════════════════════════════');
 
   await loadSeason();
-  console.log(`Season start: ${SEASON_START.toISOString()}`);
-
   const records = await getAllRecords();
-  console.log(`Loaded ${records.length} Airtable records.`);
+  console.log(`Loaded ${records.length} records.\n`);
 
-  let writes        = 0;
-  let skippedTier   = 0;
+  let recovered     = 0;   // had no images, now does
+  let stillEmpty    = 0;   // had no images, OP has none either
+  let healthy       = 0;   // already has Blob URLs, nothing to do
   let skippedSeason = 0;
-  let skippedSync   = 0;
-  let skippedSame   = 0;
+  let skippedAncient= 0;
+  let missingFlagged= 0;
   let deleted       = 0;
-  let softDeleted   = 0;
-  let missingPlus   = 0;
   let failed        = 0;
 
   for (const record of records) {
-    const f          = record.fields;
+    const f = record.fields;
     const discordURL = f.DiscordMessageURL;
     if (!discordURL) continue;
 
-    // Skip old-season records entirely
-    if (!isCurrentSeason(f.PostedAt)) {
-      skippedSeason++;
-      continue;
-    }
-
-    const tier = getTier(f.PostedAt);
-
-    if (tier === 'skip') {
-      skippedTier++;
-      continue;
-    }
-
-    if (!shouldRefresh(tier, f.LastSyncedAt)) {
-      skippedSync++;
-      continue;
-    }
+    if (!isCurrentSeason(f.PostedAt)) { skippedSeason++; continue; }
+    if (isAncient(f.PostedAt))        { skippedAncient++; continue; }
 
     const threadId = discordURL.split('/').pop();
+    const hasImages = !!(f.ImageURLs && f.ImageURLs.trim());
+
+    // If we already have Blob URLs, nothing to do most of the time.
+    // But we still need to detect missing threads (404s).
+    // To minimize Discord calls, only verify a thread exists if:
+    //   - has no images (might be recoverable), OR
+    //   - has missing count > 0 (track the soft-delete)
+    if (hasImages && !f.MissingCount) {
+      healthy++;
+      continue;
+    }
 
     try {
-      const result = await getOpImages(threadId);
+      const result = await getOpDiscordURLs(threadId);
 
-      // ── Missing thread (404) ──
+      // Thread is gone
       if (result === 'deleted') {
         const missingCount = (f.MissingCount || 0) + 1;
-
         if (missingCount >= MAX_MISSING_COUNT) {
           await deleteRecord(record.id);
-          console.log(`✗ Soft-delete after ${missingCount} misses: ${discordURL}`);
+          console.log(`✗ Soft-delete: ${discordURL}`);
           deleted++;
         } else {
           await patchRecord(record.id, { MissingCount: missingCount });
           console.log(`? Missing (${missingCount}/${MAX_MISSING_COUNT}): ${discordURL}`);
-          missingPlus++;
+          missingFlagged++;
         }
         await sleep(400);
         continue;
       }
 
-      // ── Couldn't fetch (Discord error other than 404) ──
-      if (!result) {
-        console.log(`! Skipped (fetch failed): ${threadId}`);
-        failed++;
-        continue;
-      }
+      if (!result) { failed++; continue; }
 
-      const { imageURLs } = result;
+      const discordURLs = result;
       const patch = {};
 
-      // Reset MissingCount if it was non-zero (we found it again)
+      // Thread exists — reset MissingCount if it was non-zero
       if (f.MissingCount && f.MissingCount > 0) {
         patch.MissingCount = 0;
       }
 
-      // Only write image URLs if they meaningfully changed
-      if (imagesChanged(f.ImageURLs, imageURLs)) {
-        patch.ImageURLs = imageURLs;
-        patch.LastSyncedAt = new Date().toISOString();
-      } else if (!f.LastSyncedAt) {
-        // First sync ever — record it
-        patch.LastSyncedAt = new Date().toISOString();
+      // Recover missing images — only when current ImageURLs is empty
+      if (!hasImages && discordURLs.length > 0) {
+        const blobURLs = await uploadDiscordImages(discordURLs, threadId);
+        if (blobURLs.length) {
+          patch.ImageURLs = blobURLs.join(', ');
+          patch.LastSyncedAt = new Date().toISOString();
+          recovered++;
+          console.log(`✓ Recovered ${blobURLs.length} images for ${threadId}`);
+        } else {
+          stillEmpty++;
+        }
+      } else if (!hasImages) {
+        stillEmpty++;
       }
 
-      // ── No actual changes → no write ──
-      if (Object.keys(patch).length === 0) {
-        skippedSame++;
-        await sleep(200); // still pace Discord calls
-        continue;
+      if (Object.keys(patch).length > 0) {
+        await patchRecord(record.id, patch);
       }
-
-      await patchRecord(record.id, patch);
-      writes++;
-      console.log(`✓ Updated ${threadId}: ${Object.keys(patch).join(', ')}`);
 
     } catch (err) {
       console.error(`✗ Failed ${threadId}: ${err.message}`);
@@ -300,14 +217,14 @@ async function run() {
 
   console.log('\n═══════════════════════════════════');
   console.log(`  Cron complete`);
-  console.log(`  Writes:         ${writes}`);
-  console.log(`  Skipped (same): ${skippedSame}`);
-  console.log(`  Skipped (sync): ${skippedSync}`);
-  console.log(`  Skipped (tier): ${skippedTier}`);
-  console.log(`  Skipped (season):${skippedSeason}`);
-  console.log(`  Missing flagged:${missingPlus}`);
-  console.log(`  Deleted:        ${deleted}`);
-  console.log(`  Failed:         ${failed}`);
+  console.log(`  Healthy:          ${healthy}`);
+  console.log(`  Recovered images: ${recovered}`);
+  console.log(`  Still empty:      ${stillEmpty}`);
+  console.log(`  Skipped (season): ${skippedSeason}`);
+  console.log(`  Skipped (ancient):${skippedAncient}`);
+  console.log(`  Missing flagged:  ${missingFlagged}`);
+  console.log(`  Deleted:          ${deleted}`);
+  console.log(`  Failed:           ${failed}`);
   console.log('═══════════════════════════════════');
 }
 
