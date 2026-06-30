@@ -4022,3 +4022,278 @@ body.arcana-page .board {
   }
 }
 
+/* ═══════════════════════════════════════════
+   ARCANA MOBILE BOARD FIT V7
+   Phones should see the complete 4-column board without horizontal scrolling.
+   The card dock lives directly under the board as a compact controls tray.
+   ═══════════════════════════════════════════ */
+@media (max-width: 700px) {
+  /* The board panel itself should be viewport-width, not a desktop scroller. */
+  .arcana-page.visual-fork .wrap > .gamePanel {
+    overflow-x: hidden !important;
+    padding: 10px 10px 14px !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 12px 10px 12px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .arcana-page.visual-fork .boardHeader {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    display: block !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .arcana-page.visual-fork .boardTitle {
+    font-size: clamp(18px, 6vw, 24px) !important;
+    line-height: 1.1 !important;
+    margin-bottom: 9px !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .arcana-page.visual-fork .boardLegend {
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    overflow: visible !important;
+    padding-bottom: 0 !important;
+  }
+
+  .arcana-page.visual-fork .legendPill {
+    min-width: 0 !important;
+    justify-content: center !important;
+    font-size: 10px !important;
+    padding: 4px 6px !important;
+  }
+
+  /* Fit all four board columns in a phone viewport. */
+  .arcana-page.visual-fork .board {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .arcana-page.visual-fork .boardRow {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .arcana-page.visual-fork .boardRow::before {
+    left: 9% !important;
+    right: 9% !important;
+    height: 3px !important;
+  }
+
+  .arcana-page.visual-fork .tile {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: clamp(62px, 17vw, 76px) !important;
+  }
+
+  .arcana-page.visual-fork .tile::before {
+    left: 11% !important;
+    right: 11% !important;
+    bottom: 7px !important;
+    height: 40px !important;
+  }
+
+  .arcana-page.visual-fork .tile::after {
+    left: 24% !important;
+    right: 24% !important;
+    bottom: 19px !important;
+    height: 19px !important;
+  }
+
+  .arcana-page.visual-fork .tile .n {
+    top: 2px !important;
+    left: 4px !important;
+    font-size: 10px !important;
+  }
+
+  .arcana-page.visual-fork .tile .c {
+    font-size: 11px !important;
+    padding: 0 2px !important;
+  }
+
+  .arcana-page.visual-fork .tile.trap .c::before {
+    font-size: 32px !important;
+    transform: translateY(-7px) rotate(8deg) !important;
+  }
+
+  .arcana-page.visual-fork .tile.question .c::before {
+    width: 28px !important;
+    height: 39px !important;
+    font-size: 24px !important;
+    transform: translateY(-8px) !important;
+  }
+
+  .arcana-page.visual-fork .tile.life .c::before {
+    font-size: 28px !important;
+  }
+
+  .arcana-page.visual-fork .tile.movement .c,
+  .arcana-page.visual-fork .tile.upgrade .c {
+    width: 34px !important;
+    height: 46px !important;
+    font-size: 10px !important;
+    transform: translateY(-5px) rotate(-3deg) !important;
+  }
+
+  .arcana-page.visual-fork .tile.chest .chestIcon {
+    width: 38px !important;
+    height: 27px !important;
+  }
+
+  .arcana-page.visual-fork .tile.chest .chestText {
+    font-size: 9px !important;
+  }
+
+  .arcana-page.visual-fork .tile .land {
+    right: 2px !important;
+    top: 2px !important;
+    min-width: 17px !important;
+    height: 17px !important;
+    font-size: 10px !important;
+  }
+
+  /* Dock becomes a stable under-board tray matching board width. */
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock,
+  .arcana-page.visual-fork .floatingHandDock {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 10px 0 0 !important;
+    transform: none !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    display: block !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingHandInner,
+  .arcana-page.visual-fork .floatingHandInner {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 9px !important;
+    border-radius: 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingHandRows,
+  .arcana-page.visual-fork .floatingHandRows {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+
+  /* Show stored hand as a clean compact grid, not an awkward sideways strip. */
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingHandCards,
+  .arcana-page.visual-fork .floatingHandCards {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    width: 100% !important;
+  }
+
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingHandCard,
+  .arcana-page.visual-fork .floatingHandCard {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 56px !important;
+    padding: 6px 4px 5px !important;
+    border-radius: 9px !important;
+  }
+
+  .arcana-page.visual-fork .floatingCardType {
+    font-size: 8px !important;
+    letter-spacing: .07em !important;
+  }
+
+  .arcana-page.visual-fork .floatingCardValue {
+    font-size: 18px !important;
+  }
+
+  .arcana-page.visual-fork .floatingCardLabel {
+    font-size: 9px !important;
+    line-height: 1.05 !important;
+  }
+
+  .arcana-page.visual-fork .floatingCardVisual.cardArt,
+  .arcana-page.visual-fork .floatingCardVisual.lifeChip,
+  .arcana-page.visual-fork .floatingCardVisual.mysteryChip,
+  .arcana-page.visual-fork .floatingCardVisual.trapChip,
+  .arcana-page.visual-fork .floatingCardVisual.startArt,
+  .arcana-page.visual-fork .floatingCardVisual.emptyArt {
+    width: 28px !important;
+    height: 34px !important;
+  }
+
+  .arcana-page.visual-fork .floatingCardVisual.chestArt {
+    width: 34px !important;
+    height: 30px !important;
+  }
+
+  /* Random/refill card sits under the stored hand, full width and readable. */
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock .floatingMoveCard.randomCard,
+  .arcana-page.visual-fork .floatingMoveCard.randomCard {
+    width: 100% !important;
+    min-height: 44px !important;
+    padding: 7px 9px !important;
+    border-radius: 11px !important;
+    justify-self: stretch !important;
+  }
+
+  .arcana-page.visual-fork .floatingConfirmPanel {
+    width: 100% !important;
+    padding-top: 8px !important;
+    border-top: 1px solid rgba(230,199,122,.16) !important;
+  }
+
+  .arcana-page.visual-fork .floatingConfirmText {
+    font-size: 11px !important;
+    line-height: 1.3 !important;
+    max-height: 29px !important;
+  }
+
+  .arcana-page.visual-fork .floatingDockActions {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 5px !important;
+  }
+
+  .arcana-page.visual-fork .floatingDockActions button {
+    min-height: 34px !important;
+    padding: 5px 4px !important;
+    font-size: 9px !important;
+    border-radius: 9px !important;
+  }
+
+  .arcana-page.visual-fork .floatingChoiceCards {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
