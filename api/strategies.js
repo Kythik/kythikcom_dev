@@ -2,8 +2,16 @@
    api/strategies.js — Public API endpoint
    Key-protected. Returns clean strategy JSON
    for third-party use.
+
    Usage: /api/strategies?key=YOUR_KEY
-   or: Authorization: Bearer YOUR_KEY
+   or:    Authorization: Bearer YOUR_KEY
+
+   Implementation: This endpoint calls /api/airtable internally
+   instead of hitting Airtable directly. That way all API
+   consumers share the same 6hr CDN cache layer — no matter
+   how many keys are issued, Airtable is only hit once per
+   cache window. Protects against cache-busting / abusive
+   developers eating the API call budget.
    ═══════════════════════════════════════════ */
 
 export default async function handler(req, res) {
@@ -11,7 +19,7 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Headers', 'Authorization');
   res.setHeader('Cache-Control', 's-maxage=21600, stale-while-revalidate=3600');
 
-  // Key check — query param or Authorization header
+  // ── Key check ────────────────────────────
   const VALID_KEYS = [
     process.env.API_KEY_1,
     process.env.API_KEY_2,
@@ -28,51 +36,38 @@ export default async function handler(req, res) {
     });
   }
 
-  const TOKEN = process.env.AIRTABLE_TOKEN;
-  const BASE  = process.env.AIRTABLE_BASE;
-  const TABLE = 'Strategies';
-  const seasonCfg   = await fetch('https://raw.githubusercontent.com/kythikx/kythik-hub/main/season.json').then(r => r.json()).catch(() => ({ seasonStart: '2026-04-16T19:00:00-07:00', seasonName: 'Unknown' }));
-  const SEASON_START = seasonCfg.seasonStart;
-  const SEASON_NAME  = seasonCfg.seasonName;
-
+  // ── Fetch from internal /api/airtable (cache-shared) ──
   try {
-    const formula = `IS_AFTER({PostedAt}, '${new Date(SEASON_START).toISOString()}')`;
+    // Build absolute URL to our own /api/airtable endpoint
+    const protocol = req.headers['x-forwarded-proto'] || 'https';
+    const host     = req.headers.host;
+    const internalURL = `${protocol}://${host}/api/airtable`;
 
-    const url = [
-      `https://api.airtable.com/v0/${BASE}/${encodeURIComponent(TABLE)}`,
-      `?filterByFormula=${encodeURIComponent(formula)}`,
-      '&sort[0][field]=PostedAt',
-      '&sort[0][direction]=desc',
-      '&maxRecords=100'
-    ].join('');
+    const internalRes = await fetch(internalURL);
+    if (!internalRes.ok) {
+      throw new Error(`Internal airtable endpoint returned ${internalRes.status}`);
+    }
+    const data = await internalRes.json();
 
-    const airtableRes = await fetch(url, {
-      headers: { Authorization: `Bearer ${TOKEN}` }
-    });
-
-    if (!airtableRes.ok) throw new Error(`Airtable ${airtableRes.status}`);
-
-    const data = await airtableRes.json();
-
-    // Clean output — no internal Airtable IDs exposed
+    // ── Reshape to public API format ──
     const strategies = (data.records || []).map(r => ({
-      title:      r.fields.Title || '',
-      author:     r.fields.Author || '',
-      channel:    r.fields.Channel || '',
-      tags:       r.fields.Tags || '',
-      body:       r.fields.Body || '',
-      imageURLs:  r.fields.ImageURLs || '',
-      discordURL: r.fields.DiscordMessageURL || '',
-      comments:   r.fields.CommentCount || 0,
-      postedAt:   r.fields.PostedAt || r.fields.Created || '',
-      featured:   r.fields.Featured || false,
+      title:      r.Title || '',
+      author:     r.Author || '',
+      channel:    r.Channel || '',
+      tags:       r.Tags || '',
+      body:       r.Body || '',
+      imageURLs:  r.ImageURLs || '',
+      discordURL: r.DiscordMessageURL || '',
+      comments:   r.CommentCount || 0,
+      postedAt:   r.PostedAt || r.Created || '',
+      featured:   r.Featured || false,
     }));
 
     return res.status(200).json({
       source:      'kythik.com',
-      season:      SEASON_NAME,
-      seasonStart: SEASON_START,
-      lastUpdated: new Date().toISOString(),
+      season:      data.season || 'Unknown',
+      seasonStart: data.seasonStart || null,
+      lastUpdated: data.lastUpdated || new Date().toISOString(),
       count:       strategies.length,
       strategies,
     });

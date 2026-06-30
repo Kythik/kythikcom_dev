@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     let SEASON_START = '2026-04-16T19:00:00-07:00';
     let SEASON_NAME  = 'SS12: Lunaria';
     try {
-      const cfg = await fetch('https://raw.githubusercontent.com/kythikx/kythik-hub/main/season.json').then(r => r.json());
+      const cfg = await fetch('https://www.kythik.com/torchlight/season.json').then(r => r.json());
       if (cfg.seasonStart) SEASON_START = cfg.seasonStart;
       if (cfg.seasonName)  SEASON_NAME  = cfg.seasonName;
     } catch(e) { /* use defaults */ }
@@ -40,11 +40,23 @@ export default async function handler(req, res) {
     const data    = await airtableRes.json();
     const records = (data.records || []).map(r => ({ id: r.id, ...r.fields }));
 
+    // lastUpdated = the latest LastSyncedAt across records (when bot/cron actually
+    // touched data). NOT the current request time, which would defeat CDN caching
+    // and always read as "just now" on the frontend.
+    const syncTimes = records
+      .map(r => r.LastSyncedAt)
+      .filter(Boolean)
+      .map(t => new Date(t).getTime());
+
+    const lastUpdated = syncTimes.length
+      ? new Date(Math.max(...syncTimes)).toISOString()
+      : null;
+
     return res.status(200).json({
       records,
       season:      SEASON_NAME,
       seasonStart: SEASON_START,
-      lastUpdated: new Date().toISOString(),
+      lastUpdated,
       count:       records.length,
     });
 

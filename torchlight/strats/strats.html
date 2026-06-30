@@ -39,17 +39,6 @@
 </head>
 <body>
 
-  <!-- Vercel Analytics -->
-		<script>
-		window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-		</script>
-		<script defer src="/_vercel/insights/script.js"></script>
-  <!-- Vercel Speed Insights -->
-		<script>
-		window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-		</script>
-		<script defer src="/_vercel/speed-insights/script.js"></script>
-  
   <!-- ── PAGE BACKGROUND IMAGE ── -->
   <div class="page-bg-img"></div>
 
@@ -129,14 +118,9 @@
     </div>
   </main>
 
-  <footer class="footer">
-    <div id="lastSynced" class="footer-sync">Strategies last synced from Discord...</div>
-    <div class="footer-links">
-      &copy; Kythik &nbsp;·&nbsp;
-      <a href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener">Join Discord for live discussion</a>
-      &nbsp;·&nbsp; <a href="https://twitch.tv/kythikx" target="_blank" rel="noopener">Watch Live</a>
-    </div>
-  </footer>
+  <div class="footer-sync" id="lastSynced">Strategies last synced from Discord...</div>
+
+  <div id="site-footer"></div>
 
   <!-- ── FLOATING PLAYER ── -->
   <div id="floating-player"></div>
@@ -166,6 +150,7 @@
     window.kythikSkipDefaultLiveCheck = true;
   </script>
   <script src="/shared/header.js"></script>
+  <script src="/shared/footer.js"></script>
   <script src="/shared/player.js"></script>
   <script src="/torchlight/strats/app.js"></script>
   <!-- Vercel Analytics -->

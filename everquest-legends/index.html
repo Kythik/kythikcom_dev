@@ -9,14 +9,14 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#04080F" />
-  <title>Torchlight Infinite — Kythik Hub</title>
-  <meta name="description" content="Torchlight Infinite farm strategies, builds, the Clockwork Ballet calculator, and live ARPG commentary from Kythik (kythikx)." />
+  <title>EverQuest Legends — Kythik Hub</title>
+  <meta name="description" content="EverQuest Legends stories, resources, developer videos, and MMO history from Kythik (kythikx)." />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
   <style>
     @media (max-width: 700px) {
       .main { padding: 0 16px; }
-      .tli-hero { padding: 28px 0 20px; }
+      .eql-hero { padding: 28px 0 20px; }
     }
   </style>
 </head>
@@ -36,27 +36,27 @@
   </svg>
 
   <!-- ── STICKY HEADER ── -->
-  <div id="site-header" data-active-game="torchlight"></div>
+  <div id="site-header" data-active-game="everquest-legends"></div>
 
   <main class="main">
 
     <!-- ── PAGE HERO ── -->
-    <div class="tli-hero" style="text-align:center;padding:48px 0 32px">
-      <h1 class="display display--lg" style="font-size:clamp(26px,6vw,42px);margin:0"><span class="accent">Torchlight Infinite</span></h1>
+    <div class="eql-hero" style="text-align:center;padding:48px 0 32px">
+      <h1 class="display display--lg" style="font-size:clamp(26px,6vw,42px);margin:0"><span class="accent">EverQuest Legends</span></h1>
       <div class="kicker" id="heroSeason" style="margin-top:10px;opacity:0.7"></div>
     </div>
 
     <!-- ── FEATURED CAROUSEL ── -->
-    <div class="featured-section" id="tliCarousel" style="display:none">
+    <div class="featured-section" id="eqlCarousel" style="display:none">
       <div class="featured-header">
         <div class="featured-label">Featured</div>
         <div class="featured-nav">
-          <button class="featured-btn" onclick="KythikCarousel.nav('tliCarousel', -1)" aria-label="Previous">‹</button>
-          <span class="featured-counter" id="tliCarouselCounter"></span>
-          <button class="featured-btn" onclick="KythikCarousel.nav('tliCarousel',  1)" aria-label="Next">›</button>
+          <button class="featured-btn" onclick="KythikCarousel.nav('eqlCarousel', -1)" aria-label="Previous">‹</button>
+          <span class="featured-counter" id="eqlCarouselCounter"></span>
+          <button class="featured-btn" onclick="KythikCarousel.nav('eqlCarousel',  1)" aria-label="Next">›</button>
         </div>
       </div>
-      <div class="featured-track" id="tliCarouselTrack"></div>
+      <div class="featured-track" id="eqlCarouselTrack"></div>
     </div>
 
     <!-- ── RESOURCES (populated by content.js) ── -->
@@ -67,7 +67,7 @@
       <div class="grid" id="resourcesGrid"></div>
     </section>
 
-    <!-- ── OFFICIAL YOUTUBE VIDEOS (populated by content.js) ── -->
+    <!-- ── OFFICIAL / DEVELOPER YOUTUBE VIDEOS (populated by content.js) ── -->
     <section class="hub-game-section" id="ytOfficialSection" style="display:none">
       <div class="hub-game-header" id="ytOfficialHeader"></div>
       <div class="grid" id="ytOfficialGrid"></div>
@@ -86,7 +86,7 @@
   <script src="/shared/header.js"></script>
   <script src="/shared/footer.js"></script>
   <script src="/shared/shared-carousel.js"></script>
-  <script src="/torchlight/content.js"></script>
+  <script src="/everquest-legends/content.js"></script>
   <!-- Vercel Analytics -->
   <script>
     window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };

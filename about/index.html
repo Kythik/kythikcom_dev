@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#04080F" />
+  <title>About Kythik — Systems, Synergy, and the Grind</title>
+  <meta name="description" content="About Kythik: Twitch Partner, ARPG strategy creator, MMO veteran, and chat-first systems analyst behind Kythik.com." />
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="/shared/header-additions.css" />
+
+  <style>
+    .about-hero {
+      padding: 52px 0 26px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .about-eyebrow-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .about-title {
+      font-size: clamp(34px, 7vw, 72px);
+      line-height: .95;
+      margin: 0 0 18px;
+      color: var(--gold-bright);
+      text-shadow: 0 0 34px rgba(230,199,122,.16);
+    }
+
+    .about-title span {
+      display: block;
+      color: var(--text-primary);
+      font-size: .42em;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-top: 12px;
+      opacity: .86;
+    }
+
+    .about-greeting {
+      font-size: clamp(28px, 5vw, 48px);
+      line-height: 1;
+      margin: 0 0 16px;
+      color: var(--gold-bright);
+      text-shadow: 0 0 30px rgba(230,199,122,.20);
+    }
+
+    .about-lede {
+      max-width: 780px;
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-soft);
+      line-height: 1.72;
+    }
+
+    .about-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+
+    .about-portrait-card {
+      padding: 18px;
+      min-height: 410px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .about-portrait-frame {
+      position: relative;
+      min-height: 330px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid rgba(200,164,93,.24);
+      background:
+        radial-gradient(circle at 50% 6%, rgba(230,199,122,.20), transparent 42%),
+        linear-gradient(180deg, rgba(7,17,31,.96), rgba(4,8,15,.98));
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .about-portrait-frame::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 45%, rgba(4,8,15,.72) 100%),
+        radial-gradient(circle at 50% 0%, rgba(200,164,93,.16), transparent 52%);
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .about-portrait-frame img {
+      position: relative;
+      z-index: 1;
+      width: min(92%, 330px);
+      max-height: 330px;
+      object-fit: contain;
+      object-position: bottom center;
+      filter: drop-shadow(0 24px 32px rgba(0,0,0,.56));
+    }
+
+    .about-portrait-placeholder {
+      display: none;
+      position: absolute;
+      inset: 22px;
+      z-index: 3;
+      border: 1px dashed rgba(200,164,93,.32);
+      border-radius: var(--radius);
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 18px;
+      color: var(--text-faint);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .about-portrait-frame.is-empty .about-portrait-placeholder {
+      display: flex;
+    }
+
+    .about-portrait-caption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 14px;
+      color: var(--text-faint);
+      font-size: 12px;
+      border-top: 1px solid rgba(200,164,93,.13);
+      margin-top: 14px;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin: 8px 0 34px;
+    }
+
+    .about-section {
+      margin-top: 22px;
+    }
+
+    .about-section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    .about-section-title {
+      font-family: var(--font-display);
+      font-size: clamp(20px, 3vw, 30px);
+      color: var(--gold-bright);
+      letter-spacing: .02em;
+      margin: 4px 0 0;
+    }
+
+    .about-copy-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+    }
+
+    .about-copy-card {
+      padding: 22px;
+    }
+
+    .about-copy-card p {
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.82;
+      margin: 0 0 14px;
+    }
+
+    .about-copy-card p:last-child { margin-bottom: 0; }
+
+    .about-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .about-list-item {
+      display: grid;
+      grid-template-columns: 32px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid var(--border-blue);
+      border-radius: var(--radius);
+      background: rgba(4,8,15,.32);
+    }
+
+    .about-list-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(200,164,93,.28);
+      background: rgba(200,164,93,.08);
+      color: var(--gold-bright);
+      font-size: 14px;
+    }
+
+    .about-list-title {
+      color: var(--gold-primary);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .about-list-body {
+      color: var(--text-soft);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .about-channel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .about-channel-card {
+      min-height: 180px;
+    }
+
+    .about-channel-card .tool-card__foot {
+      justify-content: flex-start;
+    }
+
+    .about-quote {
+      margin-top: 34px;
+      padding: 26px;
+      text-align: center;
+    }
+
+    .about-quote p {
+      font-family: var(--font-display);
+      color: var(--gold-bright);
+      font-size: clamp(18px, 3vw, 28px);
+      line-height: 1.4;
+      margin: 0;
+    }
+
+    .about-quote span {
+      display: block;
+      margin-top: 10px;
+      color: var(--text-faint);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 980px) {
+      .about-hero,
+      .about-copy-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-portrait-card {
+        max-width: 520px;
+      }
+
+      .about-stats,
+      .about-channel-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 700px) {
+      .main { padding: 0 16px 64px; }
+      .about-hero { padding: 34px 0 18px; gap: 18px; }
+      .about-title span { letter-spacing: .10em; }
+      .about-greeting { font-size: 30px; }
+      .about-actions .btn { width: 100%; }
+      .about-stats,
+      .about-channel-grid { grid-template-columns: 1fr; }
+      .about-section-head { align-items: flex-start; flex-direction: column; }
+      .about-copy-card { padding: 18px; }
+      .about-portrait-card { min-height: auto; }
+      .about-portrait-frame { min-height: 280px; }
+    }
+  </style>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Kythik",
+  "alternateName": [
+    "Drew",
+    "Kythik",
+    "Kythikx",
+    "@kythikx"
+  ],
+  "url": "https://www.kythik.com/about/",
+  "image": "https://www.kythik.com/images/about/kythik-about-headshot.png",
+  "sameAs": [
+    "https://www.twitch.tv/kythikx",
+    "https://www.youtube.com/@kythik"
+  ],
+  "jobTitle": "ARPG Strategy Creator and Twitch Partner",
+  "description": "Kythik is a long-time MMO raider and ARPG strategy creator focused on Torchlight: Infinite builds, farming, economy systems, league starts, and long-form Twitch streams.",
+  "knowsAbout": [
+    "Torchlight: Infinite",
+    "ARPG builds",
+    "ARPG economy",
+    "League start strategy",
+    "EverQuest",
+    "EverQuest II",
+    "Rift",
+    "Rift Junkies",
+    "RIFTception",
+    "MMO raiding"
+  ],
+  "brand": {
+    "@type": "Brand",
+    "name": "Kythik"
+  }
+}
+  </script>
+</head>
+<body>
+
+  <div class="page-bg-img"></div>
+
+  <svg class="hex-bg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <pattern id="hexGrid" width="50" height="84" patternUnits="userSpaceOnUse">
+        <polygon points="25,0 50,14 50,42 25,56 0,42 0,14" fill="none" stroke="#1A3055" stroke-width="0.8" />
+        <polygon points="0,42 25,56 25,84 0,98 -25,84 -25,56" fill="none" stroke="#1A3055" stroke-width="0.8" />
+        <polygon points="50,42 75,56 75,84 50,98 25,84 25,56" fill="none" stroke="#1A3055" stroke-width="0.8" />
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexGrid)" />
+  </svg>
+
+  <!-- ── STICKY HEADER ── -->
+  <div id="site-header" data-active-game="none"></div>
+
+  <main class="main">
+
+    <!-- ── ABOUT HERO ── -->
+    <section class="about-hero" aria-labelledby="aboutTitle">
+      <div>
+        <h1 class="display about-title" id="aboutTitle">About Kythik</h1>
+        <h2 class="display about-greeting">Hello, Gamers!</h2>
+
+        <p class="about-lede">
+          I’m an internet-native strategy creator, Twitch Partner, and veteran systems analyst focused on complex ARPG mechanics and digital economies. I don’t look at games casually. I treat them like vast mathematical puzzles built from resource optimization, RNG pressure, and build synergies. But spreadsheets don’t run a stream; real people do.
+        </p>
+
+        <div class="about-actions">
+          <a class="btn" href="https://twitch.tv/kythikx" target="_blank" rel="noopener">Watch Live</a>
+          <a class="btn btn-alt" href="https://youtube.com/@kythik" target="_blank" rel="noopener">Guides & Builds</a>
+          <a class="btn btn-alt" href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener">Join Discord</a>
+        </div>
+      </div>
+
+      <aside class="panel-card about-portrait-card" aria-label="Kythik portrait">
+        <div class="about-portrait-frame">
+          <!-- Put the provided image at: /images/about/kythik-about-headshot.png -->
+          <img src="/images/about/kythik-about-headshot.png" alt="Kythik" onerror="this.closest('.about-portrait-frame').classList.add('is-empty'); this.remove();" />
+          <div class="about-portrait-placeholder">
+            Headshot / PNGtuber image space<br />Drop an image at <strong>/images/about/kythik-about-headshot.png</strong>
+          </div>
+        </div>
+        <div class="about-portrait-caption">
+          <span class="kicker kicker--blue">Yap Online</span>
+          <span>Kythik since ’99</span>
+        </div>
+      </aside>
+    </section>
+
+    <!-- ── FAST FACTS ── -->
+    <section class="about-stats" aria-label="Kythik quick facts">
+      <div class="info-tile info-tile--gold">
+        <div class="info-tile__label">Role</div>
+        <div class="info-tile__value">Partner</div>
+        <div class="info-tile__sub">Verified Twitch creator</div>
+      </div>
+      <div class="info-tile">
+        <div class="info-tile__label">Monthly Output</div>
+        <div class="info-tile__value">115h+</div>
+        <div class="info-tile__sub">Live strategy content</div>
+      </div>
+      <div class="info-tile">
+        <div class="info-tile__label">Focus</div>
+        <div class="info-tile__value">ARPGs</div>
+        <div class="info-tile__sub">Builds, farms, economy</div>
+      </div>
+      <div class="info-tile">
+        <div class="info-tile__label">Origin</div>
+        <div class="info-tile__value">MMOs</div>
+        <div class="info-tile__sub">Hardcore raid era veteran</div>
+      </div>
+    </section>
+
+    <!-- ── PHILOSOPHY ── -->
+    <section class="about-section" aria-labelledby="philosophyTitle">
+      <div class="about-section-head">
+        <div>
+          <span class="kicker">The Philosophy</span>
+          <h2 class="about-section-title" id="philosophyTitle">Systems, synergy, and the grind.</h2>
+        </div>
+      </div>
+
+      <div class="about-copy-grid">
+        <article class="panel about-copy-card">
+          <p>
+            My approach to content relies on one philosophy: break mechanics down to raw data, test the limits of the system, and translate the ground truth directly to the community through a little dark humor and a lot of real-time interaction.
+          </p>
+          <p>
+            I run an open, chat-first broadcast where every viewer matters. My brain tends to hold onto the details: the chatter, the build, the weird drop, the conversation we had weeks ago. If you hang out during the grind, expect me to remember the thread and pick it back up.
+          </p>
+          <p>
+            Whether it’s building interactive mini-game simulators, tracking live farming velocity data, or just yapping through long grinds, the goal is immediate, actionable utility wrapped in actual human connection.
+          </p>
+        </article>
+
+        <article class="panel about-copy-card">
+          <div class="about-list">
+            <div class="about-list-item">
+              <div class="about-list-icon">◆</div>
+              <div>
+                <div class="about-list-title">Systems First</div>
+                <div class="about-list-body">Mechanics, modifiers, drop logic, route pressure, and economy movement before vibes-only conclusions.</div>
+              </div>
+            </div>
+            <div class="about-list-item">
+              <div class="about-list-icon">Σ</div>
+              <div>
+                <div class="about-list-title">Live Testing</div>
+                <div class="about-list-body">Seasonal grind data, build iteration, and farming results tested in front of the community instead of polished after the fact.</div>
+              </div>
+            </div>
+            <div class="about-list-item">
+              <div class="about-list-icon">↗</div>
+              <div>
+                <div class="about-list-title">Actionable Utility</div>
+                <div class="about-list-body">Tools and explanations should help gamers make better decisions immediately, not bury the answer under noise.</div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <hr class="section-divider" />
+
+    <!-- ── FOOTPRINT ── -->
+    <section class="about-section" aria-labelledby="footprintTitle">
+      <div class="about-section-head">
+        <div>
+          <span class="kicker">The Digital Footprint</span>
+          <h2 class="about-section-title" id="footprintTitle">From old internet to live operations.</h2>
+        </div>
+      </div>
+
+      <div class="about-copy-grid">
+        <article class="tool-card">
+          <div class="tool-card__kicker">Current</div>
+          <h3 class="tool-card__title">Live Operations & Community Architecture</h3>
+          <p class="tool-card__body">
+            As a verified Twitch Partner, I manage a live broadcasting hub with over 115 hours of real-time strategy content each month for a dedicated ARPG community. That means seasonal strategy streams, interactive live environments, cross-platform community spaces, and the ongoing buildout of Kythik.com as a practical strategy home base.
+          </p>
+          <div class="tool-card__foot">
+            <div class="tool-card__tags">
+              <span class="tag-stat">Twitch</span>
+              <span class="tag-stat tag-stat--blue">Discord</span>
+              <span class="tag-stat tag-stat--muted">Kythik.com</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="tool-card">
+          <div class="tool-card__kicker">Historical</div>
+          <h3 class="tool-card__title">Legacy Media & Hardcore MMO Roots</h3>
+          <p class="tool-card__body">
+            Long before the modern streaming landscape, I worked as an independent digital contractor, scriptwriter, and podcaster for gaming media networks. The foundation came from the hardcore MMO raiding scenes of the early 2000s: EverQuest, EverQuest II, Rift, raid mechanics, theorycrafting culture, and the messy social architecture of online games before everything had a dashboard.
+          </p>
+          <div class="tool-card__foot">
+            <div class="tool-card__tags">
+              <span class="tag-stat">MMO Veteran</span>
+              <span class="tag-stat tag-stat--blue">Media</span>
+              <span class="tag-stat tag-stat--muted">Old Internet</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="about-section" aria-label="Kythik vantage point">
+      <article class="panel about-copy-card">
+        <p>
+          That timeline gives me a useful vantage point. I understand the codebase fundamentals from the software side, the strategic pressure from startup-style project work, and the real-time engagement dynamics required to run a modern digital community without turning it into sterile brand noise.
+        </p>
+      </article>
+    </section>
+
+    <!-- ── CHANNELS ── -->
+    <section class="about-section" aria-labelledby="channelsTitle">
+      <div class="about-section-head">
+        <div>
+          <span class="kicker">Verified Channels</span>
+          <h2 class="about-section-title" id="channelsTitle">Official platforms and community hubs.</h2>
+        </div>
+      </div>
+
+      <div class="about-channel-grid">
+        <a class="tool-card about-channel-card" href="https://twitch.tv/kythikx" target="_blank" rel="noopener">
+          <div class="tool-card__kicker">Live Broadcasts</div>
+          <h3 class="tool-card__title">Twitch.tv/kythikx</h3>
+          <p class="tool-card__body">Seasonal ARPG broadcasts, live build testing, farming routes, strategy talk, and full-time yap-based problem solving.</p>
+          <div class="tool-card__foot"><span class="tag-stat">Watch Live →</span></div>
+        </a>
+
+        <a class="tool-card about-channel-card" href="https://youtube.com/@kythik" target="_blank" rel="noopener">
+          <div class="tool-card__kicker">Video Repository</div>
+          <h3 class="tool-card__title">YouTube.com/@kythik</h3>
+          <p class="tool-card__body">Guides, build notes, strategy breakdowns, clips, and longer-form resources when the grind turns into a repeatable lesson.</p>
+          <div class="tool-card__foot"><span class="tag-stat">Guides & Builds →</span></div>
+        </a>
+
+        <a class="tool-card about-channel-card" href="https://discord.gg/qDRWUM83zY" target="_blank" rel="noopener">
+          <div class="tool-card__kicker">Community Hub</div>
+          <h3 class="tool-card__title">Official Discord</h3>
+          <p class="tool-card__body">Strategy sync, farming data, community notes, and the place where half-formed testing ideas become usable tools.</p>
+          <div class="tool-card__foot"><span class="tag-stat">Join Discord →</span></div>
+        </a>
+      </div>
+    </section>
+
+    <section class="panel-card about-quote" aria-label="Kythik summary">
+      <p>Break the mechanics down, test the real map, and bring the useful answer back to the gamers.</p>
+      <span>Hello, Gamers!</span>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="/shared/header.js"></script>
+  <script src="/shared/footer.js"></script>
+  <!-- Vercel Analytics -->
+  <script>
+    window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Speed Insights -->
+  <script>
+    window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+  </script>
+  <script defer src="/_vercel/speed-insights/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+{
+  "featured": [
+    {
+      "type": "link",
+      "eyebrow": "EverQuest Legends",
+      "title": "EverQuest Legends Pre-Order",
+      "blurb": "Pre-Order and join the July 1st Beta!!",
+      "link": "https://www.everquestlegends.com/shop",
+      "linkLabel": "Official Site pre-order"
+    }
+  ],
+  "resources": [
+    {
+      "title": "Official EverQuest Legends Site",
+      "blurb": "The official home for EverQuest Legends news, updates, and game information.",
+      "link": "https://www.everquestlegends.com/home",
+      "linkLabel": "Official Site"
+    },
+    {
+      "title": "EQL Wiki",
+      "blurb": "Community wiki for EverQuest Legends systems, items, quests, zones, and reference info.",
+      "link": "https://eqlwiki.com/Main_Page",
+      "linkLabel": "Open Wiki"
+    },
+    {
+      "title": "EQ Progression",
+      "blurb": "Quest routes, tier progression, crafting notes, and content guides for moving through EverQuest Legends.",
+      "link": "https://www.eqprogression.com/",
+      "linkLabel": "Open EQ Progression"
+    },
+    {
+      "title": "EverQuest Guides — Legends",
+      "blurb": "Class combo builder with practical breakdowns for understanding how builds perform across difficulty tiers.",
+      "link": "https://www.everquestguides.com/legends/",
+      "linkLabel": "Open Class Builder"
+    }
+  ],
+  "officialYoutube": [
+  {
+      "title": "EverQuest Legends Insights Series - Nektropos, Lore & Q&A",
+      "link": "https://www.youtube.com/watch?v=y4MfpDpyKD8"
+    },
+    {
+      "title": "EverQuest Legends Insights Series - Secrets on Dungeon Revamps, Patches & Beta Feedback",
+      "link": "https://www.youtube.com/watch?v=XmwD2-gkUEM"
+    },
+    {
+      "title": "EverQuest Legends Pre-Orders Open!",
+      "link": "https://www.youtube.com/watch?v=wUcJvnOdtiY"
+    }
+	],
+  "youtube": []
+}
