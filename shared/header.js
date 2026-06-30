@@ -159,8 +159,8 @@
         </nav>
         ${HAMBURGER_HTML}
       </div>
-      ${renderMobileMenu(games, activeId)}
-    </header>`;
+    </header>
+    ${renderMobileMenu(games, activeId)}`;
   }
 
   function attachHamburger() {
