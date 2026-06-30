@@ -40,11 +40,23 @@ export default async function handler(req, res) {
     const data    = await airtableRes.json();
     const records = (data.records || []).map(r => ({ id: r.id, ...r.fields }));
 
+    // lastUpdated = the latest LastSyncedAt across records (when bot/cron actually
+    // touched data). NOT the current request time, which would defeat CDN caching
+    // and always read as "just now" on the frontend.
+    const syncTimes = records
+      .map(r => r.LastSyncedAt)
+      .filter(Boolean)
+      .map(t => new Date(t).getTime());
+
+    const lastUpdated = syncTimes.length
+      ? new Date(Math.max(...syncTimes)).toISOString()
+      : null;
+
     return res.status(200).json({
       records,
       season:      SEASON_NAME,
       seasonStart: SEASON_START,
-      lastUpdated: new Date().toISOString(),
+      lastUpdated,
       count:       records.length,
     });
 
