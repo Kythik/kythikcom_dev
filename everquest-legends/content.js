@@ -2,93 +2,70 @@
    content.js — EverQuest Legends landing page
    Loads content.json and drives:
      · Featured carousel (via KythikCarousel)
-     · Start Here grid (#quickPathsGrid)
-     · Legend Archive grid (#archiveGrid)
-     · Resources grid (#resourcesGrid)
-     · Optional videos grid (#videosGrid)
+     · Resources grid (#resourcesSection)
+     · Official / developer YouTube grid (#ytOfficialSection)
+     · Kythik YouTube grid (#ytKythikSection)
    ═══════════════════════════════════════════ */
 
 (function () {
 
   /* ── Helpers ──────────────────────────────── */
 
-  function escapeHtml(value) {
-    return String(value || '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
-  }
-
   function parseYouTubeId(url) {
     if (!url) return null;
+
     try {
       const parsed = new URL(url);
-      if (parsed.hostname.includes('youtu.be')) return parsed.pathname.replace('/', '') || null;
+
+      if (parsed.hostname.includes('youtu.be')) {
+        return parsed.pathname.replace('/', '') || null;
+      }
+
       return parsed.searchParams.get('v') || null;
     } catch {
       return null;
     }
   }
 
-  function safeLink(link) {
-    return link && link !== '#' ? link : '#';
-  }
+  /* ── YouTube card ─────────────────────────── */
 
-  function linkAttrs(link) {
-    if (!link || link === '#' || link.startsWith('#')) return '';
-    return ' target="_blank" rel="noopener"';
-  }
+  function buildVideoCard(v) {
+    const videoId = parseYouTubeId(v.link);
 
-  /* ── Cards ────────────────────────────────── */
-
-  function buildResourceCard(item, fallbackKicker) {
-    return `
-      <a href="${safeLink(item.link)}"${linkAttrs(item.link)} style="text-decoration:none;display:block">
-        <div class="resource-card">
-          <div class="resource-card__kicker">${escapeHtml(item.kicker || fallbackKicker || 'Resource')}</div>
-          <div class="resource-card__title">${escapeHtml(item.title)}</div>
-          <p class="resource-card__body">${escapeHtml(item.blurb)}</p>
-          <div class="resource-card__foot">
-            <span>${escapeHtml(item.linkLabel || 'Open')}</span>
-            <span aria-hidden="true">→</span>
-          </div>
-        </div>
-      </a>`;
-  }
-
-  function buildArchiveCard(item) {
-    return `
-      <a href="${safeLink(item.link)}"${linkAttrs(item.link)} style="text-decoration:none;display:block">
-        <div class="resource-card">
-          <div class="resource-card__kicker">${escapeHtml(item.kicker || 'Archive')}</div>
-          <div class="resource-card__title">${escapeHtml(item.title)}</div>
-          <p class="resource-card__body">${escapeHtml(item.blurb)}</p>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;padding-top:10px">
-            <span class="tag-stat">${escapeHtml(item.status || 'Draft')}</span>
-            <span class="tag-stat tag-stat--blue">${escapeHtml(item.tag || 'Story')}</span>
-          </div>
-        </div>
-      </a>`;
-  }
-
-  function buildVideoCard(video) {
-    const videoId = parseYouTubeId(video.link);
     const thumb = videoId
-      ? `<img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${escapeHtml(video.title)}" loading="lazy" style="width:100%;height:100%;object-fit:contain;background:var(--bg-navy);display:block" />`
-      : `<div style="height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-navy);color:var(--text-faint)">▶ Video</div>`;
+      ? `<img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${v.title}" loading="lazy" style="width:100%;height:100%;object-fit:contain;background:var(--bg-navy);display:block" />`
+      : `<div style="height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-navy)"><span>▶ Video</span></div>`;
 
     return `
-      <a href="${safeLink(video.link)}"${linkAttrs(video.link)} style="text-decoration:none;display:block">
+      <a href="${v.link}" target="_blank" rel="noopener" style="text-decoration:none;display:block">
         <div class="resource-card" style="cursor:pointer;overflow:hidden">
           <div style="height:200px;overflow:hidden;border-radius:var(--radius-lg) var(--radius-lg) 0 0;position:relative;background:var(--bg-navy)">
             ${thumb}
           </div>
           <div style="padding:12px 14px 14px">
-            <div class="resource-card__kicker">Video</div>
-            <div class="card-title" style="font-size:13px;margin:6px 0 0">${escapeHtml(video.title)}</div>
+            <div class="card-title" style="font-size:13px;margin:0">${v.title}</div>
           </div>
+        </div>
+      </a>`;
+  }
+
+  /* ── Section header ───────────────────────── */
+
+  function buildSectionHeader(title, channelUrl, linkLabel) {
+    return `
+      <div class="hub-game-title">${title}</div>
+      <a href="${channelUrl}" target="_blank" rel="noopener" class="hub-game-link">${linkLabel}</a>`;
+  }
+
+  /* ── Resource card ────────────────────────── */
+
+  function buildResourceCard(r) {
+    return `
+      <a href="${r.link}" target="_blank" rel="noopener" style="text-decoration:none;display:block">
+        <div class="resource-card">
+          <div class="kicker" style="margin-bottom:6px">Resource</div>
+          <div class="card-title">${r.title}</div>
+          <p class="subtext" style="margin:6px 0 0;font-size:12px">${r.blurb || ''}</p>
         </div>
       </a>`;
   }
@@ -96,41 +73,71 @@
   /* ── Main ─────────────────────────────────── */
 
   async function init() {
-    const data = await fetch('/everquest-legends/content.json').then(r => r.json()).catch(() => ({}));
+    const data = await fetch('/everquest-legends/content.json')
+      .then(r => r.json())
+      .catch(() => ({}));
 
+    // Hero subtitle — pulled from first featured entry eyebrow
+    const featuredEntry = data.featured && data.featured[0];
+
+    if (featuredEntry && featuredEntry.eyebrow) {
+      const hero = document.getElementById('heroSeason');
+      if (hero) hero.textContent = featuredEntry.eyebrow;
+    }
+
+    // Featured carousel
     if (data.featured && data.featured.length && window.KythikCarousel) {
       KythikCarousel.init({
         mountId: 'eqlCarousel',
         items: data.featured,
-        autoRotateMs: 7000,
+        autoRotateMs: 6000,
         fallbackImage: '/images/fallbacks/eql.png'
       });
     }
 
-    const quickPathsGrid = document.getElementById('quickPathsGrid');
-    if (quickPathsGrid && data.quickPaths && data.quickPaths.length) {
-      quickPathsGrid.innerHTML = data.quickPaths.map(item => buildResourceCard(item, 'Start Here')).join('');
-    }
-
-    const archiveGrid = document.getElementById('archiveGrid');
-    if (archiveGrid && data.archive && data.archive.length) {
-      archiveGrid.innerHTML = data.archive.map(buildArchiveCard).join('');
-    }
-
+    // Resources grid
     if (data.resources && data.resources.length) {
       const section = document.getElementById('resourcesSection');
       const grid = document.getElementById('resourcesGrid');
+
       if (section && grid) {
-        grid.innerHTML = data.resources.map(item => buildResourceCard(item, 'Resource')).join('');
+        grid.innerHTML = data.resources.map(buildResourceCard).join('');
         section.style.display = 'block';
       }
     }
 
-    if (data.videos && data.videos.length) {
-      const section = document.getElementById('videosSection');
-      const grid = document.getElementById('videosGrid');
-      if (section && grid) {
-        grid.innerHTML = data.videos.map(buildVideoCard).join('');
+    // Official / developer YouTube videos
+    if (data.officialYoutube && data.officialYoutube.length) {
+      const section = document.getElementById('ytOfficialSection');
+      const header = document.getElementById('ytOfficialHeader');
+      const grid = document.getElementById('ytOfficialGrid');
+
+      if (section && header && grid) {
+        header.innerHTML = buildSectionHeader(
+          'Developer Videos',
+          'https://www.youtube.com/@everquestlegends',
+          'Official YouTube →'
+        );
+
+        grid.innerHTML = data.officialYoutube.map(buildVideoCard).join('');
+        section.style.display = 'block';
+      }
+    }
+
+    // Kythik YouTube videos
+    if (data.youtube && data.youtube.length) {
+      const section = document.getElementById('ytKythikSection');
+      const header = document.getElementById('ytKythikHeader');
+      const grid = document.getElementById('ytKythikGrid');
+
+      if (section && header && grid) {
+        header.innerHTML = buildSectionHeader(
+          'Latest from Kythik',
+          'https://www.youtube.com/@kythikx',
+          'More on YouTube →'
+        );
+
+        grid.innerHTML = data.youtube.map(buildVideoCard).join('');
         section.style.display = 'block';
       }
     }
