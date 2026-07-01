@@ -73,7 +73,7 @@ function renderStrategies(list) {
     const eyebrow  = [zone, dateStr].filter(Boolean).join(' · ');
     const hasImg   = s.ImageURLs && s.ImageURLs.trim();
     const thumbSrc = hasImg ? s.ImageURLs.split(',')[0].trim() : getPlaceholder(s.id);
-    const imgThumb = `<div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}"><img src="${thumbSrc}" alt="Strategy screenshot" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" /></div>`;
+    const imgThumb = `<div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}"><img src="${thumbSrc}" alt="Strategy screenshot" width="360" height="170" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" /></div>`;
 
     return `<article class="card" data-id="${s.id}" onclick="openModal('${s.id}')">
       ${imgThumb}
@@ -166,7 +166,7 @@ function openModal(id) {
   const tags    = s.Tags ? s.Tags.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${t}</span>`).join('') : '';
   lightboxImages = s.ImageURLs ? s.ImageURLs.split(',').map(u => u.trim()).filter(Boolean) : [];
   const images   = lightboxImages.length
-    ? `<div class="modal-images">${lightboxImages.map((u,i) => `<img src="${u}" alt="Strategy screenshot" onclick="openLightbox(${i})" loading="lazy" />`).join('')}</div>`
+    ? `<div class="modal-images">${lightboxImages.map((u,i) => `<img src="${u}" alt="Strategy screenshot" width="400" height="150" onclick="openLightbox(${i})" loading="lazy" />`).join('')}</div>`
     : '';
   const discordBtn = s.DiscordMessageURL
     ? `<a class="modal-btn modal-btn--primary" href="${s.DiscordMessageURL}" target="_blank" rel="noopener">
@@ -309,7 +309,7 @@ function renderFeatured() {
     <div class="feat-card" onclick="openModal('${s.id}')">
       <div class="feat-screenshot">
         ${screenshot
-          ? `<img src="${screenshot}" alt="Strategy screenshot" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" />`
+          ? `<img src="${screenshot}" alt="Strategy screenshot" width="600" height="280" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" />`
           : `<div class="feat-screenshot-empty"><span>No screenshot</span></div>`
         }
         <div class="feat-screenshot-fade"></div>
