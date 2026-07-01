@@ -11,6 +11,20 @@
   <meta name="theme-color" content="#04080F" />
 
 
+
+<!-- Social sharing + canonical -->
+<meta property="og:title" content="Arcana Tarot Minigame Helper — Kythik" />
+<meta property="og:description" content="A Torchlight Infinite Arcana helper for board routing, card choices, chest priority, and minigame strategy." />
+<meta property="og:url" content="https://www.kythik.com/torchlight/arcana/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Kythik" />
+<meta property="og:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Arcana Tarot Minigame Helper — Kythik" />
+<meta name="twitter:description" content="A Torchlight Infinite Arcana helper for board routing, card choices, chest priority, and minigame strategy." />
+<meta name="twitter:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
+<meta name="twitter:site" content="@kythikx" />
+<link rel="canonical" href="https://www.kythik.com/torchlight/arcana/" />
 <!-- Structured data: Arcana WebApplication + breadcrumbs -->
 <script type="application/ld+json">
 {
@@ -89,6 +103,30 @@
   .arcana-page .strategyLightbox:not(.isOpen){
     display:none !important;
   }
+
+  .arcana-page .noscriptFallback{
+    max-width:1120px;
+    margin:24px auto;
+    padding:22px 24px;
+    border:1px solid rgba(200,164,93,.24);
+    border-radius:18px;
+    background:linear-gradient(180deg, rgba(13,24,40,.96), rgba(7,17,31,.96));
+    box-shadow:0 18px 44px rgba(0,0,0,.34), inset 0 1px 0 rgba(255,255,255,.05);
+    color:#E8EDF6;
+  }
+  .arcana-page .noscriptFallback h1{
+    margin:0 0 10px;
+    color:#E6C77A;
+    font-family:Cinzel, serif;
+    font-size:clamp(24px, 4vw, 36px);
+    letter-spacing:.04em;
+  }
+  .arcana-page .noscriptFallback p{
+    margin:8px 0 0;
+    color:#B8C1D1;
+    line-height:1.6;
+  }
+
 </style>
 <title>Arcana Tarot Minigame — Visual Site v1</title>
 <style id="arcana-board-layout-guard">
@@ -485,6 +523,20 @@
 </head>
 <body class="arcana-page visual-fork">
 <div id="site-header" data-active-game="torchlight"></div>
+<noscript>
+  <section class="noscriptFallback" aria-label="Arcana helper JavaScript fallback">
+    <h1>Arcana Tarot Minigame Helper</h1>
+    <p>
+      This Torchlight Infinite Arcana helper is a browser-based strategy tool for planning board movement,
+      card choices, chest priority, upgrades, and minigame routing.
+    </p>
+    <p>
+      JavaScript is required to use the interactive board simulator, autoplay recommendations, card hand,
+      and route planning tools.
+    </p>
+  </section>
+</noscript>
+
 <div class="page-bg-img" aria-hidden="true"></div>
 
 <section class="strategyDeck" aria-labelledby="strategyDeckTitle">
