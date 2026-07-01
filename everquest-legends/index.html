@@ -9,14 +9,66 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#04080F" />
+
   <title>EverQuest Legends — Kythik Hub</title>
-  <meta name="description" content="EverQuest Legends stories, resources, developer videos, and MMO history from Kythik (kythikx)." />
+  <meta name="description" content="EverQuest Legends resources, class tools, progression guides, wiki links, and official updates curated by Kythik." />
+
+  <!-- Open Graph / Twitter / Canonical -->
+  <meta property="og:title" content="EverQuest Legends — Kythik" />
+  <meta property="og:description" content="EverQuest Legends resources, class tools, progression guides, wiki links, and official updates curated by Kythik." />
+  <meta property="og:url" content="https://www.kythik.com/everquest-legends/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kythik" />
+  <meta property="og:image" content="https://www.kythik.com/images/fallbacks/everquest-legends.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="EverQuest Legends — Kythik" />
+  <meta name="twitter:description" content="EverQuest Legends resources, class tools, progression guides, wiki links, and official updates curated by Kythik." />
+  <meta name="twitter:image" content="https://www.kythik.com/images/fallbacks/everquest-legends.png" />
+  <meta name="twitter:site" content="@kythikx" />
+  <link rel="canonical" href="https://www.kythik.com/everquest-legends/" />
+
+  <!-- Schema.org structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "EverQuest Legends Resources",
+    "description": "EverQuest Legends resources, class tools, progression guides, wiki links, and official updates curated by Kythik.",
+    "url": "https://www.kythik.com/everquest-legends/",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Kythik",
+      "url": "https://www.kythik.com/"
+    },
+    "about": {
+      "@type": "VideoGame",
+      "name": "EverQuest Legends",
+      "url": "https://www.everquestlegends.com/home"
+    },
+    "author": {
+      "@type": "Person",
+      "name": "Kythik",
+      "url": "https://twitch.tv/kythikx"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
   <style>
+    #eqlCarousel { min-height: 330px; }
+    #resourcesGrid,
+    #ytOfficialGrid,
+    #ytKythikGrid { min-height: 1px; }
+
+    @media (max-width: 860px) {
+      #eqlCarousel { min-height: 520px; }
+    }
+
     @media (max-width: 700px) {
       .main { padding: 0 16px; }
       .eql-hero { padding: 28px 0 20px; }
+      #eqlCarousel { min-height: 470px; }
     }
   </style>
 </head>
@@ -39,6 +91,18 @@
   <div id="site-header" data-active-game="everquest-legends"></div>
 
   <main class="main">
+    <noscript>
+      <section class="panel" style="margin-top:24px">
+        <span class="kicker">EverQuest Legends Resources</span>
+        <h1 class="display display--lg" style="margin-top:8px">EverQuest Legends</h1>
+        <p class="subtext" style="margin-top:10px">
+          A curated EverQuest Legends landing page for official updates, wiki reference, quest and tier progression, crafting notes, content guides, and class-combo planning.
+        </p>
+        <p class="subtext" style="margin-top:10px">
+          Key resources: Official EverQuest Legends Site, EQL Wiki, EQ Progression, and EverQuest Guides — Legends.
+        </p>
+      </section>
+    </noscript>
 
     <!-- ── PAGE HERO ── -->
     <div class="eql-hero" style="text-align:center;padding:48px 0 32px">
@@ -47,7 +111,7 @@
     </div>
 
     <!-- ── FEATURED CAROUSEL ── -->
-    <div class="featured-section" id="eqlCarousel" style="display:none">
+    <div class="featured-section" id="eqlCarousel">
       <div class="featured-header">
         <div class="featured-label">Featured</div>
         <div class="featured-nav">
