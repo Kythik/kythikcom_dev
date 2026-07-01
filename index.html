@@ -27,6 +27,12 @@
   <meta name="twitter:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
   <meta name="twitter:site" content="@kythikx" />
   <link rel="canonical" href="https://www.kythik.com/" />
+  <link rel="preconnect" href="https://player.twitch.tv" crossorigin />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Non-blocking font load -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" /></noscript>
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
   <script type="application/ld+json">
@@ -277,8 +283,8 @@
       max-width: 900px;
       margin-left: auto;
       margin-right: auto;
-      /* Lock hero height to prevent CLS during Hello Gamers animation reveal */
-      min-height: 220px;
+      /* Lock full hero height to prevent CLS during animation reveal */
+      min-height: 260px;
     }
 
     .hello-text-wrap {
@@ -287,7 +293,10 @@
       justify-content: flex-start;
       border-right: 1px solid var(--border-soft);
       padding-right: 48px;
-      min-height: 120px;
+      /* Lock to prevent CLS during stage→final swap */
+      min-height: 180px;
+      max-height: 180px;
+      overflow: hidden;
     }
 
     /* Right side hello text — final resting state */
@@ -638,6 +647,7 @@
         <div class="hub-twitch-panel">
           <iframe
             src="https://player.twitch.tv/?channel=kythikx&parent=kythik.com&parent=www.kythik.com&parent=kythikcom-dev.vercel.app&muted=true"
+            loading="lazy"
             allowfullscreen>
           </iframe>
         </div>
