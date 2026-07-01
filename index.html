@@ -15,9 +15,18 @@
   <meta name="keywords" content="Kythik, KythikX, Kyth, kythik streamer, kythikx twitch, kythik twitch streamer, kythik arpg, Torchlight Infinite, EverQuest Legends, ARPG builds, ARPG streamer, ARPG Twitch streamer, Diablo IV, Hero Siege, Dwarven Realms" />
   <meta property="og:title" content="Kythik — ARPG Strategy, Builds & Live Commentary" />
   <meta property="og:description" content="Twitch streamer covering Torchlight Infinite, EverQuest Legends, and more ARPGs. Farm strategies, builds, and live commentary." />
-  <meta property="og:url" content="https://kythik.com" />
+  <meta property="og:url" content="https://www.kythik.com/" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kythik" />
+  <meta property="og:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
+  <meta property="og:image:width" content="512" />
+  <meta property="og:image:height" content="512" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Kythik — ARPG Strategy, Builds & Live Commentary" />
+  <meta name="twitter:description" content="Twitch streamer covering Torchlight Infinite, EverQuest Legends, and more ARPGs. Farm strategies, builds, and live commentary." />
+  <meta name="twitter:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
+  <meta name="twitter:site" content="@kythikx" />
+  <link rel="canonical" href="https://www.kythik.com/" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
   <script type="application/ld+json">
@@ -26,14 +35,51 @@
     "@type": "WebSite",
     "name": "Kythik",
     "alternateName": ["KythikX", "Kyth", "kythikx"],
-    "url": "https://kythik.com",
+    "url": "https://www.kythik.com/",
     "description": "ARPG farm builds, strategies, and live commentary from Kythik.",
     "author": {
       "@type": "Person",
       "name": "Kythik",
       "alternateName": "kythikx",
-      "url": "https://twitch.tv/kythikx"
+      "url": "https://twitch.tv/kythikx",
+      "sameAs": [
+        "https://twitch.tv/kythikx",
+        "https://www.youtube.com/@kythikx",
+        "https://discord.gg/qDRWUM83zY"
+      ]
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://www.kythik.com/torchlight/strats/strats.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
     }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Games Covered by Kythik",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Torchlight Infinite",
+        "url": "https://www.kythik.com/torchlight/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "EverQuest Legends",
+        "url": "https://www.kythik.com/everquest-legends/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Hero Siege",
+        "url": "https://www.kythik.com/hero-siege/"
+      }
+    ]
   }
   </script>
   <style>
@@ -231,6 +277,8 @@
       max-width: 900px;
       margin-left: auto;
       margin-right: auto;
+      /* Lock hero height to prevent CLS during Hello Gamers animation reveal */
+      min-height: 220px;
     }
 
     .hello-text-wrap {
@@ -239,6 +287,7 @@
       justify-content: flex-start;
       border-right: 1px solid var(--border-soft);
       padding-right: 48px;
+      min-height: 120px;
     }
 
     /* Right side hello text — final resting state */
@@ -533,6 +582,28 @@
 
   <main class="main">
 
+    <noscript>
+      <section style="max-width: 720px; margin: 24px auto; padding: 28px 24px; background: rgba(13,24,40,.95); border: 1px solid rgba(200,164,93,.28); border-radius: 12px; color: #C7D0DE; font-family: sans-serif; line-height: 1.6;">
+        <h2 style="font-family: 'Cinzel', serif; color: #E6C77A; font-size: 22px; letter-spacing: .04em; margin-bottom: 14px;">Kythik — ARPG Strategy &amp; Live Commentary</h2>
+        <p style="margin-bottom: 12px;">
+          Kythik (handle: kythikx) is a Twitch streamer and content creator covering Action RPGs.
+          The site is a multi-game hub featuring strategy databases, build calculators, and seasonal guides.
+        </p>
+        <p style="margin-bottom: 12px;"><strong style="color: #C8A45D;">Games covered:</strong></p>
+        <ul style="margin-bottom: 14px; padding-left: 20px;">
+          <li><a href="/torchlight/" style="color: #C8A45D;">Torchlight Infinite</a> — Season 12 Lunaria strategy hub, Clockwork Ballet calculator, Arcana minigame solver</li>
+          <li><a href="/everquest-legends/" style="color: #C8A45D;">EverQuest Legends</a> — newly launched July 1, 2026</li>
+          <li><a href="/hero-siege/" style="color: #C8A45D;">Hero Siege</a> — coming soon</li>
+        </ul>
+        <p style="margin-bottom: 0;">
+          Connect on
+          <a href="https://twitch.tv/kythikx" style="color: #C8A45D;">Twitch</a>,
+          <a href="https://discord.gg/qDRWUM83zY" style="color: #C8A45D;">Discord</a>,
+          or read <a href="/about/" style="color: #C8A45D;">more about Kythik</a>.
+        </p>
+      </section>
+    </noscript>
+
     <!-- ── HERO ── -->
     <section class="hub-hero" id="hubHero">
       <!-- LEFT: Hello Gamers — stage during anim, final text after -->
@@ -544,7 +615,7 @@
         <div class="hello-text" id="helloFinal" style="display:none"></div>
       </div>
       <!-- RIGHT: Bio — hidden until animation ends -->
-      <div class="hub-hero-right" id="heroBio" style="opacity:0;transition:opacity 0.45s ease">
+      <div class="hub-hero-right" id="heroBio" style="opacity:0;transition:opacity 0.45s ease;min-height:120px">
         <h1 class="hub-hero-name">Kythik</h1>
         <div class="hub-hero-tagline">S-Tier Yapper · Game Strategy &amp; Live Commentary</div>
         <p class="hub-hero-bio">
