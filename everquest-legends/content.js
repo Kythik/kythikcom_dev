@@ -33,7 +33,7 @@
     const videoId = parseYouTubeId(v.link);
 
     const thumb = videoId
-      ? `<img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${v.title}" loading="lazy" style="width:100%;height:100%;object-fit:contain;background:var(--bg-navy);display:block" />`
+      ? `<img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" alt="${v.title}" width="480" height="360" loading="lazy" style="width:100%;height:100%;object-fit:contain;background:var(--bg-navy);display:block" />`
       : `<div style="height:100%;display:flex;align-items:center;justify-content:center;background:var(--bg-navy)"><span>▶ Video</span></div>`;
 
     return `
@@ -115,7 +115,7 @@
       if (section && header && grid) {
         header.innerHTML = buildSectionHeader(
           'Developer Videos',
-          'https://www.youtube.com/@everquestlegends',
+          'https://www.youtube.com/@EverQuestLegends',
           'Official YouTube →'
         );
 
