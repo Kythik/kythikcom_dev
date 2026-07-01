@@ -18,6 +18,7 @@ async function fetchStrategies() {
     buildTagFilters();
     applyFilters();
     buildFeatured();
+    injectItemListSchema(allStrategies);
 
     // Update last synced footer
     if (data.lastUpdated) {
@@ -353,6 +354,29 @@ function startFeaturedTimer() {
 function resetFeaturedTimer() {
   clearInterval(featuredTimer);
   startFeaturedTimer();
+}
+
+/* ── ITEMLIST SCHEMA ────────────────────── */
+function injectItemListSchema(strategies) {
+  if (!strategies || !strategies.length) return;
+  const items = strategies.slice(0, 50).map((s, i) => ({
+    '@type':    'ListItem',
+    'position': i + 1,
+    'name':     s.Title || 'Untitled',
+    'url':      s.DiscordMessageURL || 'https://www.kythik.com/torchlight/strats/strats.html',
+  }));
+  const schema = {
+    '@context':       'https://schema.org',
+    '@type':          'ItemList',
+    'name':           'Torchlight Infinite Farm Strategies',
+    'description':    'Community-sourced farm strategies for Torchlight Infinite, synced from the Kythik Discord.',
+    'numberOfItems':  strategies.length,
+    'itemListElement': items,
+  };
+  const el = document.createElement('script');
+  el.type        = 'application/ld+json';
+  el.textContent = JSON.stringify(schema);
+  document.head.appendChild(el);
 }
 
 /* ── INIT ── */

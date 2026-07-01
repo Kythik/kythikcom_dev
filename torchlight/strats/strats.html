@@ -9,26 +9,32 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
   <meta name="theme-color" content="#04080F" />
-  <title>Kythik — Torchlight Infinite Farm Builds, ARPG Strategy & Live Commentary</title>
-  <meta name="description" content="Your source for Torchlight Infinite farm strategies, builds, and guides — plus live ARPG commentary from Kythik (kythikx). Community-sourced strategies from the Kythik Discord." />
+  <title>Torchlight Infinite Farm Strategies — Kythik</title>
+  <meta name="description" content="Community-sourced Torchlight Infinite farm strategies and builds, synced live from the Kythik Discord. Filter by zone, tag, or author." />
   <meta name="keywords" content="Kythik, KythikX, Kyth, kythik streamer, kythikx twitch, kythik twitch streamer, kythik arpg, Torchlight Infinite, Torchlight Infinite builds, Torchlight Infinite farm, Torchlight Infinite guide 2024, Torchlight Infinite guide 2025, TLI farm guide, TLI builds, TLI strategy, TLI season 12, ARPG builds, ARPG farm guide, ARPG strategy, ARPG streamer, ARPG Twitch streamer, ARPG commentary, ARPG loot game, ARPG tier list, action RPG builds, action RPG streamer, Path of Exile alternative, PoE like games, Path of Exile 2 alternative, best ARPG 2024, best ARPG 2025, Diablo IV builds, Diablo 4 streamer, Diablo alternative, Hero Siege, Dwarven Realms, loot game builds, loot game streamer, hack and slash builds, hack and slash streamer, Twitch ARPG streamer, gaming streamer builds, farm strategy guide, endgame builds, boss farming guide, speed farming builds, currency farming ARPG" />
-  <meta property="og:title" content="Kythik — Torchlight Infinite Farm Builds & ARPG Strategy" />
-  <meta property="og:description" content="Your source for Torchlight Infinite farm strategies, builds, and guides — plus live ARPG commentary from Kythik." />
-  <meta property="og:url" content="https://kythik.com" />
+  <meta property="og:title" content="Torchlight Infinite Farm Strategies — Kythik" />
+  <meta property="og:description" content="Community-sourced Torchlight Infinite farm strategies and builds, synced live from the Kythik Discord." />
+  <meta property="og:url" content="https://www.kythik.com/torchlight/strats/strats.html" />
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Kythik" />
+  <meta property="og:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Torchlight Infinite Farm Strategies — Kythik" />
+  <meta name="twitter:description" content="Community-sourced Torchlight Infinite farm strategies and builds, synced live from the Kythik Discord." />
+  <meta name="twitter:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
+  <meta name="twitter:site" content="@kythikx" />
+  <link rel="canonical" href="https://www.kythik.com/torchlight/strats/strats.html" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
   <link rel="stylesheet" href="/torchlight/strats/strats_styles.css" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "Kythik",
-    "alternateName": ["KythikX", "Kyth", "kythikx"],
-    "url": "https://kythik.com",
-    "description": "Torchlight Infinite farm builds, ARPG strategies, and live commentary from Kythik.",
-    "author": {
+    "@type": "CollectionPage",
+    "name": "Torchlight Infinite Farm Strategies",
+    "description": "Community-sourced Torchlight Infinite farm strategies and builds, synced live from the Kythik Discord.",
+    "url": "https://www.kythik.com/torchlight/strats/strats.html",
+    "publisher": {
       "@type": "Person",
       "name": "Kythik",
       "alternateName": "kythikx",
@@ -65,6 +71,14 @@
 
   <!-- ── STRATEGY DATABASE ── -->
   <main class="main">
+    <noscript>
+      <div style="padding:32px 0;color:#E8EDF6;font-family:sans-serif;">
+        <h2 style="color:#C8A45D;margin-bottom:12px;">Torchlight Infinite Farm Strategies</h2>
+        <p>Community-sourced farm strategies and builds for Torchlight Infinite, curated from the <a href="https://discord.gg/qDRWUM83zY" style="color:#7289da;">Kythik Discord</a>.</p>
+        <p style="margin-top:10px;">JavaScript is required to browse strategies on this page. Please enable JavaScript, or <a href="https://discord.gg/qDRWUM83zY" style="color:#7289da;">join the Discord</a> to view them directly.</p>
+      </div>
+    </noscript>
+
     <!-- ── PAGE TITLE ── -->
     <div class="page-title">
       <h1 class="display display--lg"><span class="accent">Torchlight Infinite</span></h1>
@@ -80,7 +94,8 @@
           <button class="featured-btn" id="featNext" onclick="featNav(1)" aria-label="Next">›</button>
         </div>
       </div>
-      <div class="featured-track" id="featuredTrack"></div>
+      <!-- min-height prevents CLS when featured card loads -->
+      <div class="featured-track" id="featuredTrack" style="min-height:280px"></div>
     </div>
 
     <div class="db-header">
@@ -98,7 +113,8 @@
     <div class="tag-filter-row" id="tagFilters"></div>
 
     <div class="grid-frame">
-      <div class="grid" id="stratGrid">
+      <!-- min-height prevents CLS when cards load in -->
+      <div class="grid" id="stratGrid" style="min-height:400px">
         <div class="card"><div class="card-inner">
           <div class="skeleton" style="height:16px;width:55%;margin-bottom:14px;"></div>
           <div class="skeleton" style="height:13px;width:100%;margin-bottom:7px;"></div>
