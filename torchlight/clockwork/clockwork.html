@@ -15,6 +15,38 @@
 <link rel="stylesheet" href="/torchlight/clockwork/clockwork_styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+
+<!-- Open Graph / Twitter Card / Canonical -->
+<meta property="og:title" content="Clockwork Ballet EV Calculator — Kythik" />
+<meta property="og:description" content="Expected-value rankings and reroll guidance for Torchlight Infinite's Clockwork Ballet Member Services." />
+<meta property="og:url" content="https://www.kythik.com/torchlight/clockwork/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Kythik" />
+<meta property="og:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Clockwork Ballet EV Calculator — Kythik" />
+<meta name="twitter:description" content="Expected-value rankings and reroll guidance for Torchlight Infinite's Clockwork Ballet Member Services." />
+<meta name="twitter:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
+<meta name="twitter:site" content="@kythikx" />
+<link rel="canonical" href="https://www.kythik.com/torchlight/clockwork/" />
+
+<!-- Schema.org structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Clockwork Ballet EV Calculator",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Web Browser",
+  "url": "https://www.kythik.com/torchlight/clockwork/",
+  "description": "Expected-value rankings and reroll guidance for Torchlight Infinite's Clockwork Ballet Member Services.",
+  "author": {
+    "@type": "Person",
+    "name": "Kythik",
+    "url": "https://twitch.tv/kythikx"
+  }
+}
+</script>
 </head>
 <body class="clockwork-page">
 
@@ -34,7 +66,7 @@
     <rect width="100%" height="100%" fill="url(#hexGrid)"/>
   </svg>
 
-<div id="site-header" data-active-game="torchlight"></div>
+<div id="site-header" data-active-game="torchlight" style="min-height:52px"></div>
 
 <header class="cw-page-head">
   <div class="cw-page-head__inner">
@@ -54,7 +86,17 @@
 
 <div class="main">
 
-
+<noscript>
+  <div style="padding:24px;border:1px solid #2a3a52;border-radius:8px;background:rgba(13,24,40,0.6);margin-bottom:24px">
+    <h2 style="font-family:Cinzel,serif;color:#c8a45d;margin-bottom:12px">Clockwork Ballet Service Rankings — Static View</h2>
+    <p style="color:#a3abbe;line-height:1.6;margin-bottom:14px">JavaScript is required for the interactive calculator. Below is the static ranking summary based on the current paired-delta model.</p>
+    <p style="color:#a3abbe;line-height:1.6;margin-bottom:8px"><strong style="color:#ff9ef5">S+ Tier (best ceiling):</strong> Roses in the No-Man's Land, Nut Trick</p>
+    <p style="color:#a3abbe;line-height:1.6;margin-bottom:8px"><strong style="color:#a78bfa">S Tier (strong picks):</strong> Clockwork Ballet Heist, Clockwork Roulette, Bloody Mary, All Tabs on Me</p>
+    <p style="color:#a3abbe;line-height:1.6;margin-bottom:8px"><strong style="color:#60a5fa">A Tier (solid value):</strong> Best Doll Employee, Triple Combo Bonus, Instant Voucher Cache, Cogwheel Gambler</p>
+    <p style="color:#a3abbe;line-height:1.6;margin-bottom:14px"><strong style="color:#c8a45d">Reroll rule:</strong> First offer keep ≥107 fe (Cogwheel Gambler or better). Second offer keep ≥86 fe (Runaway Dancer or better). Final offer: take best.</p>
+    <p style="color:#5e6a7d;font-size:11px"><a href="cheatsheet.html" style="color:#60a5fa">Open the cheat sheet</a> for the full keep/reroll matrix without requiring JavaScript.</p>
+  </div>
+</noscript>
   <section class="panel clockwork-setup-panel">
   <div class="clockwork-panel-head">
     <span class="kicker">Setup</span>
@@ -185,7 +227,7 @@
 </div>
 
 <div class="svc-list-wrap">
-    <div class="svc-list" id="tbody"></div>
+    <div class="svc-list" id="tbody" style="min-height:1200px"></div>
   <div id="roul-footnote" class="clockwork-footnote"></div>
 </div><!-- /svc-list-wrap -->
 
@@ -422,7 +464,7 @@
   </div>
 </div>
 
-<div id="site-footer"></div>
+<div id="site-footer" style="min-height:120px"></div>
 
 <script>
 const DIST={grey:0.0002,blue:0.68886,purple:0.25295,gold:0.05399,red:0.0038,rainbow:0.0002};
