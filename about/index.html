@@ -11,6 +11,18 @@
   <meta name="theme-color" content="#04080F" />
   <title>About Kythik — Systems, Synergy, and the Grind</title>
   <meta name="description" content="About Kythik: Twitch Partner, ARPG strategy creator, MMO veteran, and chat-first systems analyst behind Kythik.com." />
+  <meta property="og:title" content="About Kythik — Kythik" />
+  <meta property="og:description" content="Meet Kythik, a Twitch Partner and ARPG strategy creator focused on systems, synergy, economy testing, and chat-first gaming content." />
+  <meta property="og:url" content="https://www.kythik.com/about/" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Kythik" />
+  <meta property="og:image" content="https://www.kythik.com/images/about/kythik-about-headshot.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About Kythik — Kythik" />
+  <meta name="twitter:description" content="Meet Kythik, a Twitch Partner and ARPG strategy creator focused on systems, synergy, economy testing, and chat-first gaming content." />
+  <meta name="twitter:image" content="https://www.kythik.com/images/about/kythik-about-headshot.png" />
+  <meta name="twitter:site" content="@kythikx" />
+  <link rel="canonical" href="https://www.kythik.com/about/" />
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
 
@@ -83,6 +95,7 @@
     .about-portrait-frame {
       position: relative;
       min-height: 330px;
+      aspect-ratio: 1 / 1;
       border-radius: var(--radius-lg);
       overflow: hidden;
       border: 1px solid rgba(200,164,93,.24);
@@ -384,7 +397,7 @@
       <aside class="panel-card about-portrait-card" aria-label="Kythik portrait">
         <div class="about-portrait-frame">
           <!-- Put the provided image at: /images/about/kythik-about-headshot.png -->
-          <img src="/images/about/kythik-about-headshot.png" alt="Kythik" onerror="this.closest('.about-portrait-frame').classList.add('is-empty'); this.remove();" />
+          <img src="/images/about/kythik-about-headshot.png" alt="Kythik" width="520" height="585" decoding="async" onerror="this.closest('.about-portrait-frame').classList.add('is-empty'); this.remove();" />
           <div class="about-portrait-placeholder">
             Headshot / PNGtuber image space<br />Drop an image at <strong>/images/about/kythik-about-headshot.png</strong>
           </div>
