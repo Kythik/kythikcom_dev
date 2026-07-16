@@ -2,20 +2,20 @@
   "featured": [
     {
       "type": "season",
-      "eyebrow": "SS12 · Lunaria",
-      "title": "Season 12 — Lunaria",
-      "blurb": "The clockwork city stirs. Farm your heart out.",
-      "seasonStartISO": "2026-04-16T19:00:00-07:00",
-      "seasonEndISO": "2026-07-15T19:00:00-07:00",
-      "nextSeasonISO": "2026-07-16T19:00:00-07:00",
+      "eyebrow": "SS13 · Afterlight",
+      "title": "Season 13 — Afterlight",
+      "blurb": "Coffin Escort Quest!",
+      "seasonStartISO": "2026-07-16T19:00:00-07:00",
+      "seasonEndISO": "2026-10-14T19:00:00-07:00",
+      "nextSeasonISO": "2026-10-15T19:00:00-07:00",
       "link": null
     },
     {
       "type": "link",
       "eyebrow": "Official",
-      "title": "SS12 Patch Notes",
-      "blurb": "Full breakdown of Lunaria mechanics, balance changes, and new systems.",
-      "link": "https://torchlight.xd.com/us/news/single?id=8t9xbvgnO52x",
+      "title": "SS13 Patch Notes",
+      "blurb": "Full breakdown of Afterlight mechanics, balance changes, and new systems.",
+      "link": "https://torchlight.xd.com/ss13pn/?lang=en",
       "linkLabel": "Read Patch Notes"
     }
   ],
@@ -58,13 +58,13 @@
     }
   ],
   "officialYoutube": [
+	{
+      "title": "S13 Lunaria Reveal",
+      "link": "https://www.youtube.com/watch?v=GVtaC5CsBoU"
+    },
     {
       "title": "S13 Afterlight Teaser",
       "link": "https://www.youtube.com/watch?v=V8ozbwpPIRw"
-    },
-    {
-      "title": "S12 Lunaria Reveal",
-      "link": "https://www.youtube.com/watch?v=KEnNJp_yyro"
     },
     {
       "title": "S12 Crow's Corner + Developer Q&A",
