@@ -259,14 +259,10 @@ let featuredIndex = 0;
 let featuredTimer = null;
 
 function buildFeatured() {
-  // Manual featured first, then top voted auto-fill up to 5
-  const manual  = allStrategies.filter(s => s.Featured);
-  const voted   = allStrategies
-    .filter(s => !s.Featured)
-    .sort((a, b) => (getVotes(b.id).up - getVotes(b.id).down) - (getVotes(a.id).up - getVotes(a.id).down))
-    .slice(0, Math.max(0, 5 - manual.length));
+  // Only show manually featured strategies — no auto-fill
+  const manual = allStrategies.filter(s => s.Featured === true);
 
-  featuredList = [...manual, ...voted].slice(0, 5);
+  featuredList = manual.slice(0, 5);
 
   const section = document.getElementById('featuredSection');
   if (!featuredList.length) { section.style.display = 'none'; return; }
