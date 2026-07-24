@@ -24,6 +24,12 @@
   <meta name="twitter:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
   <meta name="twitter:site" content="@kythikx" />
   <link rel="canonical" href="https://www.kythik.com/torchlight/strats/strats.html" />
+  <!-- Preload critical resources early -->
+  <link rel="preload" href="/images/featured-panel.png" as="image" />
+  <link rel="preload" href="/api/airtable" as="fetch" crossorigin="anonymous" />
+  <link rel="preload" href="/torchlight/strats/app.js" as="script" />
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" /></noscript>
   <link rel="stylesheet" href="/styles.css" />
   <link rel="stylesheet" href="/shared/header-additions.css" />
   <link rel="stylesheet" href="/torchlight/strats/strats_styles.css" />
@@ -151,7 +157,7 @@
     <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">✕</button>
     <button class="lightbox-prev" id="lightboxPrev" onclick="lightboxNav(-1,event)" aria-label="Previous">‹</button>
     <button class="lightbox-next" id="lightboxNext" onclick="lightboxNav(1,event)" aria-label="Next">›</button>
-    <img class="lightbox-img" id="lightboxImg" src="" alt="Strategy screenshot" />
+    <img class="lightbox-img" id="lightboxImg" src="" alt="Strategy screenshot" width="1200" height="800" />
     <div class="lightbox-counter" id="lightboxCounter"></div>
   </div>
 
@@ -165,9 +171,9 @@
     // player.js handles /api/twitch — skip header.js default check
     window.kythikSkipDefaultLiveCheck = true;
   </script>
-  <script src="/shared/header.js"></script>
-  <script src="/shared/footer.js"></script>
-  <script src="/shared/player.js"></script>
+  <script src="/shared/header.js" defer></script>
+  <script src="/shared/footer.js" defer></script>
+  <script src="/shared/player.js" defer></script>
   <script src="/torchlight/strats/app.js"></script>
   <!-- Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>

@@ -1,5 +1,8 @@
 'use strict';
 
+// Fire API fetch immediately — runs in parallel with script parsing
+const _strategyFetch = fetch('/api/airtable');
+
 /* ── UTILS ──────────────────────────────── */
 function debounce(fn, ms) {
   let timer;
@@ -35,7 +38,7 @@ function getPlaceholder(id) {
 ══════════════════════════════════════════ */
 async function fetchStrategies() {
   try {
-    const res  = await fetch('/api/airtable');
+    const res  = await _strategyFetch;
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     allStrategies = data.records || [];
