@@ -634,9 +634,8 @@ function roulBlock(gearsVal,rdist,base){
   const maxCog=isAvg?6:parseInt(gearsVal);
   const dl=rdist===RDIST_HIGH?'high rarity (observed, unverified)':'expected (conservative)';
 
-  // Survival to max cog, encounter table values, headline guidance
   const pSurvMax=roulSurvival(maxCog);
-  let evMax=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(maxCog,n,rdist,base),0):roulEV(maxCog,parseInt(gearsVal),rdist,base);
+  const evMax=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(maxCog,n,rdist,base),0):roulEV(maxCog,parseInt(gearsVal),rdist,base);
 
   // Find optimal cashout cog (highest EV across 1..maxCog)
   let bestCog=maxCog,bestEV=evMax;
@@ -644,40 +643,18 @@ function roulBlock(gearsVal,rdist,base){
     const e=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(c,n,rdist,base),0):roulEV(c,parseInt(gearsVal),rdist,base);
     if(e>bestEV){bestEV=e;bestCog=c;}
   }
-  const headline=isEsc
-    ? (bestCog<maxCog
-        ? `<span style="color:var(--gold-muted)">Math says: cash out at cog ${bestCog}, not max</span>`
-        : `<span style="color:var(--gold-muted)">Math says: still go to max cogs</span>`)
-    : `<span style="color:var(--gold-muted)">Math says: always go to max cogs</span>`;
-  const failDesc=isEsc
-    ? 'Escalating 10%→47% fail per cog (cog k fail = 1−0.9^k, compounding risk grows each cog)'
-    : 'Flat 10% fail per cog survival = 0.9^cog)';
+  const headline=`<span style="color:var(--gold-muted)">Math says: full-send — EV grows every cog</span>`;
+  const failDesc='9% brick check per completed cog (survival = 0.91^cog)';
 
-  let h=`<div class="roul-block"><div class="roul-header">Dist: <span style="color:#a78bfa">${dl}</span> · ${failDesc} · Fail = entire event ends · ${headline} <button onclick="showRouletteLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:10px;cursor:pointer;padding:0;margin-left:4px">why? ↗</button></div>`;
-
-  // Encounter reality table - values differ by fail model
-  const encRows=isEsc
-    ? [['50','~0.5','--red-loss','~5% — nearly always negative'],
-       ['100','~1','--red-loss','~10% — still mostly negative'],
-       ['500','~5','--orange-fire','~42% — still a coin flip'],
-       ['1000','~10','--gold-muted','~52% — barely above 50/50']]
-    : [['50','~0.5','--red-loss','~20% — most sessions zero'],
-       ['100','~1','--orange-fire','~41% — coin flip'],
-       ['500','~5','--gold-muted','~93% — ~1 full season'],
-       ['1000','~10','--green-recording','~99% — multiple seasons']];
+  let h=`<div class="roul-block"><div class="roul-header">Dist: <span style="color:#a78bfa">${dl}</span> · ${failDesc} · Brick = entire event ends · ${headline} <button onclick="showRouletteLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:10px;cursor:pointer;padding:0;margin-left:4px">why? ↗</button></div>`;
 
   const wipeRate=((1-pSurvMax)*100).toFixed(0);
-  const survBoxColor=isEsc?'rgba(220,38,38,0.12)':'rgba(220,38,38,0.08)';
-  const survBoxBorder=isEsc?'rgba(220,38,38,0.35)':'rgba(220,38,38,0.25)';
 
-  h+=`<div style="background:${survBoxColor};border:1px solid ${survBoxBorder};border-radius:var(--radius);padding:8px 10px;margin:6px 0">
-    <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Encounter Reality (~1 per 100 maps · ${wipeRate}% wipe rate to cog ${maxCog})</div>
-    <div style="display:grid;grid-template-columns:60px 70px 1fr;gap:2px 10px;font-size:11px;margin-bottom:5px">
-      <span style="color:var(--text-faint)">Maps</span><span style="color:var(--text-faint)">Avg seen</span><span style="color:var(--text-faint)">Chance of net profit</span>
-      ${encRows.map(r=>`<span style="color:var(--text-muted)">${r[0]}</span><span style="color:var(--text-muted)">${r[1]}</span><span style="color:var(${r[2]})">${r[3]}</span>`).join('\n      ')}
+  h+=`<div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.22);border-radius:var(--radius);padding:8px 10px;margin:6px 0">
+    <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Session Reality (~1 encounter per 100 maps · ${wipeRate}% brick rate to cog ${maxCog})</div>
+    <div style="font-size:11px;color:var(--text-muted);line-height:1.5">
+      Full-send EV ≈ <b style="color:var(--gold-bright)">${evMax.toFixed(2)}</b> of theorBase (≈424 fe at typical setup). Stop at 4 is the safety line; stop at 5 is balanced greed; full-send is EV-max but high variance.
     </div>
-    <div style="font-size:10px;color:var(--red-loss)">${isEsc
-      `Full-send EV ≈ ${evMax.toFixed(2)} of theorBase. Stop at 4 is the safety line; full-send is EV-max but high variance.`}</div>
   </div>`;
 
   h+=`<div class="roul-row roul-row-head"><span class="roul-cog">Cash out</span><span class="roul-p">P(survive)</span><span class="roul-ev">EV vs base</span><span class="roul-v">Vouchers</span></div>`;
@@ -685,16 +662,14 @@ function roulBlock(gearsVal,rdist,base){
     const ps=roulSurvival(cog);
     let tv=0;for(let k=1;k<=cog;k++)tv+=1+k;
     const ev=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(cog,n,rdist,base),0):roulEV(cog,parseInt(gearsVal),rdist,base);
-    const ec=ev>0?'pos':'neg';
     const theorBaseR=bge()*maxCog*MULT[maxCog];
     const evPctR=Math.max(0,ev/theorBaseR*100);
     const tR=ev<=0?{l:'F',c:'tier-f'}:evPctR>=300?{l:'S+',c:'tier-sp'}:evPctR>=100?{l:'S',c:'tier-s'}:evPctR>=30?{l:'A',c:'tier-a'}:evPctR>=19?{l:'B',c:'tier-b'}:evPctR>=5?{l:'C',c:'tier-c'}:{l:'F',c:'tier-f'};
     const bwR=Math.min(evPctR/3,100);
-    const isBest=isEsc&&cog===bestCog?' style="background:rgba(200,164,93,0.06)"':'';
-    h+=`<div class="roul-row"${isBest}><span class="roul-cog">Cog ${cog}${isEsc&&cog===bestCog?' ★':''}</span><span class="roul-p">${(ps*100).toFixed(1)}%</span><span class="${tR.c} tier" style="font-size:12px">${tR.l}</span><div class="ev-bar-wrap"><div class="ev-bar" style="width:${bwR}px"></div></div><span class="roul-v">${tv}v</span></div>`;
+    const isBest=cog===bestCog?' style="background:rgba(200,164,93,0.06)"':'';
+    h+=`<div class="roul-row"${isBest}><span class="roul-cog">Cog ${cog}${cog===bestCog?' ★':''}</span><span class="roul-p">${(ps*100).toFixed(1)}%</span><span class="${tR.c} tier" style="font-size:12px">${tR.l}</span><div class="ev-bar-wrap"><div class="ev-bar" style="width:${bwR}px"></div></div><span class="roul-v">${tv}v</span></div>`;
   }
-  h+=`<div class="roul-note">${isEsc
-    `Weighted rarity assumed. Stop at 4 = safety, stop at 5 = balanced greed, full-send = max EV. Voucher rarity distribution is the biggest unknown in the ranking.`}</div>`;
+  h+=`<div class="roul-note">Weighted rarity assumed. Stop at 4 = safety, stop at 5 = balanced greed, full-send = max EV. ★ marks the EV-optimal cog. Voucher rarity distribution is the biggest unknown in the ranking.</div>`;
   return h+'</div>';
 }
 
