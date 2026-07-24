@@ -75,6 +75,10 @@
       <span class="kicker">Torchlight Infinite — SS12</span>
       <h1 class="display display--lg cw-page-title">Clockwork Ballet</h1>
       <p class="subtext cw-page-sub">Member Service EV rankings, reroll guidance, and setup-aware value checks for deep-space Clockwork runs.</p>
+      <div class="info-tile info-tile--gold" style="margin-top:14px;font-size:11px;line-height:1.55">
+        <span style="color:var(--gold-muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:10px">% of ceiling</span>
+        <span style="color:var(--text-muted)"> — the "100%" reference is a theoretical perfect run: 7 Rainbow compass cogwheels at SSS+clockwork_51 rating, with all Alice pactspirit procs firing and every tree bonus hitting. Probability of that is effectively zero — it's an anchor, not a goal. Real services show as low single-digit to mid-double-digit percentages of that ceiling.</span>
+      </div>
     </div>
 
     <a class="resource-card cw-cheat-card" href="cheatsheet.html" target="_blank" rel="noopener" aria-label="Open Clockwork Ballet cheat sheet">
@@ -807,8 +811,8 @@ function render(){
   const showCombat=document.getElementById('showz')&&document.getElementById('showz').checked;
   if(!showCombat)svcs=svcs.filter(s=>s.tier!=='F'||s.tag==='conditional'||s.tag==='builddep'||s.isRoulette||s.isID23);
   // Roulette always sorts last regardless of EV — encounter rate makes its tier misleading
-  if(sort==='ev'||sort==='tier')svcs.sort((a,b)=>(a.isRoulette?1:0)-(b.isRoulette?1:0)||a.rank-b.rank);
-  else if(sort==='rarity')svcs.sort((a,b)=>(a.isRoulette?1:0)-(b.isRoulette?1:0)||(RORD[a.rarity]||9)-(RORD[b.rarity]||9)||a.rank-b.rank);
+  if(sort==='ev'||sort==='tier')svcs.sort((a,b)=>a.rank-b.rank);
+  else if(sort==='rarity')svcs.sort((a,b)=>(RORD[a.rarity]||9)-(RORD[b.rarity]||9)||a.rank-b.rank);
   const maxEV=1; // unused in lookup mode
 
   const tagMap={combat:'<span class="svc-tag tag-combat">combat</span>',conditional:'<span class="svc-tag tag-conditional">conditional</span>',nonviable:'<span class="svc-tag tag-nonviable">not viable</span>',builddep:'<span class="svc-tag tag-builddep">build-dep</span>'};
@@ -858,7 +862,7 @@ function render(){
         ${extra}
         <div class="svc-meta">
           <span class="tag-stat ${RCLS[s.rarity]||'badge-blue'}">${RLABEL[s.rarity]||s.rarity}</span>
-          <span class="${t2.c} tier svc-tier-badge">${t2.l}${s.isRoulette?'*':''}</span>
+          <span class="${t2.c} tier svc-tier-badge">${t2.l}</span>
           ${roulNote}
         </div>
       </div>
@@ -869,12 +873,7 @@ function render(){
       </div>
     `;
     tbody.appendChild(tr);
-    if(s.isRoulette){
-      const sep=document.createElement('div');
-      sep.className='tier-banner tier-banner--roulette';
-      sep.innerHTML=`<span class="tier-banner__label" style="color:var(--red-loss)">Clockwork Roulette</span><span class="tier-banner__desc">High variance — tap 📊 for model details</span>`;
-      tbody.insertBefore(sep,tr);
-    } else if(i===0||svcs[i-1].tier!==s.tier||(i>0&&svcs[i-1].isRoulette)){
+    if(i===0||svcs[i-1].tier!==s.tier){
       const sep=document.createElement('div');
       sep.className='tier-banner';
       sep.style.cssText=`border-top-color:${TIER_COLORS[s.tier]||'var(--border-soft)'}`;
@@ -885,7 +884,7 @@ function render(){
 
   const roulFootEl=document.getElementById('roul-footnote');
   if(roulFootEl){
-    roulFootEl.innerHTML=`* Roulette has a 9% brick check per completed cog. Full-send EV ≈ 424 fe (weighted rarity). Stop-at-4 is the safety line; full-send is EV-max but high variance.`;
+    roulFootEl.innerHTML=`Clockwork Roulette (rank 3) has a 9% brick check per completed cog. Full-send EV ≈ 424 fe (weighted rarity). Stop at 4 = safety line, full send = max EV.`;
   }
 
   // ── Reroll recommendation ──────────────────────────────────────────────
