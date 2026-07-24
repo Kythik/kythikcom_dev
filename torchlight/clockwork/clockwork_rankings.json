@@ -1,27 +1,29 @@
 {
-  "version": "clockwork_service_rankings_v1_2",
-  "generated_from": "clockwork_v12_site_json_handoff.md",
+  "version": "clockwork_service_rankings_v1_7",
+  "generated_from": "clockwork_v17_per_cog_roulette_handoff.md",
   "default_pool": "chinese_doc_as_is",
+  "rarity_model": "weighted",
   "ceiling_fe": 2929,
-  "ceiling_note": "Theoretical perfect run: 7 compass-type Rainbow cogwheels, SSS+clockwork_51, max Alice procs. P\u22480; used as 100% reference only.",
+  "ceiling_note": "Theoretical perfect run reference \u2014 used as 100% ceiling for display only. Actual EV values below.",
   "tier_ranges": {
     "S+": "942\u20131653 fe \u2014 best ceiling services, define the run",
-    "S": "305\u2013391 fe \u2014 strong picks, take if S+ not offered",
-    "A": "127\u2013219 fe \u2014 solid value, good when S/S+ unavailable",
-    "B": "50\u201394 fe \u2014 interchangeable, pick whatever is offered",
-    "C": "10\u201349 fe \u2014 low value, only if nothing better available",
+    "S": "305\u2013424 fe \u2014 strong picks, take if S+ not offered",
+    "A": "111\u2013220 fe \u2014 solid value, good when S/S+ unavailable",
+    "B": "50\u201395 fe \u2014 interchangeable, pick whatever is offered",
+    "C": "10\u201350 fe \u2014 low value, only if nothing better available",
     "F": "\u22649 fe or negative \u2014 skip"
   },
   "reroll_thresholds": {
-    "first_offer_keep_fe": 106.83,
-    "second_offer_keep_fe": 86.17,
-    "note": "First offer: keep if best option \u2265 106.83 fe (ID23 or better). Second offer: keep if best \u2265 86.17 fe (ID19/Dolls or better). Final offer: take best."
+    "first_offer_keep_fe": 99.12,
+    "second_offer_keep_fe": 81.15,
+    "start_ev_with_two_full_rerolls": 112.98,
+    "note": "First offer: keep if best \u2265 99.12 fe (Runaway Dancer / Hunting Ground or better). Second offer: keep if best \u2265 81.15 fe (All-or-Nothing Rating or better). Final offer: take best."
   },
   "player_rule": {
-    "first_offer": "Keep ID23 or better. Otherwise reroll.",
-    "second_offer": "Keep ID19 / Dolls' Hunting Ground or better. Otherwise reroll.",
+    "first_offer": "Keep Instant Voucher Cache or better. Otherwise reroll.",
+    "second_offer": "Keep Runaway Dancer / Dolls' Hunting Ground / All-or-Nothing Rating or better. Otherwise reroll.",
     "final_offer": "Take best available.",
-    "roulette_caveat": "EV-max: keep Roulette. Stable farming: skip if variance is a problem."
+    "roulette_guidance": "Full-send is EV-max. Stop at 4 completed cogs is the safety line \u2014 trades EV for lower brick variance. Stop at 5 is balanced greed."
   },
   "service_offer_structure": {
     "offers_per_game": 3,
@@ -37,10 +39,11 @@
     "note": "5/6/7 cogs equally likely. Services selected before cog count revealed. EV uses expected 6."
   },
   "warnings": [
-    "Roulette is positive EV only under flat 10% fail model. See sensitivity_only entry for escalating model.",
-    "Chinese service pool may or may not include +60% Gold/Rainbow service-frequency nodes; used as-is by default.",
-    "ID19 and ID27 corrected in v1.2 from global 15% proc to 15% per completed cog.",
-    "Do not use v0.9/v1.0 ranking data \u2014 predates ID19/ID27 per-cog correction."
+    "Roulette 9% fail check is per completed cog (not start-once). Repeated brick checks make full-send high-variance despite high EV.",
+    "Roulette EV of 423.87 uses weighted rarity. Uniform-rarity variant (1144.97) is optimistic \u2014 see v1.7 handoff for details.",
+    "ID23 also uses per-cog 9% early-end check (previously modeled correctly, mechanic now confirmed).",
+    "ID9 corrected to exactly 2 vouchers (was 2-3). ID17 corrected to 25% per cog (was 30%).",
+    "Chinese service pool used as-is by default; do not apply +60% Gold/Rainbow unless in sensitivity mode."
   ],
   "services": [
     {
@@ -48,85 +51,89 @@
       "rank": 1,
       "name": "Roses in the No-Man's Land",
       "mean_delta_fe": 1652.95,
+      "pct": 56.43,
       "tier": "S+",
       "decision": "keep_on_first_offer",
       "notes": [],
-      "mechanic_flags": [],
-      "pct": 56.43
+      "mechanic_flags": []
     },
     {
       "id": 35,
       "rank": 2,
       "name": "Nut Trick",
       "mean_delta_fe": 942.5,
+      "pct": 32.18,
       "tier": "S+",
       "decision": "keep_on_first_offer",
       "notes": [
         "Assume 100% of possible same-rarity 3-cog combos made. Two triples possible if 6 same-rarity cogs exist."
       ],
-      "mechanic_flags": [],
-      "pct": 32.18
+      "mechanic_flags": []
+    },
+    {
+      "id": 30,
+      "rank": 3,
+      "name": "Clockwork Roulette",
+      "mean_delta_fe": 423.87,
+      "pct": 14.47,
+      "tier": "S",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "Weighted rarity, 9% fail check per completed cog (not start-once).",
+        "New escalating voucher mechanic: 1+2+\u2026+n bonus vouchers over n cogs.",
+        "Full-send is EV-max (~424 fe); stop-at-4 is a safety line trading EV for lower variance."
+      ],
+      "mechanic_flags": [
+        "per_cog_proc",
+        "high_variance",
+        "weighted_rarity"
+      ]
     },
     {
       "id": 33,
-      "rank": 3,
+      "rank": 4,
       "name": "Clockwork Ballet Heist",
       "mean_delta_fe": 391.28,
+      "pct": 13.36,
       "tier": "S",
       "decision": "keep_on_first_offer",
       "notes": [
         "3 vouchers on last cog; each voucher 50/50 Orange or Red."
       ],
-      "mechanic_flags": [],
-      "pct": 13.36
-    },
-    {
-      "id": 30,
-      "rank": 4,
-      "name": "Clockwork Roulette",
-      "mean_delta_fe": 384.68,
-      "tier": "S",
-      "decision": "keep_on_first_offer",
-      "notes": [
-        "Positive EV only under flat 10% fail model. If fail escalates this becomes negative."
-      ],
-      "mechanic_flags": [
-        "high_variance",
-        "flat_fail_default"
-      ],
-      "pct": 13.13
+      "mechanic_flags": []
     },
     {
       "id": 32,
       "rank": 5,
       "name": "Bloody Mary",
       "mean_delta_fe": 344.17,
+      "pct": 11.75,
       "tier": "S",
       "decision": "keep_on_first_offer",
       "notes": [
         "3\u20135 Purple+ vouchers immediately. SS rating, 15s default, Mary chases after 3s."
       ],
-      "mechanic_flags": [],
-      "pct": 11.75
+      "mechanic_flags": []
     },
     {
       "id": 28,
       "rank": 6,
       "name": "All Tabs on Me",
       "mean_delta_fe": 305.18,
+      "pct": 10.42,
       "tier": "S",
       "decision": "keep_on_first_offer",
       "notes": [
         "Upgrades 1\u20132 existing cogs to Rainbow. Does not add extra cogs. 1 vs 2 upgrades split 50/50."
       ],
-      "mechanic_flags": [],
-      "pct": 10.42
+      "mechanic_flags": []
     },
     {
       "id": 21,
       "rank": 7,
       "name": "Best Doll Employee",
       "mean_delta_fe": 219.37,
+      "pct": 7.49,
       "tier": "A",
       "decision": "keep_on_first_offer",
       "notes": [
@@ -134,14 +141,14 @@
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ],
-      "pct": 7.49
+      ]
     },
     {
       "id": 20,
       "rank": 8,
       "name": "Triple Combo Bonus",
       "mean_delta_fe": 210.6,
+      "pct": 7.19,
       "tier": "A",
       "decision": "keep_on_first_offer",
       "notes": [
@@ -149,40 +156,43 @@
       ],
       "mechanic_flags": [
         "condition_always_met"
-      ],
-      "pct": 7.19
-    },
-    {
-      "id": 9,
-      "rank": 9,
-      "name": "Instant Voucher Cache",
-      "mean_delta_fe": 139.37,
-      "tier": "A",
-      "decision": "keep_on_first_offer",
-      "notes": [
-        "2\u20133 vouchers (up to Orange) immediately at start."
-      ],
-      "mechanic_flags": [],
-      "pct": 4.76
+      ]
     },
     {
       "id": 23,
-      "rank": 10,
+      "rank": 9,
       "name": "Cogwheel Gambler",
-      "mean_delta_fe": 126.76,
+      "mean_delta_fe": 153.13,
+      "pct": 5.23,
       "tier": "A",
       "decision": "keep_on_first_offer",
       "notes": [
-        "40%/+1, 20%/+2, 5%/+3 vouchers per completion. 10% chance safe early end."
+        "40%/+1, 20%/+2, 5%/+3 vouchers per completion.",
+        "9% chance per cog to safe-end early (checked per Operation Cogwheel, not start-once)."
       ],
-      "mechanic_flags": [],
-      "pct": 4.33
+      "mechanic_flags": [
+        "per_cog_proc"
+      ]
+    },
+    {
+      "id": 9,
+      "rank": 10,
+      "name": "Instant Voucher Cache",
+      "mean_delta_fe": 111.5,
+      "pct": 3.81,
+      "tier": "A",
+      "decision": "keep_on_first_offer",
+      "notes": [
+        "Exactly 2 vouchers (up to Orange) immediately at start."
+      ],
+      "mechanic_flags": []
     },
     {
       "id": 19,
       "rank": 11,
       "name": "Runaway Dancer Hunt",
       "mean_delta_fe": 94.32,
+      "pct": 3.22,
       "tier": "B",
       "decision": "keep_on_second_offer",
       "notes": [
@@ -191,55 +201,55 @@
       "mechanic_flags": [
         "per_cog_proc",
         "v1_2_corrected"
-      ],
-      "pct": 3.22
+      ]
     },
     {
       "id": 29,
       "rank": 12,
       "name": "Dolls' Hunting Ground",
       "mean_delta_fe": 93.17,
+      "pct": 3.18,
       "tier": "B",
       "decision": "keep_on_second_offer",
       "notes": [
-        "Time doubled at start. 50% per completion \u2192 extra higher-rarity voucher. Death ends run early. Extra voucher pool diluted."
+        "Time doubled at start. 50% per completion \u2192 extra higher-rarity voucher. Death ends run early."
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ],
-      "pct": 3.18
+      ]
     },
     {
       "id": 11,
       "rank": 13,
       "name": "All-or-Nothing Rating",
       "mean_delta_fe": 81.55,
+      "pct": 2.78,
       "tier": "B",
-      "decision": "reroll_if_any_reroll_remains",
+      "decision": "keep_on_second_offer",
       "notes": [
         "6 Cogwheels. Hit B \u2192 jumps to SSS rating."
       ],
-      "mechanic_flags": [],
-      "pct": 2.78
+      "mechanic_flags": []
     },
     {
       "id": 8,
       "rank": 14,
       "name": "Dual Rarity Boost",
       "mean_delta_fe": 74.03,
+      "pct": 2.53,
       "tier": "B",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "+1 rarity for 2 randomly selected Cogwheels at start."
       ],
-      "mechanic_flags": [],
-      "pct": 2.53
+      "mechanic_flags": []
     },
     {
       "id": 15,
       "rank": 15,
       "name": "Lucky Upgrade + Time",
       "mean_delta_fe": 66.8,
+      "pct": 2.28,
       "tier": "B",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
@@ -247,42 +257,42 @@
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ],
-      "pct": 2.28
+      ]
     },
     {
       "id": 17,
       "rank": 16,
       "name": "Lucky Upgrade",
-      "mean_delta_fe": 66.59,
+      "mean_delta_fe": 55.49,
+      "pct": 1.89,
       "tier": "B",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
-        "30% per completed cog \u2192 that cog's voucher upgrades +1 rarity. Independent per-cog roll."
+        "25% per completed cog \u2192 that cog's voucher upgrades +1 rarity. Independent per-cog roll."
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ],
-      "pct": 2.27
+      ]
     },
     {
       "id": 10,
       "rank": 17,
       "name": "Cogwheel Culling",
       "mean_delta_fe": 54.93,
-      "tier": "C",
+      "pct": 1.88,
+      "tier": "B",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
-        "Remove 1\u20132 Cogwheels, remaining all +1 rarity. Paired-delta logic applied."
+        "Remove 1\u20132 Cogwheels, remaining all +1 rarity."
       ],
-      "mechanic_flags": [],
-      "pct": 1.88
+      "mechanic_flags": []
     },
     {
       "id": 16,
       "rank": 18,
       "name": "Rare Bonus Voucher",
       "mean_delta_fe": 49.06,
+      "pct": 1.67,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
@@ -290,14 +300,14 @@
       ],
       "mechanic_flags": [
         "per_cog_proc"
-      ],
-      "pct": 1.67
+      ]
     },
     {
       "id": 27,
       "rank": 19,
       "name": "Late-Game Bonus",
       "mean_delta_fe": 39.9,
+      "pct": 1.36,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
@@ -306,92 +316,95 @@
       "mechanic_flags": [
         "per_cog_proc",
         "v1_2_corrected"
-      ],
-      "pct": 1.36
+      ]
     },
     {
       "id": 2,
       "rank": 20,
       "name": "Single Rarity Boost",
       "mean_delta_fe": 36.92,
+      "pct": 1.26,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "+1 rarity for 1 randomly selected Cogwheel at start."
       ],
-      "mechanic_flags": [],
-      "pct": 1.26
+      "mechanic_flags": []
     },
     {
       "id": 1,
       "rank": 21,
       "name": "Starter Voucher",
       "mean_delta_fe": 31.83,
+      "pct": 1.09,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "Immediately obtain 1 Blue Cogwheel Voucher at start."
       ],
-      "mechanic_flags": [],
-      "pct": 1.09
+      "mechanic_flags": []
     },
     {
       "id": 3,
       "rank": 22,
       "name": "Every-4th Bonus",
       "mean_delta_fe": 31.57,
+      "pct": 1.08,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "Every 4 completions \u2192 1 extra Blue Voucher."
       ],
-      "mechanic_flags": [],
-      "pct": 1.08
+      "mechanic_flags": []
     },
     {
       "id": 14,
       "rank": 23,
       "name": "Time Extender",
       "mean_delta_fe": 16.83,
+      "pct": 0.57,
       "tier": "C",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "1 Time Extender in stage."
       ],
-      "mechanic_flags": [],
-      "pct": 0.57
+      "mechanic_flags": []
     },
     {
       "id": 26,
       "rank": 24,
       "name": "Rush Bonus",
       "mean_delta_fe": 0.0,
+      "pct": 0.0,
       "tier": "F",
       "decision": "reroll_if_any_reroll_remains",
       "notes": [
         "<20s remaining \u2192 30% extra voucher. Normal-play EV = 0; player does not intentionally slow cogs."
       ],
-      "mechanic_flags": [],
-      "pct": 0.0
+      "mechanic_flags": []
     }
   ],
-  "sensitivity_variants": [
-    {
-      "id": 30,
-      "name": "Clockwork Roulette (escalating fail model)",
-      "mean_delta_fe": -136.82,
-      "tier": "F",
-      "rank": null,
-      "decision": "skip",
-      "sensitivity_only": true,
-      "notes": [
-        "Under escalating fail model (10%\u219247% per cog), EV is negative. Optimal stop at cog 4."
-      ],
-      "mechanic_flags": [
-        "high_variance",
-        "escalating_fail_sensitivity"
-      ],
-      "pct": -4.67
+  "three_week_policy_projections": {
+    "hours": 90,
+    "maps_per_hour": 26.67,
+    "maps_total": 2400,
+    "prior_expected_3wk_fe": 570000,
+    "scenarios_weighted_rarity": {
+      "stop_at_4": {
+        "3wk_mean_fe": 561582,
+        "hourly_fe": 6239.8,
+        "delta_vs_prior": -8418
+      },
+      "stop_at_5": {
+        "3wk_mean_fe": 561844,
+        "hourly_fe": 6242.7,
+        "delta_vs_prior": -8156
+      },
+      "full_send": {
+        "3wk_mean_fe": 564102,
+        "hourly_fe": 6267.8,
+        "delta_vs_prior": -5898
+      }
     }
-  ]
+  }
 }
