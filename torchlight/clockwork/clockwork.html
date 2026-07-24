@@ -75,6 +75,10 @@
       <span class="kicker">Torchlight Infinite — SS12</span>
       <h1 class="display display--lg cw-page-title">Clockwork Ballet</h1>
       <p class="subtext cw-page-sub">Member Service EV rankings, reroll guidance, and setup-aware value checks for deep-space Clockwork runs.</p>
+      <div class="info-tile info-tile--gold" style="margin-top:14px;font-size:11px;line-height:1.55">
+        <span style="color:var(--gold-muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:10px">% of ceiling</span>
+        <span style="color:var(--text-muted)"> — the "100%" reference is a theoretical perfect run: 7 Rainbow compass cogwheels at SSS+clockwork_51 rating, with all Alice pactspirit procs firing and every tree bonus hitting. Probability of that is effectively zero — it's an anchor, not a goal. Real services show as low single-digit to mid-double-digit percentages of that ceiling.</span>
+      </div>
     </div>
 
     <a class="resource-card cw-cheat-card" href="cheatsheet.html" target="_blank" rel="noopener" aria-label="Open Clockwork Ballet cheat sheet">
@@ -336,7 +340,7 @@
     <p style="font-size:11px;color:var(--text-faint);margin-bottom:18px">How the EV model works for this service</p>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:14px">
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Mechanic</div>
-        Each cogwheel completion has a 40% chance for +1 extra voucher, 20% for +2, 5% for +3, and a 10% chance to immediately end the game and send you to the podium with all vouchers so far.</div>
+        Each completed cog has a 40% chance for +1 extra voucher, 20% for +2, 5% for +3, and a 9% chance to immediately end the game and send you to the podium with all vouchers so far. The 9% early-end is checked per cog (same as Roulette’s brick check).</div>
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Early End vs Full Completion</div>
         <ul style="padding-left:16px;display:flex;flex-direction:column;gap:4px">
           <li><strong style="color:var(--text-soft)">Early end (cogs 1 to n-1):</strong> Safe cashout — keep all vouchers, go to podium immediately. No wipe risk. Rating based on cogs completed — fewer cogs = lower multiplier. Podium procs (cb_59, Wasteful, Ostentatious) do NOT fire.</li>
@@ -382,46 +386,46 @@
   <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:560px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
     <button onclick="hideRouletteLightbox()" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
     <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">Clockwork Roulette — Strategy</h2>
-    <p style="font-size:11px;color:var(--text-faint);margin-bottom:18px">The math depends on which fail model is true — pick one above to see how it changes things</p>
+    <p style="font-size:11px;color:var(--text-faint);margin-bottom:18px">Season 12 mechanic: 9% brick check per completed cog, escalating voucher rewards.</p>
     <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:14px">
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Two Possible Fail Models — Unresolved</div>
-        The game says "10% fail per cog start." This could mean two very different things:
-        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:8px;margin-top:8px">
-          <div><b style="color:var(--text-soft)">Flat (10% every cog):</b> Each cog independently has a 10% fail chance — the rate itself never changes. Survival to cog 6 = 0.9⁶ = 53.1%. Under this model, EV is always positive and grows with each cog — <span style="color:var(--gold-muted)">always push to max cogs</span>.</div>
-          <div><b style="color:var(--text-soft)">Escalating (10%→47%):</b> The fail chance itself grows each cog — cog 1=10%, cog 2=19%, cog 3=27%, cog 4=34%, cog 5=41%, cog 6=47%. Survival to cog 6 drops to just 10.9%. Under this model, EV peaks around cog 4 and going to cog 6 is barely break-even — <span style="color:var(--gold-muted)">pushing to max cogs is a mistake</span>.</div>
-        </div>
-        <div style="margin-top:8px;font-size:12px;color:var(--text-faint)">Community read: going past cog 3 "feels like a coinflip," and cog 4-5+ feels progressively scarier — consistent with the escalating model (53%→35%→21%→11%) more than flat (73%→66%→59%→53%). But this is subjective and unverified. Use the dropdown above to see both.</div></div>
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">How It Works</div>
-        Each cogwheel gives you vouchers plus 1 extra random voucher, and the next cog gives +1 more than the last — so vouchers escalate fast. Each cog start has a flat 10% chance to wipe: the event ends immediately and you lose everything.</div>
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Hard Numbers</div>
+
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Mechanic</div>
+        Each completed cog grants escalating bonus vouchers: cog 1 gives +1, cog 2 gives +2, up to cog 6 giving +6 — for a total of <b style="color:var(--text-soft)">21 bonus vouchers</b> across a full 6-cog run. Every cog completion has a <b style="color:var(--text-soft)">9% chance to brick</b> the entire event (you lose everything so far). This check runs <em>every</em> cog, not just at the start.</div>
+
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Survival by Cog</div>
         <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Complete all 6 cogs:</span><span style="color:var(--orange-fire)">53% of runs</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Wipe before cog 4:</span><span style="color:var(--red-loss)">27% of runs — zero reward</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Breakeven (conservative voucher dist):</span><span style="color:var(--text-soft)">cog 4</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Breakeven (high rarity voucher dist):</span><span style="color:var(--text-soft)">cog 2</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">EV at cog 6 (conservative):</span><span style="color:var(--green-recording)">+141% of base run value</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">EV at cog 6 (high rarity):</span><span style="color:var(--green-recording)">+547% of base run value</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Survive to cog 4:</span><span style="color:var(--green-recording)">68.6%</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Survive to cog 5:</span><span style="color:var(--gold-muted)">62.4%</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Survive to cog 6:</span><span style="color:var(--orange-fire)">56.8%</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Survive to cog 7:</span><span style="color:var(--red-loss)">51.7%</span></div>
+        </div></div>
+
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Cashout Guidance</div>
+        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:8px">
+          <div><b style="color:var(--gold-bright)">Full send</b> — max EV, keeps compounding voucher rewards through cog 6+. High variance because you’re rolling the 9% brick check every cog.</div>
+          <div><b style="color:var(--gold-muted)">Stop at 5</b> — balanced greed. Locks in a meaningful chunk of the bonus vouchers before the last two brick checks. Slightly lower EV, meaningfully lower variance.</div>
+          <div><b style="color:#7dd3a0">Stop at 4</b> — safety line. Trades EV for stability; solid choice when you’re tilted or need consistent output.</div>
         </div>
-        Frequent wipes on cog 4–5 are not bad RNG. Nearly half of all Roulette runs zero out. That is the mechanic working as intended.</div>
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Why Max Cogs Is Always Correct</div>
-        Cog 6 gives 27 vouchers. Cog 3 gives 9. The runs that survive and pay out are so valuable that they more than cover the runs that wipe — mathematically, every early cashout costs EV regardless of how the run has gone so far.</div>
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">"But I'm Seeing Rainbow Vouchers — Should I Cash Out?"</div>
-        No. Seeing high rarity drops early means this is exactly the run you want to complete. Those early cogs are just the start — cog 6 on a high rarity run is where the real payout is. Cashing out at cog 3 because you already got a rainbow is leaving most of the value behind. The temptation to lock in a good start is understandable, but the math is clear: keep going.</div>
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">When It's Okay to Stop Early</div>
-        <b>Under flat:</b> stopping early is a variance-management trade — you give up EV for stability, not playing "better."<br><br>
-        <b>Under escalating:</b> stopping at the ★-marked optimal cog (shown in the table above for your gear count) isn't a trade-off at all — it IS the better play. Pushing past it loses both EV and increases variance.</div>
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Encounter Rate &amp; The Season Reality</div>
-        Roulette is a Rainbow service (~1% encounter rate). At real-world mapping rates you see it roughly once per 100 maps. At full deep-space juice a failed Roulette is a lost map — clockwork IS the map value.
-        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px;margin-top:8px">
-          <div style="color:var(--text-faint);margin-bottom:2px">When you see it — per-encounter result:</div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Goes negative (wipe):</span><span style="color:var(--red-loss)">~43% of encounters</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Floor (P10):</span><span style="color:var(--text-soft)">−1 map cost</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Average win:</span><span style="color:var(--green-recording)">+4.9× map cost profit</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Reliable positive at:</span><span style="color:var(--gold-muted)">~500 maps (93%)</span></div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Going 5+ is greed/EV mode, not safe mode. Pure EV favors full-send; risk-managed play stops at 4.</div></div>
+
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Numbers</div>
+        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Full-send EV (weighted rarity):</span><span style="color:var(--gold-bright)">≈ 424 fe</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Full-send EV (uniform rarity):</span><span style="color:var(--gold-bright)">≈ 1145 fe</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Site display uses:</span><span style="color:var(--text-soft)">weighted (conservative)</span></div>
         </div>
-        <div style="margin-top:8px;font-size:12px;color:var(--red-loss)">At ~1 encounter per 100 maps, 500 maps = ~5 Roulettes. That's roughly one full 90-day season of serious mapping before the EV advantage meaningfully materializes. The "feels like always skip" instinct is statistically valid for anyone outside streamer/nolifer territory.</div></div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Weighted rarity assumes the same voucher rarity distribution as normal cogs. Uniform-rarity is optimistic — treats each bonus voucher as equally likely to hit any rarity band.</div></div>
+
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">3-Week Projection (90h, 2400 maps)</div>
+        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Stop at 4:</span><span style="color:var(--text-soft)">~561,582 fe</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Stop at 5:</span><span style="color:var(--text-soft)">~561,844 fe</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Full send:</span><span style="color:var(--gold-bright)">~564,102 fe</span></div>
+        </div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Weighted rarity assumption. Full-send is ~2500 fe ahead of stop-at-4 over 3 weeks — meaningful, but not enormous. The gap grows under uniform rarity.</div></div>
+
       <div style="font-size:11px;color:var(--text-faint);padding-top:10px;border-top:1px solid var(--border-blue)">
-        <span style="color:var(--red-loss)">Voucher rarity distribution is unverified</span> — the difference between conservative and high rarity is dramatic and this remains the biggest unknown in the Roulette ranking. Mechanic data from the <a href="https://docs.qq.com/doc/DUFZyZFZRWnVtUVFt" target="_blank" rel="noopener" style="color:var(--blue-light)">Chinese community doc</a>.</div>
+        Model: v1.7 per-cog brick check. Voucher rarity assumption: weighted. Mechanic data from the <a href="https://docs.qq.com/doc/DUFZyZFZRWnVtUVFt" target="_blank" rel="noopener" style="color:var(--blue-light)">Chinese community doc</a> + user session sim.</div>
     </div>
   </div>
 </div>
@@ -489,7 +493,6 @@ const D9={grey:0.211,blue:0.3028,purple:0.2385,gold:0.2477};
 
 const SEASON='s12'; // S12 Lunaria — season toggle removed
 let RANKINGS=null;
-let _roulFail='flat';
 let _rdist='expected';
 let _roulExpanded=false;
 
@@ -594,20 +597,14 @@ function ege(dist){return Object.entries(dist).reduce((s,[r,p])=>s+p*gev(r),0);}
 function ug(n){return n*Object.entries(DIST).reduce((s,[r,p])=>s+p*(gev(r1u(r))-gev(r)),0);}
 
 
-function roulSurvival(cog,failModel){
-  // Flat: each cog independently 10% fail, survival = 0.9^cog
-  // Escalating: fail rate itself grows — cog k fail = 1-0.9^k
-  if(failModel==='escalating'){
-    let p=1;
-    for(let k=1;k<=cog;k++)p*=(0.9**k);
-    return p;
-  }
-  return Math.pow(0.90,cog);
+function roulSurvival(cog){
+  // v1.7: 9% brick check per completed cog, independent — survival = 0.91^cog
+  return Math.pow(0.91,cog);
 }
-function roulEV(cog,n,rdist,base,failModel){
+function roulEV(cog,n,rdist,base){
   const theorBase=bge()*n*MULT[n];
   let tv=0;for(let k=1;k<=cog;k++)tv+=1+k;
-  const ps=roulSurvival(cog,failModel);
+  const ps=roulSurvival(cog);
   const raw=ps*tv*ege(rdist)*(MULT[cog]||1.2)-theorBase;
   return(raw/theorBase)*base;
 }
@@ -636,72 +633,43 @@ function roulBlock(gearsVal,rdist,base){
   const isAvg=gearsVal==='avg',gl=isAvg?[5,6,7]:[parseInt(gearsVal)];
   const maxCog=isAvg?6:parseInt(gearsVal);
   const dl=rdist===RDIST_HIGH?'high rarity (observed, unverified)':'expected (conservative)';
-  const failModel=_roulFail;
-  const isEsc=failModel==='escalating';
 
-  // Survival to max cog, encounter table values, headline guidance
-  const pSurvMax=roulSurvival(maxCog,failModel);
-  let evMax=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(maxCog,n,rdist,base,failModel),0):roulEV(maxCog,parseInt(gearsVal),rdist,base,failModel);
+  const pSurvMax=roulSurvival(maxCog);
+  const evMax=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(maxCog,n,rdist,base),0):roulEV(maxCog,parseInt(gearsVal),rdist,base);
 
   // Find optimal cashout cog (highest EV across 1..maxCog)
   let bestCog=maxCog,bestEV=evMax;
   for(let c=1;c<maxCog;c++){
-    const e=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(c,n,rdist,base,failModel),0):roulEV(c,parseInt(gearsVal),rdist,base,failModel);
+    const e=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(c,n,rdist,base),0):roulEV(c,parseInt(gearsVal),rdist,base);
     if(e>bestEV){bestEV=e;bestCog=c;}
   }
-  const headline=isEsc
-    ? (bestCog<maxCog
-        ? `<span style="color:var(--gold-muted)">Math says: cash out at cog ${bestCog}, not max</span>`
-        : `<span style="color:var(--gold-muted)">Math says: still go to max cogs</span>`)
-    : `<span style="color:var(--gold-muted)">Math says: always go to max cogs</span>`;
-  const failDesc=isEsc
-    ? 'Escalating 10%→47% fail per cog (cog k fail = 1−0.9^k, compounding risk grows each cog)'
-    : 'Flat 10% fail per cog survival = 0.9^cog)';
+  const headline=`<span style="color:var(--gold-muted)">Math says: full-send — EV grows every cog</span>`;
+  const failDesc='9% brick check per completed cog (survival = 0.91^cog)';
 
-  let h=`<div class="roul-block"><div class="roul-header">Dist: <span style="color:#a78bfa">${dl}</span> · ${failDesc} · Fail = entire event ends · ${headline} <button onclick="showRouletteLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:10px;cursor:pointer;padding:0;margin-left:4px">why? ↗</button></div>`;
-
-  // Encounter reality table - values differ by fail model
-  const encRows=isEsc
-    ? [['50','~0.5','--red-loss','~5% — nearly always negative'],
-       ['100','~1','--red-loss','~10% — still mostly negative'],
-       ['500','~5','--orange-fire','~42% — still a coin flip'],
-       ['1000','~10','--gold-muted','~52% — barely above 50/50']]
-    : [['50','~0.5','--red-loss','~20% — most sessions zero'],
-       ['100','~1','--orange-fire','~41% — coin flip'],
-       ['500','~5','--gold-muted','~93% — ~1 full season'],
-       ['1000','~10','--green-recording','~99% — multiple seasons']];
+  let h=`<div class="roul-block"><div class="roul-header">Dist: <span style="color:#a78bfa">${dl}</span> · ${failDesc} · Brick = entire event ends · ${headline} <button onclick="showRouletteLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:10px;cursor:pointer;padding:0;margin-left:4px">why? ↗</button></div>`;
 
   const wipeRate=((1-pSurvMax)*100).toFixed(0);
-  const survBoxColor=isEsc?'rgba(220,38,38,0.12)':'rgba(220,38,38,0.08)';
-  const survBoxBorder=isEsc?'rgba(220,38,38,0.35)':'rgba(220,38,38,0.25)';
 
-  h+=`<div style="background:${survBoxColor};border:1px solid ${survBoxBorder};border-radius:var(--radius);padding:8px 10px;margin:6px 0">
-    <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Encounter Reality (~1 per 100 maps · ${wipeRate}% wipe rate to cog ${maxCog})</div>
-    <div style="display:grid;grid-template-columns:60px 70px 1fr;gap:2px 10px;font-size:11px;margin-bottom:5px">
-      <span style="color:var(--text-faint)">Maps</span><span style="color:var(--text-faint)">Avg seen</span><span style="color:var(--text-faint)">Chance of net profit</span>
-      ${encRows.map(r=>`<span style="color:var(--text-muted)">${r[0]}</span><span style="color:var(--text-muted)">${r[1]}</span><span style="color:var(${r[2]})">${r[3]}</span>`).join('\n      ')}
+  h+=`<div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.22);border-radius:var(--radius);padding:8px 10px;margin:6px 0">
+    <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Session Reality (~1 encounter per 100 maps · ${wipeRate}% brick rate to cog ${maxCog})</div>
+    <div style="font-size:11px;color:var(--text-muted);line-height:1.5">
+      Full-send EV ≈ <b style="color:var(--gold-bright)">${evMax.toFixed(2)}</b> of theorBase (≈424 fe at typical setup). Stop at 4 is the safety line; stop at 5 is balanced greed; full-send is EV-max but high variance.
     </div>
-    <div style="font-size:10px;color:var(--red-loss)">${isEsc
-      ? `Under the escalating model, going to cog ${maxCog} is barely break-even (EV≈${evMax.toFixed(2)}). Optimal stop is cog ${bestCog} (EV≈${bestEV.toFixed(2)}). Most players will not map enough for either to feel reliable.`
-      : `EV is mathematically correct. Variance is the real problem — most players will not map enough in one season for Roulette to reliably pay off.`}</div>
   </div>`;
 
   h+=`<div class="roul-row roul-row-head"><span class="roul-cog">Cash out</span><span class="roul-p">P(survive)</span><span class="roul-ev">EV vs base</span><span class="roul-v">Vouchers</span></div>`;
   for(let cog=1;cog<=maxCog;cog++){
-    const ps=roulSurvival(cog,failModel);
+    const ps=roulSurvival(cog);
     let tv=0;for(let k=1;k<=cog;k++)tv+=1+k;
-    const ev=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(cog,n,rdist,base,failModel),0):roulEV(cog,parseInt(gearsVal),rdist,base,failModel);
-    const ec=ev>0?'pos':'neg';
+    const ev=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(cog,n,rdist,base),0):roulEV(cog,parseInt(gearsVal),rdist,base);
     const theorBaseR=bge()*maxCog*MULT[maxCog];
     const evPctR=Math.max(0,ev/theorBaseR*100);
     const tR=ev<=0?{l:'F',c:'tier-f'}:evPctR>=300?{l:'S+',c:'tier-sp'}:evPctR>=100?{l:'S',c:'tier-s'}:evPctR>=30?{l:'A',c:'tier-a'}:evPctR>=19?{l:'B',c:'tier-b'}:evPctR>=5?{l:'C',c:'tier-c'}:{l:'F',c:'tier-f'};
     const bwR=Math.min(evPctR/3,100);
-    const isBest=isEsc&&cog===bestCog?' style="background:rgba(200,164,93,0.06)"':'';
-    h+=`<div class="roul-row"${isBest}><span class="roul-cog">Cog ${cog}${isEsc&&cog===bestCog?' ★':''}</span><span class="roul-p">${(ps*100).toFixed(1)}%</span><span class="${tR.c} tier" style="font-size:12px">${tR.l}</span><div class="ev-bar-wrap"><div class="ev-bar" style="width:${bwR}px"></div></div><span class="roul-v">${tv}v</span></div>`;
+    const isBest=cog===bestCog?' style="background:rgba(200,164,93,0.06)"':'';
+    h+=`<div class="roul-row"${isBest}><span class="roul-cog">Cog ${cog}${cog===bestCog?' ★':''}</span><span class="roul-p">${(ps*100).toFixed(1)}%</span><span class="${tR.c} tier" style="font-size:12px">${tR.l}</span><div class="ev-bar-wrap"><div class="ev-bar" style="width:${bwR}px"></div></div><span class="roul-v">${tv}v</span></div>`;
   }
-  h+=`<div class="roul-note">${isEsc
-    ? `★ = EV-optimal cashout point under the escalating model. Conservative dist shown; high rarity may shift the optimal cog slightly. Roulette voucher rarity distribution is unverified — this is the biggest unknown in the ranking.`
-    : `Conservative dist: cog 4+ for positive EV at average baseline. High rarity: may be positive earlier. Roulette voucher rarity distribution is unverified — this is the biggest unknown in the ranking.`}</div>`;
+  h+=`<div class="roul-note">Weighted rarity assumed. Stop at 4 = safety, stop at 5 = balanced greed, full-send = max EV. ★ marks the EV-optimal cog. Voucher rarity distribution is the biggest unknown in the ranking.</div>`;
   return h+'</div>';
 }
 
@@ -750,8 +718,8 @@ const S12_SVCS=[
   {id:5,rarity:'blue',effect:'+30% damage for 8s per cogwheel start',tag:'combat',note:'Combat utility only'},
   {id:6,rarity:'blue',effect:'Restore 30% Life/ES per second for 9s',tag:'combat',note:'Survival utility only'},
   {id:7,rarity:'blue',effect:'50% Life/ES + 7s invincibility on fatal hit (once)',tag:'combat',note:'Survival utility only'},
-  {id:8,rarity:'blue',effect:'+1 rarity for 2 randomly selected Cogwheels'},
-  {id:9,rarity:'blue',effect:'Immediately obtain 2–3 Cogwheel Vouchers (up to Orange)'},
+  {id:8,rarity:'purple',effect:'+1 rarity for 2 randomly selected Cogwheels'},
+  {id:9,rarity:'purple',effect:'Immediately obtain 2 Cogwheel Vouchers (up to Orange)'},
   {id:10,rarity:'blue',effect:'Remove 1–2 Cogwheels, remaining all +1 rarity'},
   {id:11,rarity:'purple',effect:'6 Cogwheels. Hit B at cog 3 → jumps to SS, reaches SSS by completion',note:'Final rating SSS ×1.6 + clockwork_51 +18% additional DQ'},
   {id:13,rarity:'purple',effect:'2 Booster Drinks — touching drops extra rewards',note:'With Indulgent node: 3 drinks × 24% Runaway Dancer = 0.72 Orange vouchers avg'},
@@ -766,7 +734,7 @@ const S12_SVCS=[
   {id:27,rarity:'gold',effect:'>20s remaining → 15% extra voucher',tag:'conditional',note:'Rewards fast clears naturally'},
   {id:28,name:'All Tabs on Me',rarity:'rainbow',effect:'1–2 Rainbow Cogwheels in stage. Vouchers locked until all cogwheels done.'},
   {id:29,name:"Dolls' Hunting Ground",rarity:'rainbow',effect:'Time doubled, 50% per completion → extra higher-rarity voucher. Death ends run. Default S rating.'},
-  {id:30,name:'Clockwork Roulette',rarity:'rainbow',effect:'10% fail per cog start (compounding). Escalating bonus vouchers if survived. Fail = entire event ends.',isRoulette:true},
+  {id:30,name:'Clockwork Roulette',rarity:'rainbow',effect:'9% brick check per cog. Escalating bonus vouchers (1+2+…+n) if survived. Brick = entire event ends.',isRoulette:true},
   {id:31,name:"Roses in the No-Man's Land",rarity:'rainbow',effect:'All monsters replaced with Low-Level Doll Employees. 7 Rainbow Cogwheels only.'},
   {id:32,name:'Bloody Mary',rarity:'rainbow',effect:'3–5 Purple+ vouchers immediately. Rating SS, 15s default. Bloody Mary chases after 3s.'},
   {id:33,name:'Clockwork Ballet Heist',rarity:'rainbow',effect:'Last cogwheel: 3 Runaway Dancers appear → 1 random voucher each (up to Red)'},
@@ -818,8 +786,8 @@ function render(){
   const showCombat=document.getElementById('showz')&&document.getElementById('showz').checked;
   if(!showCombat)svcs=svcs.filter(s=>s.tier!=='F'||s.tag==='conditional'||s.tag==='builddep'||s.isRoulette||s.isID23);
   // Roulette always sorts last regardless of EV — encounter rate makes its tier misleading
-  if(sort==='ev'||sort==='tier')svcs.sort((a,b)=>(a.isRoulette?1:0)-(b.isRoulette?1:0)||a.rank-b.rank);
-  else if(sort==='rarity')svcs.sort((a,b)=>(a.isRoulette?1:0)-(b.isRoulette?1:0)||(RORD[a.rarity]||9)-(RORD[b.rarity]||9)||a.rank-b.rank);
+  if(sort==='ev'||sort==='tier')svcs.sort((a,b)=>a.rank-b.rank);
+  else if(sort==='rarity')svcs.sort((a,b)=>(RORD[a.rarity]||9)-(RORD[b.rarity]||9)||a.rank-b.rank);
   const maxEV=1; // unused in lookup mode
 
   const tagMap={combat:'<span class="svc-tag tag-combat">combat</span>',conditional:'<span class="svc-tag tag-conditional">conditional</span>',nonviable:'<span class="svc-tag tag-nonviable">not viable</span>',builddep:'<span class="svc-tag tag-builddep">build-dep</span>'};
@@ -827,7 +795,6 @@ function render(){
   // Preserve expanded state and dropdown values before clearing
   const roulExpandedBefore=tbody.querySelector('.svc-row-roulette .svc-card-detail[style*="block"]')||tbody.querySelector('.svc-row-roulette div[style*="display: block"]');
   // _roulExpanded tracks whether roulette card was open
-  const savedRoulFail=_roulFail;
   // _rdist is module-level, no DOM read needed
   tbody.innerHTML='';
   svcs.forEach((s,i)=>{
@@ -835,31 +802,15 @@ function render(){
     const seasonBadge=nodeSeasonal&&s.id===11?'<span style="font-size:10px;color:var(--gold-bright);margin-left:4px">★ season</span>':'';
     let bw=s.pct||0;
     if(s.isRoulette){
-      const roulFailModel=_roulFail;
-      if(roulFailModel==='escalating'){
-        // Recompute Roulette's EV under escalating model, relative to theorBase
-        const maxCogR=6; // fixed: 6 cogs current season
-        const evEsc=roulEV(maxCogR,maxCogR===6?6:parseInt(gearsValRoul),rdist,base,'escalating');
-        const theorBaseR=bge()*maxCogR*MULT[maxCogR];
-        // Convert escalating EV (in theorBase units) to fe, then to %-of-ceiling
-        const evFe=evEsc/theorBaseR*384.68; // 384.68fe = flat Roulette's theorBase-relative value
-        const CEILING=2929;
-        bw=Math.max(0,Math.round(evFe/CEILING*100*10)/10);
-        t2={l:'F',c:'tier-f'};
-      }
-    }
+          }
     const th=s.tag?tagMap[s.tag]||'':'';
     const nameHtml=(s.name?`<span class="svc-name">${s.name}</span>`:'')+seasonBadge;
     const effClass=s.name?'svc-effect':'svc-effect svc-effect-primary';
-    const rFM=_roulFail;
     const rawEffect=s.isRoulette
-      ?(rFM==='escalating'
-        ?'Escalating: 10%→47% fail per cog. EV negative at max — optimal stop at cog 4. Fail = event ends.'
-        :'Flat: 10% fail per cog. Escalating bonus vouchers if survived. Fail = event ends.')
+      ?'9% brick check per cog. Escalating bonus vouchers (1+2+…+n) if survived. Full-send EV ≈ 424 fe.'
       :(s.effect||s.desc||'');
     const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
     const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
-    const roulFailModel=_roulFail;
     const inlineWarn='';
     let extra='';
     const lbBtn=(id,label)=>`<button onclick="document.getElementById('${id}-lightbox').style.display='flex';document.body.style.overflow='hidden'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px;display:inline-flex;align-items:center;gap:4px;transition:background .15s,border-color .15s">📊 ${label} ↗</button>`;
@@ -867,7 +818,7 @@ function render(){
     if(s.id===11)extra=lbBtn('id11','why SSS matters here');
     if(s.id===29)extra=lbBtn('id29','how this is calculated');
     if(s.id===32)extra=lbBtn('id32','how this is calculated');
-    if(s.isRoulette)extra=`<button onclick="const d=this.nextElementSibling;const open=d.style.display==='none';d.style.display=open?'block':'none';_roulExpanded=open;" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px" title="Roulette breakdown">📊</button><div style="display:none"><div style="display:flex;gap:10px;flex-wrap:wrap;padding:8px 0 6px;border-bottom:1px solid var(--border-blue);margin-bottom:8px"><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Fail model</label><select id="roulFail" onchange="_roulFail=this.value;_roulExpanded=true;setTimeout(render,0)" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="flat">Flat 10%/cog</option><option value="escalating">Escalating 10%→47%</option></select></div><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Voucher dist.</label><select id="rdist" onchange="_rdist=this.value;_roulExpanded=true;setTimeout(render,0)" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="expected">Expected</option><option value="highrarity">High rarity (observed)</option></select></div></div>`+roulBlock(gearsVal,rdist,base)+`</div>`;
+    if(s.isRoulette)extra=`<button onclick="const d=this.nextElementSibling;const open=d.style.display==='none';d.style.display=open?'block':'none';_roulExpanded=open;" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px" title="Roulette breakdown">📊</button><div style="display:none"><div style="display:flex;gap:10px;flex-wrap:wrap;padding:8px 0 6px;border-bottom:1px solid var(--border-blue);margin-bottom:8px"><div style="display:flex;flex-direction:column;gap:3px"><label style="font-size:10px;color:var(--text-faint);letter-spacing:.03em">Voucher dist.</label><select id="rdist" onchange="_rdist=this.value;_roulExpanded=true;setTimeout(render,0)" style="background:var(--bg-card);border:1px solid var(--border-blue);color:var(--text-primary);padding:6px 10px;border-radius:var(--radius);font-family:var(--font-body);font-size:11px;outline:none"><option value="expected">Expected</option><option value="highrarity">High rarity (observed)</option></select></div></div>`+roulBlock(gearsVal,rdist,base)+`</div>`;
     if(s.isID23)extra=`<button onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'" style="background:rgba(200,164,93,0.08);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius-sm);color:var(--gold-muted);font-size:10px;font-weight:600;cursor:pointer;padding:4px 10px;margin-top:6px">📊 show outcome breakdown ▾</button><div style="display:none">`+id23Block(gearsVal,base,nodeWasteful,nodeOstentatious,nodeCb59)+`</div>`;
     if(s.id===35){const nt=NUT[parseInt(gearsVal)]||NUT[6];extra=`<div class="svc-info">P(0 proc): ${(nt.p0*100).toFixed(1)}% · P(1 proc): ${(nt.p1*100).toFixed(1)}% · P(2 procs): ${(nt.p2*100).toFixed(1)}%</div>`+lbBtn('id35','how this is calculated');}
     const TIER_DESCS={'S+':'Best ceiling services — these define the run.','S':'Strong picks — take if S+ isn\'t offered.','A':'Solid value — good when S/S+ aren\'t available.','B':'Interchangeable — pick whatever\'s offered.','C':'Low value — only if nothing better is available.','F':'Skip — negative or negligible EV.'};
@@ -886,7 +837,7 @@ function render(){
         ${extra}
         <div class="svc-meta">
           <span class="tag-stat ${RCLS[s.rarity]||'badge-blue'}">${RLABEL[s.rarity]||s.rarity}</span>
-          <span class="${t2.c} tier svc-tier-badge">${t2.l}${s.isRoulette?'*':''}</span>
+          <span class="${t2.c} tier svc-tier-badge">${t2.l}</span>
           ${roulNote}
         </div>
       </div>
@@ -897,12 +848,7 @@ function render(){
       </div>
     `;
     tbody.appendChild(tr);
-    if(s.isRoulette){
-      const sep=document.createElement('div');
-      sep.className='tier-banner tier-banner--roulette';
-      sep.innerHTML=`<span class="tier-banner__label" style="color:var(--red-loss)">Clockwork Roulette</span><span class="tier-banner__desc">High variance — tap 📊 for model details</span>`;
-      tbody.insertBefore(sep,tr);
-    } else if(i===0||svcs[i-1].tier!==s.tier||(i>0&&svcs[i-1].isRoulette)){
+    if(i===0||svcs[i-1].tier!==s.tier){
       const sep=document.createElement('div');
       sep.className='tier-banner';
       sep.style.cssText=`border-top-color:${TIER_COLORS[s.tier]||'var(--border-soft)'}`;
@@ -911,12 +857,9 @@ function render(){
     }
   });
 
-  const roulFailModelFoot=_roulFail;
   const roulFootEl=document.getElementById('roul-footnote');
   if(roulFootEl){
-    roulFootEl.innerHTML=roulFailModelFoot==='escalating'
-      ? `* Under the escalating fail model, Roulette's EV at max cogs is barely break-even — pushing to max cogs is a mistake, not just high-variance. Sorted last regardless of tier — see breakdown for the optimal cashout point.`
-      : `* Roulette's per-encounter EV is mathematically correct, but at ~1 encounter per 100 maps the tier is misleading within a single season. Sorted last regardless of tier — see breakdown for the full picture.`;
+    roulFootEl.innerHTML=`Clockwork Roulette (rank 3) has a 9% brick check per completed cog. Full-send EV ≈ 424 fe (weighted rarity). Stop at 4 = safety line, full send = max EV.`;
   }
 
   // ── Reroll recommendation ──────────────────────────────────────────────
@@ -931,9 +874,7 @@ function render(){
       if(detail) detail.style.display='block';
     }
     _roulExpanded=false;
-    // Restore dropdown selected values in the newly built card
-    const rf=document.getElementById('roulFail');
-    if(rf&&rf.value!==_roulFail) rf.value=_roulFail;
+    // Restore rdist dropdown value in the newly built card
     const rd=document.getElementById('rdist');
     if(rd&&rd.value!==_rdist) rd.value=_rdist;
   }

@@ -16,47 +16,167 @@
 <link rel="preload" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'" />
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&display=swap" /></noscript>
 <style>
-  body{background:var(--bg-void);color:var(--text-primary);font-family:var(--font-body);font-size:13px;margin:0;padding:14px;max-width:380px}
+  body{background:var(--bg-void);color:var(--text-primary);font-family:var(--font-body);font-size:13px;margin:0;padding:14px;max-width:400px}
   .cs-hdr{margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border-soft);display:flex;justify-content:space-between;align-items:baseline}
   .cs-title{font-family:var(--font-display);font-size:14px;color:var(--gold-primary);font-weight:700;letter-spacing:.03em}
   .cs-back{font-size:10px;color:var(--text-faint);text-decoration:none}
   .cs-back:hover{color:var(--gold-muted)}
 
-  .cs-rule-block{margin-bottom:10px;padding:8px 10px;background:rgba(200,164,93,0.04);border:1px solid var(--border-soft);border-radius:6px}
-  .cs-rule-hdr{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--gold-muted);margin-bottom:4px}
-  .cs-rule-text{font-size:11px;color:var(--text-soft);line-height:1.5}
-  .cs-rule-keep{color:#7dd3a0;font-weight:600}
-  .cs-rule-reroll{color:#60a5fa;font-weight:600}
+  .cs-selector{background:rgba(200,164,93,0.04);border:1px solid var(--border-soft);border-radius:8px;padding:10px;margin-bottom:12px}
+  .cs-selector-hdr{font-size:10px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;color:var(--gold-muted);margin-bottom:4px}
+  .cs-selector-sub{font-size:10px;color:var(--text-faint);margin-bottom:8px;line-height:1.4}
+  .cs-pills{display:flex;gap:6px}
+  .cs-pill{flex:1;padding:8px 4px;background:var(--bg-card);border:1px solid var(--border-blue);border-radius:6px;color:var(--text-soft);font-family:var(--font-body);font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center}
+  .cs-pill:hover{border-color:var(--gold-muted);color:var(--gold-bright)}
+  .cs-pill.active{background:rgba(200,164,93,0.12);border-color:var(--gold-primary);color:var(--gold-bright)}
+  .cs-pill-num{font-family:var(--font-display);font-size:18px;font-weight:700;display:block;line-height:1}
+  .cs-pill-sub{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint);margin-top:2px}
+  .cs-pill.active .cs-pill-sub{color:var(--gold-muted)}
 
-  .cs-section{margin-bottom:8px}
+  .cs-section{margin-bottom:10px}
   .cs-section-hdr{
     font-size:9px;text-transform:uppercase;letter-spacing:.12em;font-weight:700;
-    padding:4px 8px;border-radius:4px;margin-bottom:4px;display:flex;align-items:baseline;gap:6px;
+    padding:5px 10px;border-radius:4px;margin-bottom:5px;display:flex;align-items:baseline;gap:6px;
     background:rgba(140,165,210,0.08);
   }
   .cs-section-hdr .lbl{color:var(--text-faint)}
-  .cs-section-hdr .sub{font-size:9px;font-weight:400;color:var(--text-faint);letter-spacing:.04em;text-transform:none}
+  .cs-section-hdr .sub{font-size:9px;font-weight:400;color:var(--text-faint);letter-spacing:.04em;text-transform:none;margin-left:auto}
   .cs-section-hdr.keep{background:rgba(125,211,160,0.08)}
   .cs-section-hdr.keep .lbl{color:#7dd3a0}
+  .cs-section-hdr.consider{background:rgba(200,164,93,0.08)}
+  .cs-section-hdr.consider .lbl{color:var(--gold-bright)}
   .cs-section-hdr.reroll{background:rgba(96,165,250,0.06)}
   .cs-section-hdr.reroll .lbl{color:#60a5fa}
+  .cs-section-hdr.forced{background:rgba(216,90,78,0.05)}
+  .cs-section-hdr.forced .lbl{color:var(--red-loss)}
 
-  .cs-row{padding:2px 8px;font-size:12px;line-height:1.5;border-left:2px solid transparent;padding-left:8px}
+  .cs-row{padding:3px 8px 3px 10px;font-size:12px;line-height:1.5;border-left:2px solid transparent;display:flex;align-items:baseline;gap:8px}
+  .cs-row .rank{font-size:10px;color:var(--text-faint);min-width:16px;font-variant-numeric:tabular-nums}
+  .cs-row .body{flex:1}
   .cs-row.rainbow{color:#F4F6FB;border-left-color:#ff9ef5}
   .cs-row.gold{color:#f0dcae;border-left-color:var(--gold-bright)}
   .cs-row.purple{color:#cfc4f9;border-left-color:#a78bfa}
   .cs-row.blue{color:#bcd2f5;border-left-color:#60a5fa}
 
   .cs-roul{margin-top:10px;padding:6px 8px;background:rgba(216,90,78,0.06);border:1px solid rgba(216,90,78,0.15);border-radius:6px;font-size:10px;color:var(--red-loss);line-height:1.4}
-
-  .cs-legend{display:flex;gap:12px;font-size:9px;color:var(--text-faint);margin-top:10px;padding-top:8px;border-top:1px solid var(--border-blue);flex-wrap:wrap}
-  .cs-legend span{display:flex;align-items:center;gap:4px}
-  .cs-legend i{width:8px;height:8px;border-radius:2px;display:inline-block}
+  .cs-roul b{color:#ff9ef5}
 
   .cs-footer{margin-top:8px;font-size:9px;color:var(--text-faint);text-align:center}
   .cs-footer a{color:var(--text-faint);text-decoration:none}
   .cs-footer a:hover{color:var(--gold-muted)}
 </style>
+</head>
+<body>
+
+  <div class="cs-hdr">
+    <div class="cs-title">Clockwork Quick Ref</div>
+    <a href="/torchlight/clockwork/clockwork.html" class="cs-back">full calculator ↗</a>
+  </div>
+
+  <div class="cs-selector">
+    <div class="cs-selector-hdr">Your Alice pactspirit</div>
+    <div class="cs-selector-sub">Sets your max rerolls per Clockwork game.</div>
+    <div class="cs-pills">
+      <button class="cs-pill" data-r="0"><span class="cs-pill-num">0</span><span class="cs-pill-sub">no Alice</span></button>
+      <button class="cs-pill" data-r="1"><span class="cs-pill-num">1</span><span class="cs-pill-sub">Alice ≤5</span></button>
+      <button class="cs-pill active" data-r="2"><span class="cs-pill-num">2</span><span class="cs-pill-sub">Alice 6</span></button>
+    </div>
+  </div>
+
+  <div id="cs-content">
+    <!-- populated by JS -->
+  </div>
+
+  <div class="cs-roul">
+    <b>Clockwork Roulette</b> — 9% brick check <b>per cog</b>. Stop at 4 = safety line. Stop at 5 = balanced greed. Full-send = max EV, high variance.
+  </div>
+
+  <div class="cs-footer"><a href="/torchlight/clockwork/clockwork.html">kythik.com/torchlight/clockwork</a> — full breakdown &amp; rankings</div>
+
+<script>
+const SVCS = [
+  {rank:1,  name:"Roses in the No-Man's Land",     rarity:"rainbow", decision:"keep_on_first_offer"},
+  {rank:2,  name:"Nut Trick",                      rarity:"rainbow", decision:"keep_on_first_offer"},
+  {rank:3,  name:"Clockwork Roulette",             rarity:"rainbow", decision:"keep_on_first_offer", roulette:true},
+  {rank:4,  name:"Clockwork Ballet Heist",         rarity:"rainbow", decision:"keep_on_first_offer"},
+  {rank:5,  name:"Bloody Mary",                    rarity:"rainbow", decision:"keep_on_first_offer"},
+  {rank:6,  name:"All Tabs on Me",                 rarity:"rainbow", decision:"keep_on_first_offer"},
+  {rank:7,  name:"Best Doll Employee",             rarity:"gold",    decision:"keep_on_first_offer"},
+  {rank:8,  name:"3 in 30s → 2 Orange Vouchers",   rarity:"gold",    decision:"keep_on_first_offer"},
+  {rank:9,  name:"40%/+1, 20%/+2, 5%/+3 per cog, 9% safe-end", rarity:"gold", decision:"keep_on_first_offer"},
+  {rank:10, name:"Immediate 2 vouchers (up to Orange)", rarity:"purple", decision:"keep_on_first_offer"},
+  {rank:11, name:"15% per cog → Runaway Dancer → Orange", rarity:"gold", decision:"keep_on_second_offer"},
+  {rank:12, name:"Dolls' Hunting Ground",          rarity:"rainbow", decision:"keep_on_second_offer"},
+  {rank:13, name:"6 cogs, hit B → SSS rating",     rarity:"purple",  decision:"keep_on_second_offer"},
+  {rank:14, name:"+1 rarity for 2 random Cogwheels at start", rarity:"purple", decision:"reroll_if_any_reroll_remains"},
+  {rank:15, name:"30% per cog → +1 rarity + 10s",  rarity:"purple",  decision:"reroll_if_any_reroll_remains"},
+  {rank:16, name:"25% per cog → +1 rarity",        rarity:"purple",  decision:"reroll_if_any_reroll_remains"},
+];
+
+function row(s) {
+  return `<div class="cs-row ${s.rarity}"><span class="rank">${s.rank}</span><span class="body">${s.name}</span></div>`;
+}
+
+function render(maxRerolls) {
+  const el = document.getElementById('cs-content');
+  const firstKeeps  = SVCS.filter(s => s.decision === 'keep_on_first_offer');
+  const secondKeeps = SVCS.filter(s => s.decision === 'keep_on_second_offer');
+  const rerolls     = SVCS.filter(s => s.decision === 'reroll_if_any_reroll_remains');
+
+  if (maxRerolls === 0) {
+    // Just show the full ranked list — every offer is forced
+    el.innerHTML = `
+      <div class="cs-section">
+        <div class="cs-section-hdr forced"><span class="lbl">Every offer is forced</span><span class="sub">no rerolls — take the highest-ranked service you see</span></div>
+        ${SVCS.map(row).join('')}
+      </div>`;
+  }
+  else if (maxRerolls === 1) {
+    // First offer: reroll if best is < rank 13. Second offer: forced.
+    el.innerHTML = `
+      <div class="cs-section">
+        <div class="cs-section-hdr keep"><span class="lbl">First offer — keep any of these</span><span class="sub">≥81 fe · reroll otherwise</span></div>
+        ${firstKeeps.concat(secondKeeps).map(row).join('')}
+      </div>
+      <div class="cs-section">
+        <div class="cs-section-hdr forced"><span class="lbl">Second offer — forced, take best</span><span class="sub">no rerolls left</span></div>
+        ${rerolls.slice(0, 4).map(row).join('')}
+        <div style="font-size:10px;color:var(--text-faint);padding:4px 10px">…and any lower rank if that's what you see.</div>
+      </div>`;
+  }
+  else if (maxRerolls === 2) {
+    // First offer: reroll if best is < rank 10. Second offer: reroll if < rank 13. Third: forced.
+    el.innerHTML = `
+      <div class="cs-section">
+        <div class="cs-section-hdr keep"><span class="lbl">First offer — keep any of these</span><span class="sub">≥99 fe · reroll otherwise</span></div>
+        ${firstKeeps.map(row).join('')}
+      </div>
+      <div class="cs-section">
+        <div class="cs-section-hdr consider"><span class="lbl">Second offer — also keep these</span><span class="sub">≥81 fe · reroll otherwise</span></div>
+        ${secondKeeps.map(row).join('')}
+      </div>
+      <div class="cs-section">
+        <div class="cs-section-hdr forced"><span class="lbl">Third offer — forced, take best</span><span class="sub">no rerolls left</span></div>
+        ${rerolls.slice(0, 4).map(row).join('')}
+        <div style="font-size:10px;color:var(--text-faint);padding:4px 10px">…and any lower rank if that's what you see.</div>
+      </div>`;
+  }
+}
+
+document.querySelectorAll('.cs-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.cs-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    localStorage.setItem('clockwork_max_rerolls', pill.dataset.r);
+    render(parseInt(pill.dataset.r, 10));
+  });
+});
+
+// Restore last selection, default to 2 (Alice 6)
+const saved = localStorage.getItem('clockwork_max_rerolls') || '2';
+document.querySelectorAll('.cs-pill').forEach(p => p.classList.toggle('active', p.dataset.r === saved));
+render(parseInt(saved, 10));
+</script>
 
 <!-- Open Graph / Twitter Card / Canonical -->
 <meta property="og:title" content="Clockwork Ballet Cheat Sheet — Kythik" />
@@ -71,81 +191,6 @@
 <meta name="twitter:image" content="https://www.kythik.com/images/favicon/android-chrome-512x512.png" />
 <meta name="twitter:site" content="@kythikx" />
 <link rel="canonical" href="https://www.kythik.com/torchlight/clockwork/cheatsheet.html" />
-
-<!-- Schema.org structured data -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Article",
-  "headline": "Clockwork Ballet Cheat Sheet",
-  "description": "Quick-reference keep/reroll matrix for Torchlight Infinite's Clockwork Ballet Member Services.",
-  "author": {
-    "@type": "Person",
-    "name": "Kythik",
-    "url": "https://twitch.tv/kythikx"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Kythik",
-    "url": "https://www.kythik.com/"
-  }
-}
-</script>
-</head>
-<body>
-
-  <div class="cs-hdr">
-    <div class="cs-title">Clockwork Quick Ref</div>
-    <a href="/torchlight/clockwork/clockwork.html" class="cs-back">full calculator ↗</a>
-  </div>
-
-  <div class="cs-rule-block">
-    <div class="cs-rule-hdr">Decision Rule</div>
-    <div class="cs-rule-text">
-      <b>First offer (2 rerolls left):</b> <span class="cs-rule-keep">Keep</span> Cogwheel Gambler or better.<br>
-      <b>Second offer (1 reroll left):</b> <span class="cs-rule-keep">Keep</span> Runaway Dancer / Hunting Ground or better.<br>
-      <b>Final offer:</b> Take best available.
-    </div>
-  </div>
-
-  <div class="cs-section">
-    <div class="cs-section-hdr keep"><span class="lbl">Keep on first offer</span><span class="sub">always take these</span></div>
-    <div class="cs-row rainbow">Roses in the No-Man's Land</div>
-    <div class="cs-row rainbow">Nut Trick</div>
-    <div class="cs-row rainbow">Clockwork Ballet Heist</div>
-    <div class="cs-row rainbow">Bloody Mary</div>
-    <div class="cs-row rainbow">All Tabs on Me</div>
-    <div class="cs-row gold">Best Doll Employee</div>
-    <div class="cs-row gold">3 completions in 30s → 2 Orange Vouchers</div>
-    <div class="cs-row blue">Immediate 2-3 vouchers (up to Orange) at start</div>
-    <div class="cs-row gold">40%×+1 / 20%×+2 / 5%×+3 vouchers per completion, 10% safe-end</div>
-  </div>
-
-  <div class="cs-section">
-    <div class="cs-section-hdr keep"><span class="lbl">Keep on second offer</span><span class="sub">reroll first, keep these on the second</span></div>
-    <div class="cs-row gold">15% per cog → Runaway Dancer drops 1 Orange Voucher</div>
-    <div class="cs-row rainbow">Dolls' Hunting Ground</div>
-  </div>
-
-  <div class="cs-section">
-    <div class="cs-section-hdr reroll"><span class="lbl">Reroll if any rerolls remain</span><span class="sub">only keep on final/forced offer</span></div>
-    <div class="cs-row purple">6 Cogwheels. Hit B by cog 3 → SSS rating</div>
-    <div class="cs-row blue">+1 rarity for 2 randomly selected Cogwheels at start</div>
-    <div class="cs-row purple">30% per cog → that cog's voucher +1 rarity</div>
-  </div>
-
-  <div class="cs-roul">
-    <b>Clockwork Roulette</b> — keep on first offer under flat 10% fail model. Under escalating fail model, EV drops to negative — skip.
-  </div>
-
-  <div class="cs-legend">
-    <span><i style="background:linear-gradient(135deg,#ff9ef5,#a78bfa,#60a5fa)"></i>Rainbow</span>
-    <span><i style="background:var(--gold-bright)"></i>Gold</span>
-    <span><i style="background:#a78bfa"></i>Purple</span>
-    <span><i style="background:#60a5fa"></i>Blue</span>
-  </div>
-
-  <div class="cs-footer"><a href="/torchlight/clockwork/clockwork.html">kythik.com/torchlight/clockwork</a> — full breakdown &amp; rankings</div>
 
 <!-- Vercel Analytics -->
 <script>
