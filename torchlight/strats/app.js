@@ -1,5 +1,13 @@
 'use strict';
 
+function debounce(fn, ms) {
+  let timer;
+  return function(...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn.apply(this, args), ms);
+  };
+}
+
 let allStrategies  = [];
 let activeFilter   = 'all';
 let activeTag      = 'all';
@@ -73,7 +81,7 @@ function renderStrategies(list) {
     const eyebrow  = [zone, dateStr].filter(Boolean).join(' · ');
     const hasImg   = s.ImageURLs && s.ImageURLs.trim();
     const thumbSrc = hasImg ? s.ImageURLs.split(',')[0].trim() : getPlaceholder(s.id);
-    const imgThumb = `<div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}"><img src="${thumbSrc}" alt="Strategy screenshot" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" /></div>`;
+    const imgThumb = `<div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}"><img src="${thumbSrc}" alt="Strategy screenshot" width="360" height="170" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" /></div>`;
 
     return `<article class="card" data-id="${s.id}" onclick="openModal('${s.id}')">
       ${imgThumb}
@@ -101,7 +109,7 @@ function applyFilters() {
   renderStrategies(filtered);
 }
 
-document.getElementById('searchInput').addEventListener('input', applyFilters);
+document.getElementById('searchInput').addEventListener('input', debounce(applyFilters, 180));
 document.querySelectorAll('.pill[data-filter]').forEach(btn => {
   btn.addEventListener('click', function() {
     document.querySelectorAll('.pill[data-filter]').forEach(b => b.classList.remove('active'));
@@ -166,7 +174,7 @@ function openModal(id) {
   const tags    = s.Tags ? s.Tags.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${t}</span>`).join('') : '';
   lightboxImages = s.ImageURLs ? s.ImageURLs.split(',').map(u => u.trim()).filter(Boolean) : [];
   const images   = lightboxImages.length
-    ? `<div class="modal-images">${lightboxImages.map((u,i) => `<img src="${u}" alt="Strategy screenshot" onclick="openLightbox(${i})" loading="lazy" />`).join('')}</div>`
+    ? `<div class="modal-images">${lightboxImages.map((u,i) => `<img src="${u}" alt="Strategy screenshot" width="400" height="150" onclick="openLightbox(${i})" loading="lazy" />`).join('')}</div>`
     : '';
   const discordBtn = s.DiscordMessageURL
     ? `<a class="modal-btn modal-btn--primary" href="${s.DiscordMessageURL}" target="_blank" rel="noopener">
@@ -259,14 +267,10 @@ let featuredIndex = 0;
 let featuredTimer = null;
 
 function buildFeatured() {
-  // Manual featured first, then top voted auto-fill up to 5
-  const manual  = allStrategies.filter(s => s.Featured);
-  const voted   = allStrategies
-    .filter(s => !s.Featured)
-    .sort((a, b) => (getVotes(b.id).up - getVotes(b.id).down) - (getVotes(a.id).up - getVotes(a.id).down))
-    .slice(0, Math.max(0, 5 - manual.length));
+  // Only show manually featured strategies — no auto-fill
+  const manual = allStrategies.filter(s => s.Featured === true);
 
-  featuredList = [...manual, ...voted].slice(0, 5);
+  featuredList = manual.slice(0, 5);
 
   const section = document.getElementById('featuredSection');
   if (!featuredList.length) { section.style.display = 'none'; return; }
@@ -309,7 +313,7 @@ function renderFeatured() {
     <div class="feat-card" onclick="openModal('${s.id}')">
       <div class="feat-screenshot">
         ${screenshot
-          ? `<img src="${screenshot}" alt="Strategy screenshot" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" />`
+          ? `<img src="${screenshot}" alt="Strategy screenshot" width="600" height="280" loading="lazy" onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" />`
           : `<div class="feat-screenshot-empty"><span>No screenshot</span></div>`
         }
         <div class="feat-screenshot-fade"></div>
