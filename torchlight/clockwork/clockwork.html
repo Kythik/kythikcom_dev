@@ -628,45 +628,47 @@ function getTier(ev,theorBase){
 
 function roulBlock(gearsVal,rdist,base){
   const isAvg=gearsVal==='avg',gl=isAvg?[5,6,7]:[parseInt(gearsVal)];
-  const maxCog=isAvg?6:parseInt(gearsVal);
+  const maxCog=isAvg?7:parseInt(gearsVal);
   const dl=rdist===RDIST_HIGH?'high rarity (observed, unverified)':'expected (conservative)';
 
-  const pSurvMax=roulSurvival(maxCog);
-  const evMax=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(maxCog,n,rdist,base),0):roulEV(maxCog,parseInt(gearsVal),rdist,base);
+  // Full-send only outcomes: 5-cog, 6-cog, 7-cog
+  // v1.8 N×N: total vouchers = n normal + n*n bonus
+  const cogs=[5,6,7];
+  const evs=cogs.map(n=>{
+    const tv=n+n*n; // total vouchers (normal + N×N bonus)
+    const ps=roulSurvival(n);
+    const theorBase=bge()*n*MULT[n];
+    const raw=ps*tv*ege(rdist)*(MULT[n]||1.2)-theorBase;
+    return (raw/theorBase)*base;
+  });
+  const bestIdx=evs.indexOf(Math.max(...evs));
+  const evMax=evs[cogs.length-1]; // 7-cog full send EV
+  const theorBaseR=bge()*7*MULT[7];
 
-  // Find optimal cashout cog (highest EV across 1..maxCog)
-  let bestCog=maxCog,bestEV=evMax;
-  for(let c=1;c<maxCog;c++){
-    const e=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(c,n,rdist,base),0):roulEV(c,parseInt(gearsVal),rdist,base);
-    if(e>bestEV){bestEV=e;bestCog=c;}
-  }
-  const headline=`<span style="color:var(--gold-muted)">Math says: full-send — EV grows every cog</span>`;
-  const failDesc='9% brick check per completed cog (survival = 0.91^cog)';
+  const headline=`<span style="color:var(--gold-muted)">Math says: 7-cog full-send — the biggest payout in the minigame</span>`;
+  const failDesc='9% brick check per activation (survival = 0.91^n)';
 
-  let h=`<div class="roul-block"><div class="roul-header">Dist: <span style="color:#a78bfa">${dl}</span> · ${failDesc} · Brick = entire event ends · ${headline} <button onclick="showRouletteLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:10px;cursor:pointer;padding:0;margin-left:4px">why? ↗</button></div>`;
-
-  const wipeRate=((1-pSurvMax)*100).toFixed(0);
+  let h=`<div class="roul-block"><div class="roul-header">Dist: <span style="color:#a78bfa">${dl}</span> · ${failDesc} · Brick = entire event ends · ${headline} <button onclick="showRouletteLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:10px;cursor:pointer;padding:0;margin-left:4px">how to play ↗</button></div>`;
 
   h+=`<div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.22);border-radius:var(--radius);padding:8px 10px;margin:6px 0">
-    <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Session Reality (~1 encounter per 100 maps · ${wipeRate}% brick rate to cog ${maxCog})</div>
+    <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Session Reality</div>
     <div style="font-size:11px;color:var(--text-muted);line-height:1.5">
-      Full-send EV ≈ <b style="color:var(--gold-bright)">${evMax.toFixed(2)}</b> of theorBase. <b style="color:var(--gold-bright)">Full-send or reroll</b> — activate all cogs first, then complete. 7-cog success is the biggest payout in the game.
+      Biggest possible payout in the minigame — but a coinflip (52–62%) to actually see it. <b style="color:var(--gold-bright)">Full-send or reroll</b> — activate all cogs first, then complete. Partial commits lose the escalating bonus.
     </div>
   </div>`;
 
-  h+=`<div class="roul-row roul-row-head"><span class="roul-cog">Cash out</span><span class="roul-p">P(survive)</span><span class="roul-ev">EV vs base</span><span class="roul-v">Vouchers</span></div>`;
-  for(let cog=1;cog<=maxCog;cog++){
-    const ps=roulSurvival(cog);
-    let tv=0;for(let k=1;k<=cog;k++)tv+=1+k;
-    const ev=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(cog,n,rdist,base),0):roulEV(cog,parseInt(gearsVal),rdist,base);
-    const theorBaseR=bge()*maxCog*MULT[maxCog];
+  h+=`<div class="roul-row roul-row-head"><span class="roul-cog">Full send</span><span class="roul-p">P(survive)</span><span class="roul-ev">EV vs base</span><span class="roul-v">Vouchers</span></div>`;
+  cogs.forEach((n,i)=>{
+    const ps=roulSurvival(n);
+    const tv=n+n*n;
+    const ev=evs[i];
     const evPctR=Math.max(0,ev/theorBaseR*100);
     const tR=ev<=0?{l:'F',c:'tier-f'}:evPctR>=300?{l:'S+',c:'tier-sp'}:evPctR>=100?{l:'S',c:'tier-s'}:evPctR>=30?{l:'A',c:'tier-a'}:evPctR>=19?{l:'B',c:'tier-b'}:evPctR>=5?{l:'C',c:'tier-c'}:{l:'F',c:'tier-f'};
     const bwR=Math.min(evPctR/3,100);
-    const isBest=cog===bestCog?' style="background:rgba(200,164,93,0.06)"':'';
-    h+=`<div class="roul-row"${isBest}><span class="roul-cog">Cog ${cog}${cog===bestCog?' ★':''}</span><span class="roul-p">${(ps*100).toFixed(1)}%</span><span class="${tR.c} tier" style="font-size:12px">${tR.l}</span><div class="ev-bar-wrap"><div class="ev-bar" style="width:${bwR}px"></div></div><span class="roul-v">${tv}v</span></div>`;
-  }
-  h+=`<div class="roul-note">Activation-first N×N model. ★ marks the EV-optimal cog. Recommended play: full-send or reroll — partial commits lose the escalating bonus.</div>`;
+    const isBest=i===bestIdx?' style="background:rgba(200,164,93,0.06)"':'';
+    h+=`<div class="roul-row"${isBest}><span class="roul-cog">${n}-cog${i===bestIdx?' ★':''}</span><span class="roul-p">${(ps*100).toFixed(1)}%</span><span class="${tR.c} tier" style="font-size:12px">${tR.l}</span><div class="ev-bar-wrap"><div class="ev-bar" style="width:${bwR}px"></div></div><span class="roul-v">${tv}v</span></div>`;
+  });
+  h+=`<div class="roul-note">Activation-first N×N model — total vouchers = n + n² (7-cog = 7+49 = 56). ★ marks the EV-optimal cog count. Full-send or reroll — no half commits.</div>`;
   return h+'</div>';
 }
 
@@ -731,7 +733,7 @@ const S12_SVCS=[
   {id:27,rarity:'gold',effect:'>20s remaining → 15% extra voucher',tag:'conditional',note:'Rewards fast clears naturally'},
   {id:28,name:'All Tabs on Me',rarity:'rainbow',effect:'1–2 Rainbow Cogwheels in stage. Vouchers locked until all cogwheels done.'},
   {id:29,name:"Dolls' Hunting Ground",rarity:'rainbow',effect:'Time doubled, 50% per completion → extra higher-rarity voucher. Death ends run. Default S rating.'},
-  {id:30,name:'Clockwork Roulette',rarity:'rainbow',effect:'Activation-first: open all cogs, then complete. 7-cog full send = 56 vouchers, biggest payout in the game. 9% brick check per activation.',isRoulette:true},
+  {id:30,name:'Clockwork Roulette',rarity:'rainbow',effect:'Biggest possible payout in the minigame — but a coinflip to see it. Open all cogs first, then complete. Full-send or reroll.',isRoulette:true},
   {id:31,name:"Roses in the No-Man's Land",rarity:'rainbow',effect:'All monsters replaced with Low-Level Doll Employees. 7 Rainbow Cogwheels only.'},
   {id:32,name:'Bloody Mary',rarity:'rainbow',effect:'3–5 Purple+ vouchers immediately. Rating SS, 15s default. Bloody Mary chases after 3s.'},
   {id:33,name:'Clockwork Ballet Heist',rarity:'rainbow',effect:'Last cogwheel: 3 Runaway Dancers appear → 1 random voucher each (up to Red)'},
@@ -804,7 +806,7 @@ function render(){
     const nameHtml=(s.name?`<span class="svc-name">${s.name}</span>`:'')+seasonBadge;
     const effClass=s.name?'svc-effect':'svc-effect svc-effect-primary';
     const rawEffect=s.isRoulette
-      ?'Activation-first N×N: open all cogs first, then complete. 7-cog full send = 56 vouchers (biggest in game). Full-send or reroll — half-committing loses the bonus.'
+      ?'Biggest possible payout in the minigame — but a coinflip (52–62%) to actually see it. Open all cogs first, then complete. Full-send or reroll.'
       :(s.effect||s.desc||'');
     const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
     const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
