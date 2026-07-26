@@ -583,7 +583,15 @@
   font-variant-numeric: tabular-nums;
 }
 
-.clockwork-page .svc-ev-sub {
+.clockwork-page .svc-ev-sub-help {
+  cursor: help;
+  transition: color .15s;
+}
+.svc-ev-sub-help:hover {
+  color: var(--gold-muted);
+}
+
+.svc-ev-sub {
   font-size: 10px;
   color: var(--text-faint);
   letter-spacing: .06em;

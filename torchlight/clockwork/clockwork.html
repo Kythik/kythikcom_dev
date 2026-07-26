@@ -75,10 +75,7 @@
       <span class="kicker">Torchlight Infinite — SS12</span>
       <h1 class="display display--lg cw-page-title">Clockwork Ballet</h1>
       <p class="subtext cw-page-sub">Member Service EV rankings, reroll guidance, and setup-aware value checks for deep-space Clockwork runs.</p>
-      <div class="info-tile info-tile--gold" style="margin-top:14px;font-size:11px;line-height:1.55">
-        <span style="color:var(--gold-muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:10px">% of ceiling</span>
-        <span style="color:var(--text-muted)"> — the "100%" reference is a theoretical perfect run: 7 Rainbow compass cogwheels at SSS+clockwork_51 rating, with all Alice pactspirit procs firing and every tree bonus hitting. Probability of that is effectively zero — it's an anchor, not a goal. Real services show as low single-digit to mid-double-digit percentages of that ceiling.</span>
-      </div>
+
     </div>
 
     <a class="resource-card cw-cheat-card" href="cheatsheet.html" target="_blank" rel="noopener" aria-label="Open Clockwork Ballet cheat sheet">
@@ -427,6 +424,23 @@
   </div>
 </div>
 
+<div id="ceiling-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center" onclick="hideCeilingLightbox()">
+  <div onclick="event.stopPropagation()" class="overlay-panel" style="max-width:480px;width:100%;max-height:85vh;overflow-y:auto">
+    <button onclick="hideCeilingLightbox()" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
+    <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">What is "% of ceiling"?</h2>
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:14px">The <b style="color:var(--gold-bright)">100% ceiling</b> is a theoretical perfect run:</p>
+    <ul style="font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:14px;padding-left:20px">
+      <li>7 Rainbow compass cogwheels</li>
+      <li>SSS + clockwork_51 rating stack (1.888× multiplier)</li>
+      <li>Every Alice pactspirit proc firing</li>
+      <li>Every relevant tree node hitting</li>
+    </ul>
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:10px">Probability of that happening in any given run is effectively zero — it's an <b style="color:var(--text-soft)">anchor for comparison</b>, not a realistic goal.</p>
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6">Real services land as low single-digit to mid-double-digit percentages of that ceiling. Clockwork Roulette on a 7-cog full send can actually exceed 100% — it's the only service that can, and only ~half the time.</p>
+    <div style="font-size:10px;color:var(--text-faint);padding-top:12px;margin-top:14px;border-top:1px solid var(--border-blue)">The comparison is stable across services: higher % = more value added by that service.</div>
+  </div>
+</div>
+
 <!-- Reroll Decision Lightbox -->
 <div id="lightbox-overlay" onclick="hideLightbox()" class="overlay" style="display:none;align-items:center;justify-content:center">
   <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:560px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
@@ -567,6 +581,8 @@ function hideAliceLightbox(){
   document.getElementById('alice-lightbox').style.display='none';
   document.body.style.overflow='';
 }
+function showCeilingLightbox(){document.getElementById('ceiling-lightbox').style.display='flex';document.body.style.overflow='hidden';}
+function hideCeilingLightbox(){document.getElementById('ceiling-lightbox').style.display='none';document.body.style.overflow='';}
 function showRouletteLightbox(){
   document.getElementById('roulette-lightbox').style.display='flex';
   document.body.style.overflow='hidden';
@@ -842,7 +858,7 @@ function render(){
       </div>
       <div class="svc-ev-block">
         <span class="svc-ev-pct">${bw.toFixed(1)}%</span>
-        <span class="svc-ev-sub">of ceiling</span>
+        <span class="svc-ev-sub svc-ev-sub-help" onclick="event.stopPropagation();showCeilingLightbox()" title="What is &quot;of ceiling&quot;? Tap to learn more.">of ceiling <span style="opacity:.6;font-size:9px">ⓘ</span></span>
         <div class="ev-bar-wrap" style="width:60px;margin-top:3px"><div class="ev-bar" style="width:${Math.min(bw*0.6,60)}px"></div></div>
       </div>
     `;
