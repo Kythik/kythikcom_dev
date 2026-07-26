@@ -32,6 +32,9 @@
   .cs-pill-num{font-family:var(--font-display);font-size:18px;font-weight:700;display:block;line-height:1}
   .cs-pill-sub{font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-faint);margin-top:2px}
   .cs-pill.active .cs-pill-sub{color:var(--gold-muted)}
+  .cs-pill--sm{padding:5px 8px;font-size:11px;font-family:var(--font-display);letter-spacing:.04em}
+  .cs-selector-row{display:flex;gap:12px}
+  .cs-selector-col{flex:1;min-width:0}
 
   .cs-section{margin-bottom:10px}
   .cs-section-hdr{
@@ -74,12 +77,22 @@
   </div>
 
   <div class="cs-selector">
-    <div class="cs-selector-hdr">Your Alice pactspirit</div>
-    <div class="cs-selector-sub">Sets your max rerolls per Clockwork game.</div>
-    <div class="cs-pills">
-      <button class="cs-pill" data-r="0"><span class="cs-pill-num">0</span><span class="cs-pill-sub">no Alice</span></button>
-      <button class="cs-pill" data-r="1"><span class="cs-pill-num">1</span><span class="cs-pill-sub">Alice ≤5</span></button>
-      <button class="cs-pill active" data-r="2"><span class="cs-pill-num">2</span><span class="cs-pill-sub">Alice 6</span></button>
+    <div class="cs-selector-row">
+      <div class="cs-selector-col">
+        <div class="cs-selector-hdr">Rerolls (Alice)</div>
+        <div class="cs-pills">
+          <button class="cs-pill cs-pill--sm" data-r="0" title="No Alice">0</button>
+          <button class="cs-pill cs-pill--sm" data-r="1" title="Alice ≤5">1</button>
+          <button class="cs-pill cs-pill--sm active" data-r="2" title="Alice 6">2</button>
+        </div>
+      </div>
+      <div class="cs-selector-col">
+        <div class="cs-selector-hdr">Playstyle</div>
+        <div class="cs-pills">
+          <button class="cs-pill cs-pill--sm active" data-v="all" title="Include gamble services">Max EV</button>
+          <button class="cs-pill cs-pill--sm" data-v="low" title="Hide high-variance services (Roulette, Cogwheel Gambler, Runaway Dancer)">Consistent</button>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -87,48 +100,56 @@
     <!-- populated by JS -->
   </div>
 
-  <div class="cs-roul">
-    <b>Clockwork Roulette</b> — 9% brick check <b>per cog</b>. Stop at 4 = safety line. Stop at 5 = balanced greed. Full-send = max EV, high variance.
+  <div class="cs-roul" id="cs-roul-note">
+    <b>Clockwork Roulette</b> — each completed cog gives escalating bonus vouchers (+1, +2, +3, … up to +6 at cog 6, total 21 bonus vouchers on a full run). Every cog also rolls a 9% chance to brick the entire event.
+    <br><br>
+    <b>Activation order matters:</b> the bonus per cog is set by how many cogs are already <em>activated</em>, not completed. Activate every cog first, then clear them.
+    <br><br>
+    <b>Full-send or skip.</b> EV grows every cog you push — stopping early throws away the whole point of the service. If the variance isn't for you, take a reroll instead.
   </div>
 
   <div class="cs-footer"><a href="/torchlight/clockwork/clockwork.html">kythik.com/torchlight/clockwork</a> — full breakdown &amp; rankings</div>
 
 <script>
 const SVCS = [
-  {rank:1,  name:"Roses in the No-Man's Land",     rarity:"rainbow", decision:"keep_on_first_offer"},
-  {rank:2,  name:"Nut Trick",                      rarity:"rainbow", decision:"keep_on_first_offer"},
-  {rank:3,  name:"Clockwork Roulette",             rarity:"rainbow", decision:"keep_on_first_offer", roulette:true},
-  {rank:4,  name:"Clockwork Ballet Heist",         rarity:"rainbow", decision:"keep_on_first_offer"},
-  {rank:5,  name:"Bloody Mary",                    rarity:"rainbow", decision:"keep_on_first_offer"},
-  {rank:6,  name:"All Tabs on Me",                 rarity:"rainbow", decision:"keep_on_first_offer"},
-  {rank:7,  name:"Best Doll Employee",             rarity:"gold",    decision:"keep_on_first_offer"},
-  {rank:8,  name:"3 in 30s → 2 Orange Vouchers",   rarity:"gold",    decision:"keep_on_first_offer"},
-  {rank:9,  name:"40%/+1, 20%/+2, 5%/+3 per cog, 9% safe-end", rarity:"gold", decision:"keep_on_first_offer"},
-  {rank:10, name:"Immediate 2 vouchers (up to Orange)", rarity:"purple", decision:"keep_on_first_offer"},
-  {rank:11, name:"15% per cog → Runaway Dancer → Orange", rarity:"gold", decision:"keep_on_second_offer"},
-  {rank:12, name:"Dolls' Hunting Ground",          rarity:"rainbow", decision:"keep_on_second_offer"},
-  {rank:13, name:"6 cogs, hit B → SSS rating",     rarity:"purple",  decision:"keep_on_second_offer"},
-  {rank:14, name:"+1 rarity for 2 random Cogwheels at start", rarity:"purple", decision:"reroll_if_any_reroll_remains"},
-  {rank:15, name:"30% per cog → +1 rarity + 10s",  rarity:"purple",  decision:"reroll_if_any_reroll_remains"},
-  {rank:16, name:"25% per cog → +1 rarity",        rarity:"purple",  decision:"reroll_if_any_reroll_remains"},
+  {rank:1,  name:"Roses in the No-Man's Land",     rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
+  {rank:2,  name:"Nut Trick",                      rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
+  {rank:3,  name:"Clockwork Roulette",             rarity:"rainbow", decision:"keep_on_first_offer", roulette:true, variance:"high"},
+  {rank:4,  name:"Clockwork Ballet Heist",         rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
+  {rank:5,  name:"Bloody Mary",                    rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
+  {rank:6,  name:"All Tabs on Me",                 rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
+  {rank:7,  name:"Best Doll Employee",             rarity:"gold",    decision:"keep_on_first_offer", variance:"low"},
+  {rank:8,  name:"3 in 30s → 2 Orange Vouchers",   rarity:"gold",    decision:"keep_on_first_offer", variance:"low"},
+  {rank:9,  name:"40%/+1, 20%/+2, 5%/+3 per cog, 9% safe-end", rarity:"gold", decision:"keep_on_first_offer", variance:"high"},
+  {rank:10, name:"Immediate 2 vouchers (up to Orange)", rarity:"purple", decision:"keep_on_first_offer", variance:"low"},
+  {rank:11, name:"15% per cog → Runaway Dancer → Orange", rarity:"gold", decision:"keep_on_second_offer", variance:"high"},
+  {rank:12, name:"Dolls' Hunting Ground",          rarity:"rainbow", decision:"keep_on_second_offer", variance:"low"},
+  {rank:13, name:"6 cogs, hit B → SSS rating",     rarity:"purple",  decision:"keep_on_second_offer", variance:"low"},
+  {rank:14, name:"+1 rarity for 2 random Cogwheels at start", rarity:"purple", decision:"reroll_if_any_reroll_remains", variance:"low"},
+  {rank:15, name:"30% per cog → +1 rarity + 10s",  rarity:"purple",  decision:"reroll_if_any_reroll_remains", variance:"low"},
+  {rank:16, name:"25% per cog → +1 rarity",        rarity:"purple",  decision:"reroll_if_any_reroll_remains", variance:"low"},
 ];
 
 function row(s) {
   return `<div class="cs-row ${s.rarity}"><span class="rank">${s.rank}</span><span class="body">${s.name}</span></div>`;
 }
 
-function render(maxRerolls) {
+function render(maxRerolls, varianceMode) {
   const el = document.getElementById('cs-content');
-  const firstKeeps  = SVCS.filter(s => s.decision === 'keep_on_first_offer');
-  const secondKeeps = SVCS.filter(s => s.decision === 'keep_on_second_offer');
-  const rerolls     = SVCS.filter(s => s.decision === 'reroll_if_any_reroll_remains');
+  // Hide the Roulette note when in consistent mode (Roulette is filtered out)
+  const roulNote = document.getElementById('cs-roul-note');
+  if (roulNote) roulNote.style.display = varianceMode === 'low' ? 'none' : '';
+  const pool = varianceMode === 'low' ? SVCS.filter(s => s.variance === 'low') : SVCS;
+  const firstKeeps  = pool.filter(s => s.decision === 'keep_on_first_offer');
+  const secondKeeps = pool.filter(s => s.decision === 'keep_on_second_offer');
+  const rerolls     = pool.filter(s => s.decision === 'reroll_if_any_reroll_remains');
 
   if (maxRerolls === 0) {
     // Just show the full ranked list — every offer is forced
     el.innerHTML = `
       <div class="cs-section">
         <div class="cs-section-hdr forced"><span class="lbl">Every offer is forced</span><span class="sub">no rerolls — take the highest-ranked service you see</span></div>
-        ${SVCS.map(row).join('')}
+        ${pool.map(row).join('')}
       </div>`;
   }
   else if (maxRerolls === 1) {
@@ -163,19 +184,32 @@ function render(maxRerolls) {
   }
 }
 
-document.querySelectorAll('.cs-pill').forEach(pill => {
+let currentRerolls = parseInt(localStorage.getItem('clockwork_max_rerolls') || '2', 10);
+let currentVariance = localStorage.getItem('clockwork_variance_mode') || 'all';
+
+document.querySelectorAll('.cs-pill[data-r]').forEach(pill => {
   pill.addEventListener('click', () => {
-    document.querySelectorAll('.cs-pill').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.cs-pill[data-r]').forEach(p => p.classList.remove('active'));
     pill.classList.add('active');
+    currentRerolls = parseInt(pill.dataset.r, 10);
     localStorage.setItem('clockwork_max_rerolls', pill.dataset.r);
-    render(parseInt(pill.dataset.r, 10));
+    render(currentRerolls, currentVariance);
   });
 });
 
-// Restore last selection, default to 2 (Alice 6)
-const saved = localStorage.getItem('clockwork_max_rerolls') || '2';
-document.querySelectorAll('.cs-pill').forEach(p => p.classList.toggle('active', p.dataset.r === saved));
-render(parseInt(saved, 10));
+document.querySelectorAll('.cs-pill[data-v]').forEach(pill => {
+  pill.addEventListener('click', () => {
+    document.querySelectorAll('.cs-pill[data-v]').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    currentVariance = pill.dataset.v;
+    localStorage.setItem('clockwork_variance_mode', pill.dataset.v);
+    render(currentRerolls, currentVariance);
+  });
+});
+
+document.querySelectorAll('.cs-pill[data-r]').forEach(p => p.classList.toggle('active', p.dataset.r === String(currentRerolls)));
+document.querySelectorAll('.cs-pill[data-v]').forEach(p => p.classList.toggle('active', p.dataset.v === currentVariance));
+render(currentRerolls, currentVariance);
 </script>
 
 <!-- Open Graph / Twitter Card / Canonical -->
