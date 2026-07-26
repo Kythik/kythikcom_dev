@@ -392,6 +392,9 @@
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Mechanic</div>
         Each completed cog grants escalating bonus vouchers: cog 1 gives +1, cog 2 gives +2, up to cog 6 giving +6 — for a total of <b style="color:var(--text-soft)">21 bonus vouchers</b> across a full 6-cog run. Every cog completion has a <b style="color:var(--text-soft)">9% chance to brick</b> the entire event (you lose everything so far). This check runs <em>every</em> cog, not just at the start.</div>
 
+      <div style="background:rgba(200,164,93,0.06);border:1px solid rgba(200,164,93,0.25);border-radius:var(--radius);padding:12px 14px"><div style="font-size:11px;color:var(--gold-bright);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">⚠ Activation order matters</div>
+        Roulette works unintuitively: the bonus vouchers per cog kick in <em>after</em> completion, but the size of the bonus is determined by how many cogs have already been <b style="color:var(--text-soft)">activated</b>. For max value, first activate all the cogs you're willing to gamble on, <em>then</em> clear them. Clearing as you activate leaves value on the table.</div>
+
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Survival by Cog</div>
         <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
           <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Survive to cog 4:</span><span style="color:var(--green-recording)">68.6%</span></div>
@@ -401,12 +404,10 @@
         </div></div>
 
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Cashout Guidance</div>
-        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:8px">
-          <div><b style="color:var(--gold-bright)">Full send</b> — max EV, keeps compounding voucher rewards through cog 6+. High variance because you’re rolling the 9% brick check every cog.</div>
-          <div><b style="color:var(--gold-muted)">Stop at 5</b> — balanced greed. Locks in a meaningful chunk of the bonus vouchers before the last two brick checks. Slightly lower EV, meaningfully lower variance.</div>
-          <div><b style="color:#7dd3a0">Stop at 4</b> — safety line. Trades EV for stability; solid choice when you’re tilted or need consistent output.</div>
+        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--text-muted);line-height:1.6">
+          <b style="color:var(--gold-bright)">Full-send or skip.</b> EV grows every cog you push — the whole value of the service is in the escalating bonus vouchers. Stopping at cog 4 or 5 to "play safe" throws away the point of taking Roulette in the first place. If the 9% per-cog brick variance isn't for you, use a reroll instead of half-committing.
         </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Going 5+ is greed/EV mode, not safe mode. Pure EV favors full-send; risk-managed play stops at 4.</div></div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Stop-at-4 and stop-at-5 numbers exist in the table below for reference, but they're not recommended play — they're the EV floor if you brick partway.</div></div>
 
       <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Numbers</div>
         <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
@@ -653,7 +654,7 @@ function roulBlock(gearsVal,rdist,base){
   h+=`<div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.22);border-radius:var(--radius);padding:8px 10px;margin:6px 0">
     <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Session Reality (~1 encounter per 100 maps · ${wipeRate}% brick rate to cog ${maxCog})</div>
     <div style="font-size:11px;color:var(--text-muted);line-height:1.5">
-      Full-send EV ≈ <b style="color:var(--gold-bright)">${evMax.toFixed(2)}</b> of theorBase (≈424 fe at typical setup). Stop at 4 is the safety line; stop at 5 is balanced greed; full-send is EV-max but high variance.
+      Full-send EV ≈ <b style="color:var(--gold-bright)">${evMax.toFixed(2)}</b> of theorBase (≈424 fe at typical setup). <b style="color:var(--gold-bright)">Full-send or skip</b> — stopping early throws away the point of the service.
     </div>
   </div>`;
 
@@ -669,7 +670,7 @@ function roulBlock(gearsVal,rdist,base){
     const isBest=cog===bestCog?' style="background:rgba(200,164,93,0.06)"':'';
     h+=`<div class="roul-row"${isBest}><span class="roul-cog">Cog ${cog}${cog===bestCog?' ★':''}</span><span class="roul-p">${(ps*100).toFixed(1)}%</span><span class="${tR.c} tier" style="font-size:12px">${tR.l}</span><div class="ev-bar-wrap"><div class="ev-bar" style="width:${bwR}px"></div></div><span class="roul-v">${tv}v</span></div>`;
   }
-  h+=`<div class="roul-note">Weighted rarity assumed. Stop at 4 = safety, stop at 5 = balanced greed, full-send = max EV. ★ marks the EV-optimal cog. Voucher rarity distribution is the biggest unknown in the ranking.</div>`;
+  h+=`<div class="roul-note">Weighted rarity assumed. ★ marks the EV-optimal cog. Recommended play: full-send or reroll — half-committing loses the escalating bonus and still takes the brick risk. Voucher rarity distribution is the biggest unknown in the ranking.</div>`;
   return h+'</div>';
 }
 
@@ -859,7 +860,7 @@ function render(){
 
   const roulFootEl=document.getElementById('roul-footnote');
   if(roulFootEl){
-    roulFootEl.innerHTML=`Clockwork Roulette (rank 3) has a 9% brick check per completed cog. Full-send EV ≈ 424 fe (weighted rarity). Stop at 4 = safety line, full send = max EV.`;
+    roulFootEl.innerHTML=`Clockwork Roulette (rank 3): 9% brick check per completed cog. Full-send EV ≈ 424 fe (weighted rarity). Recommended play: full-send or skip — half-committing gives up the escalating voucher bonus while still eating the brick risk.`;
   }
 
   // ── Reroll recommendation ──────────────────────────────────────────────
