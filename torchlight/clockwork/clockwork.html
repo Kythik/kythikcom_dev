@@ -98,7 +98,7 @@
     <p style="color:#a3abbe;line-height:1.6;margin-bottom:8px"><strong style="color:#ff9ef5">S+ Tier (best ceiling):</strong> Roses in the No-Man's Land, Nut Trick</p>
     <p style="color:#a3abbe;line-height:1.6;margin-bottom:8px"><strong style="color:#a78bfa">S Tier (strong picks):</strong> Clockwork Ballet Heist, Clockwork Roulette, Bloody Mary, All Tabs on Me</p>
     <p style="color:#a3abbe;line-height:1.6;margin-bottom:8px"><strong style="color:#60a5fa">A Tier (solid value):</strong> Best Doll Employee, Triple Combo Bonus, Instant Voucher Cache, Cogwheel Gambler</p>
-    <p style="color:#a3abbe;line-height:1.6;margin-bottom:14px"><strong style="color:#c8a45d">Reroll rule:</strong> First offer keep ≥107 fe (Cogwheel Gambler or better). Second offer keep ≥86 fe (Runaway Dancer or better). Final offer: take best.</p>
+    <p style="color:#a3abbe;line-height:1.6;margin-bottom:14px"><strong style="color:#c8a45d">Reroll rule:</strong> First offer, keep Cogwheel Gambler or better. Second offer, keep Runaway Dancer / Hunting Ground or better. Final offer: take best.</p>
     <p style="color:#5e6a7d;font-size:11px"><a href="cheatsheet.html" style="color:#60a5fa">Open the cheat sheet</a> for the full keep/reroll matrix without requiring JavaScript.</p>
   </div>
 </noscript>
@@ -409,21 +409,10 @@
         </div>
         <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Stop-at-4 and stop-at-5 numbers exist in the table below for reference, but they're not recommended play — they're the EV floor if you brick partway.</div></div>
 
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Numbers</div>
-        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Full-send EV (weighted rarity):</span><span style="color:var(--gold-bright)">≈ 424 fe</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Full-send EV (uniform rarity):</span><span style="color:var(--gold-bright)">≈ 1145 fe</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Site display uses:</span><span style="color:var(--text-soft)">weighted (conservative)</span></div>
-        </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Weighted rarity assumes the same voucher rarity distribution as normal cogs. Uniform-rarity is optimistic — treats each bonus voucher as equally likely to hit any rarity band.</div></div>
-
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">3-Week Projection (90h, 2400 maps)</div>
-        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Stop at 4:</span><span style="color:var(--text-soft)">~561,582 fe</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Stop at 5:</span><span style="color:var(--text-soft)">~561,844 fe</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Full send:</span><span style="color:var(--gold-bright)">~564,102 fe</span></div>
-        </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Weighted rarity assumption. Full-send is ~2500 fe ahead of stop-at-4 over 3 weeks — meaningful, but not enormous. The gap grows under uniform rarity.</div></div>
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Rarity Model</div>
+        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;color:var(--text-muted);line-height:1.5">
+          Site display uses the <b style="color:var(--text-soft)">weighted</b> rarity assumption — same voucher rarity distribution as normal cogs. This is the conservative read. The uniform-rarity model (treating each bonus voucher as equally likely across rarity bands) gives a much higher ceiling but is optimistic without more data.
+        </div></div>
 
       <div style="font-size:11px;color:var(--text-faint);padding-top:10px;border-top:1px solid var(--border-blue)">
         Model: v1.7 per-cog brick check. Voucher rarity assumption: weighted. Mechanic data from the <a href="https://docs.qq.com/doc/DUFZyZFZRWnVtUVFt" target="_blank" rel="noopener" style="color:var(--blue-light)">Chinese community doc</a> + user session sim.</div>
@@ -654,7 +643,7 @@ function roulBlock(gearsVal,rdist,base){
   h+=`<div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.22);border-radius:var(--radius);padding:8px 10px;margin:6px 0">
     <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Session Reality (~1 encounter per 100 maps · ${wipeRate}% brick rate to cog ${maxCog})</div>
     <div style="font-size:11px;color:var(--text-muted);line-height:1.5">
-      Full-send EV ≈ <b style="color:var(--gold-bright)">${evMax.toFixed(2)}</b> of theorBase (≈424 fe at typical setup). <b style="color:var(--gold-bright)">Full-send or skip</b> — stopping early throws away the point of the service.
+      Full-send EV ≈ <b style="color:var(--gold-bright)">${evMax.toFixed(2)}</b> of theorBase. <b style="color:var(--gold-bright)">Full-send or skip</b> — stopping early throws away the point of the service.
     </div>
   </div>`;
 
@@ -808,7 +797,7 @@ function render(){
     const nameHtml=(s.name?`<span class="svc-name">${s.name}</span>`:'')+seasonBadge;
     const effClass=s.name?'svc-effect':'svc-effect svc-effect-primary';
     const rawEffect=s.isRoulette
-      ?'9% brick check per cog. Escalating bonus vouchers (1+2+…+n) if survived. Full-send EV ≈ 424 fe.'
+      ?'9% brick check per cog. Escalating bonus vouchers (1+2+…+n) if survived — full-send or skip.'
       :(s.effect||s.desc||'');
     const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
     const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
@@ -845,7 +834,7 @@ function render(){
       <div class="svc-ev-block">
         <span class="svc-ev-pct">${bw.toFixed(1)}%</span>
         <span class="svc-ev-sub">of ceiling</span>
-        <div class="ev-bar-wrap" style="width:80px;margin-top:4px"><div class="ev-bar" style="width:${Math.min(bw*0.8,80)}px"></div></div>
+        <div class="ev-bar-wrap" style="width:60px;margin-top:3px"><div class="ev-bar" style="width:${Math.min(bw*0.6,60)}px"></div></div>
       </div>
     `;
     tbody.appendChild(tr);
@@ -860,7 +849,7 @@ function render(){
 
   const roulFootEl=document.getElementById('roul-footnote');
   if(roulFootEl){
-    roulFootEl.innerHTML=`Clockwork Roulette (rank 3): 9% brick check per completed cog. Full-send EV ≈ 424 fe (weighted rarity). Recommended play: full-send or skip — half-committing gives up the escalating voucher bonus while still eating the brick risk.`;
+    roulFootEl.innerHTML=`Clockwork Roulette (rank 3): 9% brick check per completed cog. Recommended play: full-send or skip — half-committing gives up the escalating voucher bonus while still eating the brick risk.`;
   }
 
   // ── Reroll recommendation ──────────────────────────────────────────────
