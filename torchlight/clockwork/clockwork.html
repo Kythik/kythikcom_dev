@@ -857,9 +857,11 @@ function render(){
         </div>
       </div>
       <div class="svc-ev-block">
-        <span class="svc-ev-pct">${bw.toFixed(1)}%</span>
+        ${s.isRoulette
+          ? `<span class="svc-ev-pct" style="color:var(--red-loss);font-size:12px;font-weight:600;line-height:1.3;text-align:right">Jackpot<br><span style="font-size:10px;color:var(--text-faint);font-weight:400">or bust</span></span>`
+          : `<span class="svc-ev-pct">${bw.toFixed(1)}%</span>
         <span class="svc-ev-sub svc-ev-sub-help" onclick="event.stopPropagation();showCeilingLightbox()" title="What is &quot;of ceiling&quot;? Tap to learn more.">of ceiling <span style="opacity:.6;font-size:9px">ⓘ</span></span>
-        <div class="ev-bar-wrap" style="width:60px;margin-top:3px"><div class="ev-bar" style="width:${Math.min(bw*0.6,60)}px"></div></div>
+        <div class="ev-bar-wrap" style="width:60px;margin-top:3px"><div class="ev-bar" style="width:${Math.min(bw*0.6,60)}px"></div></div>`}
       </div>
     `;
     tbody.appendChild(tr);
