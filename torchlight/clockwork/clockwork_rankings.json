@@ -1,10 +1,10 @@
 {
-  "version": "clockwork_service_rankings_v1_7",
-  "generated_from": "clockwork_v17_per_cog_roulette_handoff.md",
+  "version": "clockwork_service_rankings_v1_8",
+  "generated_from": "clockwork_v18_corrected_nxn_roulette_rankings.csv",
   "default_pool": "chinese_doc_as_is",
   "rarity_model": "weighted",
   "ceiling_fe": 2929,
-  "ceiling_note": "Theoretical perfect run reference \u2014 used as 100% ceiling for display only. Actual EV values below.",
+  "ceiling_note": "Theoretical perfect run reference. Roulette 7-cog full-send with observed higher-rarity distribution can exceed this ceiling.",
   "tier_ranges": {
     "S+": "942\u20131653 fe \u2014 best ceiling services, define the run",
     "S": "305\u2013424 fe \u2014 strong picks, take if S+ not offered",
@@ -14,16 +14,15 @@
     "F": "\u22649 fe or negative \u2014 skip"
   },
   "reroll_thresholds": {
-    "first_offer_keep_fe": 99.12,
-    "second_offer_keep_fe": 81.15,
-    "start_ev_with_two_full_rerolls": 112.98,
-    "note": "First offer: keep if best \u2265 99.12 fe (Runaway Dancer / Hunting Ground or better). Second offer: keep if best \u2265 81.15 fe (All-or-Nothing Rating or better). Final offer: take best."
+    "first_offer_keep_fe": 100.55,
+    "second_offer_keep_fe": 81.98,
+    "note": "First offer: keep if best \u2265 100.55 fe. Second offer: keep if best \u2265 81.98 fe. Final offer: take best. v1.8 N\u00d7N activation-first Roulette model, weighted rarity, full-send policy."
   },
   "player_rule": {
     "first_offer": "Keep Instant Voucher Cache or better. Otherwise reroll.",
     "second_offer": "Keep Runaway Dancer / Dolls' Hunting Ground / All-or-Nothing Rating or better. Otherwise reroll.",
     "final_offer": "Take best available.",
-    "roulette_guidance": "Full-send is EV-max. Stop at 4 completed cogs is the safety line \u2014 trades EV for lower brick variance. Stop at 5 is balanced greed."
+    "roulette_guidance": "Jackpot service. Activation-first: open all cogs, THEN complete. Full-send (all 7) or reroll \u2014 half-committing wastes the escalating bonus."
   },
   "service_offer_structure": {
     "offers_per_game": 3,
@@ -47,8 +46,32 @@
   ],
   "services": [
     {
-      "id": 31,
+      "id": 30,
       "rank": 1,
+      "name": "Clockwork Roulette",
+      "mean_delta_fe": 814.98,
+      "pct": 27.82,
+      "tier": "S+",
+      "decision": "keep_or_reroll",
+      "variance_tag": "High-Variance / Jackpot",
+      "low_gamble_action": "Reroll / skip in Low-Gamble",
+      "notes": [
+        "Activation-first N\u00d7N: activate all cogs first, then complete them. Each completion pays out based on activated cog count.",
+        "7-cog full send = 56 total vouchers (7 normal + 49 bonus) \u2014 the biggest single payout in the whole minigame.",
+        "9% brick check per activation; survival to 7 activations \u2248 51.7%.",
+        "Full-send or reroll \u2014 half-committing loses the escalating bonus while still eating the brick risk."
+      ],
+      "mechanic_flags": [
+        "per_cog_proc",
+        "high_variance",
+        "jackpot",
+        "weighted_rarity",
+        "activation_first"
+      ]
+    },
+    {
+      "id": 31,
+      "rank": 2,
       "name": "Roses in the No-Man's Land",
       "mean_delta_fe": 1652.95,
       "pct": 56.43,
@@ -59,7 +82,7 @@
     },
     {
       "id": 35,
-      "rank": 2,
+      "rank": 3,
       "name": "Nut Trick",
       "mean_delta_fe": 942.5,
       "pct": 32.18,
@@ -69,25 +92,6 @@
         "Assume 100% of possible same-rarity 3-cog combos made. Two triples possible if 6 same-rarity cogs exist."
       ],
       "mechanic_flags": []
-    },
-    {
-      "id": 30,
-      "rank": 3,
-      "name": "Clockwork Roulette",
-      "mean_delta_fe": 423.87,
-      "pct": 14.47,
-      "tier": "S",
-      "decision": "keep_on_first_offer",
-      "notes": [
-        "Weighted rarity, 9% fail check per completed cog (not start-once).",
-        "New escalating voucher mechanic: 1+2+\u2026+n bonus vouchers over n cogs.",
-        "Full-send is EV-max (~424 fe); stop-at-4 is a safety line trading EV for lower variance."
-      ],
-      "mechanic_flags": [
-        "per_cog_proc",
-        "high_variance",
-        "weighted_rarity"
-      ]
     },
     {
       "id": 33,
@@ -406,5 +410,6 @@
         "delta_vs_prior": -5898
       }
     }
-  }
+  },
+  "roulette_policy": "full_send"
 }

@@ -101,20 +101,20 @@
   </div>
 
   <div class="cs-roul" id="cs-roul-note">
-    <b>Clockwork Roulette</b> — each completed cog gives escalating bonus vouchers (+1, +2, +3, … up to +6 at cog 6, total 21 bonus vouchers on a full run). Every cog also rolls a 9% chance to brick the entire event.
+    <b>Clockwork Roulette</b> — <b>Jackpot service.</b> 7-cog full send = 56 total vouchers (7 normal + 49 bonus), the biggest single payout in the minigame.
     <br><br>
-    <b>Activation order matters:</b> the bonus per cog is set by how many cogs are already <em>activated</em>, not completed. Activate every cog first, then clear them.
+    <b>Activation-first N×N:</b> activate all cogs first, THEN complete them. Each completion pays out based on activated cog count, not completed count. Clearing as you go loses most of the bonus.
     <br><br>
-    <b>Full-send or skip.</b> EV grows every cog you push — stopping early throws away the whole point of the service. If the variance isn't for you, take a reroll instead.
+    <b>Full-send or reroll.</b> Every activation rolls a 9% brick check. 7-cog survival ≈ 52%. Stopping partway throws away the escalating bonus while still eating the brick risk.
   </div>
 
   <div class="cs-footer"><a href="/torchlight/clockwork/clockwork.html">kythik.com/torchlight/clockwork</a> — full breakdown &amp; rankings</div>
 
 <script>
 const SVCS = [
-  {rank:1,  name:"Roses in the No-Man's Land",     rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
-  {rank:2,  name:"Nut Trick",                      rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
-  {rank:3,  name:"Clockwork Roulette",             rarity:"rainbow", decision:"keep_on_first_offer", roulette:true, variance:"high"},
+  {rank:1,  name:"Clockwork Roulette",             rarity:"rainbow", decision:"keep_on_first_offer", roulette:true, variance:"high"},
+  {rank:2,  name:"Roses in the No-Man's Land",     rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
+  {rank:3,  name:"Nut Trick",                      rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
   {rank:4,  name:"Clockwork Ballet Heist",         rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
   {rank:5,  name:"Bloody Mary",                    rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},
   {rank:6,  name:"All Tabs on Me",                 rarity:"rainbow", decision:"keep_on_first_offer", variance:"low"},

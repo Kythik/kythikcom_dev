@@ -75,10 +75,7 @@
       <span class="kicker">Torchlight Infinite — SS12</span>
       <h1 class="display display--lg cw-page-title">Clockwork Ballet</h1>
       <p class="subtext cw-page-sub">Member Service EV rankings, reroll guidance, and setup-aware value checks for deep-space Clockwork runs.</p>
-      <div class="info-tile info-tile--gold" style="margin-top:14px;font-size:11px;line-height:1.55">
-        <span style="color:var(--gold-muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:10px">% of ceiling</span>
-        <span style="color:var(--text-muted)"> — the "100%" reference is a theoretical perfect run: 7 Rainbow compass cogwheels at SSS+clockwork_51 rating, with all Alice pactspirit procs firing and every tree bonus hitting. Probability of that is effectively zero — it's an anchor, not a goal. Real services show as low single-digit to mid-double-digit percentages of that ceiling.</span>
-      </div>
+
     </div>
 
     <a class="resource-card cw-cheat-card" href="cheatsheet.html" target="_blank" rel="noopener" aria-label="Open Clockwork Ballet cheat sheet">
@@ -98,7 +95,7 @@
     <p style="color:#a3abbe;line-height:1.6;margin-bottom:8px"><strong style="color:#ff9ef5">S+ Tier (best ceiling):</strong> Roses in the No-Man's Land, Nut Trick</p>
     <p style="color:#a3abbe;line-height:1.6;margin-bottom:8px"><strong style="color:#a78bfa">S Tier (strong picks):</strong> Clockwork Ballet Heist, Clockwork Roulette, Bloody Mary, All Tabs on Me</p>
     <p style="color:#a3abbe;line-height:1.6;margin-bottom:8px"><strong style="color:#60a5fa">A Tier (solid value):</strong> Best Doll Employee, Triple Combo Bonus, Instant Voucher Cache, Cogwheel Gambler</p>
-    <p style="color:#a3abbe;line-height:1.6;margin-bottom:14px"><strong style="color:#c8a45d">Reroll rule:</strong> First offer keep ≥107 fe (Cogwheel Gambler or better). Second offer keep ≥86 fe (Runaway Dancer or better). Final offer: take best.</p>
+    <p style="color:#a3abbe;line-height:1.6;margin-bottom:14px"><strong style="color:#c8a45d">Reroll rule:</strong> First offer, keep Cogwheel Gambler or better. Second offer, keep Runaway Dancer / Hunting Ground or better. Final offer: take best.</p>
     <p style="color:#5e6a7d;font-size:11px"><a href="cheatsheet.html" style="color:#60a5fa">Open the cheat sheet</a> for the full keep/reroll matrix without requiring JavaScript.</p>
   </div>
 </noscript>
@@ -383,50 +380,64 @@
 
 <!-- Roulette Lightbox -->
 <div id="roulette-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center">
-  <div onclick="event.stopPropagation()" style="background:var(--bg-panel);border:1px solid var(--border-soft);border-radius:var(--radius-lg);max-width:560px;width:100%;padding:28px;position:relative;max-height:85vh;overflow-y:auto">
-    <button onclick="hideRouletteLightbox()" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
-    <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">Clockwork Roulette — Strategy</h2>
-    <p style="font-size:11px;color:var(--text-faint);margin-bottom:18px">Season 12 mechanic: 9% brick check per completed cog, escalating voucher rewards.</p>
-    <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:14px">
+  <div onclick="event.stopPropagation()" class="overlay-panel" style="max-width:580px;width:100%;max-height:85vh;overflow-y:auto">
+    <button onclick="document.getElementById('roulette-lightbox').style.display='none';document.body.style.overflow='';" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
 
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Mechanic</div>
-        Each completed cog grants escalating bonus vouchers: cog 1 gives +1, cog 2 gives +2, up to cog 6 giving +6 — for a total of <b style="color:var(--text-soft)">21 bonus vouchers</b> across a full 6-cog run. Every cog completion has a <b style="color:var(--text-soft)">9% chance to brick</b> the entire event (you lose everything so far). This check runs <em>every</em> cog, not just at the start.</div>
+    <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:6px">
+      <h2 style="font-family:var(--font-display);font-size:18px;color:var(--red-loss);margin:0">Clockwork Roulette</h2>
+      <span style="font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:var(--red-loss);font-weight:700">Jackpot Service</span>
+    </div>
+    <p style="font-size:11px;color:var(--text-faint);margin-bottom:18px">Highest possible payout in the minigame. Also the highest brick risk.</p>
 
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Survival by Cog</div>
+    <div style="background:rgba(216,90,78,0.08);border:1px solid rgba(216,90,78,0.35);border-radius:var(--radius);padding:14px 16px;margin-bottom:18px">
+      <div style="font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--red-loss);letter-spacing:.04em;margin-bottom:6px">⚠ Full-send or reroll</div>
+      <div style="font-size:12px;color:var(--text-soft);line-height:1.55">Do not stop partway. Roulette’s entire value is in the escalating bonus — stopping early throws that away while still exposing you to earlier brick risk. If you can’t commit to a full activation-first send, use a reroll instead.</div>
+    </div>
+
+    <div style="font-size:13px;color:var(--text-muted);line-height:1.7;display:flex;flex-direction:column;gap:16px">
+
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">How to play Roulette (activation-first)</div>
+        <ol style="margin:0;padding-left:20px;color:var(--text-soft)">
+          <li style="margin-bottom:4px"><b>Enter the stage.</b> Note how many cogs spawned (5, 6, or 7).</li>
+          <li style="margin-bottom:4px"><b>Activate every cog you’re willing to gamble on — don’t complete any yet.</b> Walk to each and start it.</li>
+          <li style="margin-bottom:4px"><b>Once all cogs are activated, complete them.</b> Each completion pays out based on how many cogs were <em>activated</em>, not completed.</li>
+          <li><b>Each activation rolls a 9% brick check.</b> Brick = lose the entire event.</li>
+        </ol></div>
+
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Why activation-first</div>
+        The bonus per cog is <b>N × N</b> where N = activated cogs. Completing as you activate collapses the bonus into the sequential 1+2+…+n sum, which is far less. Front-loading all activations means each of your completions pays out at the full activated-N rate.</div>
+
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Voucher counts on success</div>
         <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Survive to cog 4:</span><span style="color:var(--green-recording)">68.6%</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Survive to cog 5:</span><span style="color:var(--gold-muted)">62.4%</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Survive to cog 6:</span><span style="color:var(--orange-fire)">56.8%</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Survive to cog 7:</span><span style="color:var(--red-loss)">51.7%</span></div>
-        </div></div>
-
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Cashout Guidance</div>
-        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:8px">
-          <div><b style="color:var(--gold-bright)">Full send</b> — max EV, keeps compounding voucher rewards through cog 6+. High variance because you’re rolling the 9% brick check every cog.</div>
-          <div><b style="color:var(--gold-muted)">Stop at 5</b> — balanced greed. Locks in a meaningful chunk of the bonus vouchers before the last two brick checks. Slightly lower EV, meaningfully lower variance.</div>
-          <div><b style="color:#7dd3a0">Stop at 4</b> — safety line. Trades EV for stability; solid choice when you’re tilted or need consistent output.</div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">5-cog full send:</span><span><b style="color:var(--text-soft)">5 + 25 = 30 vouchers</b> · <span style="color:var(--green-recording)">62% survive</span></span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">6-cog full send:</span><span><b style="color:var(--text-soft)">6 + 36 = 42 vouchers</b> · <span style="color:var(--gold-muted)">57% survive</span></span></div>
+          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">7-cog full send:</span><span><b style="color:var(--gold-bright)">7 + 49 = 56 vouchers</b> · <span style="color:var(--orange-fire)">52% survive</span></span></div>
         </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Going 5+ is greed/EV mode, not safe mode. Pure EV favors full-send; risk-managed play stops at 4.</div></div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">7-cog successful full send is the largest possible payout in Clockwork Ballet — above Roses’ ceiling.</div></div>
 
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">The Numbers</div>
-        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Full-send EV (weighted rarity):</span><span style="color:var(--gold-bright)">≈ 424 fe</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Full-send EV (uniform rarity):</span><span style="color:var(--gold-bright)">≈ 1145 fe</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Site display uses:</span><span style="color:var(--text-soft)">weighted (conservative)</span></div>
-        </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Weighted rarity assumes the same voucher rarity distribution as normal cogs. Uniform-rarity is optimistic — treats each bonus voucher as equally likely to hit any rarity band.</div></div>
-
-      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">3-Week Projection (90h, 2400 maps)</div>
-        <div style="background:var(--bg-card);border-radius:var(--radius);padding:10px 12px;font-size:12px;display:flex;flex-direction:column;gap:4px">
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Stop at 4:</span><span style="color:var(--text-soft)">~561,582 fe</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Stop at 5:</span><span style="color:var(--text-soft)">~561,844 fe</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="color:var(--text-faint)">Full send:</span><span style="color:var(--gold-bright)">~564,102 fe</span></div>
-        </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--text-faint)">Weighted rarity assumption. Full-send is ~2500 fe ahead of stop-at-4 over 3 weeks — meaningful, but not enormous. The gap grows under uniform rarity.</div></div>
+      <div><div style="font-size:11px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Placement rationale</div>
+        Ranked #1 because 7-cog full-send is the highest possible outcome in the minigame. Actual expected value is bracketed by whether you get 5/6/7 cogs and whether you brick — use the Consistent cheatsheet mode if variance isn’t for you.</div>
 
       <div style="font-size:11px;color:var(--text-faint);padding-top:10px;border-top:1px solid var(--border-blue)">
-        Model: v1.7 per-cog brick check. Voucher rarity assumption: weighted. Mechanic data from the <a href="https://docs.qq.com/doc/DUFZyZFZRWnVtUVFt" target="_blank" rel="noopener" style="color:var(--blue-light)">Chinese community doc</a> + user session sim.</div>
+        v1.8 model: activation-first N×N, weighted rarity, full-send policy. Data from user session sim + <a href="https://docs.qq.com/doc/DUFZyZFZRWnVtUVFt" target="_blank" rel="noopener" style="color:var(--blue-light)">Chinese community doc</a>.</div>
     </div>
+  </div>
+</div>
+
+<div id="ceiling-lightbox" class="overlay" style="display:none;align-items:center;justify-content:center" onclick="hideCeilingLightbox()">
+  <div onclick="event.stopPropagation()" class="overlay-panel" style="max-width:480px;width:100%;max-height:85vh;overflow-y:auto">
+    <button onclick="hideCeilingLightbox()" class="overlay-close" style="position:absolute;top:16px;right:16px">✕</button>
+    <h2 style="font-family:var(--font-display);font-size:18px;color:var(--gold-primary);margin-bottom:6px">What is "% of ceiling"?</h2>
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:14px">The <b style="color:var(--gold-bright)">100% ceiling</b> is a theoretical perfect run:</p>
+    <ul style="font-size:12px;color:var(--text-muted);line-height:1.7;margin-bottom:14px;padding-left:20px">
+      <li>7 Rainbow compass cogwheels</li>
+      <li>SSS + clockwork_51 rating stack (1.888× multiplier)</li>
+      <li>Every Alice pactspirit proc firing</li>
+      <li>Every relevant tree node hitting</li>
+    </ul>
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6;margin-bottom:10px">Probability of that happening in any given run is effectively zero — it's an <b style="color:var(--text-soft)">anchor for comparison</b>, not a realistic goal.</p>
+    <p style="font-size:12px;color:var(--text-muted);line-height:1.6">Real services land as low single-digit to mid-double-digit percentages of that ceiling. Clockwork Roulette on a 7-cog full send can actually exceed 100% — it's the only service that can, and only ~half the time.</p>
+    <div style="font-size:10px;color:var(--text-faint);padding-top:12px;margin-top:14px;border-top:1px solid var(--border-blue)">The comparison is stable across services: higher % = more value added by that service.</div>
   </div>
 </div>
 
@@ -570,6 +581,8 @@ function hideAliceLightbox(){
   document.getElementById('alice-lightbox').style.display='none';
   document.body.style.overflow='';
 }
+function showCeilingLightbox(){document.getElementById('ceiling-lightbox').style.display='flex';document.body.style.overflow='hidden';}
+function hideCeilingLightbox(){document.getElementById('ceiling-lightbox').style.display='none';document.body.style.overflow='';}
 function showRouletteLightbox(){
   document.getElementById('roulette-lightbox').style.display='flex';
   document.body.style.overflow='hidden';
@@ -631,45 +644,47 @@ function getTier(ev,theorBase){
 
 function roulBlock(gearsVal,rdist,base){
   const isAvg=gearsVal==='avg',gl=isAvg?[5,6,7]:[parseInt(gearsVal)];
-  const maxCog=isAvg?6:parseInt(gearsVal);
+  const maxCog=isAvg?7:parseInt(gearsVal);
   const dl=rdist===RDIST_HIGH?'high rarity (observed, unverified)':'expected (conservative)';
 
-  const pSurvMax=roulSurvival(maxCog);
-  const evMax=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(maxCog,n,rdist,base),0):roulEV(maxCog,parseInt(gearsVal),rdist,base);
+  // Full-send only outcomes: 5-cog, 6-cog, 7-cog
+  // v1.8 N×N: total vouchers = n normal + n*n bonus
+  const cogs=[5,6,7];
+  const evs=cogs.map(n=>{
+    const tv=n+n*n; // total vouchers (normal + N×N bonus)
+    const ps=roulSurvival(n);
+    const theorBase=bge()*n*MULT[n];
+    const raw=ps*tv*ege(rdist)*(MULT[n]||1.2)-theorBase;
+    return (raw/theorBase)*base;
+  });
+  const bestIdx=evs.indexOf(Math.max(...evs));
+  const evMax=evs[cogs.length-1]; // 7-cog full send EV
+  const theorBaseR=bge()*7*MULT[7];
 
-  // Find optimal cashout cog (highest EV across 1..maxCog)
-  let bestCog=maxCog,bestEV=evMax;
-  for(let c=1;c<maxCog;c++){
-    const e=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(c,n,rdist,base),0):roulEV(c,parseInt(gearsVal),rdist,base);
-    if(e>bestEV){bestEV=e;bestCog=c;}
-  }
-  const headline=`<span style="color:var(--gold-muted)">Math says: full-send — EV grows every cog</span>`;
-  const failDesc='9% brick check per completed cog (survival = 0.91^cog)';
+  const headline=`<span style="color:var(--gold-muted)">Math says: 7-cog full-send — the biggest payout in the minigame</span>`;
+  const failDesc='9% brick check per activation (survival = 0.91^n)';
 
-  let h=`<div class="roul-block"><div class="roul-header">Dist: <span style="color:#a78bfa">${dl}</span> · ${failDesc} · Brick = entire event ends · ${headline} <button onclick="showRouletteLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:10px;cursor:pointer;padding:0;margin-left:4px">why? ↗</button></div>`;
-
-  const wipeRate=((1-pSurvMax)*100).toFixed(0);
+  let h=`<div class="roul-block"><div class="roul-header">Dist: <span style="color:#a78bfa">${dl}</span> · ${failDesc} · Brick = entire event ends · ${headline} <button onclick="showRouletteLightbox()" style="background:transparent;border:none;color:var(--blue-light);font-size:10px;cursor:pointer;padding:0;margin-left:4px">how to play ↗</button></div>`;
 
   h+=`<div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.22);border-radius:var(--radius);padding:8px 10px;margin:6px 0">
-    <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Session Reality (~1 encounter per 100 maps · ${wipeRate}% brick rate to cog ${maxCog})</div>
+    <div style="font-size:10px;color:var(--gold-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px">Session Reality</div>
     <div style="font-size:11px;color:var(--text-muted);line-height:1.5">
-      Full-send EV ≈ <b style="color:var(--gold-bright)">${evMax.toFixed(2)}</b> of theorBase (≈424 fe at typical setup). Stop at 4 is the safety line; stop at 5 is balanced greed; full-send is EV-max but high variance.
+      Biggest possible payout in the minigame — but a coinflip (52–62%) to actually see it. <b style="color:var(--gold-bright)">Full-send or reroll</b> — activate all cogs first, then complete. Partial commits lose the escalating bonus.
     </div>
   </div>`;
 
-  h+=`<div class="roul-row roul-row-head"><span class="roul-cog">Cash out</span><span class="roul-p">P(survive)</span><span class="roul-ev">EV vs base</span><span class="roul-v">Vouchers</span></div>`;
-  for(let cog=1;cog<=maxCog;cog++){
-    const ps=roulSurvival(cog);
-    let tv=0;for(let k=1;k<=cog;k++)tv+=1+k;
-    const ev=isAvg?(1/3)*gl.reduce((s,n)=>s+roulEV(cog,n,rdist,base),0):roulEV(cog,parseInt(gearsVal),rdist,base);
-    const theorBaseR=bge()*maxCog*MULT[maxCog];
+  h+=`<div class="roul-row roul-row-head"><span class="roul-cog">Full send</span><span class="roul-p">P(survive)</span><span class="roul-ev">EV vs base</span><span class="roul-v">Vouchers</span></div>`;
+  cogs.forEach((n,i)=>{
+    const ps=roulSurvival(n);
+    const tv=n+n*n;
+    const ev=evs[i];
     const evPctR=Math.max(0,ev/theorBaseR*100);
     const tR=ev<=0?{l:'F',c:'tier-f'}:evPctR>=300?{l:'S+',c:'tier-sp'}:evPctR>=100?{l:'S',c:'tier-s'}:evPctR>=30?{l:'A',c:'tier-a'}:evPctR>=19?{l:'B',c:'tier-b'}:evPctR>=5?{l:'C',c:'tier-c'}:{l:'F',c:'tier-f'};
     const bwR=Math.min(evPctR/3,100);
-    const isBest=cog===bestCog?' style="background:rgba(200,164,93,0.06)"':'';
-    h+=`<div class="roul-row"${isBest}><span class="roul-cog">Cog ${cog}${cog===bestCog?' ★':''}</span><span class="roul-p">${(ps*100).toFixed(1)}%</span><span class="${tR.c} tier" style="font-size:12px">${tR.l}</span><div class="ev-bar-wrap"><div class="ev-bar" style="width:${bwR}px"></div></div><span class="roul-v">${tv}v</span></div>`;
-  }
-  h+=`<div class="roul-note">Weighted rarity assumed. Stop at 4 = safety, stop at 5 = balanced greed, full-send = max EV. ★ marks the EV-optimal cog. Voucher rarity distribution is the biggest unknown in the ranking.</div>`;
+    const isBest=i===bestIdx?' style="background:rgba(200,164,93,0.06)"':'';
+    h+=`<div class="roul-row"${isBest}><span class="roul-cog">${n}-cog${i===bestIdx?' ★':''}</span><span class="roul-p">${(ps*100).toFixed(1)}%</span><span class="${tR.c} tier" style="font-size:12px">${tR.l}</span><div class="ev-bar-wrap"><div class="ev-bar" style="width:${bwR}px"></div></div><span class="roul-v">${tv}v</span></div>`;
+  });
+  h+=`<div class="roul-note">Activation-first N×N model — total vouchers = n + n² (7-cog = 7+49 = 56). ★ marks the EV-optimal cog count. Full-send or reroll — no half commits.</div>`;
   return h+'</div>';
 }
 
@@ -734,7 +749,7 @@ const S12_SVCS=[
   {id:27,rarity:'gold',effect:'>20s remaining → 15% extra voucher',tag:'conditional',note:'Rewards fast clears naturally'},
   {id:28,name:'All Tabs on Me',rarity:'rainbow',effect:'1–2 Rainbow Cogwheels in stage. Vouchers locked until all cogwheels done.'},
   {id:29,name:"Dolls' Hunting Ground",rarity:'rainbow',effect:'Time doubled, 50% per completion → extra higher-rarity voucher. Death ends run. Default S rating.'},
-  {id:30,name:'Clockwork Roulette',rarity:'rainbow',effect:'9% brick check per cog. Escalating bonus vouchers (1+2+…+n) if survived. Brick = entire event ends.',isRoulette:true},
+  {id:30,name:'Clockwork Roulette',rarity:'rainbow',effect:'Biggest possible payout in the minigame — but a coinflip to see it. Open all cogs first, then complete. Full-send or reroll.',isRoulette:true},
   {id:31,name:"Roses in the No-Man's Land",rarity:'rainbow',effect:'All monsters replaced with Low-Level Doll Employees. 7 Rainbow Cogwheels only.'},
   {id:32,name:'Bloody Mary',rarity:'rainbow',effect:'3–5 Purple+ vouchers immediately. Rating SS, 15s default. Bloody Mary chases after 3s.'},
   {id:33,name:'Clockwork Ballet Heist',rarity:'rainbow',effect:'Last cogwheel: 3 Runaway Dancers appear → 1 random voucher each (up to Red)'},
@@ -807,7 +822,7 @@ function render(){
     const nameHtml=(s.name?`<span class="svc-name">${s.name}</span>`:'')+seasonBadge;
     const effClass=s.name?'svc-effect':'svc-effect svc-effect-primary';
     const rawEffect=s.isRoulette
-      ?'9% brick check per cog. Escalating bonus vouchers (1+2+…+n) if survived. Full-send EV ≈ 424 fe.'
+      ?'Biggest possible payout in the minigame — but a coinflip (52–62%) to actually see it. Open all cogs first, then complete. Full-send or reroll.'
       :(s.effect||s.desc||'');
     const dispEffect=rawEffect.substring(0,120)+(rawEffect.length>120?'…':'');
     const eff=`<div class="${effClass}">${dispEffect}${th}</div>`;
@@ -843,8 +858,8 @@ function render(){
       </div>
       <div class="svc-ev-block">
         <span class="svc-ev-pct">${bw.toFixed(1)}%</span>
-        <span class="svc-ev-sub">of ceiling</span>
-        <div class="ev-bar-wrap" style="width:80px;margin-top:4px"><div class="ev-bar" style="width:${Math.min(bw*0.8,80)}px"></div></div>
+        <span class="svc-ev-sub svc-ev-sub-help" onclick="event.stopPropagation();showCeilingLightbox()" title="What is &quot;of ceiling&quot;? Tap to learn more.">of ceiling <span style="opacity:.6;font-size:9px">ⓘ</span></span>
+        <div class="ev-bar-wrap" style="width:60px;margin-top:3px"><div class="ev-bar" style="width:${Math.min(bw*0.6,60)}px"></div></div>
       </div>
     `;
     tbody.appendChild(tr);
@@ -859,7 +874,7 @@ function render(){
 
   const roulFootEl=document.getElementById('roul-footnote');
   if(roulFootEl){
-    roulFootEl.innerHTML=`Clockwork Roulette (rank 3) has a 9% brick check per completed cog. Full-send EV ≈ 424 fe (weighted rarity). Stop at 4 = safety line, full send = max EV.`;
+    roulFootEl.innerHTML=`Clockwork Roulette (rank 1): Jackpot service. Activation-first — open all cogs first, then complete. 7-cog full send = 56 vouchers (biggest in-game payout). Full-send or reroll.`;
   }
 
   // ── Reroll recommendation ──────────────────────────────────────────────
