@@ -1,5 +1,8 @@
 'use strict';
 
+// Fire API fetch immediately — runs in parallel with script parsing
+const _strategyFetch = fetch('/api/airtable');
+
 /* ── UTILS ──────────────────────────────── */
 function debounce(fn, ms) {
   let timer;
@@ -35,14 +38,13 @@ function getPlaceholder(id) {
 ══════════════════════════════════════════ */
 async function fetchStrategies() {
   try {
-    const res  = await fetch('/api/airtable');
+    const res  = await _strategyFetch;
     const data = await res.json();
     if (data.error) throw new Error(data.error);
     allStrategies = data.records || [];
 
-    buildCardCache();
+    buildCardCache(); // calls applyFilters() when done
     buildTagFilters();
-    applyFilters();
     buildFeatured();
     injectItemListSchema(allStrategies);
 
@@ -64,6 +66,8 @@ async function fetchStrategies() {
 
 /* ══════════════════════════════════════════
    CARD CACHE — build all card DOM once
+   Single pass with DocumentFragment for
+   minimal reflow and zero CLS
 ══════════════════════════════════════════ */
 function buildCardCache() {
   const grid = document.getElementById('stratGrid');
@@ -73,18 +77,18 @@ function buildCardCache() {
   const fragment = document.createDocumentFragment();
 
   allStrategies.forEach(s => {
-    const dateStr   = (s.PostedAt || s.Created)
+    const dateStr  = (s.PostedAt || s.Created)
       ? new Date(s.PostedAt || s.Created).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
       : '';
-    const zone      = s.Tags ? s.Tags.split(',')[0].trim() : (s.Channel || '');
-    const hasImg    = s.ImageURLs && s.ImageURLs.trim();
-    const thumbSrc  = hasImg ? s.ImageURLs.split(',')[0].trim() : getPlaceholder(s.id);
-    const tagsList  = s.Tags ? s.Tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+    const zone     = s.Tags ? s.Tags.split(',')[0].trim() : (s.Channel || '');
+    const hasImg   = s.ImageURLs && s.ImageURLs.trim();
+    const thumbSrc = hasImg ? s.ImageURLs.split(',')[0].trim() : getPlaceholder(s.id);
+    const tagsList = s.Tags ? s.Tags.split(',').map(t => t.trim()).filter(Boolean) : [];
 
     const el = document.createElement('article');
-    el.className    = 'card';
-    el.dataset.id   = s.id;
-    el.innerHTML = `
+    el.className  = 'card';
+    el.dataset.id = s.id;
+    el.innerHTML  = `
       <div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}">
         <img src="${thumbSrc}" alt="Strategy screenshot" width="360" height="170" loading="lazy"
              onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" />
@@ -105,7 +109,6 @@ function buildCardCache() {
         </div>
       </div>`;
 
-    // Pre-compute searchable text once
     const searchText = [s.Title, s.Body, s.Author, s.Channel, s.Tags]
       .map(v => (v || '').toLowerCase()).join(' ');
 
@@ -114,6 +117,7 @@ function buildCardCache() {
   });
 
   grid.appendChild(fragment);
+  applyFilters();
 }
 
 /* ══════════════════════════════════════════
@@ -290,10 +294,15 @@ let featuredTimer = null;
 function buildFeatured() {
   featuredList = allStrategies.filter(s => s.Featured === true).slice(0, 5);
   const section = document.getElementById('featuredSection');
-  if (!featuredList.length) { section.style.display = 'none'; return; }
-  section.style.display = 'block';
+  if (!featuredList.length) {
+    section.style.visibility = 'hidden';
+    section.style.minHeight  = '0';
+    return;
+  }
   featuredIndex = 0;
   renderFeatured();
+  section.style.visibility = 'visible';
+  section.style.minHeight  = '';
   startFeaturedTimer();
 }
 
