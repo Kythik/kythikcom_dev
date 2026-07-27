@@ -568,6 +568,10 @@
       .hub-hero-bio { font-size: 12px; }
     }
 
+      /* Reserve space for JS-rendered carousels only while empty (prevents CLS) */
+    #gameSections:empty {
+      min-height: 420px;
+    }
   </style>
 </head>
 <body>
@@ -759,10 +763,10 @@
       }, 300);
     })();
   </script>
-  <script src="/shared/header.js"></script>
-  <script src="/shared/footer.js"></script>
-  <script src="/shared/shared-carousel.js"></script>
-  <script src="/app-hub.js"></script>
+  <script src="/shared/header.js" defer></script>
+  <script src="/shared/footer.js" defer></script>
+  <script src="/shared/shared-carousel.js" defer></script>
+  <script src="/app-hub.js" defer></script>
 
   <!-- Vercel Analytics -->
   <script>
