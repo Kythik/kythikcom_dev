@@ -5253,140 +5253,104 @@ body.arcana-page .board {
 }
 
 /* ═══════════════════════════════════════════
-   ARCANA PERFORMANCE / CLS STABILITY V18
-   Arcana-owned fixes only:
-   - reserve stable space for JS-rendered board/dock
-   - reduce layout shifts from late hand/board rendering
-   - avoid painting below-fold non-critical sections until needed
-   - do not change board art, tile mechanics, or header/global images
+   ARCANA SAFE CLS STABILITY V19
+   Replaces the v18 containment pass that could hide the hand dock.
+   This reserves space without content-visibility/contain on the live board/dock.
+   Board art/logic unchanged.
    ═══════════════════════════════════════════ */
 
-/* The tool shell should reserve the expected final board footprint before JS paints tiles. */
-.arcana-page .gamePanel {
+/* Desktop/tablet shell reservation only. */
+.arcana-page .panel.gamePanel {
   min-height: 720px;
-  contain: layout paint;
 }
 
-.arcana-page .boardFrame {
+.arcana-page .panel.gamePanel .boardFrame {
   min-height: 680px;
-  contain: layout paint;
 }
 
-.arcana-page .board {
-  min-height: 560px;
-  contain: layout paint;
+.arcana-page .panel.gamePanel .board {
+  min-height: 540px;
 }
 
-/* Reserve dock/control space so first card render does not push or pull layout. */
-.arcana-page #floatingHandDock {
-  min-height: 172px;
-  contain: layout paint;
+/* Never content-hide or paint-contain the live hand dock. */
+.arcana-page #floatingHandDock,
+.arcana-page #floatingHandDock *,
+.arcana-page .floatingHandDock,
+.arcana-page .floatingHandDock * {
+  content-visibility: visible !important;
 }
 
-.arcana-page #floatingHandDock .floatingHandInner {
-  min-height: 148px;
-}
-
-.arcana-page #floatingHandDock .floatingHandCards {
-  min-height: 58px;
-}
-
-.arcana-page #floatingHandDock .floatingMoveCard.randomCard {
-  min-height: 34px;
-}
-
-.arcana-page #floatingHandDock .floatingDockActions {
-  min-height: 32px;
-}
-
-/* Modals should not contribute rendering work until opened. */
+/* Modals/lightboxes only may skip rendering while hidden. */
 .arcana-page .modalOverlay:not(.open):not(.isOpen),
 .arcana-page .strategyLightbox[hidden],
 .arcana-page .strategyLightbox:not(.isOpen) {
   content-visibility: hidden;
 }
 
-/* Below-the-fold/non-critical content can be skipped until near viewport. */
+/* Below-fold sections can be delayed, but not the board or hand dock. */
 .arcana-page .strategyDeck {
   content-visibility: auto;
   contain-intrinsic-size: 920px;
 }
 
 .arcana-page .sidebarDisclosure,
-.arcana-page .lootStage,
 .arcana-page .routeNotes,
 .arcana-page .log {
   content-visibility: auto;
   contain-intrinsic-size: 260px;
 }
 
-/* Desktop/tablet: keep board stable without constraining page flow too aggressively. */
-@media (min-width: 701px) {
-  .arcana-page .panel.gamePanel {
-    min-height: 760px !important;
-  }
-
-  .arcana-page .panel.gamePanel .boardFrame {
-    min-height: 720px !important;
-  }
-
-  .arcana-page .panel.gamePanel .board {
-    min-height: 580px !important;
-  }
-}
-
-/* Phone: reserve the final play-view shape below the shared header. */
 @media (max-width: 700px) {
+  /* Keep the final mobile play-view height, but do not contain/hide the dock. */
   .arcana-page.visual-fork .wrap > .gamePanel {
+    min-height: calc(100dvh - var(--header-h, 52px) - 6px) !important;
     height: calc(100dvh - var(--header-h, 52px) - 6px) !important;
     max-height: calc(100dvh - var(--header-h, 52px) - 6px) !important;
-    min-height: calc(100dvh - var(--header-h, 52px) - 6px) !important;
     overflow: hidden !important;
-    contain: layout paint !important;
   }
 
   .arcana-page.visual-fork .boardFrame {
     min-height: 0 !important;
     height: 100% !important;
     max-height: 100% !important;
-    contain: layout paint !important;
+    overflow: hidden !important;
   }
 
   .arcana-page.visual-fork .board {
     min-height: 0 !important;
-    height: auto !important;
-    contain: layout paint !important;
   }
 
-  .arcana-page.visual-fork #floatingHandDock {
-    min-height: 136px !important;
-    max-height: 176px !important;
-    contain: layout paint !important;
+  .arcana-page.visual-fork #floatingHandDock,
+  .arcana-page.visual-fork .floatingHandDock,
+  .arcana-page.visual-fork .boardFrame > #floatingHandDock,
+  .arcana-page.visual-fork .boardFrame > .floatingHandDock {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    content-visibility: visible !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 
   .arcana-page.visual-fork #floatingHandDock .floatingHandInner {
-    min-height: 124px !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
 
   .arcana-page.visual-fork #floatingHandDock .floatingHandCards {
     min-height: 48px !important;
-    max-height: 54px !important;
-  }
-
-  .arcana-page.visual-fork #floatingHandDock .floatingMoveCard.randomCard {
-    min-height: 30px !important;
-    max-height: 64px !important;
   }
 
   .arcana-page.visual-fork #floatingHandDock .floatingDockActions {
     min-height: 29px !important;
   }
 
-  /* Keep setup/strategy sections from being expensive during initial phone paint. */
-  .arcana-page .strategyDeck,
+  /* Do not content-hide the left setup panel on mobile; it can interfere with order/flex layout in some browsers. */
   .arcana-page .wrap > .panel:first-child {
-    content-visibility: auto;
-    contain-intrinsic-size: 760px;
+    content-visibility: visible !important;
   }
 }
 
