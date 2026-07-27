@@ -44,3 +44,13 @@
   will-change: transform;
   contain: layout style paint;
 }
+
+/* ── FEATURED SECTION MOBILE MIN-HEIGHT ─── */
+@media (max-width: 700px) {
+  #featuredSection {
+    min-height: 220px !important;
+  }
+  #featuredTrack {
+    min-height: 180px !important;
+  }
+}
