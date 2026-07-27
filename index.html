@@ -568,6 +568,10 @@
       .hub-hero-bio { font-size: 12px; }
     }
 
+      /* Reserve space for JS-rendered carousels only while empty (prevents CLS) */
+    #gameSections:empty {
+      min-height: 420px;
+    }
   </style>
 </head>
 <body>
@@ -636,7 +640,7 @@
     </section>
 
     <!-- ── GAME CAROUSELS ── -->
-    <div id="gameSections" style="min-height: 760px;"></div>
+    <div id="gameSections"></div>
 
     <!-- ── COMMUNITY ── -->
     <section class="hub-community">
