@@ -33,6 +33,11 @@ function getPlaceholder(id) {
   return PLACEHOLDERS[(id ? id.charCodeAt(id.length - 1) : 0) % PLACEHOLDERS.length];
 }
 
+function imgProxy(url, width, quality) {
+  if (!url || url.startsWith('/images/')) return url;
+  return `/_vercel/image?url=${encodeURIComponent(url)}&w=${width}&q=${quality || 75}`;
+}
+
 /* ══════════════════════════════════════════
    AIRTABLE FETCH
 ══════════════════════════════════════════ */
@@ -82,7 +87,7 @@ function buildCardCache() {
       : '';
     const zone     = s.Tags ? s.Tags.split(',')[0].trim() : (s.Channel || '');
     const hasImg   = s.ImageURLs && s.ImageURLs.trim();
-    const thumbSrc = hasImg ? s.ImageURLs.split(',')[0].trim() : getPlaceholder(s.id);
+    const thumbSrc = hasImg ? imgProxy(s.ImageURLs.split(',')[0].trim(), 360, 75) : getPlaceholder(s.id);
     const tagsList = s.Tags ? s.Tags.split(',').map(t => t.trim()).filter(Boolean) : [];
 
     const el = document.createElement('article');
@@ -213,8 +218,8 @@ function openModal(id) {
   lightboxImages = s.ImageURLs ? s.ImageURLs.split(',').map(u => u.trim()).filter(Boolean) : [];
   const images = lightboxImages.length
     ? `<div class="modal-images">${lightboxImages.map((u, i) =>
-        `<img src="${u}" alt="Strategy screenshot" width="400" height="150"
-              onclick="openLightbox(${i})" loading="lazy" />`).join('')}</div>`
+        `<img src="${imgProxy(u, 800, 80)}" alt="Strategy screenshot" width="400" height="150"
+              onclick="openLightbox(${i})" loading="lazy" data-full="${u}" />`).join('')}</div>`
     : '';
 
   const discordBtn = s.DiscordMessageURL
@@ -314,7 +319,7 @@ function renderFeatured() {
   const track   = document.getElementById('featuredTrack');
   const tags    = s.Tags ? s.Tags.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="tag">${t}</span>`).join('') : '';
   const hasImg  = s.ImageURLs && s.ImageURLs.trim();
-  const screenshot = hasImg ? s.ImageURLs.split(',')[0].trim() : null;
+  const screenshot = hasImg ? imgProxy(s.ImageURLs.split(',')[0].trim(), 700, 80) : null;
   const dateStr = (s.PostedAt || s.Created)
     ? new Date(s.PostedAt || s.Created).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
   const zone    = s.Tags ? s.Tags.split(',')[0].trim() : (s.Channel || '');
