@@ -71,7 +71,7 @@
   </svg>
 
   <!-- ── STICKY HEADER ── -->
-  <div id="site-header" data-active-game="torchlight"></div>
+  <div id="site-header" data-active-game="torchlight" style="height:var(--header-h,52px);position:sticky;top:0;z-index:200;"></div>
 
   <!-- ── STRATEGY DATABASE ── -->
   <main class="main">
@@ -89,7 +89,7 @@
     </div>
 
     <!-- ── FEATURED SECTION ── -->
-    <div class="featured-section" id="featuredSection" style="display:none">
+    <div class="featured-section" id="featuredSection" style="visibility:hidden;min-height:340px">
       <div class="featured-header">
         <div class="featured-label">Featured Strategy</div>
         <div class="featured-nav">
@@ -98,7 +98,6 @@
           <button class="featured-btn" id="featNext" onclick="featNav(1)" aria-label="Next">›</button>
         </div>
       </div>
-      <!-- min-height prevents CLS when featured card loads -->
       <div class="featured-track" id="featuredTrack" style="min-height:280px"></div>
     </div>
 
@@ -158,8 +157,8 @@
 
   <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 
-  <script src="/shared/header.js" defer></script>
-  <script src="/shared/footer.js" defer></script>
+  <script src="/shared/header.js"></script>
+  <script src="/shared/footer.js"></script>
   <script src="/torchlight/strats/app.js"></script>
   <!-- Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>

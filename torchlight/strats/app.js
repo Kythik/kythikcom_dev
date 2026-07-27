@@ -294,10 +294,15 @@ let featuredTimer = null;
 function buildFeatured() {
   featuredList = allStrategies.filter(s => s.Featured === true).slice(0, 5);
   const section = document.getElementById('featuredSection');
-  if (!featuredList.length) { section.style.display = 'none'; return; }
-  section.style.display = 'block';
+  if (!featuredList.length) {
+    section.style.visibility = 'hidden';
+    section.style.minHeight  = '0';
+    return;
+  }
   featuredIndex = 0;
   renderFeatured();
+  section.style.visibility = 'visible';
+  section.style.minHeight  = '';
   startFeaturedTimer();
 }
 
