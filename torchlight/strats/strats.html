@@ -142,9 +142,6 @@
 
   <div id="site-footer"></div>
 
-  <!-- ── FLOATING PLAYER ── -->
-  <div id="floating-player"></div>
-
   <!-- ── MODAL ── -->
   <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true">
     <div class="modal" id="modalContent"></div>
@@ -161,17 +158,8 @@
 
   <div class="toast" id="toast" role="alert" aria-live="polite"></div>
 
-  <script>
-    const CONFIG = {
-      TWITCH_CHANNEL: 'kythikx',
-      VERCEL_DOMAIN:  'kythik.com',
-    };
-    // player.js handles /api/twitch — skip header.js default check
-    window.kythikSkipDefaultLiveCheck = true;
-  </script>
   <script src="/shared/header.js" defer></script>
   <script src="/shared/footer.js" defer></script>
-  <script src="/shared/player.js" defer></script>
   <script src="/torchlight/strats/app.js"></script>
   <!-- Vercel Analytics -->
   <script defer src="/_vercel/insights/script.js"></script>

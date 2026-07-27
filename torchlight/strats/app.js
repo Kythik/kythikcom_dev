@@ -66,8 +66,8 @@ async function fetchStrategies() {
 
 /* ══════════════════════════════════════════
    CARD CACHE — build all card DOM once
-   Uses requestIdleCallback to avoid blocking
-   the main thread during initial paint
+   Single pass with DocumentFragment for
+   minimal reflow and zero CLS
 ══════════════════════════════════════════ */
 function buildCardCache() {
   const grid = document.getElementById('stratGrid');
@@ -75,102 +75,49 @@ function buildCardCache() {
   grid.innerHTML = '';
 
   const fragment = document.createDocumentFragment();
-  const CHUNK    = 8; // cards per idle chunk
-  let   i        = 0;
 
-  function processChunk(deadline) {
-    while (i < allStrategies.length && (deadline.timeRemaining() > 2 || deadline.didTimeout)) {
-      const s       = allStrategies[i++];
-      const dateStr = (s.PostedAt || s.Created)
-        ? new Date(s.PostedAt || s.Created).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-        : '';
-      const zone      = s.Tags ? s.Tags.split(',')[0].trim() : (s.Channel || '');
-      const hasImg    = s.ImageURLs && s.ImageURLs.trim();
-      const thumbSrc  = hasImg ? s.ImageURLs.split(',')[0].trim() : getPlaceholder(s.id);
-      const tagsList  = s.Tags ? s.Tags.split(',').map(t => t.trim()).filter(Boolean) : [];
+  allStrategies.forEach(s => {
+    const dateStr  = (s.PostedAt || s.Created)
+      ? new Date(s.PostedAt || s.Created).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+      : '';
+    const zone     = s.Tags ? s.Tags.split(',')[0].trim() : (s.Channel || '');
+    const hasImg   = s.ImageURLs && s.ImageURLs.trim();
+    const thumbSrc = hasImg ? s.ImageURLs.split(',')[0].trim() : getPlaceholder(s.id);
+    const tagsList = s.Tags ? s.Tags.split(',').map(t => t.trim()).filter(Boolean) : [];
 
-      const el = document.createElement('article');
-      el.className  = 'card';
-      el.dataset.id = s.id;
-      el.innerHTML  = `
-        <div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}">
-          <img src="${thumbSrc}" alt="Strategy screenshot" width="360" height="170" loading="lazy"
-               onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" />
+    const el = document.createElement('article');
+    el.className  = 'card';
+    el.dataset.id = s.id;
+    el.innerHTML  = `
+      <div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}">
+        <img src="${thumbSrc}" alt="Strategy screenshot" width="360" height="170" loading="lazy"
+             onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" />
+      </div>
+      <div class="card-inner">
+        <div class="card-top">
+          ${zone ? `<span class="pill pill--tag">${zone}</span>` : '<span></span>'}
+          ${dateStr ? `<span class="card-date">${dateStr}</span>` : ''}
         </div>
-        <div class="card-inner">
-          <div class="card-top">
-            ${zone ? `<span class="pill pill--tag">${zone}</span>` : '<span></span>'}
-            ${dateStr ? `<span class="card-date">${dateStr}</span>` : ''}
-          </div>
-          <h2 class="card-title">${s.Title || 'Untitled'}</h2>
-          <div class="card-pills">
-            <div class="pill pill--author">${s.Author || 'Anonymous'}</div>
-            ${s.CommentCount
-              ? `<a class="pill pill--muted card-comments"
-                    href="${s.DiscordMessageURL}" target="_blank" rel="noopener"
-                    data-stop-propagation>💬 ${s.CommentCount}</a>`
-              : ''}
-          </div>
-        </div>`;
-
-      const searchText = [s.Title, s.Body, s.Author, s.Channel, s.Tags]
-        .map(v => (v || '').toLowerCase()).join(' ');
-
-      cardCache.set(s.id, { el, searchText, channel: s.Channel || '', tags: tagsList });
-      fragment.appendChild(el);
-    }
-
-    if (i < allStrategies.length) {
-      requestIdleCallback(processChunk, { timeout: 500 });
-    } else {
-      grid.appendChild(fragment);
-      applyFilters();
-    }
-  }
-
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(processChunk, { timeout: 500 });
-  } else {
-    // Fallback for Safari
-    allStrategies.forEach(s => {
-      const dateStr = (s.PostedAt || s.Created)
-        ? new Date(s.PostedAt || s.Created).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-        : '';
-      const zone     = s.Tags ? s.Tags.split(',')[0].trim() : (s.Channel || '');
-      const hasImg   = s.ImageURLs && s.ImageURLs.trim();
-      const thumbSrc = hasImg ? s.ImageURLs.split(',')[0].trim() : getPlaceholder(s.id);
-      const tagsList = s.Tags ? s.Tags.split(',').map(t => t.trim()).filter(Boolean) : [];
-      const el = document.createElement('article');
-      el.className  = 'card';
-      el.dataset.id = s.id;
-      el.innerHTML  = `
-        <div class="card-thumb${hasImg ? '' : ' card-thumb--placeholder'}">
-          <img src="${thumbSrc}" alt="Strategy screenshot" width="360" height="170" loading="lazy"
-               onerror="this.src='${getPlaceholder(s.id)}';this.onerror=null;" />
+        <h2 class="card-title">${s.Title || 'Untitled'}</h2>
+        <div class="card-pills">
+          <div class="pill pill--author">${s.Author || 'Anonymous'}</div>
+          ${s.CommentCount
+            ? `<a class="pill pill--muted card-comments"
+                  href="${s.DiscordMessageURL}" target="_blank" rel="noopener"
+                  data-stop-propagation>💬 ${s.CommentCount}</a>`
+            : ''}
         </div>
-        <div class="card-inner">
-          <div class="card-top">
-            ${zone ? `<span class="pill pill--tag">${zone}</span>` : '<span></span>'}
-            ${dateStr ? `<span class="card-date">${dateStr}</span>` : ''}
-          </div>
-          <h2 class="card-title">${s.Title || 'Untitled'}</h2>
-          <div class="card-pills">
-            <div class="pill pill--author">${s.Author || 'Anonymous'}</div>
-            ${s.CommentCount
-              ? `<a class="pill pill--muted card-comments"
-                    href="${s.DiscordMessageURL}" target="_blank" rel="noopener"
-                    data-stop-propagation>💬 ${s.CommentCount}</a>`
-              : ''}
-          </div>
-        </div>`;
-      const searchText = [s.Title, s.Body, s.Author, s.Channel, s.Tags]
-        .map(v => (v || '').toLowerCase()).join(' ');
-      cardCache.set(s.id, { el, searchText, channel: s.Channel || '', tags: tagsList });
-      fragment.appendChild(el);
-    });
-    grid.appendChild(fragment);
-    applyFilters();
-  }
+      </div>`;
+
+    const searchText = [s.Title, s.Body, s.Author, s.Channel, s.Tags]
+      .map(v => (v || '').toLowerCase()).join(' ');
+
+    cardCache.set(s.id, { el, searchText, channel: s.Channel || '', tags: tagsList });
+    fragment.appendChild(el);
+  });
+
+  grid.appendChild(fragment);
+  applyFilters();
 }
 
 /* ══════════════════════════════════════════
