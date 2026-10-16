@@ -2,20 +2,20 @@
   "featured": [
     {
       "type": "season",
-      "eyebrow": "SS13 · Afterlight",
-      "title": "Season 13 — Afterlight",
-      "blurb": "Coffin Escort Quest!",
-      "seasonStartISO": "2026-07-16T19:00:00-07:00",
-      "seasonEndISO": "2026-10-14T19:00:00-07:00",
-      "nextSeasonISO": "2026-10-15T19:00:00-07:00",
+      "eyebrow": "SS14 · Tartarus",
+      "title": "Season 14 — Tartarus",
+      "blurb": "Vorax but better?",
+      "seasonStartISO": "2026-10-15T19:00:00-07:00",
+      "seasonEndISO": "2027-01-12T19:00:00-07:00",
+      "nextSeasonISO": "2027-01-13T19:00:00-07:00",
       "link": null
     },
     {
       "type": "link",
       "eyebrow": "Official",
-      "title": "SS13 Patch Notes",
-      "blurb": "Full breakdown of Afterlight mechanics, balance changes, and new systems.",
-      "link": "https://torchlight.xd.com/ss13pn/?lang=en",
+      "title": "SS14 Patch Notes",
+      "blurb": "Full breakdown of Tartarus mechanics, balance changes, and new systems.",
+      "link": "https://torchlight.xd.com/ss14pn/?lang=en",
       "linkLabel": "Read Patch Notes"
     }
   ],
